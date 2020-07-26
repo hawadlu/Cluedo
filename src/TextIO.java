@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 /**
  * Simple class for taking input from the console
  */
-public class Input {
+public class TextIO {
     public static String read(String statement) throws IOException
     {
         System.out.println(statement);
