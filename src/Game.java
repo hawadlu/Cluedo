@@ -6,6 +6,9 @@ import java.util.Scanner;
 
 public class Game {
     public static void main(String[] args) throws FileNotFoundException {
+        Game newGame = new Game();
+        newGame.initGame();
+        newGame.shuffle();
         showInitialInstructions();
 //        System.out.println("Please input something: ");
 //        Scanner sc = new Scanner(System.in);
@@ -47,7 +50,7 @@ public class Game {
         while (scanner.hasNextLine()) System.out.println(scanner.nextLine());
     }
 
-    public enum players {
+    public enum Players {
         SCARLET,
         PLUM,
         WHITE,
@@ -125,11 +128,5 @@ public class Game {
         remainingCards.addAll(weaponCards);
         System.out.println("Remaining cards: "+remainingCards.size());
 
-    }
-
-    public static void main(String[] args){
-        Game newGame = new Game();
-        newGame.initGame();
-        newGame.shuffle();
     }
 }
