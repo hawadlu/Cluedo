@@ -5,5 +5,6 @@ public class Game {
         System.out.println("Please input something: ");
         Scanner sc = new Scanner(System.in);
         System.out.println(sc.nextLine());
+        //Justin was here
     }
 }
