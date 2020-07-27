@@ -9,6 +9,6 @@ public class PlayerCard extends Card {
 
     @Override
     public String toString() {
-        return name.toString().substring(0, 1);
+        return name.toString().substring(0, 2);
     }
 }

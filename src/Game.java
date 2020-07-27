@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class Game {
@@ -46,8 +48,46 @@ public class Game {
 
     }
 
+    /**
+     * Creates cards, shuffles, removes 3 for accuse
+     *
+     * TO-DO: Add rest into players hands.
+     *        Add to board class?
+     */
+    public void shuffle(){
+        //Create ArrayLists of each card type
+        ArrayList<Card> playerCards = new ArrayList<>();
+        ArrayList<Card> weaponCards = new ArrayList<>();
+        ArrayList<Card> roomCards = new ArrayList<>();
+
+        for(Players p : Players.values()){ playerCards.add(new PlayerCard(p)); }
+        for(Weapons w : Weapons.values()){ weaponCards.add(new WeaponCard(w)); }
+        for(Rooms r : Rooms.values()){ roomCards.add(new RoomCard(r)); }
+
+        //Shuffling
+        Collections.shuffle(playerCards);
+        Collections.shuffle(weaponCards);
+        Collections.shuffle(roomCards);
+
+        //Add to accuse
+        ArrayList<Card> accuse = new ArrayList<>();
+        accuse.add(playerCards.get(0));     playerCards.remove(0);
+        accuse.add(roomCards.get(0));       roomCards.remove(0);
+        accuse.add(weaponCards.get(0));     weaponCards.remove(0);
+        System.out.println("Accuse List:"+ accuse.toString());
+
+        //Add rest to big list
+        ArrayList<Card> remainingCards = new ArrayList<>();
+        remainingCards.addAll(playerCards);
+        remainingCards.addAll(roomCards);
+        remainingCards.addAll(weaponCards);
+        System.out.println("Remaining cards: "+remainingCards.size());
+
+    }
+
     public static void main(String[] args){
         Game newGame = new Game();
         newGame.initGame();
+        newGame.shuffle();
     }
 }

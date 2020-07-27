@@ -2,13 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="282160f1-3723-4af6-8078-72a0a8f707c3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Card.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Move.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/PlayerCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlayerCard.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/RoomCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RoomCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/WeaponCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/WeaponCard.java" afterDir="false" />
     </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -75,6 +76,7 @@
       <workItem from="1595805379816" duration="1092000" />
       <workItem from="1595809941527" duration="337000" />
       <workItem from="1595815584774" duration="1473000" />
+      <workItem from="1595883406516" duration="2038000" />
     </task>
     <servers />
   </component>

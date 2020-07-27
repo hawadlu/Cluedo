@@ -1,26 +1,14 @@
 public class RoomCard extends Card {
-    Game.Rooms roomName;
-    public String name;
+    Game.Rooms name;
 
-    public enum RoomChar{
-        KI,
-        BA,
-        ST,
-        BI,
-        CO,
-        DI,
-        HA,
-        LI,
-        LO
+    RoomCard(Game.Rooms name) {
+        this.name = name;
     }
 
-    public String getName(){
-        return name;
-    }
+    public String getName(){ return name.toString();}
 
-    //TO-DO
     @Override
-    public String toString(){
-        return "";
+    public String toString() {
+        return name.toString().substring(0, 2);
     }
 }
