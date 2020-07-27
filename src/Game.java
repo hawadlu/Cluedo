@@ -1,22 +1,19 @@
 import java.util.Scanner;
 
 public class Game {
-    public static void main(String[] args){
-        System.out.println("Please input something: ");
-        Scanner sc = new Scanner(System.in);
-        System.out.println(sc.nextLine());
-    }
+    int numPlayers;
 
-    public enum players {
+    public enum Players {
         SCARLET,
         PLUM,
         WHITE,
         PEACOCK,
         GREEN,
-        MUSTARD
+        MUSTARD;
     }
 
-    public enum rooms{
+
+    public enum Rooms{
         KITCHEN,
         BALLROOM,
         STUDY,
@@ -25,15 +22,32 @@ public class Game {
         DINING_ROOM,
         HALL,
         LIBRARY,
-        LOUNGE
+        LOUNGE;
     }
 
-    public enum weapons{
+
+    public enum Weapons{
         CANDLESTICK,
         DAGGER,
         LEAD_PIPE,
         REVOLVER,
         ROPE,
-        SPANNER
+        SPANNER;
+
+    }
+
+    /**
+     * Initialise the game
+     */
+    public void initGame() {
+        System.out.println("How many players are playing?");
+        Scanner sc = new Scanner(System.in);
+        System.out.println(sc.nextLine());
+
+    }
+
+    public static void main(String[] args){
+        Game newGame = new Game();
+        newGame.initGame();
     }
 }
