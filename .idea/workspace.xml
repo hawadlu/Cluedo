@@ -4,6 +4,7 @@
     <list default="true" id="282160f1-3723-4af6-8078-72a0a8f707c3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
 <<<<<<< HEAD
+<<<<<<< HEAD
       <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/TextIO.java" beforeDir="false" />
@@ -16,7 +17,15 @@
       <change beforePath="$PROJECT_DIR$/src/Exception.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Exception.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
 >>>>>>> master
+=======
+      <change beforePath="$PROJECT_DIR$/src/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/PlayerCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/PlayerCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RoomCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RoomCard.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/WeaponCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/WeaponCard.java" afterDir="false" />
+>>>>>>> DevConn
     </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,12 +55,28 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="project.structure.last.edited" value="Project" />
+<<<<<<< HEAD
     <property name="project.structure.proportion" value="0.0" />
 <<<<<<< HEAD
+=======
+    <property name="project.structure.proportion" value="0.15" />
+>>>>>>> DevConn
     <property name="project.structure.side.proportion" value="0.2" />
 =======
     <property name="project.structure.side.proportion" value="0.0" />
 >>>>>>> master
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
   </component>
   <component name="RunManager">
     <configuration name="Cluedo" type="Application" factoryName="Application">
@@ -75,6 +100,7 @@
       <workItem from="1595805379816" duration="1092000" />
       <workItem from="1595809941527" duration="337000" />
       <workItem from="1595815584774" duration="1473000" />
+      <workItem from="1595883406516" duration="2038000" />
     </task>
     <servers />
   </component>
@@ -91,7 +117,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="249" y="0" key="#Project_Structure" timestamp="1595816916287">
