@@ -1,8 +1,8 @@
 public class RoomCard extends Card {
-    Game.rooms roomName;
+    Game.Rooms roomName;
     public String name;
 
-    public enum roomChar{
+    public enum RoomChar{
         KI,
         BA,
         ST,
