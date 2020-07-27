@@ -1,9 +1,9 @@
-import java.io.IOException;
+import java.util.Scanner;
 
 public class Game {
-    public static void main(String[] args) throws IOException {
-        //read something in
-        String something = TextIO.read("Please input something: ");
-        System.out.println(something);
+    public static void main(String[] args){
+        System.out.println("Please input something: ");
+        Scanner sc = new Scanner(System.in);
+        System.out.println(sc.nextLine());
     }
 }

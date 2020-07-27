@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="282160f1-3723-4af6-8078-72a0a8f707c3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Class Diagram.drawio" beforeDir="false" afterPath="$PROJECT_DIR$/Class Diagram.drawio" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cluedo.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Cluedo.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -68,7 +68,7 @@
       <option name="presentableId" value="Default" />
       <updated>1595805280682</updated>
       <workItem from="1595805379816" duration="1092000" />
-      <workItem from="1595809919035" duration="416000" />
+      <workItem from="1595809941527" duration="337000" />
     </task>
     <servers />
   </component>
