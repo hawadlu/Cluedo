@@ -1,0 +1,10 @@
+todo this needs to be written better
+This is a turn based game.
+
+On your turn you will roll the dice and be given the option to move.
+
+If you are in a room on your turn you may suggest or accuse a suspect.
+If you suggest a suspect you will be shown a relevant card by an
+adjacent player if they have one.
+
+If you accuse a suspect and are correct, you win. Otherwise you loose.

@@ -1,7 +1,20 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Game {
-    public static void main(String[] args){
+    public static void main(String[] args) throws FileNotFoundException {
+        showInitialInstructions();
+//        System.out.println("Please input something: ");
+//        Scanner sc = new Scanner(System.in);
+//        System.out.println(sc.nextLine());
+    }
+
+    /**
+     * Shows the initial instructions.
+     * Ask if the user just wants to play or view the instructions
+     */
+    private static void showInitialInstructions() throws FileNotFoundException {
         System.out.println("Welcome to Cluedo!\n" +
                 "To view the instructions type 'instructions'\n" +
                 "To play the game type 'play'");
@@ -10,10 +23,10 @@ public class Game {
 
         if (response.equals("instructions")) showInstructions();
         else if (response.equals("play")) playGame();
-
-        System.out.println("Please input something: ");
-        Scanner sc = new Scanner(System.in);
-        System.out.println(sc.nextLine());
+        else {
+            System.out.println("Invalid response, try again!");
+            showInitialInstructions();
+        }
     }
 
     /**
@@ -26,9 +39,10 @@ public class Game {
     /**
      * Show the instructions
      */
-    private static void showInstructions() {
-        //todo write the actual instructions
-        System.out.println("You are viewing the instructions");
+    private static void showInstructions() throws FileNotFoundException {
+        File instructions = new File("Assets/Instructions.txt");
+        Scanner scanner = new Scanner(instructions);
+        while (scanner.hasNextLine()) System.out.println(scanner.nextLine());
     }
 
     public enum players {
