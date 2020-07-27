@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="282160f1-3723-4af6-8078-72a0a8f707c3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Cluedo.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Cluedo.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Card.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/RoomCard.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/RoomCard.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -69,6 +70,7 @@
       <updated>1595805280682</updated>
       <workItem from="1595805379816" duration="1092000" />
       <workItem from="1595809941527" duration="337000" />
+      <workItem from="1595815584774" duration="1473000" />
     </task>
     <servers />
   </component>
@@ -80,7 +82,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
