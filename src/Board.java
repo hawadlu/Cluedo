@@ -130,12 +130,19 @@ public class Board {
 
 
     /**
-     * Cheks to see if this position in the board class is valid.
-     * @param currentX the x pos
-     * @param currentY the y pos
+     * Cheks to see if this move in the board class is valid.
+     * @param current the x pos
+     * @param next the y pos
      * @return boolean indicating valid/invalid.
      */
-    public boolean isValidPosition(Position currentX, Position currentY) {
+    public boolean isValidMove(Position current, Position next) {
+       if(!board[current.y][current.x].isRoom()&&!board[next.y][next.y].isRoom()){
+          return true;
+       }
+       if(!board[current.y][current.x].isRoom()&&board[next.y][next.y].isRoom()){
+          if(board[current.y][current.x].isDoor()){
+          }
+       }
         return true; //todo implement me
     }
 }

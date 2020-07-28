@@ -10,4 +10,15 @@ public class Tile {
     public void setDoor(boolean bool){
         door=bool;
     }
+
+    public boolean isRoom(){
+        if(room == null){
+            return false;
+        }
+        return true;
+    }
+
+    public boolean isDoor(){
+        return door;
+    }
 }
