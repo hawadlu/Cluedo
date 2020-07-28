@@ -13,8 +13,9 @@ import java.util.Scanner;
  * -Checks if game is finished
  */
 public class Game {
-    int numPlayers;
-    ArrayList<Card> accuseList;
+    public static Players accusePlayer;
+    public static Rooms accuseRoom;
+    public static Weapons accuseWeapon;
 
     public enum Players {
         SCARLET,
@@ -93,21 +94,53 @@ public class Game {
             num = inputStr.nextInt();
         }
 
-        return inputStr.nextInt();
+        return num;
     }
 
     /**
      * Create the players that will be playing the game
      * @param numPlayers the number of players that will be playing the game
+     * @param input the scanner that is scanning the input stream
      * @return an arraylist of players
      */
-    public ArrayList<Player> createPlayers(int numPlayers) {
+    public ArrayList<Player> createPlayers(int numPlayers, Scanner input) {
         ArrayList<Player> players = new ArrayList<>();
         for (int i = 0; i < numPlayers; i++) {
+            Players player = chooseFromArray(Players.values(), "Player "+i+" choose your character:", input);
             //players.add(new Player());
         }
         return null;
     }
+
+    /**
+     * Get the user to choose an option from an array of options of a given type
+     * @param options the array of options
+     * @param text the text at the top of the list of options, e.g. "Choose a weapon:"
+     * @param input the scanner that is scanning the input stream
+     * @param <T> the type of the individual options
+     * @return the option that was chosen
+     */
+    public static <T> T chooseFromArray(T[] options, String text, Scanner input) {
+        System.out.println(text+" (Enter a number 1-"+options.length+")");
+        for (int i = 0; i < options.length; i++) {
+            System.out.println(i+1 + ". "+options[i]);
+        }
+
+        Scanner inputStr = new Scanner(input.nextLine());
+        int index = 0;
+
+        while (index < 1 || index > options.length) {
+            while (!inputStr.hasNextInt()) {
+                System.out.println("Please enter a number 1-"+options.length);
+                inputStr = new Scanner(input.nextLine());
+            }
+            index = inputStr.nextInt();
+        }
+
+        return options[index-1];
+    }
+
+
 
     /**
      * Play the game
@@ -115,7 +148,7 @@ public class Game {
     public void playGame() {
         Scanner input = new Scanner(System.in);
         int numPlayers = getNumPlayers(input);
-        List<Player> players = createPlayers(numPlayers);
+        List<Player> players = createPlayers(numPlayers, input);
 
     }
 
@@ -140,11 +173,10 @@ public class Game {
         Collections.shuffle(roomCards);
 
         //Add to accuse
-        accuseList = new ArrayList<>();
-        accuseList.add(playerCards.get(0));     playerCards.remove(0);
-        accuseList.add(roomCards.get(0));       roomCards.remove(0);
-        accuseList.add(weaponCards.get(0));     weaponCards.remove(0);
-        System.out.println("Accuse List:"+ accuseList.toString());
+        accusePlayer = playerCards.get(0).getPlayer();     playerCards.remove(0);
+        accuseRoom = roomCards.get(0).getRoom();       roomCards.remove(0);
+        accuseWeapon = weaponCards.get(0).getWeapon();     weaponCards.remove(0);
+        System.out.println("Accuse List:"+ accusePlayer.toString()+", "+accuseRoom.toString()+", "+accuseWeapon.toString());
 
         //Add rest to big list
         ArrayList<Card> remainingCards = new ArrayList<>();
