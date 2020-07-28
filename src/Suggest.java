@@ -1,2 +1,6 @@
-public class Suggest extends Action {
+public class Suggest implements Action {
+    @Override
+    public boolean apply() throws InvalidActionException {
+        return false;
+    }
 }
