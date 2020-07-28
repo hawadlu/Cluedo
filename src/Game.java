@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Scanner;
 
 public class Game {
+
     public enum Players {
         SCARLET,
         PLUM,
@@ -12,15 +13,6 @@ public class Game {
         PEACOCK,
         GREEN,
         MUSTARD;
-
-    public static void main(String[] args) throws FileNotFoundException {
-        Game newGame = new Game();
-        newGame.initGame();
-        newGame.shuffle();
-        showInitialInstructions();
-//        System.out.println("Please input something: ");
-//        Scanner sc = new Scanner(System.in);
-//        System.out.println(sc.nextLine());
     }
 
     public enum Rooms{
@@ -43,15 +35,13 @@ public class Game {
         REVOLVER,
         ROPE,
         SPANNER;
-
-
     }
 
     /**
      * Shows the initial instructions.
      * Ask if the user just wants to play or view the instructions
      */
-    private static void showInitialInstructions() throws FileNotFoundException {
+    private void showInitialInstructions() throws FileNotFoundException {
         System.out.println("Welcome to Cluedo!\n" +
                 "To view the instructions type 'instructions'\n" +
                 "To play the game type 'play'");
@@ -69,55 +59,17 @@ public class Game {
     /**
      * Play the game
      */
-    private static void playGame() {
+    private void playGame() {
         System.out.println("You are playing the game");
     }
 
     /**
      * Show the instructions
      */
-    private static void showInstructions() throws FileNotFoundException {
+    private void showInstructions() throws FileNotFoundException {
         File instructions = new File("Assets/Instructions.txt");
         Scanner scanner = new Scanner(instructions);
         while (scanner.hasNextLine()) System.out.println(scanner.nextLine());
-    }
-
-    public static void main(String[] args) throws FileNotFoundException {
-        showInitialInstructions();
-    }
-
-
-    public enum Rooms{
-        KITCHEN,
-        BALLROOM,
-        STUDY,
-        BILLARD_ROOM,
-        CONSERVATORY,
-        DINING_ROOM,
-        HALL,
-        LIBRARY,
-        LOUNGE;
-    }
-
-
-    public enum Weapons{
-        CANDLESTICK,
-        DAGGER,
-        LEAD_PIPE,
-        REVOLVER,
-        ROPE,
-        SPANNER;
-
-    }
-
-    /**
-     * Initialise the game
-     */
-    public void initGame() {
-        System.out.println("How many players are playing?");
-        Scanner sc = new Scanner(System.in);
-        System.out.println(sc.nextLine());
-
     }
 
     /**
@@ -155,5 +107,10 @@ public class Game {
         remainingCards.addAll(weaponCards);
         System.out.println("Remaining cards: "+remainingCards.size());
 
+    }
+
+    public static void main(String[] args) throws FileNotFoundException {
+        Game game = new Game();
+        game.showInitialInstructions();
     }
 }
