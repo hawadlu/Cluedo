@@ -62,6 +62,48 @@ public class Board {
       Study = allocateTiles(Study, 17,23,21,23);
       Study = allocateTiles(Study, 18,23,24,24);
       room.put("Study", new Room(Study, "Study"));
+
+      //sets doors
+      //Kitchen
+      board[7][4].setDoor(true);
+
+      //ball room
+      board[5][7].setDoor(true);
+      board[8][9].setDoor(true);
+      board[8][14].setDoor(true);
+      board[5][16].setDoor(true);
+
+      //conservatory
+      board[5][18].setDoor(true);
+
+      //Dinning room
+      board[12][8].setDoor(true);
+      board[16][6].setDoor(true);
+
+      //Dinning room
+      board[12][8].setDoor(true);
+      board[16][6].setDoor(true);
+
+      //Billiard room
+      board[9][17].setDoor(true);
+      board[13][22].setDoor(true);
+      board[13][22].setRoom("BilliardRoom");
+
+      //Library room
+      board[13][20].setDoor(true);
+      board[13][20].setRoom("Library");
+      board[16][16].setDoor(true);
+
+      //Lounge room
+      board[18][6].setDoor(true);
+
+      //Hall room
+      board[17][11].setDoor(true);
+      board[17][12].setDoor(true);
+
+      //Study room
+      board[20][17].setDoor(true);
+
    }
 
    /**Helper method to set room tiles
