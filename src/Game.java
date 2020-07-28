@@ -1,10 +1,9 @@
+import javafx.geometry.Pos;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Overall class to run game
@@ -105,11 +104,21 @@ public class Game {
      */
     public ArrayList<Player> createPlayers(int numPlayers, Scanner input) {
         ArrayList<Player> players = new ArrayList<>();
+        ArrayList<Players> availablePlayers = new ArrayList<>(Arrays.asList(Players.values()));
         for (int i = 0; i < numPlayers; i++) {
-            Players player = chooseFromArray(Players.values(), "Player "+i+" choose your character:", input);
-            //players.add(new Player());
+            Players player = chooseFromArray(availablePlayers.toArray(new Players[]{}), "Player "+(i+1)+" choose your character:", input);
+            availablePlayers.remove(player);
+
+            try {
+                Position startPos = getStartingPosition(player);
+                players.add(new Player(player, startPos));
+            }
+            catch (InvalidPlayerException e) {
+                System.out.println(e.toString());
+                i--;
+            }
         }
-        return null;
+        return players;
     }
 
     /**
@@ -140,7 +149,23 @@ public class Game {
         return options[index-1];
     }
 
-
+    /**
+     * Gets the default starting position of a player
+     * @param player the player enum to find the position of
+     * @return a position object, containing the starting position coordinates
+     * @throws InvalidPlayerException if the provided player does not have a starting position
+     */
+    public Position getStartingPosition(Players player) throws InvalidPlayerException {
+        switch (player) {
+            case WHITE: return new Position(9, 0);
+            case GREEN: return new Position(14, 0);
+            case PEACOCK: return new Position(23, 6);
+            case PLUM: return new Position(23, 19);
+            case SCARLET: return new Position(7, 24);
+            case MUSTARD: return new Position(0, 17);
+        }
+        throw new InvalidPlayerException(player.toString());
+    }
 
     /**
      * Play the game
