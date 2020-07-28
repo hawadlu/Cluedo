@@ -1,3 +1,7 @@
+/**
+ * A Player Card
+ * -Extends Card class
+ */
 public class PlayerCard extends Card {
     Game.Players name;
 

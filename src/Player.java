@@ -1,7 +1,9 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
- * Physical PLayer
+ * Physical PLayer.
+ * -Contains their hand, pos & if they've lost
  */
 public class Player {
     Game.Players name;
@@ -16,9 +18,11 @@ public class Player {
         //position = pos;
     }
 
-    public void addHand(ArrayList<Card> newHand){
-        this.hand = newHand;
+    public void addToHand(Card card){
+        this.hand.add(card);
     }
+
+    public ArrayList<Card> getHand(){ return hand; }
 
     @Override
     public String toString() {

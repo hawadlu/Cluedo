@@ -1,9 +1,7 @@
-import java.util.ArrayList;
-
+/**
+ * Construct a board of positions
+ * -Draws board for user
+ * -Contains locations of players
+ */
 public class Board {
-    public ArrayList<Card> accuseList;
-
-    public void setAccuse(ArrayList<Card> cards){
-        accuseList = cards;
-    }
 }
