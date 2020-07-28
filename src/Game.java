@@ -1,7 +1,9 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Scanner;
 
 public class Game {
@@ -41,7 +43,7 @@ public class Game {
      * Shows the initial instructions.
      * Ask if the user just wants to play or view the instructions
      */
-    private void showInitialInstructions() throws FileNotFoundException {
+    public void showInitialInstructions() throws FileNotFoundException {
         System.out.println("Welcome to Cluedo!\n" +
                 "To view the instructions type 'instructions'\n" +
                 "To play the game type 'play'");
@@ -57,19 +59,56 @@ public class Game {
     }
 
     /**
-     * Play the game
-     */
-    private void playGame() {
-        System.out.println("You are playing the game");
-    }
-
-    /**
      * Show the instructions
      */
-    private void showInstructions() throws FileNotFoundException {
+    public void showInstructions() throws FileNotFoundException {
         File instructions = new File("Assets/Instructions.txt");
         Scanner scanner = new Scanner(instructions);
         while (scanner.hasNextLine()) System.out.println(scanner.nextLine());
+    }
+
+    /**
+     * Get the number of players from the user
+     * @param input the scanner that is scanning the input stream
+     * @return the number of players playing the game
+     */
+    public int getNumPlayers(Scanner input) {
+        System.out.println("How many players are playing? (2-6 Players only)");
+        Scanner inputStr = new Scanner(input.nextLine());
+        int num = 0;
+
+        while (num < 2 || num > 6) {
+            while (!inputStr.hasNextInt()) {
+                System.out.println("Please enter a number 2-6");
+                inputStr = new Scanner(input.nextLine());
+            }
+            num = inputStr.nextInt();
+        }
+
+        return inputStr.nextInt();
+    }
+
+    /**
+     * Create the players that will be playing the game
+     * @param numPlayers the number of players that will be playing the game
+     * @return an arraylist of players
+     */
+    public ArrayList<Player> createPlayers(int numPlayers) {
+        ArrayList<Player> players = new ArrayList<>();
+        for (int i = 0; i < numPlayers; i++) {
+            //players.add(new Player());
+        }
+        return null;
+    }
+
+    /**
+     * Play the game
+     */
+    public void playGame() {
+        Scanner input = new Scanner(System.in);
+        int numPlayers = getNumPlayers(input);
+        List<Player> players = createPlayers(numPlayers);
+
     }
 
     /**

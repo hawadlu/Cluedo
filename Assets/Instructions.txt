@@ -1,10 +1,17 @@
-todo this needs to be written better
-This is a turn based game.
+At the beginning of the game a character, weapon and room will be chosen
+at random to be the murderer, murder weapon and location of murder respectively.
+
+The rest of the cards will be shuffled and dealt to the players.
 
 On your turn you will roll the dice and be given the option to move.
 
-If you are in a room on your turn you may suggest or accuse a suspect.
-If you suggest a suspect you will be shown a relevant card by an
-adjacent player if they have one.
+If you are in a room on your turn you may suggest or accuse a suspect 
+and weapon of your choice of murder in the room you are in.
 
-If you accuse a suspect and are correct, you win. Otherwise you loose.
+After a suggestion players clockwise from you will attempt to prove your 
+suggestion wrong by showing you a card from your suggestion.
+(If a player has a card that means it wasnt chosen at the start)
+
+If you accuse a suspect and are correct, you win. Otherwise you lose and
+can no longer take turns of your own, but still prove other players wrong
+if you can, when they make suggestions.
