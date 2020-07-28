@@ -2,12 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f6e4cae5-3bd8-430d-894d-961427ebb47d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Accuse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Accuse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Cluedo.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Cluedo.iml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -18,6 +27,10 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -29,10 +42,10 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.Tests">
     <configuration name="Cluedo" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Game" />
       <module name="Cluedo" />
@@ -40,6 +53,22 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Tests" type="JUnit" factoryName="JUnit">
+      <module name="Cluedo" />
+      <useClassPathOnly />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="Tests" />
+      <option name="METHOD_NAME" value="" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="PARAMETERS" value="" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Cluedo" />
+      <item itemvalue="JUnit.Tests" />
+    </list>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -63,18 +92,20 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="275" y="22" key="#Project_Structure/0.0.1366.728@0.0.1366.728" timestamp="1595899808565" />
-    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1595895816729">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="209" y="94" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1595906537601">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1595895816729" />
+    <state x="209" y="94" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.877@0.23.1440.877" timestamp="1595906537601" />
     <state x="533" y="175" key="#com.intellij.ide.util.MemberChooser" timestamp="1595904511066">
       <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="533" y="175" key="#com.intellij.ide.util.MemberChooser/0.23.1440.877@0.23.1440.877" timestamp="1595904511066" />
-    <state x="498" y="202" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1595895813437">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state x="467" y="238" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1595906536046">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state x="498" y="202" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1536.824@0.0.1536.824" timestamp="1595895813437" />
+    <state x="467" y="238" key="#com.intellij.ide.util.TreeClassChooserDialog/0.23.1440.877@0.23.1440.877" timestamp="1595906536046" />
     <state x="531" y="253" key="#com.intellij.ide.util.projectWizard.JdkChooserPanel.MyDialog" timestamp="1595899782088">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -99,5 +130,17 @@
     </state>
     <state width="1323" height="179" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1595899713409" />
     <state width="1493" height="172" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1595895878057" />
+    <state x="208" y="43" key="SettingsEditor" timestamp="1595906350332">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="208" y="43" key="SettingsEditor/0.23.1440.877@0.23.1440.877" timestamp="1595906350332" />
+    <state x="417" y="361" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1595906442240">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="417" y="361" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.23.1440.877@0.23.1440.877" timestamp="1595906442240" />
+    <state x="425" y="244" key="refactoring.ChangeSignatureDialog" timestamp="1595905971891">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="425" y="244" key="refactoring.ChangeSignatureDialog/0.23.1440.877@0.23.1440.877" timestamp="1595905971891" />
   </component>
 </project>
