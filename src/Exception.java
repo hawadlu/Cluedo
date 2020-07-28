@@ -8,8 +8,8 @@ class InvalidActionException extends Throwable {
     }
 }
 
-class InvalidCardExcdption extends Throwable {
-    InvalidCardExcdption(String specifics) {
+class InvalidCardException extends Throwable {
+    InvalidCardException(String specifics) {
         System.out.println("Card is invalid: " + specifics);
     }
 }
@@ -23,5 +23,11 @@ class InvalidRoomException extends Throwable {
 class InvalidWeaponException extends Throwable {
     InvalidWeaponException(String specifics) {
         System.out.println("Weapon is invalid: " + specifics);
+    }
+}
+
+class InvalidPlayerException extends Throwable {
+    InvalidPlayerException(String specifics) {
+        System.out.println("Player is invalid: " + specifics);
     }
 }

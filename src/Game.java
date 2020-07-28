@@ -1,10 +1,9 @@
+import javafx.geometry.Pos;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Overall class to run game
@@ -13,7 +12,9 @@ import java.util.Scanner;
  * -Checks if game is finished
  */
 public class Game {
-    ArrayList<Card> accuseList;
+    public static Players accusePlayer;
+    public static Rooms accuseRoom;
+    public static Weapons accuseWeapon;
 
     public enum Players {
         SCARLET,
@@ -103,11 +104,21 @@ public class Game {
      */
     public ArrayList<Player> createPlayers(int numPlayers, Scanner input) {
         ArrayList<Player> players = new ArrayList<>();
+        ArrayList<Players> availablePlayers = new ArrayList<>(Arrays.asList(Players.values()));
         for (int i = 0; i < numPlayers; i++) {
-            Players player = chooseFromArray(Players.values(), "Player "+i+" choose your character:", input);
-            //players.add(new Player());
+            Players player = chooseFromArray(availablePlayers.toArray(new Players[]{}), "Player "+(i+1)+" choose your character:", input);
+            availablePlayers.remove(player);
+
+            try {
+                Position startPos = getStartingPosition(player);
+                players.add(new Player(player, startPos));
+            }
+            catch (InvalidPlayerException e) {
+                System.out.println(e.toString());
+                i--;
+            }
         }
-        return null;
+        return players;
     }
 
     /**
@@ -138,7 +149,23 @@ public class Game {
         return options[index-1];
     }
 
-
+    /**
+     * Gets the default starting position of a player
+     * @param player the player enum to find the position of
+     * @return a position object, containing the starting position coordinates
+     * @throws InvalidPlayerException if the provided player does not have a starting position
+     */
+    public Position getStartingPosition(Players player) throws InvalidPlayerException {
+        switch (player) {
+            case WHITE: return new Position(9, 0);
+            case GREEN: return new Position(14, 0);
+            case PEACOCK: return new Position(23, 6);
+            case PLUM: return new Position(23, 19);
+            case SCARLET: return new Position(7, 24);
+            case MUSTARD: return new Position(0, 17);
+        }
+        throw new InvalidPlayerException(player.toString());
+    }
 
     /**
      * Play the game
@@ -171,11 +198,10 @@ public class Game {
         Collections.shuffle(roomCards);
 
         //Add to accuse
-        accuseList = new ArrayList<>();
-        accuseList.add(playerCards.get(0));     playerCards.remove(0);
-        accuseList.add(roomCards.get(0));       roomCards.remove(0);
-        accuseList.add(weaponCards.get(0));     weaponCards.remove(0);
-        System.out.println("Accuse List:"+ accuseList.toString());
+        accusePlayer = playerCards.get(0).getPlayer();     playerCards.remove(0);
+        accuseRoom = roomCards.get(0).getRoom();       roomCards.remove(0);
+        accuseWeapon = weaponCards.get(0).getWeapon();     weaponCards.remove(0);
+        System.out.println("Accuse List:"+ accusePlayer.toString()+", "+accuseRoom.toString()+", "+accuseWeapon.toString());
 
         //Add rest to big list
         ArrayList<Card> remainingCards = new ArrayList<>();

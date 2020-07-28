@@ -9,7 +9,7 @@ public class PlayerCard extends Card {
         this.name = name;
     }
 
-    public String getName(){ return name.toString();}
+    public Game.Players getPlayer(){ return name;}
 
     @Override
     public String toString() {

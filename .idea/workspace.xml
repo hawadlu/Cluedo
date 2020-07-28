@@ -1,10 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
+<<<<<<< Updated upstream
     <list default="true" id="f6e4cae5-3bd8-430d-894d-961427ebb47d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Action.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Action.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Move.java" afterDir="false" />
+=======
+    <list default="true" id="a07a04af-64aa-4d43-9f1a-b18c1fc47f2b" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Cluedo.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Cluedo.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player.java" afterDir="false" />
+>>>>>>> Stashed changes
+=======
+    <list default="true" id="e3f4a33a-b123-4f49-b82b-f6e4c19deb07" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Accuse.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Accuse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Action.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Action.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Board.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Card.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Card.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Error.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Game$Players.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Game$Players.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Game$rooms.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Game$weapons.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/InvalidActionException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/InvalidActionException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/InvalidCardExcdption.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/InvalidRoomException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/InvalidRoomException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/InvalidWeaponException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/InvalidWeaponException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Move.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Move.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Player.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/PlayerCard.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/PlayerCard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Position.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Position.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Room.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Room.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/RoomCard.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/RoomCard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Suggest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Suggest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Tile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/WeaponCard.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/WeaponCard.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Accuse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Accuse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Exception.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Exception.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Suggest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Suggest.java" afterDir="false" />
+>>>>>>> master
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,9 +81,27 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+<<<<<<< Updated upstream
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
+=======
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.0" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+>>>>>>> Stashed changes
   </component>
   <component name="RunManager" selected="JUnit.Tests">
     <configuration name="Cluedo" type="Application" factoryName="Application">
@@ -80,25 +138,41 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1595895783825</updated>
-      <workItem from="1595895790783" duration="7207000" />
+      <workItem from="1595895790783" duration="10480000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="2" />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="WindowStateProjectService">
-    <state x="275" y="22" key="#Project_Structure" timestamp="1595899808565">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="249" y="0" key="#Project_Structure" timestamp="1595906357269">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="275" y="22" key="#Project_Structure/0.0.1366.728@0.0.1366.728" timestamp="1595899808565" />
-    <state x="209" y="94" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1595906537601">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state x="249" y="0" key="#Project_Structure/0.0.1536.824@0.0.1536.824" timestamp="1595906357269" />
+    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1595895816729">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1595895816729" />
-    <state x="209" y="94" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.23.1440.877@0.23.1440.877" timestamp="1595906537601" />
-    <state x="533" y="175" key="#com.intellij.ide.util.MemberChooser" timestamp="1595904511066">
-      <screen x="0" y="23" width="1440" height="877" />
+    <state x="574" y="118" key="#com.intellij.ide.util.MemberChooser" timestamp="1595906206755">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="574" y="118" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1595906206755" />
+    <state x="498" y="202" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1595895813437">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="533" y="175" key="#com.intellij.ide.util.MemberChooser/0.23.1440.877@0.23.1440.877" timestamp="1595904511066" />
     <state x="467" y="238" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1595906536046">
@@ -113,20 +187,17 @@
     <state width="1323" height="179" key="GridCell.Tab.0.bottom" timestamp="1595899713409">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="179" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1595899713409" />
-    <state width="1493" height="172" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1595895878057" />
-    <state width="1323" height="179" key="GridCell.Tab.0.center" timestamp="1595899713409">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state width="1493" height="194" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1595906597973" />
+    <state width="1493" height="194" key="GridCell.Tab.0.left" timestamp="1595906597973">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1323" height="179" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1595899713409" />
-    <state width="1493" height="172" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1595895878057" />
-    <state width="1323" height="179" key="GridCell.Tab.0.left" timestamp="1595899713408">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state width="1493" height="194" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1595906597973" />
+    <state width="1493" height="194" key="GridCell.Tab.0.right" timestamp="1595906597973">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1323" height="179" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1595899713408" />
-    <state width="1493" height="172" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1595895878056" />
-    <state width="1323" height="179" key="GridCell.Tab.0.right" timestamp="1595899713409">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state width="1493" height="194" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1595906597973" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1595901108750">
+      <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state width="1323" height="179" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1595899713409" />
     <state width="1493" height="172" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1595895878057" />
