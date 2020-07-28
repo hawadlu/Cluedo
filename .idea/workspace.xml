@@ -128,6 +128,10 @@
     <state x="498" y="202" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1595895813437">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
+    <state x="533" y="175" key="#com.intellij.ide.util.MemberChooser/0.23.1440.877@0.23.1440.877" timestamp="1595904511066" />
+    <state x="467" y="238" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1595906536046">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
     <state x="498" y="202" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1536.824@0.0.1536.824" timestamp="1595895813437" />
     <state width="1493" height="194" key="GridCell.Tab.0.bottom" timestamp="1595906597974">
       <screen x="0" y="0" width="1536" height="824" />
@@ -148,6 +152,19 @@
     <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1595901108750">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1595901108750" />
+    <state width="1323" height="179" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1595899713409" />
+    <state width="1493" height="172" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1595895878057" />
+    <state x="208" y="43" key="SettingsEditor" timestamp="1595906350332">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="208" y="43" key="SettingsEditor/0.23.1440.877@0.23.1440.877" timestamp="1595906350332" />
+    <state x="417" y="361" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD" timestamp="1595906442240">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="417" y="361" key="com.intellij.jarRepository.RepositoryAttachDialog-DOWNLOAD/0.23.1440.877@0.23.1440.877" timestamp="1595906442240" />
+    <state x="425" y="244" key="refactoring.ChangeSignatureDialog" timestamp="1595905971891">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="425" y="244" key="refactoring.ChangeSignatureDialog/0.23.1440.877@0.23.1440.877" timestamp="1595905971891" />
   </component>
 </project>
