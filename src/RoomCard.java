@@ -1,14 +1,14 @@
 public class RoomCard extends Card {
-    Game.Rooms roomName;
-    public String name;
+    Game.Rooms name;
 
-    public String getName(){
-        return name;
+    RoomCard(Game.Rooms name) {
+        this.name = name;
     }
 
-    //TO-DO
+    public String getName(){ return name.toString();}
+
     @Override
-    public String toString(){
-        return "";
+    public String toString() {
+        return name.toString().substring(0, 2);
     }
 }
