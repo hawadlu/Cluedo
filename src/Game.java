@@ -13,7 +13,9 @@ import java.util.Scanner;
  * -Checks if game is finished
  */
 public class Game {
-    ArrayList<Card> accuseList;
+    public static Players accusePlayer;
+    public static Rooms accuseRoom;
+    public static Weapons accuseWeapon;
 
     public enum Players {
         SCARLET,
@@ -171,11 +173,10 @@ public class Game {
         Collections.shuffle(roomCards);
 
         //Add to accuse
-        accuseList = new ArrayList<>();
-        accuseList.add(playerCards.get(0));     playerCards.remove(0);
-        accuseList.add(roomCards.get(0));       roomCards.remove(0);
-        accuseList.add(weaponCards.get(0));     weaponCards.remove(0);
-        System.out.println("Accuse List:"+ accuseList.toString());
+        accusePlayer = playerCards.get(0).getPlayer();     playerCards.remove(0);
+        accuseRoom = roomCards.get(0).getRoom();       roomCards.remove(0);
+        accuseWeapon = weaponCards.get(0).getWeapon();     weaponCards.remove(0);
+        System.out.println("Accuse List:"+ accusePlayer.toString()+", "+accuseRoom.toString()+", "+accuseWeapon.toString());
 
         //Add rest to big list
         ArrayList<Card> remainingCards = new ArrayList<>();

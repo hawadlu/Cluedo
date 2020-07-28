@@ -12,20 +12,12 @@ public class Player {
     Position newPos;
     Position oldPos;
 
-<<<<<<< Updated upstream
-    Player(Game.Players name, Position pos) {
-        this.name = name;
-        hand = new ArrayList<>();
-        hasLost = false;
-        position = pos;
-=======
     Player(Game.Players name, Position startPos) {
         this.name = name;
         hand = new ArrayList<>();
         hasLost = false;
         newPos = startPos;
         oldPos = startPos;
->>>>>>> Stashed changes
     }
 
     public void addToHand(Card card){
@@ -41,11 +33,8 @@ public class Player {
 
         //If they have been moved to a room, Player chooses if they want to move again
         if(oldPos != newPos){
-            String response = "";
-            System.out.println("Do you want to move?\nType '1' for yes or '2' for no");
-            while(!response.equals("1") && !response.equals("2")) {
-                response = new Scanner(System.in).nextLine();
-            }
+            String response = Game.chooseFromArray(new String[]{"Yes", "No"},
+                    "Would you like to move?.\n", new Scanner(System.in));
             if(response.equals("2")){ willMove = false; }
         }
 
@@ -68,16 +57,29 @@ public class Player {
             }
         }
 
-        //Checking if
-        System.out.println("Would you like to accuse or suggest?\n" +
-                "Please type '1' for accuse or '2' for suggest.");
-        String response = "";
-        while(!response.equals("1") && !response.equals("2")) {
-            response = new Scanner(System.in).nextLine();
-        }
+        //Checking if suggest or accuse
+        String action = Game.chooseFromArray(new String[]{"Suggest", "Accuse"},
+                "Would you like to Accuse or Suggest?.\n", new Scanner(System.in));
 
-        if(response.equals("1")){
+        //Getting weapon, room, player
+        Game.Players player = Game.chooseFromArray(Game.Players.values(),
+                "Please choose a Weapon.\n", new Scanner(System.in));
+        Game.Weapons weapon = Game.chooseFromArray(Game.Weapons.values(),
+                "Please choose a Weapon.\n", new Scanner(System.in));
+        Game.Rooms room = Game.chooseFromArray(Game.Rooms.values(),
+                "Please choose a Weapon.\n", new Scanner(System.in));
 
+        //Accuse / Suggest
+        if(action.equals("Accuse")){
+            boolean hasAccused = false;
+            while(!hasAccused){
+                hasAccused = new Accuse(room, player, weapon, this);
+            }
+        }else{
+            boolean hasSuggested = false;
+            while(!hasSuggested){
+                hasSuggested = new Suggest(room, player, weapon, this);
+            }
         }
     }
 

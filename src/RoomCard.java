@@ -5,7 +5,7 @@ public class RoomCard extends Card {
         this.name = name;
     }
 
-    public String getName(){ return name.toString();}
+    public Game.Rooms getRoom(){ return name;}
 
     @Override
     public String toString() {

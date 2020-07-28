@@ -5,7 +5,7 @@ public class WeaponCard extends Card {
         this.name = name;
     }
 
-    public String getName(){ return name.toString();}
+    public Game.Weapons getWeapon(){ return name;}
 
     @Override
     public String toString() {
