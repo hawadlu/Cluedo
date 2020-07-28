@@ -6,7 +6,15 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * Overall class to run game
+ * -Initializes players, card and board
+ * -Loops through players to run game
+ * -Checks if game is finished
+ */
 public class Game {
+    int numPlayers;
+    ArrayList<Card> accuseList;
 
     public enum Players {
         SCARLET,
@@ -115,7 +123,6 @@ public class Game {
      * Creates cards, shuffles, removes 3 for accuse
      *
      * TO-DO: Add rest into players hands.
-     *        Add to board class?
      */
     public void shuffle(){
         //Create ArrayLists of each card type
@@ -133,11 +140,11 @@ public class Game {
         Collections.shuffle(roomCards);
 
         //Add to accuse
-        ArrayList<Card> accuse = new ArrayList<>();
-        accuse.add(playerCards.get(0));     playerCards.remove(0);
-        accuse.add(roomCards.get(0));       roomCards.remove(0);
-        accuse.add(weaponCards.get(0));     weaponCards.remove(0);
-        System.out.println("Accuse List:"+ accuse.toString());
+        accuseList = new ArrayList<>();
+        accuseList.add(playerCards.get(0));     playerCards.remove(0);
+        accuseList.add(roomCards.get(0));       roomCards.remove(0);
+        accuseList.add(weaponCards.get(0));     weaponCards.remove(0);
+        System.out.println("Accuse List:"+ accuseList.toString());
 
         //Add rest to big list
         ArrayList<Card> remainingCards = new ArrayList<>();
@@ -146,6 +153,18 @@ public class Game {
         remainingCards.addAll(weaponCards);
         System.out.println("Remaining cards: "+remainingCards.size());
 
+        //Divide Among players
+        int currentPlayer = 0;
+        for(Card c : remainingCards){
+            players.get(currentPlayer).addToHand(c);
+            currentPlayer ++;
+            currentPlayer %= numPlayers;
+        }
+
+        System.out.println("Each Players Cards: ");
+        for(Player p : players){
+            System.out.println(p.toString() + ": "+p.getHand().toString());
+        }
     }
 
     public static void main(String[] args) throws FileNotFoundException {

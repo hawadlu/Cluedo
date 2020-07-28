@@ -1,3 +1,7 @@
+/**
+ * Records the Players position
+ *  - Use with 2d array?
+ */
 public class Position {
     int x, y;
 
