@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e3f4a33a-b123-4f49-b82b-f6e4c19deb07" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,6 +31,9 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.side.proportion" value="0.2" />
   </component>
   <component name="RunManager">
     <configuration name="Cluedo" type="Application" factoryName="Application">
@@ -48,7 +54,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1595895783825</updated>
-      <workItem from="1595895790783" duration="3216000" />
+      <workItem from="1595895790783" duration="7207000" />
     </task>
     <servers />
   </component>
@@ -56,6 +62,10 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
+    <state x="249" y="0" key="#Project_Structure" timestamp="1595899917108">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="249" y="0" key="#Project_Structure/0.0.1536.824@0.0.1536.824" timestamp="1595899917108" />
     <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1595895816729">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
@@ -64,21 +74,25 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="498" y="202" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1536.824@0.0.1536.824" timestamp="1595895813437" />
-    <state width="1493" height="172" key="GridCell.Tab.0.bottom" timestamp="1595895878057">
+    <state width="1493" height="172" key="GridCell.Tab.0.bottom" timestamp="1595899566242">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="172" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1595895878057" />
-    <state width="1493" height="172" key="GridCell.Tab.0.center" timestamp="1595895878057">
+    <state width="1493" height="172" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1595899566242" />
+    <state width="1493" height="172" key="GridCell.Tab.0.center" timestamp="1595899566242">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="172" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1595895878057" />
-    <state width="1493" height="172" key="GridCell.Tab.0.left" timestamp="1595895878056">
+    <state width="1493" height="172" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1595899566242" />
+    <state width="1493" height="172" key="GridCell.Tab.0.left" timestamp="1595899566242">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="172" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1595895878056" />
-    <state width="1493" height="172" key="GridCell.Tab.0.right" timestamp="1595895878057">
+    <state width="1493" height="172" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1595899566242" />
+    <state width="1493" height="172" key="GridCell.Tab.0.right" timestamp="1595899566242">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="172" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1595895878057" />
+    <state width="1493" height="172" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1595899566242" />
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup" timestamp="1595901108750">
+      <screen x="0" y="0" width="1536" height="824" />
+    </state>
+    <state x="431" y="145" width="672" height="678" key="search.everywhere.popup/0.0.1536.824@0.0.1536.824" timestamp="1595901108750" />
   </component>
 </project>
