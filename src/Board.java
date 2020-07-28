@@ -93,7 +93,7 @@ public class Board {
      * @param currentY the y pos
      * @return boolean indicating valid/invalid.
      */
-    public boolean isValidPosition(int currentX, int currentY) {
+    public boolean isValidPosition(Position currentX, Position currentY) {
         return true; //todo implement me
     }
 }

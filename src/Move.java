@@ -1,3 +1,5 @@
+import javafx.geometry.Pos;
+
 /**
  * Checks where are valid moves to make?
  */
@@ -45,26 +47,29 @@ public class Move implements Action {
      * @return
      */
     private boolean validateMoves() {
-        int currentX = player.position.x;
-        int currentY = player.position.y;
+        Position current = player.position;
+        Position prev = player.position;
 
         for (String action: actions) {
             if (action.equals("l")){
                 //move left
-                currentX -= 1;
-                if (!board.isValidPosition(currentX, currentY)) return false;
+                current.x -= 1;
+                if (!board.isValidPosition(current, prev)) return false;
+                prev = current;
             } else if (action.equals("r")) {
                 //move right
-                currentX += 1;
-                if (!board.isValidPosition(currentX, currentY)) return false;
+                current.x += 1;
+                if (!board.isValidPosition(current, prev)) return false;
             } else if (action.equals("u")) {
                 //move up
-                currentY -= 1;
-                if (!board.isValidPosition(currentX, currentY)) return false;
+                current.y -= 1;
+                if (!board.isValidPosition(current, prev)) return false;
+                prev = current;
             } else if (action.equals("d")) {
                 //move down
-                currentY += 1;
-                if (!board.isValidPosition(currentX, currentY)) return false;
+                current.y += 1;
+                if (!board.isValidPosition(current, prev)) return false;
+                prev = current;
             }
             else return false;
         }
