@@ -4,5 +4,9 @@
  *  -Check if user has correct guess
  *  -End game if correct, current player loses if incorrect
  */
-public class Accuse extends Action {
+public class Accuse implements Action {
+    @Override
+    public void performAction(Player player, String action) {
+
+    }
 }
