@@ -1,7 +1,3 @@
- */
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-
 /**
  * Construct a board of positions
  * -Draws board for user
@@ -9,6 +5,6 @@ import java.util.ArrayList;
  */
 public class Board {
 
-   Tile[][] baord;
+   Tile[][] board;
 
 }
