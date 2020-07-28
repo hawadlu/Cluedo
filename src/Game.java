@@ -124,7 +124,7 @@ public class Game {
      *
      * TO-DO: Add rest into players hands.
      */
-    public void shuffle(){
+    public void shuffle(List<Player> players, int numPlayers){
         //Create ArrayLists of each card type
         ArrayList<Card> playerCards = new ArrayList<>();
         ArrayList<Card> weaponCards = new ArrayList<>();

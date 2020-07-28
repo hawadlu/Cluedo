@@ -2,36 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e3f4a33a-b123-4f49-b82b-f6e4c19deb07" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/luke.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Instructions.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Instructions.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Cluedo.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Cluedo.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Accuse.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Accuse.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Action.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Action.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Board.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Card.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Card.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Game$Players.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Game$Players.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Game$rooms.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Game$rooms.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Game$weapons.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Game$weapons.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Game.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/InvalidActionException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/InvalidActionException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/InvalidCardExcdption.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/InvalidCardExcdption.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/InvalidRoomException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/InvalidRoomException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/InvalidWeaponException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/InvalidWeaponException.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/META-INF/Cluedo.kotlin_module" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Move.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Move.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Player.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/PlayerCard.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/PlayerCard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Room.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Room.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/RoomCard$roomChar.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/RoomCard.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/RoomCard.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Suggest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Suggest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/WeaponCard.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/WeaponCard.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -78,7 +48,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1595895783825</updated>
-      <workItem from="1595895790783" duration="2785000" />
+      <workItem from="1595895790783" duration="3216000" />
     </task>
     <servers />
   </component>
