@@ -1,4 +1,3 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -11,11 +10,11 @@ public class Player {
     boolean hasLost;
     Position position;
 
-    Player(Game.Players name) {
+    Player(Game.Players name, Position pos) {
         this.name = name;
         hand = new ArrayList<>();
         hasLost = false;
-        //position = pos;
+        position = pos;
     }
 
     public void addToHand(Card card){
