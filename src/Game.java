@@ -13,7 +13,6 @@ import java.util.Scanner;
  * -Checks if game is finished
  */
 public class Game {
-    int numPlayers;
     ArrayList<Card> accuseList;
 
     public enum Players {
@@ -93,21 +92,53 @@ public class Game {
             num = inputStr.nextInt();
         }
 
-        return inputStr.nextInt();
+        return num;
     }
 
     /**
      * Create the players that will be playing the game
      * @param numPlayers the number of players that will be playing the game
+     * @param input the scanner that is scanning the input stream
      * @return an arraylist of players
      */
-    public ArrayList<Player> createPlayers(int numPlayers) {
+    public ArrayList<Player> createPlayers(int numPlayers, Scanner input) {
         ArrayList<Player> players = new ArrayList<>();
         for (int i = 0; i < numPlayers; i++) {
+            Players player = chooseFromArray(Players.values(), "Player "+i+" choose your character:", input);
             //players.add(new Player());
         }
         return null;
     }
+
+    /**
+     * Get the user to choose an option from an array of options of a given type
+     * @param options the array of options
+     * @param text the text at the top of the list of options, e.g. "Choose a weapon:"
+     * @param input the scanner that is scanning the input stream
+     * @param <T> the type of the individual options
+     * @return the option that was chosen
+     */
+    public static <T> T chooseFromArray(T[] options, String text, Scanner input) {
+        System.out.println(text+" (Enter a number 1-"+options.length+")");
+        for (int i = 0; i < options.length; i++) {
+            System.out.println(i+1 + ". "+options[i]);
+        }
+
+        Scanner inputStr = new Scanner(input.nextLine());
+        int index = 0;
+
+        while (index < 1 || index > options.length) {
+            while (!inputStr.hasNextInt()) {
+                System.out.println("Please enter a number 1-"+options.length);
+                inputStr = new Scanner(input.nextLine());
+            }
+            index = inputStr.nextInt();
+        }
+
+        return options[index-1];
+    }
+
+
 
     /**
      * Play the game
@@ -115,7 +146,7 @@ public class Game {
     public void playGame() {
         Scanner input = new Scanner(System.in);
         int numPlayers = getNumPlayers(input);
-        List<Player> players = createPlayers(numPlayers);
+        List<Player> players = createPlayers(numPlayers, input);
 
     }
 
