@@ -1,5 +1,3 @@
-import javafx.geometry.Pos;
-
 /**
  * Checks where are valid moves to make?
  */
@@ -31,10 +29,10 @@ public class Move implements Action {
         if (!validateMoves()) return false;
 
         for (String action: actions) {
-            if (action.equals("l")) player.position.x -= 1; //move left
-            else if (action.equals("r")) player.position.x += 1; //move right
-            else if (action.equals("u")) player.position.y -= 1; //move up
-            else if (action.equals("d")) player.position.y += 1; //move down
+            if (action.equals("l")) player.newPos.x -= 1; //move left
+            else if (action.equals("r")) player.newPos.x += 1; //move right
+            else if (action.equals("u")) player.newPos.y -= 1; //move up
+            else if (action.equals("d")) player.newPos.y += 1; //move down
             else return false;
         }
 
@@ -47,28 +45,29 @@ public class Move implements Action {
      * @return
      */
     private boolean validateMoves() {
-        Position current = player.position;
-        Position prev = player.position;
+        //todo might need to change this?
+        Position current = player.newPos;
+        Position prev = player.newPos;
 
         for (String action: actions) {
             if (action.equals("l")){
                 //move left
                 current.x -= 1;
-                if (!board.isValidPosition(current, prev)) return false;
+                if (!board.isValidMove(current, prev)) return false;
                 prev = current;
             } else if (action.equals("r")) {
                 //move right
                 current.x += 1;
-                if (!board.isValidPosition(current, prev)) return false;
+                if (!board.isValidMove(current, prev)) return false;
             } else if (action.equals("u")) {
                 //move up
                 current.y -= 1;
-                if (!board.isValidPosition(current, prev)) return false;
+                if (!board.isValidMove(current, prev)) return false;
                 prev = current;
             } else if (action.equals("d")) {
                 //move down
                 current.y += 1;
-                if (!board.isValidPosition(current, prev)) return false;
+                if (!board.isValidMove(current, prev)) return false;
                 prev = current;
             }
             else return false;
