@@ -1,14 +1,20 @@
 public class Tile {
-    String room=null;
+    Room room=null;
+    String roomName=null;
     Player player=null;
     Boolean door=false;
     String doorRoom=null;
 
-    public void setRoom(String roomName){
-        room=roomName;
+    public void setRoom(Room r){
+        room=r;
+    }
+
+    public void setRoomName(String roomName){
+        this.roomName=roomName;
     }
     public void setDoor(boolean bool){
         door=bool;
+        room.addDoor(this);
     }
 
     public boolean isRoom(){
@@ -20,5 +26,32 @@ public class Tile {
 
     public boolean isDoor(){
         return door;
+    }
+
+    public void setPlayer(Player p){
+        player = p;
+    }
+
+    /**puts player on tile
+     *
+     * @param p
+     */
+    public void addPlayer(Player p){
+        if(room==null) {
+            player = p;
+        }else{
+            room.addPlayer(p);
+        }
+    }
+
+    /**removes player form tile
+     *
+     * @param p
+     */
+    public void removePlayer(Player p){
+        player = null;
+        if(room!=null) {
+            room.removePlayer(p);
+        }
     }
 }
