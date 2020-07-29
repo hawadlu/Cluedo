@@ -54,4 +54,10 @@ public class Tile {
             room.removePlayer(p);
         }
     }
+
+    //todo implement this properly.
+    @Override
+    public String toString() {
+        return "T";
+    }
 }
