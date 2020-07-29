@@ -1,5 +1,3 @@
-import javafx.geometry.Pos;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Array;
