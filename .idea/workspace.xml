@@ -3,6 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="282160f1-3723-4af6-8078-72a0a8f707c3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Board.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Game.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Move.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -74,7 +78,7 @@
       <updated>1595805280682</updated>
       <workItem from="1595805379816" duration="1092000" />
       <workItem from="1596070840523" duration="369000" />
-      <workItem from="1596071699703" duration="6751000" />
+      <workItem from="1596071699703" duration="11184000" />
     </task>
     <servers />
   </component>

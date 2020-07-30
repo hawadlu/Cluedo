@@ -154,7 +154,7 @@ public class Board {
      */
     public boolean isValidMove(Position current, Position next) {
        //checks if the next position is outside of the board
-       if(next.x<0||next.x<23||next.y<0||next.y>24){
+       if(next.x<0||next.x>23||next.y<0||next.y>24){
           return false;
        }
 
@@ -164,12 +164,12 @@ public class Board {
        }
 
        //checks non room to non room move
-       if(!board[current.y][current.x].isRoom()&&!board[next.y][next.y].isRoom()){
+       if(!board[current.y][current.x].isRoom()&&!board[next.y][next.x].isRoom()){
           return true;
        }
 
        //checks non room to room move
-       if(!board[current.y][current.x].isRoom()&&board[next.y][next.y].isRoom()){
+       if(!board[current.y][current.x].isRoom()&&board[next.y][next.x].isRoom()){
           if(board[current.y][current.x].isDoor()){
              //checks player can use door to enter the room
              if(board[current.y][current.x].doorRoom.equals(board[next.y][next.x].room)||board[current.y][current.x].doorRoom==null){
@@ -179,7 +179,7 @@ public class Board {
        }
 
        //checks room to non room move
-       if(board[current.y][current.x].isRoom()&&!board[next.y][next.y].isRoom()){
+       if(board[current.y][current.x].isRoom()&&!board[next.y][next.x].isRoom()){
           if(board[next.y][next.x].isDoor()) {
              if(board[next.y][next.x].doorRoom.equals(board[current.y][current.x].room)||board[next.y][next.x].doorRoom==null){
                 return true;

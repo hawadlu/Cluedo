@@ -23,17 +23,17 @@ public class Move implements Action {
     @Override
     public boolean apply() throws InvalidActionException {
         //Check to see if the player is trying to move more than their dice roll
-        if (actions.length != diceRoll) throw new InvalidActionException("Invalid number of moves");
+        if (actions.length > diceRoll) throw new InvalidActionException("Invalid number of moves");
 
         //Validate the moves
-        if (!validateMoves()) return false;
+        if (!validateMoves()) {System.out.println("IM A BUGGEER"); return false;}
 
         for (String action: actions) {
             if (action.equals("l")){ player.newPos.x -= 1; player.oldPos.x -= 1; }//move left
             else if (action.equals("r")){ player.newPos.x += 1; player.oldPos.x += 1; } //move right
             else if (action.equals("u")){ player.newPos.y -= 1; player.oldPos.y -= 1; }//move up
             else if (action.equals("d")){ player.newPos.y += 1; player.oldPos.y += 1; }//move down
-            else return false;
+            else{ System.out.println("IM A BIGGER BUGGEER");return false;}
         }
 
         //Indicate if the move worked
@@ -45,7 +45,7 @@ public class Move implements Action {
      * @return
      */
     private boolean validateMoves() {
-        //todo might need to change this?
+        //todo might need to change this? yes
         Position current = player.newPos;
         Position prev = player.newPos;
 
