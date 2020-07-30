@@ -12,6 +12,8 @@ public class Player {
     boolean hasLost;
     Position newPos;
     Position oldPos;
+    Game.Rooms lastRoom;
+
 
     Player(Game.Players name, Position startPos) {
         this.name = name;
@@ -19,6 +21,7 @@ public class Player {
         hasLost = false;
         newPos = startPos;
         oldPos = new Position(startPos);
+        lastRoom = null;
     }
 
     /**
@@ -55,7 +58,7 @@ public class Player {
     public void takeTurn(Board board, List<Player> allPlayers) {
         boolean willMove = true;
         //If they have been moved to a room, Player chooses if they want to move again
-        if(oldPos != newPos){
+        if(isDiffPos()){
             String response = Game.chooseFromArray(new String[]{"Yes", "No"},
                     "Would you like to move?.\n");
             if(response.equals("No")){ willMove = false; }
@@ -73,12 +76,17 @@ public class Player {
                 System.out.println("old - "+oldPos);
                 System.out.println(newPos);
             }
-            oldPos = new Position(newPos);
         }
 
         //Checking if suggest or accuse
-        String action = Game.chooseFromArray(new String[]{"Suggest", "Accuse"},
-                "Would you like to Accuse or Suggest?.\n");
+        String action = "";
+        if(isDiffPos() && Game.Rooms.valueOf(board.board[newPos.y][newPos.x].room.name) != lastRoom) {
+            action = Game.chooseFromArray(new String[]{"Suggest", "Accuse"},
+                    "Would you like to Accuse or Suggest?.\n");
+        }else{
+            action = Game.chooseFromArray(new String[]{"Accuse", "Don't accuse"},
+                    "Would you like to Accuse?.\n");
+        }
 
         //Getting player and weapon
         Game.Players player = Game.chooseFromArray(Game.Players.values(),
@@ -91,10 +99,12 @@ public class Player {
             Game.Rooms room = Game.chooseFromArray(Game.Rooms.values(),
                     "Please choose a Weapon.\n");
             makeAccuse(room, player, weapon);
-        }else{
+        }else if(action.equals("Suggest")){
             Game.Rooms room = Game.Rooms.valueOf(board.board[newPos.y][newPos.x].room.name);
+            lastRoom = room;
             makeSuggest(room, player, weapon, allPlayers);
         }
+        oldPos = new Position(newPos);
     }
 
     public int makeMove(int numMove, Board board){
@@ -132,6 +142,11 @@ public class Player {
         while(!hasAccused){
             hasAccused = new Accuse(room, player, weapon, this).apply();
         }
+    }
+
+    public boolean isDiffPos(){
+        if(oldPos.x != newPos.x && oldPos.y != newPos.y){ return true; }
+        return false;
     }
 
     /**
