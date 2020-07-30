@@ -47,7 +47,7 @@ public class Player {
             System.out.println("Please type a valid number of moves. \n" +
                     "'L' for Left, 'R' for Right, 'U' for Up and 'D' for Down");
             while(response.length() != numMove) {
-                response = new Scanner(System.in).nextLine();
+                response = new Scanner(System.in).nextLine().toLowerCase();
             }
 
             //Creating new move
@@ -65,11 +65,11 @@ public class Player {
         Game.Players player = Game.chooseFromArray(Game.Players.values(),
                 "Please choose a Person:\n");
         Game.Weapons weapon = Game.chooseFromArray(Game.Weapons.values(),
-                "Please choose a Weapon.\n", new Scanner(System.in));
+                "Please choose a Weapon.\n");
         Game.Rooms room;
         if(action.equals("Accuse")) {
             room = Game.chooseFromArray(Game.Rooms.values(),
-                    "Please choose a Weapon.\n", new Scanner(System.in));
+                    "Please choose a Weapon.\n");
         }else {
             room = Game.Rooms.valueOf(board.board[newPos.y][newPos.x].room.name);
         }
