@@ -14,13 +14,18 @@ public class Board {
    HashMap<String, Room> rooms = new HashMap<>();
    Tile[][] board = new Tile[25][24];
 
-   public Board(ArrayList<Player> players){
+   public Board(){
 
       for(int i =0; i< board.length; i++){
          for(int j =0; j< board[i].length; j++){
             board[i][j] = new Tile();
          }
       }
+
+
+
+
+
 
       //sets room tiles
       ArrayList<Tile> Kitchen = new ArrayList<>();
@@ -189,12 +194,37 @@ public class Board {
              if(board[next.y][next.x].doorRoom.equals(board[current.y][current.x].room)||board[next.y][next.x].doorRoom==null){
                 return true;
              }
+          }{
+
           }
        }
 
         return false;
     }
 
+   /**gets Tile from x and y
+    *
+    * @param x
+    * @param y
+    * @return
+    */
+    public Tile getTile(int x, int y){
+       return board[y][x];
+    }
+
+   /**moves player on board
+    *
+    * @param currentPos
+    * @param nextPos
+    */
+    public void movePlayer(Position currentPos, Position nextPos){
+       Tile currentTile = board[currentPos.y][currentPos.x];
+       Tile nextTile = board[nextPos.y][nextPos.x];
+       Player player = currentTile.player;
+       currentTile.removePlayer(player);
+       nextTile.addPlayer(player);
+    }
+    
     //todo implement this properly
    @Override
    public String toString() {
