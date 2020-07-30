@@ -174,6 +174,7 @@ public class Game {
         gameOver = false;
         int numPlayers = getNumPlayers();
         ArrayList<Player> players = createPlayers(numPlayers);
+        ArrayList<Player> lostPlayers = new ArrayList<>();
         dealCards(players, numPlayers);
         board = new Board();
 
@@ -188,11 +189,17 @@ public class Game {
         int currentPlayer = 0;
         while (!gameOver) {
             Player player = players.get(currentPlayer%numPlayers);
+            if(!lostPlayers.contains(player)) {
+                System.out.println(board);
+                System.out.println(player.getName() + "'s Turn");
 
-            System.out.println(board);
-            System.out.println(player.getName() + "'s Turn");
-
-            player.takeTurn(board, players);
+                player.takeTurn(board, players);
+                if (player.hasLost){ lostPlayers.add(player); }
+            }
+            if(lostPlayers.size() == players.size()) {
+                System.out.println("All players have lost game is over.");
+                gameOver = true;
+            }
             currentPlayer++;
         }
     }

@@ -72,10 +72,8 @@ public class Player {
             while(numMove > 0){
                 numMove = makeMove(numMove, board);
                 board.movePlayer(oldPos, newPos);
-                System.out.println(board);
-                System.out.println("old - "+oldPos);
-                System.out.println(newPos);
             }
+            oldPos = newPos;
         }
 
         //Checking if suggest or accuse
@@ -89,10 +87,13 @@ public class Player {
         }
 
         //Getting player and weapon
-        Game.Players player = Game.chooseFromArray(Game.Players.values(),
-                "Please choose a Person:\n");
-        Game.Weapons weapon = Game.chooseFromArray(Game.Weapons.values(),
-                "Please choose a Weapon.\n");
+        Game.Players player = null; Game.Weapons weapon = null;
+        if(action.equals("Accuse") || action.equals("Suggest")) {
+            player = Game.chooseFromArray(Game.Players.values(),
+                    "Please choose a Person:\n");
+            weapon = Game.chooseFromArray(Game.Weapons.values(),
+                    "Please choose a Weapon.\n");
+        }
 
         //Accuse / Suggest & getting room
         if(action.equals("Accuse")){
@@ -104,7 +105,6 @@ public class Player {
             lastRoom = room;
             makeSuggest(room, player, weapon, allPlayers);
         }
-        oldPos = new Position(newPos);
     }
 
     /**
@@ -123,8 +123,7 @@ public class Player {
         while(!hasMoved){
             response = "";
             while(response.length() < 1) {
-                System.out.println("Please type a valid number of moves. \n" +
-                        "'L' for Left, 'R' for Right, 'U' for Up and 'D' for Down");
+                System.out.println("'L' for Left, 'R' for Right, 'U' for Up and 'D' for Down");
                 response = new Scanner(System.in).nextLine().toLowerCase();
             }
             try {
@@ -190,6 +189,8 @@ public class Player {
         return name.toString().substring(0, 2);
     }
     
+
+    public Position getPos(){ return newPos; }
 
     /**
      * Look through this hand for any matches
