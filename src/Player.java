@@ -52,7 +52,7 @@ public class Player {
      * Gets the choice to move if they have been moved to another room
      * Has the choice of suggest / accuse
      */
-    public void takeTurn(Board board, List<Player> allPlayers) throws InvalidActionException {
+    public void takeTurn(Board board, List<Player> allPlayers) {
         boolean willMove = true;
         //If they have been moved to a room, Player chooses if they want to move again
         if(oldPos != newPos){
