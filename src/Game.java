@@ -12,6 +12,7 @@ public class Game {
     public static Players accusePlayer;
     public static Rooms accuseRoom;
     public static Weapons accuseWeapon;
+    public static Scanner input = new Scanner(System.in);
 
     Board gameBoard;
 
@@ -49,18 +50,14 @@ public class Game {
      * Shows the initial instructions.
      * Ask if the user just wants to play or view the instructions
      */
-    public void showInitialInstructions() throws FileNotFoundException {
-        System.out.println("Welcome to Cluedo!\n" +
-                "To view the instructions type 'instructions'\n" +
-                "To play the game type 'play'");
+    public void showMenu() throws FileNotFoundException {
+        String response = chooseFromArray(new String[]{"Instructions", "Play"}, "Welcome to Cluedo!");
 
-        String response = new Scanner(System.in).nextLine();
-
-        if (response.equals("instructions")) showInstructions();
-        else if (response.equals("play")) playGame();
+        if (response.equals("Instructions")) showInstructions();
+        else if (response.equals("Play")) playGame();
         else {
             System.out.println("Invalid response, try again!");
-            showInitialInstructions();
+            showMenu();
         }
     }
 
@@ -71,19 +68,21 @@ public class Game {
         File instructions = new File("Assets/Instructions.txt");
         Scanner scanner = new Scanner(instructions);
         while (scanner.hasNextLine()) System.out.println(scanner.nextLine());
+        System.out.println();
+        showMenu();
     }
 
     /**
      * Get the number of players from the user
      *
-     * @param input the scanner that is scanning the input stream
      * @return the number of players playing the game
      */
-    public int getNumPlayers(Scanner input) {
+    public int getNumPlayers() {
         System.out.println("How many players are playing? (2-6 Players only)");
         Scanner inputStr = new Scanner(input.nextLine());
         int num = 0;
 
+        // Error check input
         while (num < 2 || num > 6) {
             while (!inputStr.hasNextInt()) {
                 System.out.println("Please enter a number 2-6");
@@ -99,16 +98,19 @@ public class Game {
      * Create the players that will be playing the game
      *
      * @param numPlayers the number of players that will be playing the game
-     * @param input the scanner that is scanning the input stream
      * @return an arraylist of players
      */
-    public ArrayList<Player> createPlayers(int numPlayers, Scanner input) {
+    public ArrayList<Player> createPlayers(int numPlayers) {
         ArrayList<Player> players = new ArrayList<>();
+        // Make a list of available players so that chosen players can be removed from the list
         ArrayList<Players> availablePlayers = new ArrayList<>(Arrays.asList(Players.values()));
+
+        // Make player objects for each player that wants to play
         for (int i = 0; i < numPlayers; i++) {
-            Players player = chooseFromArray(availablePlayers.toArray(new Players[]{}), "Player "+(i+1)+" choose your character:", input);
+            Players player = chooseFromArray(availablePlayers.toArray(new Players[]{}), "Player "+(i+1)+" choose your character:");
             availablePlayers.remove(player);
 
+            // Catch choosing a player that doesnt have a starting position set
             try {
                 Position startPos = getStartingPosition(player);
                 players.add(new Player(player, startPos));
@@ -126,19 +128,21 @@ public class Game {
      *
      * @param options the array of options
      * @param text the text at the top of the list of options, e.g. "Choose a weapon:"
-     * @param input the scanner that is scanning the input stream
      * @param <T> the type of the individual options
      * @return the option that was chosen
      */
-    public static <T> T chooseFromArray(T[] options, String text, Scanner input) {
+    public static <T> T chooseFromArray(T[] options, String text) {
+        // Display available options
         System.out.println(text+" (Enter a number 1-"+options.length+")");
         for (int i = 0; i < options.length; i++) {
             System.out.println(i+1 + ". "+options[i]);
         }
 
+        // Get input
         Scanner inputStr = new Scanner(input.nextLine());
         int index = 0;
 
+        // Error check input
         while (index < 1 || index > options.length) {
             while (!inputStr.hasNextInt()) {
                 System.out.println("Please enter a number 1-"+options.length);
@@ -173,9 +177,8 @@ public class Game {
      * Play the game
      */
     public void playGame() {
-        Scanner input = new Scanner(System.in);
-        int numPlayers = getNumPlayers(input);
-        ArrayList<Player> players = createPlayers(numPlayers, input);
+        int numPlayers = getNumPlayers();
+        ArrayList<Player> players = createPlayers(numPlayers);
         dealCards(players, numPlayers);
 
         //Create the board
@@ -241,6 +244,6 @@ public class Game {
 
     public static void main(String[] args) throws FileNotFoundException {
         Game game = new Game();
-        game.showInitialInstructions();
+        game.showMenu();
     }
 }

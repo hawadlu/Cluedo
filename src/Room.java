@@ -4,9 +4,9 @@ import java.util.HashSet;
 public class Room {
     String name;
     ArrayList<Tile> tiles;
-    HashSet<Player> players;
-    ArrayList<Tile> playerSeats;
-    ArrayList<Tile> doors;
+    HashSet<Player> players = new HashSet<>();
+    ArrayList<Tile> playerSeats = new ArrayList<>();
+    ArrayList<Tile> doors = new ArrayList<>();
 
     public Room(ArrayList<Tile> tiles, String name){
         this.name=name;
