@@ -99,6 +99,10 @@ public class Player {
      */
     public ArrayList<Card<?>> getHand(){ return hand; }
 
+    public Game.Players getName() {
+        return name;
+    }
+
     @Override
     public String toString() {
         return name.toString().substring(0, 2);
