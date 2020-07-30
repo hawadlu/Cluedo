@@ -29,10 +29,10 @@ public class Move implements Action {
         if (!validateMoves()) {System.out.println("IM A BUGGEER"); return false;}
 
         for (String action: actions) {
-            if (action.equals("l")){ player.newPos.x -= 1; player.oldPos.x -= 1; }//move left
-            else if (action.equals("r")){ player.newPos.x += 1; player.oldPos.x += 1; } //move right
-            else if (action.equals("u")){ player.newPos.y -= 1; player.oldPos.y -= 1; }//move up
-            else if (action.equals("d")){ player.newPos.y += 1; player.oldPos.y += 1; }//move down
+            if (action.equals("l")){ player.newPos.x -= 1; }//move left
+            else if (action.equals("r")){ player.newPos.x += 1; } //move right
+            else if (action.equals("u")){ player.newPos.y -= 1; }//move up
+            else if (action.equals("d")){ player.newPos.y += 1; }//move down
             else{ System.out.println("IM A BIGGER BUGGEER");return false;}
         }
 

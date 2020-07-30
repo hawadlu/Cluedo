@@ -1,3 +1,5 @@
+import org.junit.internal.InexactComparisonCriteria;
+
 import java.util.*;
 
 /**
@@ -67,6 +69,8 @@ public class Player {
             while(numMove > 0){
                 numMove = makeMove(numMove, board);
             }
+            board.movePlayer(oldPos, newPos);
+            oldPos = newPos;
         }
 
         //Checking if suggest or accuse
