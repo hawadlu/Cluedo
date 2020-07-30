@@ -34,7 +34,7 @@ public class Player {
         //If they have been moved to a room, Player chooses if they want to move again
         if(oldPos != newPos){
             String response = Game.chooseFromArray(new String[]{"Yes", "No"},
-                    "Would you like to move?.\n", new Scanner(System.in));
+                    "Would you like to move?.\n");
             if(response.equals("2")){ willMove = false; }
         }
 
@@ -59,15 +59,15 @@ public class Player {
 
         //Checking if suggest or accuse
         String action = Game.chooseFromArray(new String[]{"Suggest", "Accuse"},
-                "Would you like to Accuse or Suggest?.\n", new Scanner(System.in));
+                "Would you like to Accuse or Suggest?.\n");
 
         //Getting weapon, room, player
         Game.Players player = Game.chooseFromArray(Game.Players.values(),
-                "Please choose a Weapon.\n", new Scanner(System.in));
+                "Please choose a Person:\n");
         Game.Weapons weapon = Game.chooseFromArray(Game.Weapons.values(),
-                "Please choose a Weapon.\n", new Scanner(System.in));
+                "Please choose a Weapon:\n");
         Game.Rooms room = Game.chooseFromArray(Game.Rooms.values(),
-                "Please choose a Weapon.\n", new Scanner(System.in));
+                "Please choose a Room:\n");
 
         //Accuse / Suggest
         if(action.equals("Accuse")){
