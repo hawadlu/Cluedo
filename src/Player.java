@@ -77,6 +77,7 @@ public class Player {
                 board.movePlayer(oldPos, newPos);
                 System.out.println(board);
             }
+            oldPos = new Position(newPos);
         }
 
         //Checking if suggest or accuse
@@ -162,7 +163,7 @@ public class Player {
     /**
      * Make an accusation
      * @param room the room that is being accused
-     * @param player the player that is veing accused
+     * @param player the player that is being accused
      * @param weapon the weapon that is being accused
      */
     public void makeAccuse(Game.Rooms room, Game.Players player, Game.Weapons weapon){
