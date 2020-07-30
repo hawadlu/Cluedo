@@ -185,7 +185,12 @@ public class Board {
              if(board[current.y][current.x].doorRoom.equals(board[next.y][next.x].room)||board[current.y][current.x].doorRoom==null){
                 return true;
              }
-          }else if(board[next.y][next.x].isDoor()) {
+          }
+       }
+
+       //checks room to non room move
+       if(board[current.y][current.x].isRoom()&&!board[next.y][next.x].isRoom()){
+          if(board[next.y][next.x].isDoor()) {
              if(board[next.y][next.x].doorRoom.equals(board[current.y][current.x].room)||board[next.y][next.x].doorRoom==null){
                 return true;
              }
