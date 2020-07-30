@@ -46,29 +46,30 @@ public class Move implements Action {
      */
     private boolean validateMoves() {
         //todo might need to change this? yes
-        Position current = player.newPos;
-        Position prev = player.newPos;
+        Position next = new Position(player.newPos);
+        Position prev = new Position(player.newPos);
 
         for (String action: actions) {
             if (action.equals("l")){
                 //move left
-                current.x -= 1;
-                if (!board.isValidMove(current, prev)) return false;
-                prev = current;
+                next.x -= 1;
+                if (!board.isValidMove(next, prev)) return false;
+                prev = new Position(next);
             } else if (action.equals("r")) {
                 //move right
-                current.x += 1;
-                if (!board.isValidMove(current, prev)) return false;
+                next.x += 1;
+                if (!board.isValidMove(next, prev)) return false;
+                prev = new Position(next);
             } else if (action.equals("u")) {
                 //move up
-                current.y -= 1;
-                if (!board.isValidMove(current, prev)) return false;
-                prev = current;
+                next.y -= 1;
+                if (!board.isValidMove(next, prev)) return false;
+                prev = new Position(next);
             } else if (action.equals("d")) {
                 //move down
-                current.y += 1;
-                if (!board.isValidMove(current, prev)) return false;
-                prev = current;
+                next.y += 1;
+                if (!board.isValidMove(next, prev)) return false;
+                prev = new Position(next);
             }
             else return false;
         }

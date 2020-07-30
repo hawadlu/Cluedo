@@ -240,7 +240,6 @@ public class Board {
             while(line.hasNext()){
                String next = line.next();
                if(next.equals("•")){
-                  System.out.println(posX);
                   toReturn.append(board[posY-1][((posX-1)/3)].toString());
                   line.next();
                   posX++;
