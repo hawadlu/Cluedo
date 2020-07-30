@@ -52,6 +52,9 @@ public class Game {
      * Ask if the user just wants to play or view the instructions
      */
     public void showMenu() throws FileNotFoundException {
+        System.out.println("Note: The board was designed using the 'Consolas' font and may not display properly in other fonts.");
+        System.out.println();
+
         String response = chooseFromArray(new String[]{"Instructions", "Play"}, "Welcome to Cluedo!");
 
         if (response.equals("Instructions")) showInstructions();
