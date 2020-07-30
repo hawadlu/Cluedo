@@ -11,7 +11,7 @@ import java.util.Scanner;
  * -Contains locations of players
  */
 public class Board {
-   HashMap<String, Room> rooms = new HashMap<>();
+   public static HashMap<String, Room> rooms = new HashMap<>();
    Tile[][] board = new Tile[25][24];
 
    public Board(){
@@ -152,7 +152,7 @@ public class Board {
    }
 
     /**
-     * Cheks to see if this move in the board class is valid.
+     * Checks to see if this move in the board class is valid.
      * @param current the x pos
      * @param next the y pos
      * @return boolean indicating valid/invalid.
@@ -177,7 +177,7 @@ public class Board {
        if(!currentTile.isRoom() && nextTile.isRoom()){
           if(currentTile.isDoor()){
              //checks player can use door to enter the room
-             if(currentTile.doorRoom.equals(nextTile.room) || currentTile.doorRoom==null){
+             if(currentTile.doorRoom==null || currentTile.doorRoom.equals(nextTile.room)){
                 return true;
              }
           } return false;
@@ -186,7 +186,7 @@ public class Board {
        //checks room to non room move
        if(currentTile.isRoom() && !nextTile.isRoom()){
           if(nextTile.isDoor()) {
-             if(nextTile.doorRoom.equals(currentTile.room)||nextTile.doorRoom==null){
+             if(nextTile.doorRoom==null || nextTile.doorRoom.equals(currentTile.room)){
                 return true;
              }
           }

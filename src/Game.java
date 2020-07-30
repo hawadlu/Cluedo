@@ -15,7 +15,7 @@ public class Game {
     public static Scanner input = new Scanner(System.in);
     public static boolean gameOver = false;
 
-    Board board;
+    public static Board board;
 
     public enum Players {
         SCARLET,

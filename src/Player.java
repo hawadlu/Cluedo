@@ -123,11 +123,18 @@ public class Player {
         while(!hasMoved){
             response = "";
             while(response.length() < 1) {
-                System.out.println("'L' for Left, 'R' for Right, 'U' for Up and 'D' for Down");
+                System.out.println("'L' for Left, 'R' for Right, 'U' for Up and 'D' for Down, 'S' to show the board");
                 response = new Scanner(System.in).nextLine().toLowerCase();
             }
             try {
-                hasMoved = new Move(board, this, response.split(""), numMove).apply();
+                //show the board if requested
+                if (response.equals("s")) {
+                    System.out.println(board);
+                    return numMove;
+                } else {
+                    //process the requested move
+                    hasMoved = new Move(board, this, response.split(""), numMove).apply();
+                }
             }catch(InvalidMoveException e){ System.out.println("Invalid move, try again."); }
         }
         return numMove-response.length();
@@ -167,7 +174,7 @@ public class Player {
      * @return boolean if player moved
      */
     public boolean isDiffPos(){
-        return oldPos.x != newPos.x && oldPos.y != newPos.y;
+        return !oldPos.equals(newPos);
     }
 
     /**
@@ -188,7 +195,7 @@ public class Player {
     public String toString() {
         return name.toString().substring(0, 2);
     }
-    
+
 
     public Position getPos(){ return newPos; }
 
