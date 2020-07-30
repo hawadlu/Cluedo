@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e92e7495-924a-4ac4-af3e-1f7e572e5a6e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Accuse.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Accuse.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Action.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Action.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Board.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Game.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/InvalidActionException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/InvalidActionException.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/InvalidActionException.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Cluedo/InvalidCardException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/InvalidCardException.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Cluedo/InvalidPlayerException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/InvalidPlayerException.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Cluedo/InvalidRoomException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/InvalidRoomException.class" afterDir="false" />
@@ -15,13 +15,17 @@
       <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Move.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Move.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Player.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Position.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Position.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Room.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Room.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Suggest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Suggest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Tests$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Tests$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Tests.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Tests.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Tile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Action.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Action.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Exception.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Exception.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Move.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Position.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Suggest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Suggest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tile.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tile.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +47,7 @@
     <property name="Repository.Attach.Sources" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -52,7 +57,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Console Font" />
   </component>
@@ -75,7 +80,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1596084496620</updated>
-      <workItem from="1596084503457" duration="2765000" />
+      <workItem from="1596084503457" duration="5685000" />
     </task>
     <servers />
   </component>
@@ -83,38 +88,38 @@
     <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="249" y="0" key="#Project_Structure" timestamp="1596084995626">
+    <state x="249" y="0" key="#Project_Structure" timestamp="1596088942033">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="249" y="0" key="#Project_Structure/0.0.1536.824@0.0.1536.824" timestamp="1596084995626" />
-    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1596084531783">
+    <state x="249" y="0" key="#Project_Structure/0.0.1536.824@0.0.1536.824" timestamp="1596088942033" />
+    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1596089026259">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1596084531783" />
+    <state x="223" y="67" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1536.824@0.0.1536.824" timestamp="1596089026259" />
     <state x="537" y="113" key="#com.intellij.ide.util.MemberChooser" timestamp="1596086674285">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="537" y="113" key="#com.intellij.ide.util.MemberChooser/0.0.1536.824@0.0.1536.824" timestamp="1596086674285" />
-    <state x="498" y="202" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1596084527020">
+    <state x="498" y="202" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1596089024955">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state x="498" y="202" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1536.824@0.0.1536.824" timestamp="1596084527020" />
-    <state width="1493" height="146" key="GridCell.Tab.0.bottom" timestamp="1596086959223">
+    <state x="498" y="202" key="#com.intellij.ide.util.TreeClassChooserDialog/0.0.1536.824@0.0.1536.824" timestamp="1596089024955" />
+    <state width="1493" height="576" key="GridCell.Tab.0.bottom" timestamp="1596090012509">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="146" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1596086959223" />
-    <state width="1493" height="146" key="GridCell.Tab.0.center" timestamp="1596086959223">
+    <state width="1493" height="576" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1596090012509" />
+    <state width="1493" height="576" key="GridCell.Tab.0.center" timestamp="1596090012509">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="146" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1596086959223" />
-    <state width="1493" height="146" key="GridCell.Tab.0.left" timestamp="1596086959223">
+    <state width="1493" height="576" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1596090012509" />
+    <state width="1493" height="576" key="GridCell.Tab.0.left" timestamp="1596090012509">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="146" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1596086959223" />
-    <state width="1493" height="146" key="GridCell.Tab.0.right" timestamp="1596086959223">
+    <state width="1493" height="576" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1596090012509" />
+    <state width="1493" height="576" key="GridCell.Tab.0.right" timestamp="1596090012509">
       <screen x="0" y="0" width="1536" height="824" />
     </state>
-    <state width="1493" height="146" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1596086959223" />
+    <state width="1493" height="576" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1596090012509" />
     <state x="277" y="57" key="SettingsEditor" timestamp="1596086361783">
       <screen x="0" y="0" width="1536" height="824" />
     </state>

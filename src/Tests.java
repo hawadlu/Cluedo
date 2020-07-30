@@ -1,6 +1,3 @@
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -23,7 +20,7 @@ public class Tests {
     }
 
     @Test
-    public void testSuggest() throws InvalidActionException {
+    public void testSuggest() throws InvalidMoveException {
         List<Player> players = createPlayers(6);
 
         dealCards(players, 6);

@@ -17,7 +17,7 @@ public class Suggest implements Action {
     }
 
     @Override
-    public boolean apply() throws InvalidActionException {
+    public boolean apply() throws InvalidMoveException {
         //Move the accused players to this room
         //todo implement this part.
 
