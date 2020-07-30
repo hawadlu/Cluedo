@@ -191,7 +191,7 @@ public class Board {
              }
           }
        }
-
+       System.out.println("3");
         return false;
     }
 
