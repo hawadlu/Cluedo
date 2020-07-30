@@ -8,7 +8,6 @@ public class Accuse implements Action {
     Game.Rooms room;
     Game.Players suspect;
     Game.Weapons weapon;
-    Game game;
     Player player;
 
     /**
@@ -24,11 +23,19 @@ public class Accuse implements Action {
     @Override
     public boolean apply() {
         //Check to see if the accused matches
-        if (!game.accuseRoom.equals(room)) player.hasLost = true;
-        else if (!game.accusePlayer.equals(suspect)) player.hasLost = true;
-        else if (!game.accuseWeapon.equals(weapon)) player.hasLost = true;
-
-        //todo end the game for a a win
-        return false;
+        if (!Game.accuseRoom.equals(room)) {
+            player.hasLost = true;
+            System.out.println("The room is incorrect. You have lost.");
+        }else if (!Game.accusePlayer.equals(suspect)) {
+            player.hasLost = true;
+            System.out.println("The Suspect is incorrect. You have lost.");
+        }else if (!Game.accuseWeapon.equals(weapon)){
+            player.hasLost = true;
+            System.out.println("The Weapon is incorrect. You have lost.");
+        }else{
+            Game.gameOver = true;
+            System.out.println("You have won! Congratz.");
+        }
+        return true;
     }
 }

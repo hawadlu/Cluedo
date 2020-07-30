@@ -13,6 +13,7 @@ public class Game {
     public static Rooms accuseRoom;
     public static Weapons accuseWeapon;
     public static Scanner input = new Scanner(System.in);
+    public static boolean gameOver;
 
     Board gameBoard;
 
@@ -177,6 +178,7 @@ public class Game {
      * Play the game
      */
     public void playGame() {
+        gameOver = false;
         int numPlayers = getNumPlayers();
         ArrayList<Player> players = createPlayers(numPlayers);
         dealCards(players, numPlayers);

@@ -92,6 +92,6 @@ public class Player {
 
     @Override
     public String toString() {
-        return name.toString();
+        return name.toString().substring(0, 2);
     }
 }
