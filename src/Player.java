@@ -31,23 +31,6 @@ public class Player {
         this.hand.add(card);
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Player player = (Player) o;
-        return hasLost == player.hasLost &&
-                name == player.name &&
-                Objects.equals(hand, player.hand) &&
-                Objects.equals(newPos, player.newPos) &&
-                Objects.equals(oldPos, player.oldPos);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, hand, hasLost, newPos, oldPos);
-    }
-
     /**
      * Player takes their turn.
      * Gets the choice to move if they have been moved to another room
@@ -78,7 +61,7 @@ public class Player {
 
         //Checking if suggest or accuse
         String action;
-        if(isDiffPos() && Game.Rooms.valueOf(board.board[newPos.y][newPos.x].room.name) != lastRoom) {
+        if(isDiffPos() && lastRoom != null && Game.Rooms.valueOf(board.board[newPos.y][newPos.x].room.name) != lastRoom) {
             action = Game.chooseFromArray(new String[]{"Suggest", "Accuse"},
                     "Would you like to Accuse or Suggest?.\n");
         }else{
@@ -123,11 +106,18 @@ public class Player {
         while(!hasMoved){
             response = "";
             while(response.length() < 1) {
-                System.out.println("'L' for Left, 'R' for Right, 'U' for Up and 'D' for Down");
+                System.out.println("'L' for Left, 'R' for Right, 'U' for Up and 'D' for Down, 'S' to show the board");
                 response = new Scanner(System.in).nextLine().toLowerCase();
             }
             try {
-                hasMoved = new Move(board, this, response.split(""), numMove).apply();
+                //show the board if requested
+                if (response.equals("s")) {
+                    System.out.println(board);
+                    return numMove;
+                } else {
+                    //process the requested move
+                    hasMoved = new Move(board, this, response.split(""), numMove).apply();
+                }
             }catch(InvalidMoveException e){ System.out.println("Invalid move, try again."); }
         }
         return numMove-response.length();
@@ -167,7 +157,8 @@ public class Player {
      * @return boolean if player moved
      */
     public boolean isDiffPos(){
-        return oldPos.x != newPos.x && oldPos.y != newPos.y;
+        return !oldPos.equals(newPos);
+        //return oldPos.x != newPos.x && oldPos.y != newPos.y;
     }
 
     /**

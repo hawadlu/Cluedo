@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Suggest implements Action {
     private final Card<Game.Rooms> room;
@@ -19,7 +20,13 @@ public class Suggest implements Action {
     @Override
     public boolean apply() throws InvalidMoveException {
         //Move the accused players to this room
-        //todo implement this part.
+        for (Player playerToMove: allPlayers) {
+            if (playerToMove.name.equals(accused.name)) {
+                //Get the room
+                Board.rooms.get(room.name).addPlayer(playerToMove);
+                break;
+            }
+        }
 
         allPlayers.remove(player);
 
@@ -36,9 +43,6 @@ public class Suggest implements Action {
                 return true;
             }
         }
-
-        //todo move the accused into the correct room
-
         return false;
     }
 }
