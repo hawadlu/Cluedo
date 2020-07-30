@@ -1,6 +1,9 @@
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.Scanner;
 
 /**
  * Construct a board of positions
@@ -75,6 +78,7 @@ public class Board {
       Blocked.add(board[20][23]);
       Blocked.add(board[24][8]);
       Blocked.add(board[24][15]);
+      rooms.put("Blocked", new Room(Blocked, "Blocked"));
 
       //sets doors
       //Kitchen
@@ -119,13 +123,13 @@ public class Board {
       //sets rooms standing spots
       rooms.get("Kitchen").setSeats(this,1,4);
       rooms.get("BallRoom").setSeats(this,10,5);
-      rooms.get("Conservatory").setSeats(this,19,4);
+      rooms.get("Conservatory").setSeats(this,19,3);
       rooms.get("DinningRoom").setSeats(this,3,13);
-      rooms.get("BilliardRoom").setSeats(this,19,10);
+      rooms.get("BilliardRoom").setSeats(this,19,9);
       rooms.get("Library").setSeats(this,19,16);
       rooms.get("Lounge").setSeats(this,2,20);
       rooms.get("Hall").setSeats(this,10,20);
-      rooms.get("Study").setSeats(this,19,21);
+      rooms.get("Study").setSeats(this,19,22);
    }
 
    /**Helper method to set room tiles
@@ -137,9 +141,10 @@ public class Board {
     * @param y2
     * @return
     */
+
    public ArrayList<Tile> allocateTiles(ArrayList<Tile> tiles, int x1, int x2, int y1, int y2){
       for(int i=y1; i<=y2; i++){
-         for(int j=x1; i<=x2; i++){
+         for(int j=x1; j<=x2; j++){
             tiles.add(board[i][j]);
          }
       }
@@ -194,12 +199,32 @@ public class Board {
    @Override
    public String toString() {
       StringBuilder toReturn = new StringBuilder();
-      for (int i = 0; i < board.length; i++) {
-         for (int j = 0; j < board[0].length; j++) {
-            toReturn.append(board[i][j].toString());
+
+      try {
+         Scanner sc = new Scanner(new File("Assets/textcluedo.txt"));
+         int posY=0;
+         while(sc.hasNextLine()){
+            Scanner line = new Scanner(sc.nextLine());
+            line.useDelimiter("");
+            int posX=0;
+            while(line.hasNext()){
+               String next = line.next();
+               if(next.equals("•")){
+                  System.out.println(posX);
+                  toReturn.append(board[posY-1][((posX-1)/3)].toString());
+                  line.next();
+                  posX++;
+               }else{
+                  toReturn.append(next);
+               }
+               posX++;
+            }
+            toReturn.append("\n");
+            posY++;
          }
-         toReturn.append("\n");
+      } catch(FileNotFoundException e){
+         System.out.println("File error: " + e);
       }
-      return toReturn.toString();
+   return toReturn.toString();
    }
 }
