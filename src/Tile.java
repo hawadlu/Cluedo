@@ -59,12 +59,12 @@ public class Tile {
     @Override
     public String toString() {
         if(player!=null){
-           return " " + player.toString();
+           return player.toString();
         }else if(room!=null){
-            return room.toString();
+            return "  ";
         }
 
-        return " . ";
+        return "• ";
 
     }
 }
