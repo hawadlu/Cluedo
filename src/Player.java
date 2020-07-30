@@ -1,5 +1,3 @@
-import org.junit.internal.InexactComparisonCriteria;
-
 import java.util.*;
 
 /**
@@ -72,6 +70,7 @@ public class Player {
             while(numMove > 0){
                 numMove = makeMove(numMove, board);
                 board.movePlayer(oldPos, newPos);
+                oldPos = new Position(newPos);
                 System.out.println(board);
                 System.out.println("old - "+oldPos);
                 System.out.println(newPos);
@@ -89,10 +88,13 @@ public class Player {
         }
 
         //Getting player and weapon
-        Game.Players player = Game.chooseFromArray(Game.Players.values(),
-                "Please choose a Person:\n");
-        Game.Weapons weapon = Game.chooseFromArray(Game.Weapons.values(),
-                "Please choose a Weapon.\n");
+        Game.Players player = null; Game.Weapons weapon = null;
+        if(action.equals("Accuse") || action.equals("Suggest")) {
+            player = Game.chooseFromArray(Game.Players.values(),
+                    "Please choose a Person:\n");
+            weapon = Game.chooseFromArray(Game.Weapons.values(),
+                    "Please choose a Weapon.\n");
+        }
 
         //Accuse / Suggest & getting room
         if(action.equals("Accuse")){
@@ -104,7 +106,6 @@ public class Player {
             lastRoom = room;
             makeSuggest(room, player, weapon, allPlayers);
         }
-        oldPos = new Position(newPos);
     }
 
     public int makeMove(int numMove, Board board){
@@ -117,13 +118,12 @@ public class Player {
         while(!hasMoved){
             response = "";
             while(response.length() < 1) {
-                System.out.println("Please type a valid number of moves. \n" +
-                        "'L' for Left, 'R' for Right, 'U' for Up and 'D' for Down");
+                System.out.println("'L' for Left, 'R' for Right, 'U' for Up and 'D' for Down");
                 response = new Scanner(System.in).nextLine().toLowerCase();
             }
             try {
                 hasMoved = new Move(board, this, response.split(""), numMove).apply();
-            }catch(InvalidActionException e){ System.out.println("Invalid move, try again."); }
+            }catch(InvalidMoveException e){ System.out.println("Invalid move, try again."); }
         }
         return numMove-response.length();
     }
@@ -133,7 +133,7 @@ public class Player {
         while(!hasSuggested){
             try {
                 hasSuggested = new Suggest(room, player, weapon, this, allPlayers).apply();
-            }catch(InvalidActionException e){ System.out.println("Invalid move, try again."); }
+            }catch(InvalidMoveException e){ System.out.println("Invalid move, try again."); }
         }
     }
 

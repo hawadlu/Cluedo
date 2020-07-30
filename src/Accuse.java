@@ -36,6 +36,8 @@ public class Accuse implements Action {
             Game.gameOver = true;
             System.out.println("You have won! Congratz.");
         }
+        System.out.println("Press 'enter' to continue.");
+        Game.input.nextLine();
         return true;
     }
 }
