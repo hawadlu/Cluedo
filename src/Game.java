@@ -184,7 +184,9 @@ public class Game {
         dealCards(players, numPlayers);
 
         //Create the board
-        board = new Board(players);
+        board = new Board();
+
+
 
         int currentPlayer = 0;
         while (!gameOver) {
