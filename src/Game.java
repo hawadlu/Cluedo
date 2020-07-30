@@ -109,17 +109,10 @@ public class Game {
         // Make player objects for each player that wants to play
         for (int i = 0; i < numPlayers; i++) {
             Players player = chooseFromArray(availablePlayers.toArray(new Players[]{}), "Player "+(i+1)+" choose your character:");
-            availablePlayers.remove(player);
+            Position startPos = getStartingPosition(player);
+            players.add(new Player(player, startPos));
 
-            // Catch choosing a player that doesnt have a starting position set
-            try {
-                Position startPos = getStartingPosition(player);
-                players.add(new Player(player, startPos));
-            }
-            catch (InvalidPlayerException e) {
-                System.out.println(e.toString());
-                i--;
-            }
+            availablePlayers.remove(player);
         }
         return players;
     }
@@ -160,9 +153,8 @@ public class Game {
      *
      * @param player the player enum to find the position of
      * @return a position object, containing the starting position coordinates
-     * @throws InvalidPlayerException if the provided player does not have a starting position
      */
-    public Position getStartingPosition(Players player) throws InvalidPlayerException {
+    public Position getStartingPosition(Players player){
         switch (player) {
             case WHITE: return new Position(9, 0);
             case GREEN: return new Position(14, 0);
@@ -170,8 +162,8 @@ public class Game {
             case PLUM: return new Position(23, 19);
             case SCARLET: return new Position(7, 24);
             case MUSTARD: return new Position(0, 17);
+            default: return null;
         }
-        throw new InvalidPlayerException(player.toString());
     }
 
     /**
@@ -231,9 +223,6 @@ public class Game {
         accusePlayer = playerCards.get(0).getEnum();     playerCards.remove(0);
         accuseRoom = roomCards.get(0).getEnum();       roomCards.remove(0);
         accuseWeapon = weaponCards.get(0).getEnum();     weaponCards.remove(0);
-        /* TESTING
-        System.out.println("Accuse List: "+ accusePlayer.toString()+", "+accuseRoom.toString()+", "+accuseWeapon.toString());
-         */
 
         //Add rest to big list
         ArrayList<Card<?>> remainingCards = new ArrayList<>();
@@ -251,13 +240,6 @@ public class Game {
             currentPlayer ++;
             currentPlayer %= numPlayers;
         }
-
-
-        System.out.println("Each Players Cards: ");
-        for(Player p : players){
-            System.out.println(p.toString() + ": "+p.getHand().toString());
-        }
-
     }
 
     public static void main(String[] args) throws FileNotFoundException {
