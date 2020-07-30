@@ -1,6 +1,5 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -22,7 +21,7 @@ public class Game {
         WHITE,
         PEACOCK,
         GREEN,
-        MUSTARD;
+        MUSTARD
     }
 
     public enum Rooms{
@@ -34,8 +33,7 @@ public class Game {
         DINING_ROOM,
         HALL,
         LIBRARY,
-        LOUNGE;
-
+        LOUNGE
     }
 
     public enum Weapons{
@@ -44,7 +42,7 @@ public class Game {
         LEAD_PIPE,
         REVOLVER,
         ROPE,
-        SPANNER;
+        SPANNER
     }
 
     /**
@@ -77,6 +75,7 @@ public class Game {
 
     /**
      * Get the number of players from the user
+     *
      * @param input the scanner that is scanning the input stream
      * @return the number of players playing the game
      */
@@ -98,6 +97,7 @@ public class Game {
 
     /**
      * Create the players that will be playing the game
+     *
      * @param numPlayers the number of players that will be playing the game
      * @param input the scanner that is scanning the input stream
      * @return an arraylist of players
@@ -123,6 +123,7 @@ public class Game {
 
     /**
      * Get the user to choose an option from an array of options of a given type
+     *
      * @param options the array of options
      * @param text the text at the top of the list of options, e.g. "Choose a weapon:"
      * @param input the scanner that is scanning the input stream
@@ -151,6 +152,7 @@ public class Game {
 
     /**
      * Gets the default starting position of a player
+     *
      * @param player the player enum to find the position of
      * @return a position object, containing the starting position coordinates
      * @throws InvalidPlayerException if the provided player does not have a starting position
@@ -174,6 +176,7 @@ public class Game {
         Scanner input = new Scanner(System.in);
         int numPlayers = getNumPlayers(input);
         ArrayList<Player> players = createPlayers(numPlayers, input);
+        dealCards(players, numPlayers);
 
         //Create the board
         gameBoard = new Board(players);
@@ -182,19 +185,21 @@ public class Game {
     }
 
     /**
-     * Creates cards, shuffles, removes 3 for accuse
-     *
-     * TODO: Add rest into players hands.
-     */
-    public void shuffle(List<Player> players, int numPlayers){
-        //Create ArrayLists of each card type
-        ArrayList<Card> playerCards = new ArrayList<>();
-        ArrayList<Card> weaponCards = new ArrayList<>();
-        ArrayList<Card> roomCards = new ArrayList<>();
+     * Creates cards, chooses a person, weapon and room at random to be the murder items
+     * shuffles the remaining cards and deals them out to the players
 
-        for(Players p : Players.values()){ playerCards.add(new PlayerCard(p)); }
-        for(Weapons w : Weapons.values()){ weaponCards.add(new WeaponCard(w)); }
-        for(Rooms r : Rooms.values()){ roomCards.add(new RoomCard(r)); }
+     * @param players the list of players playing the game to be dealt cards to
+     * @param numPlayers the number of players playing the game
+     */
+    public void dealCards(List<Player> players, int numPlayers){
+        //Create ArrayLists of each card type
+        ArrayList<Card<Players>> playerCards = new ArrayList<>();
+        ArrayList<Card<Weapons>> weaponCards = new ArrayList<>();
+        ArrayList<Card<Rooms>> roomCards = new ArrayList<>();
+
+        for(Players p : Players.values()){ playerCards.add(new Card<>(p)); }
+        for(Weapons w : Weapons.values()){ weaponCards.add(new Card<>(w)); }
+        for(Rooms r : Rooms.values()){ roomCards.add(new Card<>(r)); }
 
         //Shuffling
         Collections.shuffle(playerCards);
@@ -202,30 +207,36 @@ public class Game {
         Collections.shuffle(roomCards);
 
         //Add to accuse
-        accusePlayer = playerCards.get(0).getPlayer();     playerCards.remove(0);
-        accuseRoom = roomCards.get(0).getRoom();       roomCards.remove(0);
-        accuseWeapon = weaponCards.get(0).getWeapon();     weaponCards.remove(0);
-        System.out.println("Accuse List:"+ accusePlayer.toString()+", "+accuseRoom.toString()+", "+accuseWeapon.toString());
+        accusePlayer = playerCards.get(0).getEnum();     playerCards.remove(0);
+        accuseRoom = roomCards.get(0).getEnum();       roomCards.remove(0);
+        accuseWeapon = weaponCards.get(0).getEnum();     weaponCards.remove(0);
+        /* TESTING
+        System.out.println("Accuse List: "+ accusePlayer.toString()+", "+accuseRoom.toString()+", "+accuseWeapon.toString());
+         */
 
         //Add rest to big list
-        ArrayList<Card> remainingCards = new ArrayList<>();
+        ArrayList<Card<?>> remainingCards = new ArrayList<>();
         remainingCards.addAll(playerCards);
         remainingCards.addAll(roomCards);
         remainingCards.addAll(weaponCards);
-        System.out.println("Remaining cards: "+remainingCards.size());
+
+        //Shuffle all the cards
+        Collections.shuffle(remainingCards);
 
         //Divide Among players
         int currentPlayer = 0;
-        for(Card c : remainingCards){
+        for(Card<?> c : remainingCards){
             players.get(currentPlayer).addToHand(c);
             currentPlayer ++;
             currentPlayer %= numPlayers;
         }
 
+        /* TESTING
         System.out.println("Each Players Cards: ");
         for(Player p : players){
             System.out.println(p.toString() + ": "+p.getHand().toString());
         }
+         */
     }
 
     public static void main(String[] args) throws FileNotFoundException {
