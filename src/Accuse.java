@@ -10,9 +10,6 @@ public class Accuse implements Action {
     Game.Weapons weapon;
     Player player;
 
-    /**
-     * Setup the accusation
-     */
     Accuse(Game.Rooms room, Game.Players suspect, Game.Weapons weapon, Player player) {
         this.room = room;
         this.suspect = suspect;
@@ -26,13 +23,13 @@ public class Accuse implements Action {
         if (!Game.accuseRoom.equals(room)) {
             player.hasLost = true;
             System.out.println("Your guess is incorrect. You have lost.");
-        }else if (!Game.accusePlayer.equals(suspect)) {
+        } else if (!Game.accusePlayer.equals(suspect)) {
             player.hasLost = true;
             System.out.println("Your guess is incorrect. You have lost.");
-        }else if (!Game.accuseWeapon.equals(weapon)){
+        } else if (!Game.accuseWeapon.equals(weapon)) {
             player.hasLost = true;
             System.out.println("Your guess is incorrect. You have lost.");
-        }else{
+        } else {
             Game.gameOver = true;
             System.out.println("You have won! Congratz.");
         }

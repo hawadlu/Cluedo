@@ -44,7 +44,6 @@ public class Move implements Action {
 
     /**
      * Check if the list of proposed moves is valid;
-     * @return
      */
     private void validateMoves() throws InvalidMoveException {
         Position next = new Position(player.newPos);
@@ -62,7 +61,6 @@ public class Move implements Action {
             if (!board.isValidMove(prev, next)) throw new InvalidMoveException("Cannot move to that tile");;
             prev = new Position(next);
         }
-
-        //The move was valid.
+        //The move was valid if code gets here
     }
 }
