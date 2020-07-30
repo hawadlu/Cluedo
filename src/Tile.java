@@ -58,6 +58,13 @@ public class Tile {
     //todo implement this properly.
     @Override
     public String toString() {
-        return "T";
+        if(player!=null){
+           return " " + player.toString();
+        }else if(room!=null){
+            return room.toString();
+        }
+
+        return " . ";
+
     }
 }
