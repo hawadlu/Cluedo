@@ -159,38 +159,36 @@ public class Board {
      */
     public boolean isValidMove(Position current, Position next) {
        //checks if the next position is outside of the board
-       if(next.x<0||next.x>23||next.y<0||next.y>24){
+       if(next.x < 0 || next.x > 23 || next.y < 0 || next.y > 24)
           return false;
-       }
+
+       Tile nextTile = board[next.y][next.x];
+       Tile currentTile = board[current.y][current.x];
 
        //checks if another player is already on that tile
-       if(board[next.y][next.x].player!=null){
+       if(nextTile.player != null)
           return false;
-       }
 
        //checks non room to non room move
-       if(!board[current.y][current.x].isRoom()&&!board[next.y][next.x].isRoom()){
+       if(!currentTile.isRoom() && !nextTile.isRoom())
           return true;
-       }
 
        //checks non room to room move
-       if(!board[current.y][current.x].isRoom()&&board[next.y][next.x].isRoom()){
-          if(board[current.y][current.x].isDoor()){
+       if(!currentTile.isRoom() && nextTile.isRoom()){
+          if(currentTile.isDoor()){
              //checks player can use door to enter the room
-             if(board[current.y][current.x].doorRoom.equals(board[next.y][next.x].room)||board[current.y][current.x].doorRoom==null){
+             if(currentTile.doorRoom.equals(nextTile.room) || currentTile.doorRoom==null){
                 return true;
              }
-          }
+          } return false;
        }
 
        //checks room to non room move
-       if(board[current.y][current.x].isRoom()&&!board[next.y][next.x].isRoom()){
-          if(board[next.y][next.x].isDoor()) {
-             if(board[next.y][next.x].doorRoom.equals(board[current.y][current.x].room)||board[next.y][next.x].doorRoom==null){
+       if(currentTile.isRoom() && !nextTile.isRoom()){
+          if(nextTile.isDoor()) {
+             if(nextTile.doorRoom.equals(currentTile.room)||nextTile.doorRoom==null){
                 return true;
              }
-          }{
-
           }
        }
 

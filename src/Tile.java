@@ -18,10 +18,7 @@ public class Tile {
     }
 
     public boolean isRoom(){
-        if(room == null){
-            return false;
-        }
-        return true;
+        return room != null;
     }
 
     public boolean isDoor(){

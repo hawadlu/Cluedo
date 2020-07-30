@@ -18,63 +18,51 @@ public class Move implements Action {
     /**
      * Check and apply a move
      * @return true if the move is valid, false otherwise
-     * @throws InvalidActionException
+     * @throws InvalidMoveException
      */
     @Override
-    public boolean apply() throws InvalidActionException {
+    public boolean apply() throws InvalidMoveException {
         //Check to see if the player is trying to move more than their dice roll
-        if (actions.length > diceRoll) throw new InvalidActionException("Invalid number of moves");
+        if (actions.length > diceRoll) throw new InvalidMoveException("Move too long");
 
-        //Validate the moves
-        if (!validateMoves()) {System.out.println("IM A BUGGEER"); return false;}
+        // Will throw error if not a valid move
+        validateMoves();
 
         for (String action: actions) {
-            if (action.equals("l")){ player.newPos.x -= 1; }//move left
-            else if (action.equals("r")){ player.newPos.x += 1; } //move right
-            else if (action.equals("u")){ player.newPos.y -= 1; }//move up
-            else if (action.equals("d")){ player.newPos.y += 1; }//move down
-            else{ System.out.println("IM A BIGGER BUGGEER");return false;}
+            switch (action) {
+                case "l": player.newPos.x -= 1; break; //move left
+                case "r": player.newPos.x += 1; break; //move right
+                case "u": player.newPos.y -= 1; break; //move up
+                case "d": player.newPos.y += 1; break; //move down
+                default: return false;
+            }
         }
 
         //Indicate if the move worked
-        return true; //todo this will not always be true
+        return true;
     }
 
     /**
      * Check if the list of proposed moves is valid;
      * @return
      */
-    private boolean validateMoves() {
-        //todo might need to change this? yes
+    private void validateMoves() throws InvalidMoveException {
         Position next = new Position(player.newPos);
         Position prev = new Position(player.newPos);
 
         for (String action: actions) {
-            if (action.equals("l")){
-                //move left
-                next.x -= 1;
-                if (!board.isValidMove(next, prev)) return false;
-                prev = new Position(next);
-            } else if (action.equals("r")) {
-                //move right
-                next.x += 1;
-                if (!board.isValidMove(next, prev)) return false;
-                prev = new Position(next);
-            } else if (action.equals("u")) {
-                //move up
-                next.y -= 1;
-                if (!board.isValidMove(next, prev)) return false;
-                prev = new Position(next);
-            } else if (action.equals("d")) {
-                //move down
-                next.y += 1;
-                if (!board.isValidMove(next, prev)) return false;
-                prev = new Position(next);
+            switch (action) {
+                case "l": next.x -= 1; break; //move left
+                case "r": next.x += 1; break; //move right
+                case "u": next.y -= 1; break; //move up
+                case "d": next.y += 1; break; //move down
+                default: throw new InvalidMoveException("Unrecognised move type");
             }
-            else return false;
+
+            if (!board.isValidMove(prev, next)) throw new InvalidMoveException("Cannot move to that tile");;
+            prev = new Position(next);
         }
 
         //The move was valid.
-        return true;
     }
 }
