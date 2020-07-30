@@ -63,7 +63,8 @@ public class Move implements Action {
             } else if (action.equals("u")) {
                 //move up
                 next.y -= 1;
-                if (!board.isValidMove(next, prev)) return false;
+                System.out.println("Next: "+next+"Prev "+prev);
+                if (!board.isValidMove(prev, next)) return false;
                 prev = new Position(next);
             } else if (action.equals("d")) {
                 //move down

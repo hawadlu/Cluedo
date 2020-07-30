@@ -160,11 +160,14 @@ public class Board {
     public boolean isValidMove(Position current, Position next) {
        //checks if the next position is outside of the board
        if(next.x<0||next.x>23||next.y<0||next.y>24){
+          System.out.println("1");
           return false;
        }
 
        //checks if another player is already on that tile
        if(board[next.y][next.x].player!=null){
+          System.out.println("Player: "+board[next.y][next.x].player);
+          System.out.println("2");
           return false;
        }
 
@@ -193,7 +196,7 @@ public class Board {
 
           }
        }
-
+       System.out.println("3");
         return false;
     }
 
