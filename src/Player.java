@@ -148,6 +148,8 @@ public class Player {
         return name.toString().substring(0, 2);
     }
 
+    public Position getPos(){ return newPos; }
+
     /**
      * Look through this hand for any matches
      * @param room Game.Rooms

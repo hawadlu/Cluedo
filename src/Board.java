@@ -22,11 +22,6 @@ public class Board {
          }
       }
 
-
-
-
-
-
       //sets room tiles
       ArrayList<Tile> Kitchen = new ArrayList<>();
       Kitchen = allocateTiles(Kitchen, 0,5,0,6);

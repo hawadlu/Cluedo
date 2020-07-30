@@ -4,8 +4,19 @@
     <list default="true" id="e92e7495-924a-4ac4-af3e-1f7e572e5a6e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Action.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Action.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Board.class" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Accuse.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Accuse.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Action.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Action.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Board.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Card.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Card.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Game$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Game$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Game$Players.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Game$Players.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Game$Rooms.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Game$Rooms.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Game$Weapons.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Game$Weapons.class" afterDir="false" />
+>>>>>>> Stashed changes
       <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Game.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Cluedo/InvalidActionException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/InvalidActionException.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Cluedo/InvalidCardException.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/InvalidCardException.class" afterDir="false" />
@@ -16,17 +27,31 @@
       <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Player.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Position.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Position.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Room.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Room.class" afterDir="false" />
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Tests$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Tests$1.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Tile.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Board.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Move.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Position.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Position.java" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Suggest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Suggest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Tests$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Tests$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Tests.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Tests.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Tile.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Tile.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Accuse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Accuse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Board.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player.java" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="Cluedo" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -45,6 +70,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+<<<<<<< Updated upstream
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -55,6 +81,24 @@
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Console Font" />
+=======
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Console Font" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+>>>>>>> Stashed changes
   </component>
   <component name="RunManager">
     <configuration name="Cluedo" type="Application" factoryName="Application">
@@ -75,12 +119,28 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1596084496620</updated>
+<<<<<<< Updated upstream
       <workItem from="1596084503457" duration="2765000" />
+=======
+      <workItem from="1596084503457" duration="30000" />
+      <workItem from="1596085129353" duration="2203000" />
+>>>>>>> Stashed changes
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="2" />
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="WindowStateProjectService">
     <state x="249" y="0" key="#Project_Structure" timestamp="1596084995626">
