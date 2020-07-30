@@ -35,8 +35,10 @@ public class Player {
      * Has the choice of suggest / accuse
      */
     public void takeTurn(Board board) throws InvalidActionException {
-        boolean willMove = true;
+        //Print out board
+        System.out.println(board.toString());
 
+        boolean willMove = true;
         //If they have been moved to a room, Player chooses if they want to move again
         if(oldPos != newPos){
             String response = Game.chooseFromArray(new String[]{"Yes", "No"},
@@ -48,18 +50,21 @@ public class Player {
         if(willMove){
             int numMove = (int)(Math.random() * 6) + 1;
             numMove += (int)(Math.random() * 6) + 1;
-            System.out.println("Your turn to move: you have "+numMove+" moves.");
+            boolean hasMoved = false;
             String response = "";
-            System.out.println("Please type a valid number of moves. \n" +
-                    "'L' for Left, 'R' for Right, 'U' for Up and 'D' for Down");
-            while(response.length() != numMove) {
-                response = new Scanner(System.in).nextLine().toLowerCase();
-            }
+
+            System.out.println("Your turn to move: you have "+numMove+" moves.");
 
             //Creating new move
-            boolean hasMoved = false;
             while(!hasMoved){
-                hasMoved = new Move(board, this, response.split(""), numMove).apply();
+                while(response.length() != numMove) {
+                    System.out.println("Please type a valid number of moves. \n" +
+                            "'L' for Left, 'R' for Right, 'U' for Up and 'D' for Down");
+                    response = new Scanner(System.in).nextLine().toLowerCase();
+                }
+                try {
+                    hasMoved = new Move(board, this, response.split(""), numMove).apply();
+                }catch(InvalidActionException e){ System.out.println("Invalid move, try again."); }
             }
         }
 
@@ -89,7 +94,9 @@ public class Player {
         }else{
             boolean hasSuggested = false;
             while(!hasSuggested){
-                hasSuggested = new Suggest(room, player, weapon, this).apply();
+                try {
+                    hasSuggested = new Suggest(room, player, weapon, this).apply();
+                }catch(InvalidActionException e){ System.out.println("Invalid move, try again."); }
             }
         }
     }
