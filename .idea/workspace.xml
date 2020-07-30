@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="282160f1-3723-4af6-8078-72a0a8f707c3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Accuse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Accuse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Suggest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Suggest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Tests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Tests.java" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,19 +42,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
   </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JUnit.Tests.testSuggest">
     <configuration name="Run" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Game" />
       <module name="Cluedo" />
@@ -62,6 +50,25 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Tests.testSuggest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="Cluedo" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="Tests" />
+      <option name="METHOD_NAME" value="testSuggest" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Application.Run" />
+      <item itemvalue="JUnit.Tests.testSuggest" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.Tests.testSuggest" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -92,6 +99,7 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="196" y="94" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1596070580114">
@@ -112,45 +120,79 @@
       <screen x="0" y="0" width="1536" height="824" />
     </state>
     <state x="499" y="159" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1536.824@0.0.1536.824" timestamp="1596067598027" />
-    <state width="1493" height="226" key="GridCell.Tab.0.bottom" timestamp="1596071065135">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1398" height="286" key="GridCell.Tab.0.bottom" timestamp="1596079276117">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1493" height="226" key="GridCell.Tab.0.bottom/0.0.1536.824@0.0.1536.824" timestamp="1596071065135" />
-    <state width="1398" height="231" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1595806404423" />
+    <state width="1398" height="286" key="GridCell.Tab.0.bottom/0.23.1440.877@0.23.1440.877" timestamp="1596079276117" />
     <state width="1830" height="347" key="GridCell.Tab.0.bottom/0.23.1920.1057/-1920.23.1920.1177@0.23.1920.1057" timestamp="1596001196146" />
-    <state width="1493" height="226" key="GridCell.Tab.0.center" timestamp="1596071065134">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1398" height="286" key="GridCell.Tab.0.center" timestamp="1596079276115">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1493" height="226" key="GridCell.Tab.0.center/0.0.1536.824@0.0.1536.824" timestamp="1596071065134" />
-    <state width="1398" height="231" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1595806404422" />
+    <state width="1398" height="286" key="GridCell.Tab.0.center/0.23.1440.877@0.23.1440.877" timestamp="1596079276115" />
     <state width="1830" height="347" key="GridCell.Tab.0.center/0.23.1920.1057/-1920.23.1920.1177@0.23.1920.1057" timestamp="1596001196145" />
-    <state width="1493" height="226" key="GridCell.Tab.0.left" timestamp="1596071065134">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1398" height="286" key="GridCell.Tab.0.left" timestamp="1596079276113">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1493" height="226" key="GridCell.Tab.0.left/0.0.1536.824@0.0.1536.824" timestamp="1596071065134" />
-    <state width="1398" height="231" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1595806404422" />
+    <state width="1398" height="286" key="GridCell.Tab.0.left/0.23.1440.877@0.23.1440.877" timestamp="1596079276113" />
     <state width="1830" height="347" key="GridCell.Tab.0.left/0.23.1920.1057/-1920.23.1920.1177@0.23.1920.1057" timestamp="1596001196145" />
-    <state width="1493" height="226" key="GridCell.Tab.0.right" timestamp="1596071065134">
-      <screen x="0" y="0" width="1536" height="824" />
+    <state width="1398" height="286" key="GridCell.Tab.0.right" timestamp="1596079276116">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
     <state width="1493" height="226" key="GridCell.Tab.0.right/0.0.1536.824@0.0.1536.824" timestamp="1596071065134" />
-    <state width="1398" height="231" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1595806404422" />
+    <state width="1398" height="286" key="GridCell.Tab.0.right/0.23.1440.877@0.23.1440.877" timestamp="1596079276116" />
     <state width="1830" height="347" key="GridCell.Tab.0.right/0.23.1920.1057/-1920.23.1920.1177@0.23.1920.1057" timestamp="1596001196146" />
-    <state width="1830" height="347" key="GridCell.Tab.1.bottom" timestamp="1596001196148">
-      <screen x="0" y="23" width="1920" height="1057" />
+    <state width="1398" height="286" key="GridCell.Tab.1.bottom" timestamp="1596079277380">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
+    <state width="1398" height="286" key="GridCell.Tab.1.bottom/0.23.1440.877@0.23.1440.877" timestamp="1596079277380" />
     <state width="1830" height="347" key="GridCell.Tab.1.bottom/0.23.1920.1057/-1920.23.1920.1177@0.23.1920.1057" timestamp="1596001196148" />
-    <state width="1830" height="347" key="GridCell.Tab.1.center" timestamp="1596001196147">
-      <screen x="0" y="23" width="1920" height="1057" />
+    <state width="1398" height="286" key="GridCell.Tab.1.center" timestamp="1596079277379">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
+    <state width="1398" height="286" key="GridCell.Tab.1.center/0.23.1440.877@0.23.1440.877" timestamp="1596079277378" />
     <state width="1830" height="347" key="GridCell.Tab.1.center/0.23.1920.1057/-1920.23.1920.1177@0.23.1920.1057" timestamp="1596001196147" />
-    <state width="1830" height="347" key="GridCell.Tab.1.left" timestamp="1596001196147">
-      <screen x="0" y="23" width="1920" height="1057" />
+    <state width="1398" height="286" key="GridCell.Tab.1.left" timestamp="1596079277378">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
+    <state width="1398" height="286" key="GridCell.Tab.1.left/0.23.1440.877@0.23.1440.877" timestamp="1596079277378" />
     <state width="1830" height="347" key="GridCell.Tab.1.left/0.23.1920.1057/-1920.23.1920.1177@0.23.1920.1057" timestamp="1596001196147" />
-    <state width="1830" height="347" key="GridCell.Tab.1.right" timestamp="1596001196148">
-      <screen x="0" y="23" width="1920" height="1057" />
+    <state width="1398" height="286" key="GridCell.Tab.1.right" timestamp="1596079277379">
+      <screen x="0" y="23" width="1440" height="877" />
     </state>
+    <state width="1398" height="286" key="GridCell.Tab.1.right/0.23.1440.877@0.23.1440.877" timestamp="1596079277379" />
     <state width="1830" height="347" key="GridCell.Tab.1.right/0.23.1920.1057/-1920.23.1920.1177@0.23.1920.1057" timestamp="1596001196148" />
+    <state x="421" y="216" width="598" height="490" key="find.popup" timestamp="1596079136528">
+      <screen x="0" y="23" width="1440" height="877" />
+    </state>
+    <state x="421" y="216" width="598" height="490" key="find.popup/0.23.1440.877@0.23.1440.877" timestamp="1596079136528" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Tests.java</url>
+          <line>30</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Suggest.java</url>
+          <line>22</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Player.java</url>
+          <line>122</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Player.java</url>
+          <line>128</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
