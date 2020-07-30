@@ -11,6 +11,10 @@ public class Card<T extends Enum<T>> {
         this.name = name;
     }
 
+    /**
+     * Get the enum (from Game class) that this is a card of
+     * @return enum Players/Weapons/Rooms from Game class
+     */
     public T getEnum(){ return name;}
 
     @Override

@@ -2,16 +2,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Suggest implements Action {
-    Card room;
-    List<Player> allPlayers;
-    Card weapon;
-    Player player;
-    Card accused;
+    private final Card<Game.Rooms> room;
+    private final List<Player> allPlayers;
+    private final Card<Game.Weapons> weapon;
+    private final Player player;
+    private final Card<Game.Players> accused;
 
-    public Suggest(Game.Rooms room, Game.Players accused, Game.Weapons weapon, Player player, List<Player> allPlayers) {
-        this.room = new Card(room);
-        this.weapon = new Card(weapon);
-        this.accused = new Card(accused);
+    Suggest(Game.Rooms room, Game.Players accused, Game.Weapons weapon, Player player, List<Player> allPlayers) {
+        this.room = new Card<>(room);
+        this.weapon = new Card<>(weapon);
+        this.accused = new Card<>(accused);
         this.allPlayers = allPlayers;
         this.player = player;
     }
@@ -25,12 +25,12 @@ public class Suggest implements Action {
 
         //Go through all of the players hand looking for a match
         for (Player other: allPlayers) {
-            ArrayList<Card> cardOptions = other.addMatches(room, accused, weapon);
+            ArrayList<Card<?>> cardOptions = other.addMatches(room, accused, weapon);
 
             if (!cardOptions.isEmpty()) {
                 System.out.println("Found a match");
 
-                Card toShow = (Card) Game.chooseFromArray(cardOptions.toArray(), "Choose a card to show");
+                Card<?> toShow = Game.chooseFromArray(cardOptions.toArray(new Card<?>[]{}), "Choose a card to show");
                 System.out.println("Show card: " + toShow);
 
                 return true;

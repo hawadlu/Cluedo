@@ -25,7 +25,7 @@ public class Player {
     /**
      * Adds a card to players hand
      * Use to Create a player
-     * @param card
+     * @param card the card to add to the hand
      */
     public void addToHand(Card<?> card){
         this.hand.add(card);
@@ -52,6 +52,8 @@ public class Player {
      * Player takes their turn.
      * Gets the choice to move if they have been moved to another room
      * Has the choice of suggest / accuse
+     * @param board the board that the game is running on
+     * @param allPlayers the list of all the players playing the game
      */
     public void takeTurn(Board board, List<Player> allPlayers) {
         boolean willMove = true;
@@ -78,7 +80,7 @@ public class Player {
         }
 
         //Checking if suggest or accuse
-        String action = "";
+        String action;
         if(isDiffPos() && Game.Rooms.valueOf(board.board[newPos.y][newPos.x].room.name) != lastRoom) {
             action = Game.chooseFromArray(new String[]{"Suggest", "Accuse"},
                     "Would you like to Accuse or Suggest?.\n");
@@ -108,6 +110,12 @@ public class Player {
         }
     }
 
+    /**
+     * Make a move action
+     * @param numMove the amount that this player can move this turn
+     * @param board the board the game is running on
+     * @return the amount of moves left
+     */
     public int makeMove(int numMove, Board board){
         boolean hasMoved = false;
         String response = "";
@@ -128,6 +136,13 @@ public class Player {
         return numMove-response.length();
     }
 
+    /**
+     * Make a suggestion
+     * @param room the room that is being suggested
+     * @param player the player that is being suggested
+     * @param weapon the weapon that is being suggested
+     * @param allPlayers the list of all players that are playing the game
+     */
     public void makeSuggest(Game.Rooms room, Game.Players player, Game.Weapons weapon, List<Player> allPlayers){
         boolean hasSuggested = false;
         while(!hasSuggested){
@@ -137,6 +152,12 @@ public class Player {
         }
     }
 
+    /**
+     * Make an accusation
+     * @param room the room that is being accused
+     * @param player the player that is veing accused
+     * @param weapon the weapon that is being accused
+     */
     public void makeAccuse(Game.Rooms room, Game.Players player, Game.Weapons weapon){
         boolean hasAccused = false;
         while(!hasAccused){
@@ -144,16 +165,24 @@ public class Player {
         }
     }
 
+    /**
+     * Has this player moved between their turns (oldPos == newPos)
+     * @return boolean if player moved
+     */
     public boolean isDiffPos(){
-        if(oldPos.x != newPos.x && oldPos.y != newPos.y){ return true; }
-        return false;
+        return oldPos.x != newPos.x && oldPos.y != newPos.y;
     }
 
     /**
-     * @return Players hand
+     * Get this players hand
+     * @return arraylist of cards in this players hand
      */
     public ArrayList<Card<?>> getHand(){ return hand; }
 
+    /**
+     * Get name of this player
+     * @return enum from Players in Game class
+     */
     public Game.Players getName() {
         return name;
     }
@@ -171,8 +200,8 @@ public class Player {
      * @param weapon Game.Weapons
      * @return arraylist of the matches
      */
-    public ArrayList<Card> addMatches(Card room, Card accused, Card weapon) {
-        ArrayList<Card> matches = new ArrayList<>();
+    public ArrayList<Card<?>> addMatches(Card<Game.Rooms> room, Card<Game.Players> accused, Card<Game.Weapons> weapon) {
+        ArrayList<Card<?>> matches = new ArrayList<>();
         if (hand.contains(room)) matches.add(room);
         if (hand.contains(accused)) matches.add(accused);
         if (hand.contains(weapon)) matches.add(weapon);

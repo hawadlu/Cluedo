@@ -82,43 +82,43 @@ public class Board {
 
       //sets doors
       //Kitchen
-      board[7][4].setDoor(true, rooms.get("Kitchen"));
+      board[7][4].setDoor(rooms.get("Kitchen"));
 
       //ball room
-      board[5][7].setDoor(true, rooms.get("BallRoom"));
-      board[8][9].setDoor(true, rooms.get("BallRoom"));
-      board[8][14].setDoor(true, rooms.get("BallRoom"));
-      board[5][16].setDoor(true, rooms.get("BallRoom"));
+      board[5][7].setDoor(rooms.get("BallRoom"));
+      board[8][9].setDoor(rooms.get("BallRoom"));
+      board[8][14].setDoor(rooms.get("BallRoom"));
+      board[5][16].setDoor(rooms.get("BallRoom"));
 
       //conservatory
-      board[5][18].setDoor(true, rooms.get("Conservatory"));
+      board[5][18].setDoor(rooms.get("Conservatory"));
 
       //Dinning room
-      board[12][8].setDoor(true, rooms.get("DinningRoom"));
-      board[16][6].setDoor(true, rooms.get("DinningRoom"));
+      board[12][8].setDoor(rooms.get("DinningRoom"));
+      board[16][6].setDoor(rooms.get("DinningRoom"));
 
       //Billiard room
-      board[9][17].setDoor(true, rooms.get("BilliardRoom"));
-      board[13][22].setDoor(true, rooms.get("BilliardRoom"));
+      board[9][17].setDoor(rooms.get("BilliardRoom"));
+      board[13][22].setDoor(rooms.get("BilliardRoom"));
       board[13][22].setRoomName("BilliardRoom");
 
       //Library room
-      board[13][20].setDoor(true, rooms.get("Library"));
+      board[13][20].setDoor(rooms.get("Library"));
       board[13][20].setRoomName("Library");
-      board[16][16].setDoor(true, rooms.get("Library"));
+      board[16][16].setDoor(rooms.get("Library"));
 
       //Lounge room
-      board[18][6].setDoor(true, rooms.get("Lounge"));
+      board[18][6].setDoor(rooms.get("Lounge"));
 
       //Hall room
-      board[17][11].setDoor(true, rooms.get("Hall"));
+      board[17][11].setDoor(rooms.get("Hall"));
       board[17][11].setRoomName("Hall");
-      board[17][12].setDoor(true, rooms.get("Hall"));
+      board[17][12].setDoor(rooms.get("Hall"));
       board[17][12].setRoomName("Hall");
-      board[20][15].setDoor(true, rooms.get("Hall"));
+      board[20][15].setDoor(rooms.get("Hall"));
 
       //Study room
-      board[20][17].setDoor(true, rooms.get("Study"));
+      board[20][17].setDoor(rooms.get("Study"));
 
       //sets rooms standing spots
       rooms.get("Kitchen").setSeats(this,1,4);
