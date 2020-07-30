@@ -118,13 +118,11 @@ public class Player {
      * @param weapon Game.Weapons
      * @return arraylist of the matches
      */
-    public ArrayList<Card> addMatches(Game.Rooms room, Game.Players accused, Game.Weapons weapon) {
+    public ArrayList<Card> addMatches(Card room, Card accused, Card weapon) {
         ArrayList<Card> matches = new ArrayList<>();
-        for (Card card: hand) {
-            if (hand.contains(new Card<>(room))) matches.add(card);
-            if (hand.contains(new Card<>(accused))) matches.add(card);
-            if (hand.contains(new Card<>(weapon))) matches.add(card);
-        }
+        if (hand.contains(room)) matches.add(room);
+        if (hand.contains(accused)) matches.add(accused);
+        if (hand.contains(weapon)) matches.add(weapon);
 
         return matches;
     }
