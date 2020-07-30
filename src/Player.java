@@ -65,9 +65,14 @@ public class Player {
         Game.Players player = Game.chooseFromArray(Game.Players.values(),
                 "Please choose a Person:\n");
         Game.Weapons weapon = Game.chooseFromArray(Game.Weapons.values(),
-                "Please choose a Weapon:\n");
-        Game.Rooms room = Game.chooseFromArray(Game.Rooms.values(),
-                "Please choose a Room:\n");
+                "Please choose a Weapon.\n", new Scanner(System.in));
+        Game.Rooms room;
+        if(action.equals("Accuse")) {
+            room = Game.chooseFromArray(Game.Rooms.values(),
+                    "Please choose a Weapon.\n", new Scanner(System.in));
+        }else {
+            room = Game.Rooms.valueOf(board.board[newPos.y][newPos.x].room.name);
+        }
 
         //Accuse / Suggest
         if(action.equals("Accuse")){
