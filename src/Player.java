@@ -31,6 +31,23 @@ public class Player {
         this.hand.add(card);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return hasLost == player.hasLost &&
+                name == player.name &&
+                Objects.equals(hand, player.hand) &&
+                Objects.equals(newPos, player.newPos) &&
+                Objects.equals(oldPos, player.oldPos);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, hand, hasLost, newPos, oldPos);
+    }
+
     /**
      * Player takes their turn.
      * Gets the choice to move if they have been moved to another room
@@ -61,7 +78,7 @@ public class Player {
 
         //Checking if suggest or accuse
         String action;
-        if(isDiffPos() && lastRoom != null && Game.Rooms.valueOf(board.board[newPos.y][newPos.x].room.name) != lastRoom) {
+        if(isDiffPos() && Game.Rooms.valueOf(board.board[newPos.y][newPos.x].room.name) != lastRoom) {
             action = Game.chooseFromArray(new String[]{"Suggest", "Accuse"},
                     "Would you like to Accuse or Suggest?.\n");
         }else{
@@ -158,7 +175,6 @@ public class Player {
      */
     public boolean isDiffPos(){
         return !oldPos.equals(newPos);
-        //return oldPos.x != newPos.x && oldPos.y != newPos.y;
     }
 
     /**
@@ -179,7 +195,7 @@ public class Player {
     public String toString() {
         return name.toString().substring(0, 2);
     }
-    
+
 
     public Position getPos(){ return newPos; }
 

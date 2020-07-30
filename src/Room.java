@@ -75,6 +75,7 @@ public class Room {
         for(Tile t: playerSeats){
             if(t.player==null){
                 t.setPlayer(p);
+                System.out.println(p.name + " has entered the " + this.name); //primarily for debugging
                 break;
             }
         }
