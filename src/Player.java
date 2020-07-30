@@ -72,11 +72,8 @@ public class Player {
             while(numMove > 0){
                 numMove = makeMove(numMove, board);
                 board.movePlayer(oldPos, newPos);
-                oldPos = new Position(newPos);
-                System.out.println(board);
-                System.out.println("old - "+oldPos);
-                System.out.println(newPos);
             }
+            oldPos = newPos;
         }
 
         //Checking if suggest or accuse
@@ -192,6 +189,8 @@ public class Player {
         return name.toString().substring(0, 2);
     }
     
+
+    public Position getPos(){ return newPos; }
 
     /**
      * Look through this hand for any matches
