@@ -50,7 +50,7 @@ public class Player {
      * Gets the choice to move if they have been moved to another room
      * Has the choice of suggest / accuse
      */
-    public void takeTurn(Board board) throws InvalidActionException {
+    public void takeTurn(Board board, List<Player> allPlayers) throws InvalidActionException {
         boolean willMove = true;
         //If they have been moved to a room, Player chooses if they want to move again
         if(oldPos != newPos){
@@ -86,7 +86,7 @@ public class Player {
             makeAccuse(room, player, weapon);
         }else{
             Game.Rooms room = Game.Rooms.valueOf(board.board[newPos.y][newPos.x].room.name);
-            makeSuggest(room, player, weapon);
+            makeSuggest(room, player, weapon, allPlayers);
         }
     }
 
@@ -111,11 +111,11 @@ public class Player {
         return numMove-response.length();
     }
 
-    public void makeSuggest(Game.Rooms room, Game.Players player, Game.Weapons weapon){
+    public void makeSuggest(Game.Rooms room, Game.Players player, Game.Weapons weapon, List<Player> allPlayers){
         boolean hasSuggested = false;
         while(!hasSuggested){
             try {
-                hasSuggested = new Suggest(room, player, weapon, this).apply();
+                hasSuggested = new Suggest(room, player, weapon, this, allPlayers).apply();
             }catch(InvalidActionException e){ System.out.println("Invalid move, try again."); }
         }
     }
