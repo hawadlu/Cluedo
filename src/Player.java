@@ -7,7 +7,7 @@ import java.util.Scanner;
  */
 public class Player {
     Game.Players name;
-    ArrayList<Card> hand;
+    ArrayList<Card<?>> hand;
     boolean hasLost;
     Position newPos;
     Position oldPos;
@@ -20,7 +20,7 @@ public class Player {
         oldPos = startPos;
     }
 
-    public void addToHand(Card card){
+    public void addToHand(Card<?> card){
         this.hand.add(card);
     }
 
@@ -83,7 +83,7 @@ public class Player {
         }
     }
 
-    public ArrayList<Card> getHand(){ return hand; }
+    public ArrayList<Card<?>> getHand(){ return hand; }
 
     @Override
     public String toString() {

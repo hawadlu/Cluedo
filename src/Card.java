@@ -2,21 +2,17 @@
  * Card class
  * -Main class for 3 card subclasses to map to
  */
-public class Card {
+public class Card<T extends Enum<T>> {
+    T name;
 
-    public String toString(){
-        return "";
+    Card(T name) {
+        this.name = name;
     }
 
-    public Game.Players getPlayer() {
-        return null;
-    }
+    public T getEnum(){ return name;}
 
-    public Game.Rooms getRoom() {
-        return null;
-    }
-
-    public Game.Weapons getWeapon() {
-        return null;
+    @Override
+    public String toString() {
+        return name.toString();//.substring(0, 2);
     }
 }
