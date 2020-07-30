@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Physical PLayer.
@@ -29,15 +28,29 @@ public class Player {
         this.hand.add(card);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return hasLost == player.hasLost &&
+                name == player.name &&
+                Objects.equals(hand, player.hand) &&
+                Objects.equals(newPos, player.newPos) &&
+                Objects.equals(oldPos, player.oldPos);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, hand, hasLost, newPos, oldPos);
+    }
+
     /**
      * Player takes their turn.
      * Gets the choice to move if they have been moved to another room
      * Has the choice of suggest / accuse
      */
-    public void takeTurn(Board board) throws InvalidActionException {
-        //Print out board
-        System.out.println(board.toString());
-
+    public void takeTurn(Board board, List<Player> players) throws InvalidActionException {
         boolean willMove = true;
         //If they have been moved to a room, Player chooses if they want to move again
         if(oldPos != newPos){
@@ -73,7 +86,7 @@ public class Player {
                 "Would you like to Accuse or Suggest?.\n");
 
         //Getting weapon, room, player
-        Game.Players player = Game.chooseFromArray(Game.Players.values(),
+        Game.Players accused = Game.chooseFromArray(Game.Players.values(),
                 "Please choose a Person:\n");
         Game.Weapons weapon = Game.chooseFromArray(Game.Weapons.values(),
                 "Please choose a Weapon.\n");
@@ -89,14 +102,12 @@ public class Player {
         if(action.equals("Accuse")){
             boolean hasAccused = false;
             while(!hasAccused){
-                hasAccused = new Accuse(room, player, weapon, this).apply();
+                hasAccused = new Accuse(room, accused, weapon, this).apply();
             }
         }else{
             boolean hasSuggested = false;
             while(!hasSuggested){
-                try {
-                    hasSuggested = new Suggest(room, player, weapon, this).apply();
-                }catch(InvalidActionException e){ System.out.println("Invalid move, try again."); }
+                hasSuggested = new Suggest(room, accused, weapon, this, players).apply();
             }
         }
     }
@@ -113,5 +124,21 @@ public class Player {
     @Override
     public String toString() {
         return name.toString().substring(0, 2);
+    }
+
+    /**
+     * Look through this hand for any matches
+     * @param room Game.Rooms
+     * @param accused Game.Players
+     * @param weapon Game.Weapons
+     * @return arraylist of the matches
+     */
+    public ArrayList<Card> addMatches(Card room, Card accused, Card weapon) {
+        ArrayList<Card> matches = new ArrayList<>();
+        if (hand.contains(room)) matches.add(room);
+        if (hand.contains(accused)) matches.add(accused);
+        if (hand.contains(weapon)) matches.add(weapon);
+
+        return matches;
     }
 }
