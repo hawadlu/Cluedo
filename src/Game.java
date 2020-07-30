@@ -178,24 +178,29 @@ public class Game {
      * Play the game
      */
     public void playGame() {
+        // Setup the game
         gameOver = false;
         int numPlayers = getNumPlayers();
         ArrayList<Player> players = createPlayers(numPlayers);
         dealCards(players, numPlayers);
-
-        //Create the board
         board = new Board();
 
+        // Set players to their starting positions
+        for (Player player : players) {
+            int x = player.newPos.x;
+            int y = player.newPos.y;
+            board.getTile(x, y).setPlayer(player);
+        }
 
-
+        // Run the game
         int currentPlayer = 0;
         while (!gameOver) {
             Player player = players.get(currentPlayer%numPlayers);
-            try {
-                System.out.println(player.getName() + "'s Turn");
-                player.takeTurn(board);
-            } catch (InvalidActionException e) {System.out.println("CONNOR FIX THA THING");}
 
+            System.out.println(board);
+            System.out.println(player.getName() + "'s Turn");
+
+            player.takeTurn(board, players);
             currentPlayer++;
         }
     }
