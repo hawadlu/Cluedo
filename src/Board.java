@@ -189,4 +189,17 @@ public class Board {
 
         return false;
     }
+
+    //todo implement this properly
+   @Override
+   public String toString() {
+      StringBuilder toReturn = new StringBuilder();
+      for (int i = 0; i < board.length; i++) {
+         for (int j = 0; j < board[0].length; j++) {
+            toReturn.append(board[i][j].toString());
+         }
+         toReturn.append("\n");
+      }
+      return toReturn.toString();
+   }
 }

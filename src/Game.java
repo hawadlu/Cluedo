@@ -1,5 +1,3 @@
-import javafx.geometry.Pos;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Array;
@@ -15,6 +13,8 @@ public class Game {
     public static Players accusePlayer;
     public static Rooms accuseRoom;
     public static Weapons accuseWeapon;
+
+    Board gameBoard;
 
     public enum Players {
         SCARLET,
@@ -173,14 +173,18 @@ public class Game {
     public void playGame() {
         Scanner input = new Scanner(System.in);
         int numPlayers = getNumPlayers(input);
-        List<Player> players = createPlayers(numPlayers, input);
+        ArrayList<Player> players = createPlayers(numPlayers, input);
 
+        //Create the board
+        gameBoard = new Board(players);
+
+        System.out.println(gameBoard);
     }
 
     /**
      * Creates cards, shuffles, removes 3 for accuse
      *
-     * TO-DO: Add rest into players hands.
+     * TODO: Add rest into players hands.
      */
     public void shuffle(List<Player> players, int numPlayers){
         //Create ArrayLists of each card type

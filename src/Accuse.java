@@ -5,29 +5,28 @@
  *  -End game if correct, current player loses if incorrect
  */
 public class Accuse implements Action {
-    RoomCard room;
-    PlayerCard suspect;
-    WeaponCard weapon;
+    Game.Rooms room;
+    Game.Players suspect;
+    Game.Weapons weapon;
     Game game;
     Player player;
 
     /**
      * Setup the accusation
      */
-    Accuse(RoomCard room, PlayerCard suspect, WeaponCard weapon, Game game, Player player) {
+    Accuse(Game.Rooms room, Game.Players suspect, Game.Weapons weapon, Player player) {
         this.room = room;
         this.suspect = suspect;
         this.weapon = weapon;
-        this.game = game;
         this.player = player;
     }
 
     @Override
     public boolean apply() {
         //Check to see if the accused matches
-        if (!game.accuseList.contains(room)) player.hasLost = true;
-        else if (!game.accuseList.contains(weapon)) player.hasLost = true;
-        else if (!game.accuseList.contains(suspect)) player.hasLost = true;
+        if (!game.accuseRoom.equals(room)) player.hasLost = true;
+        else if (!game.accusePlayer.equals(suspect)) player.hasLost = true;
+        else if (!game.accuseWeapon.equals(weapon)) player.hasLost = true;
 
         //todo end the game for a a win
         return false;

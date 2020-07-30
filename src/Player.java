@@ -28,7 +28,7 @@ public class Player {
      * Player takes a turn,
      * moves, suggests and accuses
      */
-    public void takeTurn(Board board){
+    public void takeTurn(Board board) throws InvalidActionException {
         boolean willMove = true;
 
         //If they have been moved to a room, Player chooses if they want to move again
@@ -53,7 +53,7 @@ public class Player {
             //Creating new move
             boolean hasMoved = false;
             while(!hasMoved){
-                hasMoved = new Move(board, this, response, numMove);
+                hasMoved = new Move(board, this, response.split(""), numMove).apply();
             }
         }
 
@@ -73,12 +73,12 @@ public class Player {
         if(action.equals("Accuse")){
             boolean hasAccused = false;
             while(!hasAccused){
-                hasAccused = new Accuse(room, player, weapon, this);
+                hasAccused = new Accuse(room, player, weapon, this).apply();
             }
         }else{
             boolean hasSuggested = false;
             while(!hasSuggested){
-                hasSuggested = new Suggest(room, player, weapon, this);
+                hasSuggested = new Suggest(room, player, weapon, this).apply();
             }
         }
     }
