@@ -18,12 +18,12 @@ public class Player {
         hand = new ArrayList<>();
         hasLost = false;
         newPos = startPos;
-        oldPos = startPos;
+        oldPos = new Position(startPos);
     }
 
     /**
      * Adds a card to players hand
-     * Use to Create a plaeyr
+     * Use to Create a player
      * @param card
      */
     public void addToHand(Card<?> card){
@@ -68,9 +68,12 @@ public class Player {
 
             while(numMove > 0){
                 numMove = makeMove(numMove, board);
+                board.movePlayer(oldPos, newPos);
+                System.out.println(board);
+                System.out.println("old - "+oldPos);
+                System.out.println(newPos);
             }
-            board.movePlayer(oldPos, newPos);
-            oldPos = newPos;
+            oldPos = new Position(newPos);
         }
 
         //Checking if suggest or accuse
