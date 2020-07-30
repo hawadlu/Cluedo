@@ -13,8 +13,9 @@ public class Game {
     public static Rooms accuseRoom;
     public static Weapons accuseWeapon;
     public static Scanner input = new Scanner(System.in);
+    public static boolean gameOver = false;
 
-    Board gameBoard;
+    Board board;
 
     public enum Players {
         SCARLET,
@@ -177,14 +178,24 @@ public class Game {
      * Play the game
      */
     public void playGame() {
+        gameOver = false;
         int numPlayers = getNumPlayers();
         ArrayList<Player> players = createPlayers(numPlayers);
         dealCards(players, numPlayers);
 
         //Create the board
-        gameBoard = new Board(players);
+        board = new Board(players);
 
-        System.out.println(gameBoard);
+        int currentPlayer = 0;
+        while (!gameOver) {
+            Player player = players.get(currentPlayer%numPlayers);
+            try {
+                System.out.println(player.getName() + "'s Turn");
+                player.takeTurn(board);
+            } catch (InvalidActionException e) {System.out.println("CONNOR FIX THA THING");}
+
+            currentPlayer++;
+        }
     }
 
     /**
@@ -234,12 +245,12 @@ public class Game {
             currentPlayer %= numPlayers;
         }
 
-        /* TESTING
+
         System.out.println("Each Players Cards: ");
         for(Player p : players){
             System.out.println(p.toString() + ": "+p.getHand().toString());
         }
-         */
+
     }
 
     public static void main(String[] args) throws FileNotFoundException {
