@@ -236,12 +236,12 @@ public class Game {
             currentPlayer %= numPlayers;
         }
 
-        /* TESTING
+
         System.out.println("Each Players Cards: ");
         for(Player p : players){
             System.out.println(p.toString() + ": "+p.getHand().toString());
         }
-         */
+
     }
 
     public static void main(String[] args) throws FileNotFoundException {

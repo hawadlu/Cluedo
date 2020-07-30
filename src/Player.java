@@ -20,13 +20,19 @@ public class Player {
         oldPos = startPos;
     }
 
+    /**
+     * Adds a card to players hand
+     * Use to Create a plaeyr
+     * @param card
+     */
     public void addToHand(Card<?> card){
         this.hand.add(card);
     }
 
     /**
-     * Player takes a turn,
-     * moves, suggests and accuses
+     * Player takes their turn.
+     * Gets the choice to move if they have been moved to another room
+     * Has the choice of suggest / accuse
      */
     public void takeTurn(Board board) throws InvalidActionException {
         boolean willMove = true;
@@ -88,6 +94,9 @@ public class Player {
         }
     }
 
+    /**
+     * @return Players hand
+     */
     public ArrayList<Card<?>> getHand(){ return hand; }
 
     @Override
