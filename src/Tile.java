@@ -12,9 +12,9 @@ public class Tile {
     public void setRoomName(String roomName){
         this.roomName=roomName;
     }
-    public void setDoor(boolean bool){
+    public void setDoor(boolean bool, Room r){
         door=bool;
-        room.addDoor(this);
+        r.addDoor(this);
     }
 
     public boolean isRoom(){
