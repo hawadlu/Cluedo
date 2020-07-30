@@ -9,7 +9,7 @@ import java.util.Map;
  */
 public class Board {
    HashMap<String, Room> rooms = new HashMap<>();
-   Tile[][] board = new Tile[26][24];
+   Tile[][] board = new Tile[25][24];
 
    public Board(ArrayList<Player> players){
 
