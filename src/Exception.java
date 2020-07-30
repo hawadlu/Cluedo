@@ -2,8 +2,8 @@
  * Classes containing any potential errors
  */
 
-class InvalidActionException extends Throwable {
-    InvalidActionException(String specifics) {
+class InvalidMoveException extends Throwable {
+    InvalidMoveException(String specifics) {
         System.out.println("Move is invalid: " + specifics);
     }
 }
