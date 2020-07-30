@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Physical PLayer.
@@ -27,6 +26,23 @@ public class Player {
      */
     public void addToHand(Card<?> card){
         this.hand.add(card);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Player player = (Player) o;
+        return hasLost == player.hasLost &&
+                name == player.name &&
+                Objects.equals(hand, player.hand) &&
+                Objects.equals(newPos, player.newPos) &&
+                Objects.equals(oldPos, player.oldPos);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, hand, hasLost, newPos, oldPos);
     }
 
     /**
@@ -123,5 +139,21 @@ public class Player {
     @Override
     public String toString() {
         return name.toString().substring(0, 2);
+    }
+
+    /**
+     * Look through this hand for any matches
+     * @param room Game.Rooms
+     * @param accused Game.Players
+     * @param weapon Game.Weapons
+     * @return arraylist of the matches
+     */
+    public ArrayList<Card> addMatches(Card room, Card accused, Card weapon) {
+        ArrayList<Card> matches = new ArrayList<>();
+        if (hand.contains(room)) matches.add(room);
+        if (hand.contains(accused)) matches.add(accused);
+        if (hand.contains(weapon)) matches.add(weapon);
+
+        return matches;
     }
 }
