@@ -1,3 +1,5 @@
+import javafx.geometry.Pos;
+
 import java.util.*;
 
 /**
@@ -70,10 +72,11 @@ public class Player {
             numMove += (int)(Math.random() * 6) + 1;
 
             while(numMove > 0){
+                oldPos = new Position(newPos);
                 numMove = makeMove(numMove, board);
                 board.movePlayer(oldPos, newPos);
+                System.out.println(board);
             }
-            oldPos = newPos;
         }
 
         //Checking if suggest or accuse
