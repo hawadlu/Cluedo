@@ -136,7 +136,7 @@ public class Player {
     public int makeMove(int numMove, Board board){
         boolean hasMoved = false;
         String response = "";
-        System.out.println(board);
+        System.out.println(Game.getPlainText() + board);
         System.out.println("--------------------------------------------");
         System.out.println("Your turn to move: you have "+numMove+" moves.");
 //
