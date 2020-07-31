@@ -106,12 +106,13 @@ public class Player {
 
         //Accuse / Suggest & getting room
         if(action.equals("Accuse")){
-            Game.Rooms room = Game.chooseFromArray(Game.Rooms.values(),
-                    "Please choose a Room.\n");
-            makeAccuse(room, player, weapon);
+            Game.Rooms room = Game.chooseFromArray(Game.Rooms.values(), "Please choose a Room.\n");
+            new Accuse(room, player, weapon, this).apply();
+
         }else if(action.equals("Suggest")){
             Game.Rooms room = board.getTile(newPos.x, newPos.y).getEnum();
             lastRoom = room;
+
             new Suggest(room, player, weapon, this).apply();
         }
 
@@ -184,19 +185,6 @@ public class Player {
         if(board.getTile(newPos.x, newPos.y).getEnum() != lastRoom){ return 0; }
         //else return num of moves
         return numMove-response.length();
-    }
-
-    /**
-     * Make an accusation
-     * @param room the room that is being accused
-     * @param player the player that is being accused
-     * @param weapon the weapon that is being accused
-     */
-    public void makeAccuse(Game.Rooms room, Game.Players player, Game.Weapons weapon){
-        boolean hasAccused = false;
-        while(!hasAccused){
-            hasAccused = new Accuse(room, player, weapon, this).apply();
-        }
     }
 
     /**
