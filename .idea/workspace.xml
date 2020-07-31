@@ -4,15 +4,8 @@
     <list default="true" id="282160f1-3723-4af6-8078-72a0a8f707c3" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Board.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Board.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Game$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Game$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Game.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Move.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Move.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Player.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Position.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Position.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Room.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Room.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Suggest.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Suggest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Tests$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Tests$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Cluedo/Tests.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Cluedo/Tests.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Move.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Move.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Player.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -68,6 +61,7 @@
       <option name="PARAMETERS" value="" />
       <method v="2">
         <option name="Make" enabled="true" />
+        <option name="BSP.BeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <configuration name="Tests.testSuggest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
@@ -104,6 +98,7 @@
       <workItem from="1595805379816" duration="1092000" />
       <workItem from="1596070840523" duration="1429000" />
       <workItem from="1596134656730" duration="6856000" />
+      <workItem from="1596157637915" duration="763000" />
     </task>
     <servers />
   </component>
@@ -209,5 +204,16 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1596153814650" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/Move.java</url>
+          <line>62</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

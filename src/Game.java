@@ -14,6 +14,8 @@ public class Game {
     public static Weapons accuseWeapon;
     public static Scanner input = new Scanner(System.in);
     public static boolean gameOver = false;
+    public static List<Player> players;
+    public static Map<Players, Player> playerMap;
 
     public static Board board;
 
@@ -117,6 +119,15 @@ public class Game {
 
             availablePlayers.remove(player);
         }
+
+        // Make player objects for the remaining characters that aren't playing
+        for (Players player : availablePlayers) {
+            Position startPos = getStartingPosition(player);
+            Player npc = new Player(player, startPos);
+            npc.setHasLost(true);
+            players.add(npc);
+        }
+
         return players;
     }
 
@@ -176,10 +187,17 @@ public class Game {
         // Setup the game
         gameOver = false;
         int numPlayers = getNumPlayers();
-        ArrayList<Player> players = createPlayers(numPlayers);
+        players = createPlayers(numPlayers);
         ArrayList<Player> lostPlayers = new ArrayList<>();
+        playerMap = new HashMap<>();
         dealCards(players, numPlayers);
         board = new Board();
+
+        // Populate lostPlayers and playerMap
+        for (Player player : players) {
+            if (player.hasLost()) lostPlayers.add(player);
+            playerMap.put(player.getName(), player);
+        }
 
         // Set players to their starting positions
         for (Player player : players) {
@@ -191,16 +209,16 @@ public class Game {
         // Run the game
         int currentPlayer = 0;
         while (!gameOver) {
-            Player player = players.get(currentPlayer%numPlayers);
+            Player player = players.get(currentPlayer % numPlayers);
             if(!lostPlayers.contains(player)) {
                 System.out.println(board);
                 System.out.println(player.getName() + "'s Turn");
 
-                player.takeTurn(board, players);
+                player.takeTurn(board);
                 if (player.hasLost){ lostPlayers.add(player); }
             }
             if(lostPlayers.size() == players.size()) {
-                System.out.println("All players have lost game is over.");
+                System.out.println("All players have lost, game is over.");
                 gameOver = true;
             }
             currentPlayer++;
@@ -250,6 +268,13 @@ public class Game {
             currentPlayer ++;
             currentPlayer %= numPlayers;
         }
+    }
+
+    /**
+     * 'Clear' the output of the console by printing a bunch of newline characters
+     */
+    public static void clearOutput() {
+        System.out.print(String.join("", Collections.nCopies(30, "\n")));
     }
 
     public static void main(String[] args) throws FileNotFoundException {
