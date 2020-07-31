@@ -50,6 +50,8 @@ public class Suggest implements Action {
         }
         // No matches were found
         System.out.println("No one can prove you wrong!");
+        System.out.println("Press Enter to Continue");
+        Game.input.nextLine();
         return false;
     }
 }
