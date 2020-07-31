@@ -1,5 +1,3 @@
-import javafx.geometry.Pos;
-
 import java.util.*;
 
 /**
@@ -55,9 +53,8 @@ public class Player {
      * Gets the choice to move if they have been moved to another room
      * Has the choice of suggest / accuse
      * @param board the board that the game is running on
-     * @param allPlayers the list of all the players playing the game
      */
-    public void takeTurn(Board board, List<Player> allPlayers) {
+    public void takeTurn(Board board) {
         boolean willMove = true;
         //If they have been moved to a room, Player chooses if they want to move again
         if(isDiffPos()){
@@ -102,12 +99,12 @@ public class Player {
         //Accuse / Suggest & getting room
         if(action.equals("Accuse")){
             Game.Rooms room = Game.chooseFromArray(Game.Rooms.values(),
-                    "Please choose a Weapon.\n");
+                    "Please choose a Room.\n");
             makeAccuse(room, player, weapon);
         }else if(action.equals("Suggest")){
             Game.Rooms room = Game.Rooms.valueOf(board.board[newPos.y][newPos.x].room.name);
             lastRoom = room;
-            makeSuggest(room, player, weapon, allPlayers);
+            new Suggest(room, player, weapon, this).apply();
         }
     }
 
@@ -142,22 +139,6 @@ public class Player {
             }catch(InvalidMoveException e){ System.out.println("Invalid move, try again."); }
         }
         return numMove-response.length();
-    }
-
-    /**
-     * Make a suggestion
-     * @param room the room that is being suggested
-     * @param player the player that is being suggested
-     * @param weapon the weapon that is being suggested
-     * @param allPlayers the list of all players that are playing the game
-     */
-    public void makeSuggest(Game.Rooms room, Game.Players player, Game.Weapons weapon, List<Player> allPlayers){
-        boolean hasSuggested = false;
-        while(!hasSuggested){
-            try {
-                hasSuggested = new Suggest(room, player, weapon, this, allPlayers).apply();
-            }catch(InvalidMoveException e){ System.out.println("Invalid move, try again."); }
-        }
     }
 
     /**
@@ -206,16 +187,23 @@ public class Player {
     /**
      * Look through this hand for any matches
      * @param room Game.Rooms
-     * @param accused Game.Players
+     * @param suspect Game.Players
      * @param weapon Game.Weapons
      * @return arraylist of the matches
      */
-    public ArrayList<Card<?>> addMatches(Card<Game.Rooms> room, Card<Game.Players> accused, Card<Game.Weapons> weapon) {
+    public ArrayList<Card<?>> addMatches(Card<Game.Rooms> room, Card<Game.Players> suspect, Card<Game.Weapons> weapon) {
         ArrayList<Card<?>> matches = new ArrayList<>();
-        if (hand.contains(room)) matches.add(room);
-        if (hand.contains(accused)) matches.add(accused);
-        if (hand.contains(weapon)) matches.add(weapon);
-
+        for (Card<?> card : hand)
+            if (card.equals(room) || card.equals(suspect) || card.equals(weapon))
+                matches.add(card);
         return matches;
+    }
+
+    public void setHasLost(boolean hasLost) {
+        this.hasLost = hasLost;
+    }
+
+    public boolean hasLost() {
+        return hasLost;
     }
 }

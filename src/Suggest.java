@@ -1,48 +1,55 @@
+import com.sun.org.apache.bcel.internal.util.SyntheticRepository;
+
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class Suggest implements Action {
+    private final Card<Game.Players> suspect;
     private final Card<Game.Rooms> room;
-    private final List<Player> allPlayers;
     private final Card<Game.Weapons> weapon;
     private final Player player;
-    private final Card<Game.Players> accused;
 
-    Suggest(Game.Rooms room, Game.Players accused, Game.Weapons weapon, Player player, List<Player> allPlayers) {
+    Suggest(Game.Rooms room, Game.Players suspect, Game.Weapons weapon, Player player) {
+        this.suspect = new Card<>(suspect);
         this.room = new Card<>(room);
         this.weapon = new Card<>(weapon);
-        this.accused = new Card<>(accused);
-        this.allPlayers = allPlayers;
         this.player = player;
     }
 
     @Override
-    public boolean apply() throws InvalidMoveException {
-        //Move the accused players to this room
-        for (Player playerToMove: allPlayers) {
-            if (playerToMove.name.equals(accused.name)) {
-                //Get the room
-                Board.rooms.get(room.name).addPlayer(playerToMove);
-                break;
-            }
-        }
+    public boolean apply() {
+        // Move the suggested player to the room
+        Board.rooms.get(room.name.toString())
+                .addPlayer(Game.playerMap.get(suspect.getEnum()));
 
-        allPlayers.remove(player);
+        // Go through each players hand after this player looking for a match
+        int indexOfPlayer = Game.players.indexOf(player);
+        for (int i = indexOfPlayer+1; i != indexOfPlayer; i = (i+1) % Game.players.size()) {
+            Player otherPlayer = Game.players.get(i);
+            ArrayList<Card<?>> cardOptions = otherPlayer.addMatches(room, suspect, weapon);
 
-        //Go through all of the players hand looking for a match
-        for (Player other: allPlayers) {
-            ArrayList<Card<?>> cardOptions = other.addMatches(room, accused, weapon);
-
+            // A match has been found in this hand
             if (!cardOptions.isEmpty()) {
-                System.out.println("Found a match");
+                // Allow the player to choose a card without current player seeing
+                Game.clearOutput();
+                System.out.println(otherPlayer.getName() + " can prove you wrong, let them choose a card to show you"
+                        +"\nPress Enter if you are "+otherPlayer.getName());
+                Game.input.nextLine();
 
-                Card<?> toShow = Game.chooseFromArray(cardOptions.toArray(new Card<?>[]{}), "Choose a card to show");
-                System.out.println("Show card: " + toShow);
+                Card<?> toShow = Game.chooseFromArray(cardOptions.toArray(new Card<?>[]{}), "Choose a card to show to "+player.getName());
+
+                // Go back to the current players turn and display the chosen card
+                Game.clearOutput();
+                System.out.println(otherPlayer.getName() + " has chosen to show you "+toShow
+                        +"\nPress Enter if you are "+player.getName()+" to continue");
+                Game.input.nextLine();
 
                 return true;
             }
         }
+        // No matches were found
+        System.out.println("No one can prove you wrong!");
         return false;
     }
 }
