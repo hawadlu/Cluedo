@@ -17,6 +17,15 @@ public class Game {
     public static List<Player> players;
     public static Map<Players, Player> playerMap;
 
+    //Text colours
+    static final String plainText = "\033[0m";  // Text Reset
+    static final String redText = "\033[0;31m";     // RED
+    static final String greenText = "\033[0;32m";   // GREEN
+    static final String yellowText = "\033[0;33m";  // YELLOW
+    static final String blueText = "\033[0;34m";    // BLUE
+    static final String purpleText = "\033[0;35m";  // PURPLE
+    static final String whiteText = "\033[0;37m";   // WHITE
+
     public static Board board;
 
     public enum Players {
@@ -272,6 +281,31 @@ public class Game {
      */
     public static void clearOutput() {
         System.out.print(String.join("", Collections.nCopies(30, "\n")));
+    }
+
+    /**
+     * Get the appropriate colour for the character
+     * @param name the character name
+     * @return string of the colour
+     */
+    public static String getColour(String name) {
+        switch (name) {
+            case "SCARLET": return redText;
+            case "PLUM" : return purpleText;
+            case "WHITE" : return whiteText;
+            case "PEACOCK" : return blueText;
+            case "GREEN" : return greenText;
+            case "MUSTARD" : return yellowText;
+        }
+        return plainText;
+    }
+
+    /**
+     * Get the normal text colour of the console
+     * @return the normal colour
+     */
+    public static String getPlainText() {
+        return plainText;
     }
 
     public static void main(String[] args) throws FileNotFoundException {
