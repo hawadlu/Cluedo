@@ -1,9 +1,12 @@
 public class Tile {
     Room room=null;
-    String roomName=null;
+    Game.Rooms roomName=null;
     Player player=null;
     Boolean door=false;
-    String doorRoom=null;
+    Boolean toggleDoor=false;
+    Game.Rooms doorRoom=null;
+    int doorNumber=0;
+    Game.Rooms enumDoor=null;
 
     /**
      * Set this tile to a room
@@ -17,7 +20,7 @@ public class Tile {
      * Set the name of this room
      * @param roomName new name for this room
      */
-    public void setRoomName(String roomName){
+    public void setRoomName(Game.Rooms roomName){
         this.roomName=roomName;
     }
 
@@ -28,6 +31,34 @@ public class Tile {
     public void setDoor(Room r){
         door=true;
         r.addDoor(this);
+    }
+
+    /**gets the room enum
+     *
+     * @return room enum
+     */
+    public Game.Rooms getEnum(){
+        return roomName;
+    }
+
+
+    /**toggles the display of the door
+     *
+     */
+    public void toggleDoor(){
+        if(!toggleDoor){
+            toggleDoor=true;
+        }else{
+            toggleDoor=false;
+        }
+    }
+
+    /**sets room door number
+     *
+     * @param i is the new door number
+     */
+    public void setDoorNumber(int i){
+        doorNumber=i;
     }
 
     /**
@@ -83,6 +114,8 @@ public class Tile {
            return player.toString();
         }else if(room!=null){
             return "  ";
+        }else if(toggleDoor){
+            return doorNumber+" ";
         }
 
         return "• ";
