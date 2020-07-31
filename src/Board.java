@@ -117,7 +117,7 @@ public class Board {
       board[20][15].setDoor(rooms.get(Game.Rooms.HALL),new Position(15,20));
 
       //Study room
-      board[20][17].setDoor(rooms.get(Game.Rooms.STUDY),new Position(15,20));
+      board[20][17].setDoor(rooms.get(Game.Rooms.STUDY),new Position(17,20));
 
       //sets rooms standing spots
       rooms.get(Game.Rooms.KITCHEN).setSeats(this,1,4);
@@ -211,8 +211,9 @@ public class Board {
        Tile currentTile = board[currentPos.y][currentPos.x];
        Tile nextTile = board[nextPos.y][nextPos.x];
        Player player = currentTile.player;
-       currentTile.removePlayer(player);
        nextTile.addPlayer(player);
+       currentTile.removePlayer(player);
+
     }
     
     //todo implement this properly
