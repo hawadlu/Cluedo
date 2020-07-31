@@ -53,9 +53,8 @@ public class Player {
      * Gets the choice to move if they have been moved to another room
      * Has the choice of suggest / accuse
      * @param board the board that the game is running on
-     * @param allPlayers the list of all the players playing the game
      */
-    public void takeTurn(Board board, List<Player> allPlayers) {
+    public void takeTurn(Board board) {
         //Show players Hand
         System.out.println("Your Hand: "+getHand());
 
@@ -110,8 +109,9 @@ public class Player {
                     "Please choose a Room.\n");
             makeAccuse(room, player, weapon);
         }else if(action.equals("Suggest")){
-            Game.Rooms room = board.getTile(newPos.x, newPos.y).getEnum();
-            makeSuggest(room, player, weapon, allPlayers);
+            Game.Rooms room = Game.Rooms.valueOf(board.board[newPos.y][newPos.x].room.name);
+            lastRoom = room;
+            new Suggest(room, player, weapon, this).apply();
         }
 
         //Update lastRoom, will be null if outside of room, used in accuse
@@ -161,22 +161,6 @@ public class Player {
     }
 
     /**
-     * Make a suggestion
-     * @param room the room that is being suggested
-     * @param player the player that is being suggested
-     * @param weapon the weapon that is being suggested
-     * @param allPlayers the list of all players that are playing the game
-     */
-    public void makeSuggest(Game.Rooms room, Game.Players player, Game.Weapons weapon, List<Player> allPlayers){
-        boolean hasSuggested = false;
-        while(!hasSuggested){
-            try {
-                hasSuggested = new Suggest(room, player, weapon, this, allPlayers).apply();
-            }catch(InvalidMoveException e){ System.out.println("Invalid move, try again."); }
-        }
-    }
-
-    /**
      * Make an accusation
      * @param room the room that is being accused
      * @param player the player that is being accused
@@ -221,16 +205,23 @@ public class Player {
     /**
      * Look through this hand for any matches
      * @param room Game.Rooms
-     * @param accused Game.Players
+     * @param suspect Game.Players
      * @param weapon Game.Weapons
      * @return arraylist of the matches
      */
-    public ArrayList<Card<?>> addMatches(Card<Game.Rooms> room, Card<Game.Players> accused, Card<Game.Weapons> weapon) {
+    public ArrayList<Card<?>> addMatches(Card<Game.Rooms> room, Card<Game.Players> suspect, Card<Game.Weapons> weapon) {
         ArrayList<Card<?>> matches = new ArrayList<>();
-        if (hand.contains(room)) matches.add(room);
-        if (hand.contains(accused)) matches.add(accused);
-        if (hand.contains(weapon)) matches.add(weapon);
-
+        for (Card<?> card : hand)
+            if (card.equals(room) || card.equals(suspect) || card.equals(weapon))
+                matches.add(card);
         return matches;
+    }
+
+    public void setHasLost(boolean hasLost) {
+        this.hasLost = hasLost;
+    }
+
+    public boolean hasLost() {
+        return hasLost;
     }
 }

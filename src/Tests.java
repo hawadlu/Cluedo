@@ -33,7 +33,7 @@ public class Tests {
         Player testPlayer = players.remove(0);
 
         //Test the suggest mechanism with some random cards
-        Suggest suggest = new Suggest(Game.Rooms.BILLARD_ROOM, Game.Players.PEACOCK, Game.Weapons.ROPE, testPlayer, players);
+        Suggest suggest = new Suggest(Game.Rooms.BILLARD_ROOM, Game.Players.PEACOCK, Game.Weapons.ROPE, testPlayer);
         suggest.apply();
 
     }
