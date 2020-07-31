@@ -7,7 +7,7 @@ public class Tile {
     Game.Rooms doorRoom=null;
     int doorNumber=0;
     Game.Rooms enumDoor=null;
-    Position doorPos=null;
+    Position pos=null;
 
     /**
      * Set this tile to a room
@@ -31,10 +31,13 @@ public class Tile {
      */
     public void setDoor(Room r, Position pos){
         door=true;
-        doorPos=pos;
+        this.pos=pos;
         r.addDoor(this);
     }
 
+    public void setPos(Position pos){
+        this.pos=pos;
+    }
     /**
      * Gets the room enum
      * @return room enum
@@ -54,8 +57,8 @@ public class Tile {
      * Gets this door position, used for leaving rooms
      * @return door position
      */
-    public Position getDoorPos(){
-        return doorPos;
+    public Position getPos(){
+        return pos;
     }
 
     /**toggles the display of the door
@@ -111,6 +114,7 @@ public class Tile {
         if(room==null) {
             player = p;
         }else{
+
             room.addPlayer(p);
         }
     }
