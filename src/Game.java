@@ -211,9 +211,6 @@ public class Game {
         while (!gameOver) {
             Player player = players.get(currentPlayer % numPlayers);
             if(!lostPlayers.contains(player)) {
-                System.out.println(board);
-                System.out.println(player.getName() + "'s Turn");
-
                 player.takeTurn(board);
                 if (player.hasLost){ lostPlayers.add(player); }
             }

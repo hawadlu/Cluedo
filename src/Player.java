@@ -11,8 +11,12 @@ public class Player {
     Position newPos;
     Position oldPos;
     Game.Rooms lastRoom;
-    HashSet<Position> tilesThisTurn = new HashSet<>();
+    HashSet<Tile> tilesThisTurn = new HashSet<>();
+    boolean suggested = false;
 
+    private int movement = 0;
+
+    private enum Actions {VIEW_HAND, MOVE, SUGGEST, ACCUSE, LEAVE_ROOM, END_TURN }
 
     Player(Game.Players name, Position startPos) {
         this.name = name;
@@ -24,12 +28,216 @@ public class Player {
     }
 
     /**
+     * Player takes their turn.
+     * Gets the choice to move if they have been moved to another room
+     * Has the choice of suggest / accuse
+     * @param board the board that the game is running on
+     */
+    public void takeTurn(Board board) {
+        System.out.println(board);
+
+        // Simulates rolling dice for movement
+        movement = (int)(Math.random() * 6) + (int)(Math.random() * 6) + 2;
+
+        tilesThisTurn = new HashSet<>();
+        suggested = false;
+        boolean takingTurn = true;
+
+        while (takingTurn) {
+            System.out.println(name + "'s Turn");
+            Actions action = Game.chooseFromArray(getActions(board), "What would you like to do?");
+
+            switch (action) {
+                case VIEW_HAND:
+                    System.out.println("Your hand: " + getHand());
+                    break;
+
+                case MOVE:
+                    System.out.println(board);
+                    makeMove(board);
+                    break;
+
+                case SUGGEST:
+                case ACCUSE:
+                    // Choose a suspect and weapon to accuse/suggest
+                    Game.Players player = Game.chooseFromArray(Game.Players.values(), "Please choose a Suspect:");
+                    Game.Weapons weapon = Game.chooseFromArray(Game.Weapons.values(), "Please choose a Weapon:");
+                    Game.Rooms room;
+
+                    switch (action) {
+                        case ACCUSE:
+                            room = Game.chooseFromArray(Game.Rooms.values(), "Please choose a Room:");
+                            new Accuse(room, player, weapon, this).apply();
+                            takingTurn = false;
+                            break;
+                        case SUGGEST:
+                            room = board.getTile(newPos.x, newPos.y).getEnum();
+                            lastRoom = room;
+                            suggested = true;
+                            new Suggest(room, player, weapon, this).apply();
+                    }
+                    break;
+
+                case LEAVE_ROOM:
+                    leaveRoom(board);
+                    break;
+
+                case END_TURN:
+                    takingTurn = false;
+                    break;
+            }
+        }
+
+        //Update lastRoom, will be null if outside of room, used in accuse
+        if (!suggested) lastRoom = null;
+        else lastRoom = board.getTile(newPos.x, newPos.y).getEnum();
+    }
+
+    /**
+     * Generate an array of actions that can be taken
+     * @param board the board the game is being played on
+     * @return the array of actions that can be taken
+     */
+    public Actions[] getActions(Board board) {
+        List<Actions> actions = new ArrayList<>();
+        Game.Rooms currentRoom = board.getTile(newPos.x, newPos.y).getEnum();
+        boolean inRoom = board.getTile(newPos.x, newPos.y).isRoom();
+
+        actions.add(Actions.VIEW_HAND);
+
+        if (inRoom && movement > 0)
+            actions.add(Actions.LEAVE_ROOM);
+        else if (movement > 0)
+            actions.add(Actions.MOVE);
+
+        if (inRoom && !suggested && currentRoom != lastRoom)
+            actions.add(Actions.SUGGEST);
+
+        actions.add(Actions.ACCUSE);
+        actions.add(Actions.END_TURN);
+
+        return actions.toArray(new Actions[]{});
+    }
+
+    /**
+     * Attempt to leave the room the player is in
+     * @param board the board that the game is playing on
+     */
+    public void leaveRoom(Board board) {
+        Room room = board.getTile(newPos.x, newPos.y).getRoom();
+        int numDoors = room.getNumberOfDoors();
+        List<Position> doors = new ArrayList<>();
+
+        // Display doors on board
+        room.toggleDoorNumbers();
+        System.out.println(board);
+
+        // Create Questions
+        List<String> options = new ArrayList<>();
+
+        // Ask what door they want to leave from
+        for (int i = 0; i < numDoors; i++) {
+            Position doorPos = room.getDoor(i);
+            if (!board.getTile(doorPos.x, doorPos.y).hasPlayer()) {
+                options.add("Door " + (i + 1));
+                doors.add(doorPos);
+            }
+        }
+        options.add("Stay in room");
+        String doorString = Game.chooseFromArray(options.toArray(new String[]{}),
+                "What door would you like to leave from?\n");
+
+        // Leave the room
+        if(!doorString.equals("Stay in room")) {
+            int door = options.indexOf(doorString);
+            board.movePlayer(newPos, doors.get(door));
+
+            newPos = new Position(room.getDoor(door));
+            oldPos = new Position(newPos);
+            movement -= 1;
+
+            room.toggleDoorNumbers();
+            System.out.println(board);
+        }
+    }
+
+    /**
+     * Make a move action
+     * @param board the board the game is running on
+     */
+    public void makeMove(Board board){
+        // Take movement commands until run out of movement
+        while(movement > 0){
+            oldPos = new Position(newPos);
+
+            System.out.println(board);
+            System.out.println(name +" has "+movement+" moves left.");
+
+            // Request intended movement
+            System.out.println("'L' for Left, 'R' for Right, 'U' for Up and 'D' for Down" +
+                    "\n(You can make multiple moves at once e.g. LLDLLU)" +
+                        "\nEnter nothing to stop moving");
+            String response = new Scanner(System.in).nextLine().toLowerCase();
+
+            // Player chooses to stop moving
+            if (response.trim().length() == 0) return;
+
+            // Add the current position to the set of visited tiles
+            tilesThisTurn.add(board.getTile(newPos.x, newPos.y));
+
+            // Process the requested move
+            String[] actions = response.split("");
+            try {
+                // Check to see if the player is trying to move more than their remaining movement
+                if (actions.length > movement) throw new InvalidMoveException("Move too long");
+
+                // Try to apply the move
+                new Move(board, this, actions).apply();
+
+                // Move worked, reduce movement
+                movement -= actions.length;
+
+                // If entered room, set movement to 0
+                if(board.getTile(newPos.x, newPos.y).getEnum() != null)
+                    movement = 0;
+
+                // Execute the movement on the board
+                board.movePlayer(oldPos, newPos);
+                oldPos = new Position(newPos);
+
+            } catch(InvalidMoveException e) {
+                System.out.println("Try again (Press Enter to Continue)");
+                Game.input.nextLine();
+            }
+        }
+    }
+
+    /**
+     * Get this players hand
+     * @return arraylist of cards in this players hand
+     */
+    public ArrayList<Card<?>> getHand(){ return hand; }
+
+    /**
      * Adds a card to players hand
      * Use to Create a player
      * @param card the card to add to the hand
      */
     public void addToHand(Card<?> card){
         this.hand.add(card);
+    }
+
+    /**
+     * Get name of this player
+     * @return enum from Players in Game class
+     */
+    public Game.Players getName() {
+        return name;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, hand, hasLost, newPos, oldPos);
     }
 
     @Override
@@ -42,173 +250,6 @@ public class Player {
                 Objects.equals(hand, player.hand) &&
                 Objects.equals(newPos, player.newPos) &&
                 Objects.equals(oldPos, player.oldPos);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, hand, hasLost, newPos, oldPos);
-    }
-
-    /**
-     * Player takes their turn.
-     * Gets the choice to move if they have been moved to another room
-     * Has the choice of suggest / accuse
-     * @param board the board that the game is running on
-     */
-    public void takeTurn(Board board) {
-        //Start by asking what user wants to do
-        boolean willMove = true;
-        String response = "Show Hand";
-        while(response.equals("Show Hand")) {
-            if (board.getTile(newPos.x, newPos.y).getEnum() != lastRoom) {
-                response = Game.chooseFromArray(new String[]{"Show Hand", "Move", "Accuse", "Suggest", "End Turn"},
-                        "What would you like to do?");
-            }else{
-                response = Game.chooseFromArray(new String[]{"Show Hand", "Move", "Accuse", "End Turn"},
-                        "What would you like to do?");
-            }
-
-            if(response.equals("Show Hand")){ System.out.println("Your hand: "+getHand()); }
-        }
-        if(!response.equals("Move")){ willMove = false; }
-
-        //Moving
-        if(willMove){
-            int numMove = (int)(Math.random() * 6) + 1;
-            numMove += (int)(Math.random() * 6) + 1;
-
-            while(numMove > 0){
-                oldPos = new Position(newPos);
-                numMove = makeMove(numMove, board);
-                board.movePlayer(oldPos, newPos);
-                System.out.println(board);
-            }
-            oldPos = new Position(newPos);
-        }
-
-        //Checking if suggest or accuse
-        if(willMove) {
-            response = "Show Hand";
-            while(response.equals("Show Hand")) {
-                if (board.getTile(newPos.x, newPos.y).getEnum() != lastRoom
-                        && board.getTile(newPos.x, newPos.y).getEnum() != null) {
-                    response = Game.chooseFromArray(new String[]{"Show Hand", "Suggest", "Accuse", "End turn"},
-                            "Would you like to Accuse or Suggest?");
-                } else {
-                    response = Game.chooseFromArray(new String[]{"Show Hand", "Accuse", "End Turn"},
-                            "Would you like to Accuse?");
-                }
-
-                if(response.equals("Show Hand")){ System.out.println("Your hand: "+getHand()); }
-            }
-        }
-
-        //Getting player and weapon
-        Game.Players player = null; Game.Weapons weapon = null;
-        if(response.equals("Accuse") || response.equals("Suggest")) {
-            player = Game.chooseFromArray(Game.Players.values(),
-                    "Please choose a Person:");
-            weapon = Game.chooseFromArray(Game.Weapons.values(),
-                    "Please choose a Weapon:");
-        }
-
-        //Accuse / Suggest & getting room
-        if(response.equals("Accuse")){
-            Game.Rooms room = Game.chooseFromArray(Game.Rooms.values(), "Please choose a Room:");
-            new Accuse(room, player, weapon, this);
-
-        }else if(response.equals("Suggest")){
-            Game.Rooms room = board.getTile(newPos.x, newPos.y).getEnum();
-            lastRoom = room;
-
-            new Suggest(room, player, weapon, this).apply();
-        }
-
-        //Update lastRoom, will be null if outside of room, used in accuse
-        lastRoom = board.getTile(newPos.x, newPos.y).getEnum();
-    }
-
-    /**
-     * Make a move action
-     * @param numMove the amount that this player can move this turn
-     * @param board the board the game is running on
-     * @return the amount of moves left
-     */
-    public int makeMove(int numMove, Board board){
-        boolean hasMoved = false;
-        String response = "";
-        System.out.println(board);
-        System.out.println("--------------------------------------------");
-        System.out.println("Your turn to move: you have "+numMove+" moves.");
-//
-        //Creating new move
-        while(!hasMoved){
-            //If player is inside a room
-            if(board.getTile(newPos.x, newPos.y).getEnum() != null){
-                Room room = board.getTile(newPos.x, newPos.y).getRoom();
-                int numDoors = room.getNumberOfDoors();
-                room.toggleDoorNumbers();
-                System.out.println(board);
-                //Create Questions
-                String[] questions = new String[numDoors+1];
-                for(int i=0; i<numDoors+1; i++){
-                    if(i==numDoors){ questions[i] = "Don't Leave Room";}
-                    else {questions[i] = "Door "+(i+1); }
-                }
-                String doorString = Game.chooseFromArray(questions, "What door would you like to leave from?\n");
-                int door = Integer.parseInt(doorString.substring(doorString.length()-1));
-                if(door <= numDoors) {
-                    System.out.println(newPos.x+" "+newPos.y);
-                    System.out.println(room.getDoor(door).x+" "+room.getDoor(door).y);
-                    board.movePlayer(newPos, room.getDoor(door));
-                    newPos = new Position(room.getDoor(door));
-                    oldPos = new Position(room.getDoor(door));
-                    numMove -= 1;
-                    room.toggleDoorNumbers();
-                    System.out.println(board);
-                    System.out.println("--------------------------------------------");
-                    System.out.println("Your turn to move: you have "+numMove+" moves.");
-                }else{ return 0; }
-
-            }
-
-            System.out.println("'L' for Left, 'R' for Right, 'U' for Up and 'D' for Down, " +
-                        "Press enter to use all Movement");
-            response = new Scanner(System.in).nextLine().toLowerCase();
-
-            try {
-                //Player chooses to end their turn
-                if(response.length() == 0){
-                    numMove = 0;
-                    hasMoved = true;
-
-                //process the requested move
-                }else {
-                    tilesThisTurn = new HashSet<>();
-                    tilesThisTurn.add(newPos); //Add the current position
-                    hasMoved = new Move(board, this, response.split(""), numMove).apply();
-                }
-            }catch(InvalidMoveException e){ System.out.println("Invalid move, try again."); }
-        }
-
-        //If entered room, return 0
-        if(board.getTile(newPos.x, newPos.y).getEnum() != lastRoom){ return 0; }
-        //else return num of moves
-        return numMove-response.length();
-    }
-
-    /**
-     * Get this players hand
-     * @return arraylist of cards in this players hand
-     */
-    public ArrayList<Card<?>> getHand(){ return hand; }
-
-    /**
-     * Get name of this player
-     * @return enum from Players in Game class
-     */
-    public Game.Players getName() {
-        return name;
     }
 
     @Override
