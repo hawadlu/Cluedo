@@ -50,12 +50,20 @@ public class Move implements Action {
         Position prev = new Position(player.newPos);
 
         for (String action: actions) {
+            //Check if the move is recognised
             switch (action) {
                 case "l": next.x -= 1; break; //move left
                 case "r": next.x += 1; break; //move right
                 case "u": next.y -= 1; break; //move up
                 case "d": next.y += 1; break; //move down
                 default: throw new InvalidMoveException("Unrecognised move type");
+            }
+
+            //Check if the player has already moved to this square in this turn.
+            if (player.tilesThisTurn.contains(next)) {
+                throw new InvalidMoveException("Cannot move to the same twice square in one turn");
+            } else {
+                player.tilesThisTurn.add(next);
             }
 
             if (!board.isValidMove(prev, next)) throw new InvalidMoveException("Cannot move to that tile");;

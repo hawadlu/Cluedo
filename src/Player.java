@@ -11,6 +11,7 @@ public class Player {
     Position newPos;
     Position oldPos;
     Game.Rooms lastRoom;
+    HashSet<Position> tilesThisTurn = new HashSet<>();
 
 
     Player(Game.Players name, Position startPos) {
@@ -149,6 +150,8 @@ public class Player {
 
                 //process the requested move
                 }else {
+                    tilesThisTurn = new HashSet<>();
+                    tilesThisTurn.add(newPos); //Add the current position
                     hasMoved = new Move(board, this, response.split(""), numMove).apply();
                 }
             }catch(InvalidMoveException e){ System.out.println("Invalid move, try again."); }
