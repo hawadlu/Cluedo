@@ -118,7 +118,7 @@ public class Board {
       board[20][15].setDoor(rooms.get(Game.Rooms.HALL),new Position(15,20));
 
       //Study room
-      board[20][17].setDoor(rooms.get(Game.Rooms.STUDY));
+      board[20][17].setDoor(rooms.get(Game.Rooms.STUDY),new Position(15,20));
 
       //sets rooms standing spots
       rooms.get(Game.Rooms.KITCHEN).setSeats(this,1,4);
