@@ -2,13 +2,13 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 public class Room {
-    String name;
+    Game.Rooms name;
     ArrayList<Tile> tiles;
     HashSet<Player> players = new HashSet<>();
     ArrayList<Tile> playerSeats = new ArrayList<>();
     ArrayList<Tile> doors = new ArrayList<>();
 
-    public Room(ArrayList<Tile> tiles, String name){
+    public Room(ArrayList<Tile> tiles, Game.Rooms name){
         this.name=name;
         this.tiles=tiles;
         for(Tile t: tiles){
@@ -38,7 +38,18 @@ public class Room {
      */
     public void addDoor(Tile t){
         doors.add(t);
+        t.setDoorNumber(doors.indexOf(t));
     }
+
+    /**toggles display of the rooms doors
+     *
+     */
+    public void toggleDoorNumbers(){
+        for(Tile t: doors){
+            t.toggleDoor();
+        }
+    }
+
 
     /**
      * The number of doors into this room
