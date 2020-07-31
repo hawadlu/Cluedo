@@ -83,11 +83,14 @@ public class Player {
 
         //Checking if suggest or accuse
         String action;
-        System.out.println("Old room: "+lastRoom+", new: "+ board.getTile(newPos.x, newPos.y).getEnum());
+        //System.out.println("Old room: "+lastRoom+", new: "+ board.getTile(newPos.x, newPos.y).getEnum());
+        System.out.println("Your Hand: "+getHand());
+        System.out.println("-------------------------------");
         if(board.getTile(newPos.x, newPos.y).getEnum() != lastRoom) {
             action = Game.chooseFromArray(new String[]{"Suggest", "Accuse", "End turn"},
                     "Would you like to Accuse or Suggest?.\n");
         }else{
+
             action = Game.chooseFromArray(new String[]{"Accuse", "End Turn"},
                     "Would you like to Accuse?.\n");
         }
@@ -104,7 +107,7 @@ public class Player {
         //Accuse / Suggest & getting room
         if(action.equals("Accuse")){
             Game.Rooms room = Game.chooseFromArray(Game.Rooms.values(),
-                    "Please choose a Weapon.\n");
+                    "Please choose a Room.\n");
             makeAccuse(room, player, weapon);
         }else if(action.equals("Suggest")){
             Game.Rooms room = board.getTile(newPos.x, newPos.y).getEnum();
@@ -141,6 +144,7 @@ public class Player {
 
                 //Player chooses to end their turn
                 } else if(response.length() == 0){
+                    numMove = 0;
                     hasMoved = true;
 
                 //process the requested move
