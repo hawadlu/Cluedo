@@ -90,7 +90,8 @@ public class Player {
         if(willMove) {
             response = "Show Hand";
             while(response.equals("Show Hand")) {
-                if (board.getTile(newPos.x, newPos.y).getEnum() != lastRoom) {
+                if (board.getTile(newPos.x, newPos.y).getEnum() != lastRoom
+                        && board.getTile(newPos.x, newPos.y).getEnum() != null) {
                     response = Game.chooseFromArray(new String[]{"Show Hand", "Suggest", "Accuse", "End turn"},
                             "Would you like to Accuse or Suggest?");
                 } else {
@@ -163,6 +164,8 @@ public class Player {
                     oldPos = new Position(room.getDoor(door));
                     numMove -= 1;
                     System.out.println(board);
+                    System.out.println("--------------------------------------------");
+                    System.out.println("Your turn to move: you have "+numMove+" moves.");
                 }else{ return 0; }
 
             }
