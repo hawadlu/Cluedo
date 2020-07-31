@@ -64,8 +64,8 @@ public class Room {
      * @param n the index of the door to be got
      * @return the door at the provided index
      */
-    public Tile getDoor(int n){
-        return doors.get(n);
+    public Position getDoor(int n){
+        return doors.get(n).getDoorPos();
     }
 
 

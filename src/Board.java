@@ -82,40 +82,40 @@ public class Board {
 
       //sets doors
       //Kitchen
-      board[7][4].setDoor(rooms.get(Game.Rooms.KITCHEN));
+      board[7][4].setDoor(rooms.get(Game.Rooms.KITCHEN),new Position(4,7));
 
       //ball room
-      board[5][7].setDoor(rooms.get(Game.Rooms.BALLROOM));
-      board[8][9].setDoor(rooms.get(Game.Rooms.BALLROOM));
-      board[8][14].setDoor(rooms.get(Game.Rooms.BALLROOM));
-      board[5][16].setDoor(rooms.get(Game.Rooms.BALLROOM));
+      board[5][7].setDoor(rooms.get(Game.Rooms.BALLROOM),new Position(7,5));
+      board[8][9].setDoor(rooms.get(Game.Rooms.BALLROOM),new Position(9,8));
+      board[8][14].setDoor(rooms.get(Game.Rooms.BALLROOM),new Position(14,8));
+      board[5][16].setDoor(rooms.get(Game.Rooms.BALLROOM),new Position(16,5));
 
       //conservatory
-      board[5][18].setDoor(rooms.get(Game.Rooms.CONSERVATORY));
+      board[5][18].setDoor(rooms.get(Game.Rooms.CONSERVATORY),new Position(18,5));
 
       //Dinning room
-      board[12][8].setDoor(rooms.get(Game.Rooms.DINING_ROOM));
-      board[16][6].setDoor(rooms.get(Game.Rooms.DINING_ROOM));
+      board[12][8].setDoor(rooms.get(Game.Rooms.DINING_ROOM),new Position(8,12));
+      board[16][6].setDoor(rooms.get(Game.Rooms.DINING_ROOM),new Position(6,16));
 
       //Billiard room
-      board[9][17].setDoor(rooms.get(Game.Rooms.BILLARD_ROOM));
-      board[13][22].setDoor(rooms.get(Game.Rooms.BILLARD_ROOM));
+      board[9][17].setDoor(rooms.get(Game.Rooms.BILLARD_ROOM),new Position(17,9));
+      board[13][22].setDoor(rooms.get(Game.Rooms.BILLARD_ROOM),new Position(22,13));
       board[13][22].setRoomName(Game.Rooms.BILLARD_ROOM);
 
       //Library room
-      board[13][20].setDoor(rooms.get(Game.Rooms.LIBRARY));
+      board[13][20].setDoor(rooms.get(Game.Rooms.LIBRARY),new Position(20,13));
       board[13][20].setRoomName(Game.Rooms.LIBRARY);
-      board[16][16].setDoor(rooms.get(Game.Rooms.LIBRARY));
+      board[16][16].setDoor(rooms.get(Game.Rooms.LIBRARY),new Position(16,16));
 
       //Lounge room
-      board[18][6].setDoor(rooms.get(Game.Rooms.LOUNGE));
+      board[18][6].setDoor(rooms.get(Game.Rooms.LOUNGE),new Position(6,18));
 
       //Hall room
-      board[17][11].setDoor(rooms.get(Game.Rooms.HALL));
+      board[17][11].setDoor(rooms.get(Game.Rooms.HALL),new Position(11,17));
       board[17][11].setRoomName(Game.Rooms.HALL);
-      board[17][12].setDoor(rooms.get(Game.Rooms.HALL));
+      board[17][12].setDoor(rooms.get(Game.Rooms.HALL),new Position(12,17));
       board[17][12].setRoomName(Game.Rooms.HALL);
-      board[20][15].setDoor(rooms.get(Game.Rooms.HALL));
+      board[20][15].setDoor(rooms.get(Game.Rooms.HALL),new Position(15,20));
 
       //Study room
       board[20][17].setDoor(rooms.get(Game.Rooms.STUDY));
