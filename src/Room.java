@@ -88,7 +88,6 @@ public class Room {
             if(t.player==null){
                 t.setPlayer(p);
                 p.setNewPos(t.getPos());
-                System.out.println(p.name + " has entered the " + this.name); //primarily for debugging
                 break;
             }
         }
