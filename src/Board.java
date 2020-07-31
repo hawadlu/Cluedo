@@ -11,7 +11,7 @@ import java.util.Scanner;
  * -Contains locations of players
  */
 public class Board {
-   public static HashMap<String, Room> rooms = new HashMap<>();
+   public static HashMap<Enum, Room> rooms = new HashMap<>();
    Tile[][] board = new Tile[25][24];
 
    public Board(){
@@ -25,43 +25,43 @@ public class Board {
       //sets room tiles
       ArrayList<Tile> Kitchen = new ArrayList<>();
       Kitchen = allocateTiles(Kitchen, 0,5,0,6);
-      rooms.put("Kitchen", new Room(Kitchen, "Kitchen"));
+      rooms.put(Game.Rooms.KITCHEN, new Room(Kitchen, Game.Rooms.KITCHEN));
 
       ArrayList<Tile> BallRoom = new ArrayList<>();
       BallRoom = allocateTiles(BallRoom, 10,13,0,1);
       BallRoom = allocateTiles(BallRoom, 8,15,2,7);
-      rooms.put("BallRoom", new Room(BallRoom, "BallRoom"));
+      rooms.put(Game.Rooms.BALLROOM, new Room(BallRoom, Game.Rooms.BALLROOM));
 
       ArrayList<Tile> Conservatory = new ArrayList<>();
       Conservatory = allocateTiles(Conservatory, 18,23,0,4);
       Conservatory = allocateTiles(Conservatory, 19,23,5,5);
-      rooms.put("Conservatory", new Room(Conservatory, "Conservatory"));
+      rooms.put(Game.Rooms.CONSERVATORY, new Room(Conservatory, Game.Rooms.CONSERVATORY));
 
       ArrayList<Tile> DinningRoom = new ArrayList<>();
       DinningRoom = allocateTiles(DinningRoom, 0,4,9,9);
       DinningRoom = allocateTiles(DinningRoom, 0,7,10,15);
-      rooms.put("DinningRoom", new Room(DinningRoom, "DinningRoom"));
+      rooms.put(Game.Rooms.DINING_ROOM, new Room(DinningRoom, Game.Rooms.DINING_ROOM));
 
       ArrayList<Tile> BilliardRoom = new ArrayList<>();
       BilliardRoom = allocateTiles(BilliardRoom, 18,23,8,12);
-      rooms.put("BilliardRoom", new Room(BilliardRoom, "BilliardRoom"));
+      rooms.put(Game.Rooms.BILLARD_ROOM, new Room(BilliardRoom, Game.Rooms.BILLARD_ROOM));
 
       ArrayList<Tile> Library = new ArrayList<>();
       Library = allocateTiles(Library, 17,17,15,17);
       Library = allocateTiles(Library, 18,23,14,18);
-      rooms.put("Library", new Room(Library, "Library"));
+      rooms.put(Game.Rooms.LIBRARY, new Room(Library, Game.Rooms.LIBRARY));
 
       ArrayList<Tile> Lounge = new ArrayList<>();
       Lounge = allocateTiles(Lounge, 0,6,19,24);
-      rooms.put("Lounge", new Room(Lounge, "Lounge"));
+      rooms.put(Game.Rooms.LOUNGE, new Room(Lounge, Game.Rooms.LOUNGE));
 
       ArrayList<Tile> Hall = new ArrayList<>();
       Hall = allocateTiles(Hall, 9,14,18,24);
-      rooms.put("Hall", new Room(Hall, "Hall"));
+      rooms.put(Game.Rooms.HALL, new Room(Hall, Game.Rooms.HALL));
 
       ArrayList<Tile> Study = new ArrayList<>();
       Study = allocateTiles(Study, 17,23,21,24);
-      rooms.put("Study", new Room(Study, "Study"));
+      rooms.put(Game.Rooms.STUDY, new Room(Study, Game.Rooms.STUDY));
 
       //blocked tiles
       ArrayList<Tile> Blocked = new ArrayList<>();
@@ -78,58 +78,58 @@ public class Board {
       Blocked.add(board[20][23]);
       Blocked.add(board[24][8]);
       Blocked.add(board[24][15]);
-      rooms.put("Blocked", new Room(Blocked, "Blocked"));
+      rooms.put(null, new Room(Blocked, null));
 
       //sets doors
       //Kitchen
-      board[7][4].setDoor(rooms.get("Kitchen"));
+      board[7][4].setDoor(rooms.get(Game.Rooms.KITCHEN));
 
       //ball room
-      board[5][7].setDoor(rooms.get("BallRoom"));
-      board[8][9].setDoor(rooms.get("BallRoom"));
-      board[8][14].setDoor(rooms.get("BallRoom"));
-      board[5][16].setDoor(rooms.get("BallRoom"));
+      board[5][7].setDoor(rooms.get(Game.Rooms.BALLROOM));
+      board[8][9].setDoor(rooms.get(Game.Rooms.BALLROOM));
+      board[8][14].setDoor(rooms.get(Game.Rooms.BALLROOM));
+      board[5][16].setDoor(rooms.get(Game.Rooms.BALLROOM));
 
       //conservatory
-      board[5][18].setDoor(rooms.get("Conservatory"));
+      board[5][18].setDoor(rooms.get(Game.Rooms.CONSERVATORY));
 
       //Dinning room
-      board[12][8].setDoor(rooms.get("DinningRoom"));
-      board[16][6].setDoor(rooms.get("DinningRoom"));
+      board[12][8].setDoor(rooms.get(Game.Rooms.DINING_ROOM));
+      board[16][6].setDoor(rooms.get(Game.Rooms.DINING_ROOM));
 
       //Billiard room
-      board[9][17].setDoor(rooms.get("BilliardRoom"));
-      board[13][22].setDoor(rooms.get("BilliardRoom"));
-      board[13][22].setRoomName("BilliardRoom");
+      board[9][17].setDoor(rooms.get(Game.Rooms.BILLARD_ROOM));
+      board[13][22].setDoor(rooms.get(Game.Rooms.BILLARD_ROOM));
+      board[13][22].setRoomName(Game.Rooms.BILLARD_ROOM);
 
       //Library room
-      board[13][20].setDoor(rooms.get("Library"));
-      board[13][20].setRoomName("Library");
-      board[16][16].setDoor(rooms.get("Library"));
+      board[13][20].setDoor(rooms.get(Game.Rooms.LIBRARY));
+      board[13][20].setRoomName(Game.Rooms.LIBRARY);
+      board[16][16].setDoor(rooms.get(Game.Rooms.LIBRARY));
 
       //Lounge room
-      board[18][6].setDoor(rooms.get("Lounge"));
+      board[18][6].setDoor(rooms.get(Game.Rooms.LOUNGE));
 
       //Hall room
-      board[17][11].setDoor(rooms.get("Hall"));
-      board[17][11].setRoomName("Hall");
-      board[17][12].setDoor(rooms.get("Hall"));
-      board[17][12].setRoomName("Hall");
-      board[20][15].setDoor(rooms.get("Hall"));
+      board[17][11].setDoor(rooms.get(Game.Rooms.HALL));
+      board[17][11].setRoomName(Game.Rooms.HALL);
+      board[17][12].setDoor(rooms.get(Game.Rooms.HALL));
+      board[17][12].setRoomName(Game.Rooms.HALL);
+      board[20][15].setDoor(rooms.get(Game.Rooms.HALL));
 
       //Study room
-      board[20][17].setDoor(rooms.get("Study"));
+      board[20][17].setDoor(rooms.get(Game.Rooms.STUDY));
 
       //sets rooms standing spots
-      rooms.get("Kitchen").setSeats(this,1,4);
-      rooms.get("BallRoom").setSeats(this,10,5);
-      rooms.get("Conservatory").setSeats(this,19,3);
-      rooms.get("DinningRoom").setSeats(this,3,13);
-      rooms.get("BilliardRoom").setSeats(this,19,9);
-      rooms.get("Library").setSeats(this,19,16);
-      rooms.get("Lounge").setSeats(this,2,20);
-      rooms.get("Hall").setSeats(this,10,20);
-      rooms.get("Study").setSeats(this,19,22);
+      rooms.get(Game.Rooms.KITCHEN).setSeats(this,1,4);
+      rooms.get(Game.Rooms.BALLROOM).setSeats(this,10,5);
+      rooms.get(Game.Rooms.CONSERVATORY).setSeats(this,19,3);
+      rooms.get(Game.Rooms.DINING_ROOM).setSeats(this,3,13);
+      rooms.get(Game.Rooms.BILLARD_ROOM).setSeats(this,19,9);
+      rooms.get(Game.Rooms.LIBRARY).setSeats(this,19,16);
+      rooms.get(Game.Rooms.LOUNGE).setSeats(this,2,20);
+      rooms.get(Game.Rooms.HALL).setSeats(this,10,20);
+      rooms.get(Game.Rooms.STUDY).setSeats(this,19,22);
    }
 
    /**Helper method to set room tiles
@@ -177,7 +177,7 @@ public class Board {
        if(!currentTile.isRoom() && nextTile.isRoom()){
           if(currentTile.isDoor()){
              //checks player can use door to enter the room
-             if(currentTile.doorRoom==null || currentTile.doorRoom.equals(nextTile.room)){
+             if(currentTile.doorRoom==null || currentTile.doorRoom.equals(nextTile.roomName)){
                 return true;
              }
           } return false;
@@ -186,7 +186,7 @@ public class Board {
        //checks room to non room move
        if(currentTile.isRoom() && !nextTile.isRoom()){
           if(nextTile.isDoor()) {
-             if(nextTile.doorRoom==null || nextTile.doorRoom.equals(currentTile.room)){
+             if(nextTile.doorRoom==null || nextTile.doorRoom.equals(currentTile.roomName)){
                 return true;
              }
           }
