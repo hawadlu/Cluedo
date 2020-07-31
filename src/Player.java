@@ -132,6 +132,26 @@ public class Player {
 
         //Creating new move
         while(!hasMoved){
+            //If player is inside a room
+            if(board.getTile(newPos.x, newPos.y).getEnum() != null){
+                Room room = board.getTile(newPos.x, newPos.y).getRoom();
+                int numDoors = room.getNumberOfDoors();
+
+                //Create Questions
+                String[] questions = new String[numDoors];
+                for(int i=0; i<numDoors; i++){
+                    questions[i] = "Door "+i;
+                }
+                int door = Integer.parseInt(Game.chooseFromArray(questions,
+                        "What door would you like to leave from?.\n"));
+
+                //board.movePlayer(newPos, room.getDoor(door));
+                //newPos.x = room.getDoor(door).x;
+                //newPos.y = room.getDoor(door).y;
+                numMove -= 1;
+
+            }
+
             System.out.println("'L' for Left, 'R' for Right, 'U' for Up and 'D' for Down, " +
                         "'S' to show the board, Press enter to end Movement");
             response = new Scanner(System.in).nextLine().toLowerCase();
