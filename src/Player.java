@@ -146,9 +146,9 @@ public class Player {
                 int door = Integer.parseInt(Game.chooseFromArray(questions,
                         "What door would you like to leave from?.\n"));
 
-                //board.movePlayer(newPos, room.getDoor(door));
-                //newPos.x = room.getDoor(door).x;
-                //newPos.y = room.getDoor(door).y;
+                board.movePlayer(newPos, room.getDoor(door));
+                newPos.x = room.getDoor(door).x;
+                newPos.y = room.getDoor(door).y;
                 numMove -= 1;
 
             }

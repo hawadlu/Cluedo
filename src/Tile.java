@@ -33,17 +33,23 @@ public class Tile {
         r.addDoor(this);
     }
 
-    /**gets the room enum
-     *
+    /**
+     * Gets the room enum
      * @return room enum
      */
     public Game.Rooms getEnum(){
         return roomName;
     }
 
+    /**
+     * Gets the room the player's in
+     */
+    public Room getRoom(){
+        return room;
+    }
 
-    /**toggles the display of the door
-     *
+    /**
+     * Toggles the display of the door
      */
     public void toggleDoor(){
         if(!toggleDoor){
@@ -53,8 +59,8 @@ public class Tile {
         }
     }
 
-    /**sets room door number
-     *
+    /**
+     * Sets room door number
      * @param i is the new door number
      */
     public void setDoorNumber(int i){
@@ -111,7 +117,7 @@ public class Tile {
     @Override
     public String toString() {
         if(player!=null){
-           return player.toString();
+            return player.toString();
         }else if(room!=null){
             return "  ";
         }else if(toggleDoor){
