@@ -137,7 +137,7 @@ public class Tile {
         }else if(room!=null){
             return "  ";
         }else if(toggleDoor){
-            return doorNumber+" ";
+            return (doorNumber+1)+" ";
         }
 
         return "• ";

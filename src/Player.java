@@ -147,12 +147,13 @@ public class Player {
             if(board.getTile(newPos.x, newPos.y).getEnum() != null){
                 Room room = board.getTile(newPos.x, newPos.y).getRoom();
                 int numDoors = room.getNumberOfDoors();
-
+                room.toggleDoorNumbers();
+                System.out.println(board);
                 //Create Questions
                 String[] questions = new String[numDoors+1];
                 for(int i=0; i<numDoors+1; i++){
                     if(i==numDoors){ questions[i] = "Don't Leave Room";}
-                    else {questions[i] = "Door "+i; }
+                    else {questions[i] = "Door "+(i+1); }
                 }
                 String doorString = Game.chooseFromArray(questions, "What door would you like to leave from?\n");
                 int door = Integer.parseInt(doorString.substring(doorString.length()-1));
@@ -163,6 +164,7 @@ public class Player {
                     newPos = new Position(room.getDoor(door));
                     oldPos = new Position(room.getDoor(door));
                     numMove -= 1;
+                    room.toggleDoorNumbers();
                     System.out.println(board);
                     System.out.println("--------------------------------------------");
                     System.out.println("Your turn to move: you have "+numMove+" moves.");
