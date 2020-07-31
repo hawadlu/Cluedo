@@ -56,16 +56,21 @@ public class Player {
      * @param board the board that the game is running on
      */
     public void takeTurn(Board board) {
-        //Show players Hand
-        System.out.println("Your Hand: "+getHand());
-
+        //Start by asking what user wants to do
         boolean willMove = true;
-        //If they have been moved to a room, Player chooses if they want to move again
-        if(isDiffPos()){
-            String response = Game.chooseFromArray(new String[]{"Yes", "No"},
-                    "Would you like to move?.\n");
-            if(response.equals("No")){ willMove = false; }
+        String response = "Show Hand";
+        while(response.equals("Show Hand")) {
+            if (board.getTile(newPos.x, newPos.y).getEnum() != lastRoom) {
+                response = Game.chooseFromArray(new String[]{"Show Hand", "Move", "Accuse", "Suggest", "End Turn"},
+                        "What would you like to do?");
+            }else{
+                response = Game.chooseFromArray(new String[]{"Show Hand", "Move", "Accuse", "End Turn"},
+                        "What would you like to do?");
+            }
+
+            if(response.equals("Show Hand")){ System.out.println("Your hand: "+getHand()); }
         }
+        if(!response.equals("Move")){ willMove = false; }
 
         //Moving
         if(willMove){
@@ -82,34 +87,36 @@ public class Player {
         }
 
         //Checking if suggest or accuse
-        String action;
-        //System.out.println("Old room: "+lastRoom+", new: "+ board.getTile(newPos.x, newPos.y).getEnum());
-        System.out.println("Your Hand: "+getHand());
-        System.out.println("-------------------------------");
-        if(board.getTile(newPos.x, newPos.y).getEnum() != lastRoom) {
-            action = Game.chooseFromArray(new String[]{"Suggest", "Accuse", "End turn"},
-                    "Would you like to Accuse or Suggest?.\n");
-        }else{
+        if(willMove) {
+            response = "Show Hand";
+            while(response.equals("Show Hand")) {
+                if (board.getTile(newPos.x, newPos.y).getEnum() != lastRoom) {
+                    response = Game.chooseFromArray(new String[]{"Show Hand", "Suggest", "Accuse", "End turn"},
+                            "Would you like to Accuse or Suggest?");
+                } else {
+                    response = Game.chooseFromArray(new String[]{"Show Hand", "Accuse", "End Turn"},
+                            "Would you like to Accuse?");
+                }
 
-            action = Game.chooseFromArray(new String[]{"Accuse", "End Turn"},
-                    "Would you like to Accuse?.\n");
+                if(response.equals("Show Hand")){ System.out.println("Your hand: "+getHand()); }
+            }
         }
 
         //Getting player and weapon
         Game.Players player = null; Game.Weapons weapon = null;
-        if(action.equals("Accuse") || action.equals("Suggest")) {
+        if(response.equals("Accuse") || response.equals("Suggest")) {
             player = Game.chooseFromArray(Game.Players.values(),
-                    "Please choose a Person:\n");
+                    "Please choose a Person:");
             weapon = Game.chooseFromArray(Game.Weapons.values(),
-                    "Please choose a Weapon.\n");
+                    "Please choose a Weapon:");
         }
 
         //Accuse / Suggest & getting room
-        if(action.equals("Accuse")){
+        if(response.equals("Accuse")){
             Game.Rooms room = Game.chooseFromArray(Game.Rooms.values(),
-                    "Please choose a Room.\n");
+                    "Please choose a Room:");
             makeAccuse(room, player, weapon);
-        }else if(action.equals("Suggest")){
+        }else if(response.equals("Suggest")){
             Game.Rooms room = board.getTile(newPos.x, newPos.y).getEnum();
             lastRoom = room;
             new Suggest(room, player, weapon, this).apply();
@@ -128,9 +135,10 @@ public class Player {
     public int makeMove(int numMove, Board board){
         boolean hasMoved = false;
         String response = "";
+        System.out.println(board);
         System.out.println("--------------------------------------------");
         System.out.println("Your turn to move: you have "+numMove+" moves.");
-
+//
         //Creating new move
         while(!hasMoved){
             //If player is inside a room
@@ -157,17 +165,12 @@ public class Player {
             }
 
             System.out.println("'L' for Left, 'R' for Right, 'U' for Up and 'D' for Down, " +
-                        "'S' to show the board, Press enter to end Movement");
+                        "Press enter to use all Movement");
             response = new Scanner(System.in).nextLine().toLowerCase();
 
             try {
-                //show the board if requested
-                if (response.equals("s")) {
-                    System.out.println(board);
-                    return numMove;
-
                 //Player chooses to end their turn
-                } else if(response.length() == 0){
+                if(response.length() == 0){
                     numMove = 0;
                     hasMoved = true;
 
@@ -227,6 +230,10 @@ public class Player {
     }
 
     public Position getPos(){ return newPos; }
+
+    public void setNewPos(Position newPos) {
+        this.newPos = newPos;
+    }
 
     /**
      * Look through this hand for any matches
