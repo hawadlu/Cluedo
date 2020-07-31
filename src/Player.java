@@ -139,18 +139,19 @@ public class Player {
                 int numDoors = room.getNumberOfDoors();
 
                 //Create Questions
-                String[] questions = new String[numDoors];
+                String[] questions = new String[numDoors+1];
                 for(int i=0; i<numDoors+1; i++){
                     if(i==numDoors){ questions[i] = "Don't Leave Room";}
                     else {questions[i] = "Door "+i; }
                 }
-                int door = Integer.parseInt(Game.chooseFromArray(questions,
-                        "What door would you like to leave from?\n"));
+                String doorString = Game.chooseFromArray(questions, "What door would you like to leave from?\n");
+                int door = Integer.parseInt(doorString.substring(doorString.length()-1));
                 if(door <= numDoors) {
                     board.movePlayer(newPos, room.getDoor(door));
-                    newPos.x = room.getDoor(door).x;
-                    newPos.y = room.getDoor(door).y;
+                    newPos = new Position(room.getDoor(door));
+                    oldPos = new Position(room.getDoor(door));
                     numMove -= 1;
+                    System.out.println(board);
                 }else{ return 0; }
 
             }
