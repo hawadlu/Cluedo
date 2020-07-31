@@ -147,6 +147,8 @@ public class Player {
                 String doorString = Game.chooseFromArray(questions, "What door would you like to leave from?\n");
                 int door = Integer.parseInt(doorString.substring(doorString.length()-1));
                 if(door <= numDoors) {
+                    System.out.println(newPos.x+" "+newPos.y);
+                    System.out.println(room.getDoor(door).x+" "+room.getDoor(door).y);
                     board.movePlayer(newPos, room.getDoor(door));
                     newPos = new Position(room.getDoor(door));
                     oldPos = new Position(room.getDoor(door));
@@ -249,5 +251,9 @@ public class Player {
 
     public boolean hasLost() {
         return hasLost;
+    }
+
+    public void setNewPos(Position newPos) {
+        this.newPos = newPos;
     }
 }
