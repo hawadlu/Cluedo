@@ -1,5 +1,3 @@
-import javafx.geometry.Pos;
-
 import java.util.*;
 
 /**
@@ -58,6 +56,9 @@ public class Player {
      * @param allPlayers the list of all the players playing the game
      */
     public void takeTurn(Board board, List<Player> allPlayers) {
+        //Show players Hand
+        System.out.println("Your Hand: "+getHand());
+
         boolean willMove = true;
         //If they have been moved to a room, Player chooses if they want to move again
         if(isDiffPos()){
@@ -82,11 +83,12 @@ public class Player {
 
         //Checking if suggest or accuse
         String action;
-        if(isDiffPos() && Game.Rooms.valueOf(board.board[newPos.y][newPos.x].room.name) != lastRoom) {
-            action = Game.chooseFromArray(new String[]{"Suggest", "Accuse"},
+        System.out.println("Old room: "+lastRoom+", new: "+ board.getTile(newPos.x, newPos.y).getEnum());
+        if(board.getTile(newPos.x, newPos.y).getEnum() != lastRoom) {
+            action = Game.chooseFromArray(new String[]{"Suggest", "Accuse", "End turn"},
                     "Would you like to Accuse or Suggest?.\n");
         }else{
-            action = Game.chooseFromArray(new String[]{"Accuse", "Don't accuse"},
+            action = Game.chooseFromArray(new String[]{"Accuse", "End Turn"},
                     "Would you like to Accuse?.\n");
         }
 
@@ -105,10 +107,12 @@ public class Player {
                     "Please choose a Weapon.\n");
             makeAccuse(room, player, weapon);
         }else if(action.equals("Suggest")){
-            Game.Rooms room = Game.Rooms.valueOf(board.board[newPos.y][newPos.x].room.name);
-            lastRoom = room;
+            Game.Rooms room = board.getTile(newPos.x, newPos.y).getEnum();
             makeSuggest(room, player, weapon, allPlayers);
         }
+
+        //Update lastRoom, will be null if outside of room, used in accuse
+        lastRoom = board.getTile(newPos.x, newPos.y).getEnum();
     }
 
     /**
@@ -125,22 +129,30 @@ public class Player {
 
         //Creating new move
         while(!hasMoved){
-            response = "";
-            while(response.length() < 1) {
-                System.out.println("'L' for Left, 'R' for Right, 'U' for Up and 'D' for Down, 'S' to show the board");
-                response = new Scanner(System.in).nextLine().toLowerCase();
-            }
+            System.out.println("'L' for Left, 'R' for Right, 'U' for Up and 'D' for Down, " +
+                        "'S' to show the board, Press enter to end Movement");
+            response = new Scanner(System.in).nextLine().toLowerCase();
+
             try {
                 //show the board if requested
                 if (response.equals("s")) {
                     System.out.println(board);
                     return numMove;
-                } else {
-                    //process the requested move
+
+                //Player chooses to end their turn
+                } else if(response.length() == 0){
+                    hasMoved = true;
+
+                //process the requested move
+                }else {
                     hasMoved = new Move(board, this, response.split(""), numMove).apply();
                 }
             }catch(InvalidMoveException e){ System.out.println("Invalid move, try again."); }
         }
+
+        //If entered room, return 0
+        if(board.getTile(newPos.x, newPos.y).getEnum() != lastRoom){ return 0; }
+        //else return num of moves
         return numMove-response.length();
     }
 
@@ -199,7 +211,6 @@ public class Player {
     public String toString() {
         return name.toString().substring(0, 2);
     }
-
 
     public Position getPos(){ return newPos; }
 
