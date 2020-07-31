@@ -1,4 +1,3 @@
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -11,7 +10,7 @@ import java.util.Scanner;
  * -Contains locations of players
  */
 public class Board {
-   public static HashMap<Enum, Room> rooms = new HashMap<>();
+   public static HashMap<Game.Rooms, Room> rooms = new HashMap<>();
    Tile[][] board = new Tile[25][24];
 
    public Board(){
@@ -118,7 +117,7 @@ public class Board {
       board[20][15].setDoor(rooms.get(Game.Rooms.HALL),new Position(15,20));
 
       //Study room
-      board[20][17].setDoor(rooms.get(Game.Rooms.STUDY),new Position(15,20));
+      board[20][17].setDoor(rooms.get(Game.Rooms.STUDY),new Position(17,20));
 
       //sets rooms standing spots
       rooms.get(Game.Rooms.KITCHEN).setSeats(this,1,4);
@@ -177,9 +176,7 @@ public class Board {
        if(!currentTile.isRoom() && nextTile.isRoom()){
           if(currentTile.isDoor()){
              //checks player can use door to enter the room
-             if(currentTile.doorRoom==null || currentTile.doorRoom.equals(nextTile.roomName)){
-                return true;
-             }
+             return currentTile.doorRoom == null || currentTile.doorRoom.equals(nextTile.roomName);
           } return false;
        }
 
@@ -214,8 +211,9 @@ public class Board {
        Tile currentTile = board[currentPos.y][currentPos.x];
        Tile nextTile = board[nextPos.y][nextPos.x];
        Player player = currentTile.player;
-       currentTile.removePlayer(player);
        nextTile.addPlayer(player);
+       currentTile.removePlayer(player);
+
     }
     
     //todo implement this properly

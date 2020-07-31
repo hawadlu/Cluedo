@@ -24,12 +24,13 @@ public class Room {
      * @param y topmost position of 3x2 area
      */
     public void setSeats(Board b, int x, int y){
-        playerSeats.add(b.board[y][x]);
-        playerSeats.add(b.board[y][x+1]);
-        playerSeats.add(b.board[y][x+2]);
-        playerSeats.add(b.board[y+1][x]);
-        playerSeats.add(b.board[y+1][x+1]);
-        playerSeats.add(b.board[y+1][x+2]);
+
+        for(int i=0; i<2; i++){
+            for(int j=0; j<3; j++){
+                playerSeats.add(b.board[y+i][x+j]);
+                b.board[y+i][x+j].setPos(new Position(x+j,y+i));
+            }
+        }
     }
 
     /**
@@ -65,7 +66,7 @@ public class Room {
      * @return the door at the provided index
      */
     public Position getDoor(int n){
-        return doors.get(n).getDoorPos();
+        return doors.get(n).getPos();
     }
 
 
@@ -86,6 +87,7 @@ public class Room {
         for(Tile t: playerSeats){
             if(t.player==null){
                 t.setPlayer(p);
+                p.setNewPos(t.getPos());
                 System.out.println(p.name + " has entered the " + this.name); //primarily for debugging
                 break;
             }

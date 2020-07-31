@@ -119,6 +119,7 @@ public class Player {
         }else if(response.equals("Suggest")){
             Game.Rooms room = board.getTile(newPos.x, newPos.y).getEnum();
             lastRoom = room;
+
             new Suggest(room, player, weapon, this).apply();
         }
 
@@ -155,6 +156,8 @@ public class Player {
                 String doorString = Game.chooseFromArray(questions, "What door would you like to leave from?\n");
                 int door = Integer.parseInt(doorString.substring(doorString.length()-1));
                 if(door <= numDoors) {
+                    System.out.println(newPos.x+" "+newPos.y);
+                    System.out.println(room.getDoor(door).x+" "+room.getDoor(door).y);
                     board.movePlayer(newPos, room.getDoor(door));
                     newPos = new Position(room.getDoor(door));
                     oldPos = new Position(room.getDoor(door));
@@ -187,19 +190,6 @@ public class Player {
         if(board.getTile(newPos.x, newPos.y).getEnum() != lastRoom){ return 0; }
         //else return num of moves
         return numMove-response.length();
-    }
-
-    /**
-     * Make an accusation
-     * @param room the room that is being accused
-     * @param player the player that is being accused
-     * @param weapon the weapon that is being accused
-     */
-    public void makeAccuse(Game.Rooms room, Game.Players player, Game.Weapons weapon){
-        boolean hasAccused = false;
-        while(!hasAccused){
-            hasAccused = new Accuse(room, player, weapon, this).apply();
-        }
     }
 
     /**
@@ -256,5 +246,9 @@ public class Player {
 
     public boolean hasLost() {
         return hasLost;
+    }
+
+    public void setNewPos(Position newPos) {
+        this.newPos = newPos;
     }
 }
