@@ -109,7 +109,7 @@ public class Player {
                     "Please choose a Room.\n");
             makeAccuse(room, player, weapon);
         }else if(action.equals("Suggest")){
-            Game.Rooms room = Game.Rooms.valueOf(board.board[newPos.y][newPos.x].room.name);
+            Game.Rooms room = board.getTile(newPos.x, newPos.y).getEnum();
             lastRoom = room;
             new Suggest(room, player, weapon, this).apply();
         }
