@@ -20,18 +20,12 @@ public class Accuse implements Action {
     @Override
     public boolean apply() {
         //Check to see if the accused matches
-        if (!Game.accuseRoom.equals(room)) {
-            player.hasLost = true;
-            System.out.println("Your guess is incorrect. You have lost.");
-        } else if (!Game.accusePlayer.equals(suspect)) {
-            player.hasLost = true;
-            System.out.println("Your guess is incorrect. You have lost.");
-        } else if (!Game.accuseWeapon.equals(weapon)) {
-            player.hasLost = true;
-            System.out.println("Your guess is incorrect. You have lost.");
-        } else {
+        if (Game.accuseRoom.equals(room) && Game.accusePlayer.equals(suspect) && Game.accuseWeapon.equals(weapon)) {
             Game.gameOver = true;
-            System.out.println("You have won! Congratz.");
+            System.out.println("You have won!");
+        } else {
+            player.hasLost = true;
+            System.out.println("Your accusation is incorrect. You have lost.");
         }
         System.out.println("Press 'enter' to continue.");
         Game.input.nextLine();

@@ -1,4 +1,3 @@
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -11,7 +10,7 @@ import java.util.Scanner;
  * -Contains locations of players
  */
 public class Board {
-   public static HashMap<Enum, Room> rooms = new HashMap<>();
+   public static HashMap<Game.Rooms, Room> rooms = new HashMap<>();
    Tile[][] board = new Tile[25][24];
 
    public Board(){
@@ -177,9 +176,7 @@ public class Board {
        if(!currentTile.isRoom() && nextTile.isRoom()){
           if(currentTile.isDoor()){
              //checks player can use door to enter the room
-             if(currentTile.doorRoom==null || currentTile.doorRoom.equals(nextTile.roomName)){
-                return true;
-             }
+             return currentTile.doorRoom == null || currentTile.doorRoom.equals(nextTile.roomName);
           } return false;
        }
 
