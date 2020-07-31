@@ -53,7 +53,7 @@ public class Board {
 
       ArrayList<Tile> Lounge = new ArrayList<>();
       Lounge = allocateTiles(Lounge, 0,6,19,24);
-      rooms.put(Game.Rooms.LIBRARY, new Room(Lounge, Game.Rooms.LIBRARY));
+      rooms.put(Game.Rooms.LOUNGE, new Room(Lounge, Game.Rooms.LOUNGE));
 
       ArrayList<Tile> Hall = new ArrayList<>();
       Hall = allocateTiles(Hall, 9,14,18,24);
