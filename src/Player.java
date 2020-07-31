@@ -113,9 +113,9 @@ public class Player {
 
         //Accuse / Suggest & getting room
         if(response.equals("Accuse")){
-            Game.Rooms room = Game.chooseFromArray(Game.Rooms.values(),
-                    "Please choose a Room:");
-            makeAccuse(room, player, weapon);
+            Game.Rooms room = Game.chooseFromArray(Game.Rooms.values(), "Please choose a Room:");
+            new Accuse(room, player, weapon, this);
+
         }else if(response.equals("Suggest")){
             Game.Rooms room = board.getTile(newPos.x, newPos.y).getEnum();
             lastRoom = room;
@@ -193,14 +193,6 @@ public class Player {
     }
 
     /**
-     * Has this player moved between their turns (oldPos == newPos)
-     * @return boolean if player moved
-     */
-    public boolean isDiffPos(){
-        return !oldPos.equals(newPos);
-    }
-
-    /**
      * Get this players hand
      * @return arraylist of cards in this players hand
      */
@@ -246,9 +238,5 @@ public class Player {
 
     public boolean hasLost() {
         return hasLost;
-    }
-
-    public void setNewPos(Position newPos) {
-        this.newPos = newPos;
     }
 }
