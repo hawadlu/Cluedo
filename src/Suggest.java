@@ -18,8 +18,10 @@ public class Suggest implements Action {
     @Override
     public boolean apply() {
         // Move the suggested player to the room
-        Board.rooms.get(room.name)
-                .addPlayer(Game.playerMap.get(suspect.getEnum()));
+        Player suspectPlayer = Game.playerMap.get(suspect.getEnum());
+        Position pos = suspectPlayer.getPos();
+        Game.board.getTile(pos.x, pos.y).removePlayer(suspectPlayer);
+        Board.rooms.get(room.name).addPlayer(suspectPlayer);
 
         // Go through each players hand after this player looking for a match
         int indexOfPlayer = Game.players.indexOf(player);
