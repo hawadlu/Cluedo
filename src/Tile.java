@@ -4,106 +4,14 @@ public class Tile {
     Player player=null;
     Boolean door=false;
     Boolean toggleDoor=false;
-    Game.Rooms doorRoom=null;
     int doorNumber=0;
-    Game.Rooms enumDoor=null;
     Position pos=null;
 
-    /**
-     * Set this tile to a room
-     * @param r the room to set this tile as
-     */
-    public void setRoom(Room r){
-        room=r;
-    }
-
-    /**
-     * Set the name of this room
-     * @param roomName new name for this room
-     */
-    public void setRoomName(Game.Rooms roomName){
-        this.roomName=roomName;
-    }
-
-    /**
-     * Set this tile to be a door
-     * @param r the room to add this door to
-     */
-    public void setDoor(Room r, Position pos){
-        door=true;
-        this.pos=pos;
-        r.addDoor(this);
-    }
-
-    public void setPos(Position pos){
-        this.pos=pos;
-    }
-    /**
-     * Gets the room enum
-     * @return room enum
-     */
-    public Game.Rooms getEnum(){
-        return roomName;
-    }
-
-    /**
-     * Gets the room the player's in
-     */
-    public Room getRoom(){
-        return room;
-    }
-
-    /**
-     * Gets this door position, used for leaving rooms
-     * @return door position
-     */
-    public Position getPos(){
-        return pos;
-    }
-
-    /**toggles the display of the door
-     *
     /**
      * Toggles the display of the door
      */
     public void toggleDoor(){
-        if(!toggleDoor){
-            toggleDoor=true;
-        }else{
-            toggleDoor=false;
-        }
-    }
-
-    /**
-     * Sets room door number
-     * @param i is the new door number
-     */
-    public void setDoorNumber(int i){
-        doorNumber=i;
-    }
-
-    /**
-     * Is this tile a room?
-     * @return boolean response
-     */
-    public boolean isRoom(){
-        return room != null;
-    }
-
-    /**
-     * Is this tile a door?
-     * @return boolean response
-     */
-    public boolean isDoor(){
-        return door;
-    }
-
-    /**
-     * Set the player on this tile
-     * @param p the player to give this tile
-     */
-    public void setPlayer(Player p){
-        player = p;
+        toggleDoor= !toggleDoor;
     }
 
     /**
@@ -137,10 +45,119 @@ public class Tile {
         }else if(room!=null){
             return "  ";
         }else if(toggleDoor){
-            return doorNumber+" ";
+            return (doorNumber+1)+" ";
         }
 
         return "• ";
 
+    }
+
+
+    // BOOLEAN CHECKERS
+
+
+    /**
+     * Is this tile a room?
+     * @return boolean response
+     */
+    public boolean isRoom(){
+        return room != null;
+    }
+
+    /**
+     * Is this tile a door?
+     * @return boolean response
+     */
+    public boolean isDoor(){
+        return door;
+    }
+
+    /**
+     * Check if this tile has a player
+     * @return boolean response
+     */
+    public boolean hasPlayer() {
+        return player != null;
+    }
+
+
+    // GETTERS
+
+
+    /**
+     * Gets the room enum
+     * @return room enum
+     */
+    public Game.Rooms getEnum(){
+        return roomName;
+    }
+
+    /**
+     * Gets the room the player's in
+     */
+    public Room getRoom(){
+        return room;
+    }
+
+    /**
+     * Gets this door position, used for leaving rooms
+     * @return door position
+     */
+    public Position getPos(){
+        return pos;
+    }
+
+
+    // SETTERS
+
+
+    /**
+     * Set this tile to a room
+     * @param r the room to set this tile as
+     */
+    public void setRoom(Room r){
+        room=r;
+    }
+
+    /**
+     * Set the name of this room
+     * @param roomName new name for this room
+     */
+    public void setRoomName(Game.Rooms roomName){
+        this.roomName=roomName;
+    }
+
+    /**
+     * Set this tile to be a door
+     * @param r the room to add this door to
+     */
+    public void setDoor(Room r, Position pos){
+        door=true;
+        this.pos=pos;
+        r.addDoor(this);
+    }
+
+    /**
+     * Sets room door number
+     * @param i is the new door number
+     */
+    public void setDoorNumber(int i){
+        doorNumber=i;
+    }
+
+    /**
+     * Set the player on this tile
+     * @param p the player to give this tile
+     */
+    public void setPlayer(Player p){
+        player = p;
+    }
+
+    /**
+     * Set the position of this tile
+     * @param pos the position to set this tile to
+     */
+    public void setPos(Position pos){
+        this.pos=pos;
     }
 }

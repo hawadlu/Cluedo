@@ -173,27 +173,15 @@ public class Board {
           return true;
 
        //checks non room to room move
-       if(!currentTile.isRoom() && nextTile.isRoom()){
-          if(currentTile.isDoor()){
-             //checks player can use door to enter the room
-             return currentTile.doorRoom == null || currentTile.doorRoom.equals(nextTile.roomName);
-          } return false;
-       }
+       if(!currentTile.isRoom() && nextTile.isRoom())
+          if(currentTile.isDoor())
+             return currentTile.roomName == null || currentTile.roomName == nextTile.roomName;
 
-       //checks room to non room move
-       if(currentTile.isRoom() && !nextTile.isRoom()){
-          if(nextTile.isDoor()) {
-             if(nextTile.doorRoom==null || nextTile.doorRoom.equals(currentTile.roomName)){
-                return true;
-             }
-          }
-       }
-       System.out.println("3");
-        return false;
+       return false;
     }
 
-   /**gets Tile from x and y
-    *
+   /**
+    * Gets Tile from x and y
     * @param x
     * @param y
     * @return
@@ -202,8 +190,8 @@ public class Board {
        return board[y][x];
     }
 
-   /**moves player on board
-    *
+   /**
+    * Moves player on board
     * @param currentPos
     * @param nextPos
     */
@@ -215,8 +203,7 @@ public class Board {
        currentTile.removePlayer(player);
 
     }
-    
-    //todo implement this properly
+
    @Override
    public String toString() {
       StringBuilder toReturn = new StringBuilder();

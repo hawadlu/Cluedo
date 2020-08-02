@@ -1,33 +1,32 @@
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Checks where are valid moves to make?
  */
 public class Move implements Action {
-    Board board;
-    Player player;
-    String[] actions;
-    int diceRoll;
+    private final Board board;
+    private final Player player;
+    private final String[] actions;
 
 
-    Move(Board board, Player player, String[] actions, int diceRoll) {
+    Move(Board board, Player player, String[] actions) {
         this.board = board;
         this.player = player;
         this.actions = actions;
-        this.diceRoll = diceRoll;
     }
 
     /**
      * Check and apply a move
      * @return true if the move is valid, false otherwise
-     * @throws InvalidMoveException
+     * @throws InvalidMoveException if the move is invalid
      */
     @Override
     public boolean apply() throws InvalidMoveException {
-        //Check to see if the player is trying to move more than their dice roll
-        if (actions.length > diceRoll) throw new InvalidMoveException("Move too long");
-
         // Will throw error if not a valid move
         validateMoves();
 
+        // Change the players position based on actions
         for (String action: actions) {
             switch (action) {
                 case "l": player.newPos.x -= 1; break; //move left
@@ -38,7 +37,7 @@ public class Move implements Action {
             }
         }
 
-        //Indicate if the move worked
+        //Indicate that the move worked
         return true;
     }
 
@@ -48,6 +47,7 @@ public class Move implements Action {
     private void validateMoves() throws InvalidMoveException {
         Position next = new Position(player.newPos);
         Position prev = new Position(player.newPos);
+        Set<Tile> tilesThisMove = new HashSet<>();
 
         for (String action: actions) {
             //Check if the move is recognised
@@ -59,16 +59,18 @@ public class Move implements Action {
                 default: throw new InvalidMoveException("Unrecognised move type");
             }
 
-            //Check if the player has already moved to this square in this turn.
-            if (player.tilesThisTurn.contains(next)) {
-                throw new InvalidMoveException("Cannot move to the same twice square in one turn");
-            } else {
-                player.tilesThisTurn.add(next);
-            }
-
             if (!board.isValidMove(prev, next)) throw new InvalidMoveException("Cannot move to that tile");;
             prev = new Position(next);
+
+            //Check if the player has already moved to this square in this turn.
+            Tile nextTile = board.getTile(next.x, next.y);
+            if (player.tilesThisTurn.contains(nextTile) || tilesThisMove.contains(nextTile)) {
+                throw new InvalidMoveException("Cannot move on to the same place twice in one turn");
+            } else {
+                tilesThisMove.add(nextTile);
+            }
         }
+        player.tilesThisTurn.addAll(tilesThisMove);
         //The move was valid if code gets here
     }
 }
