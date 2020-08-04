@@ -122,7 +122,7 @@ public class Board {
       //sets rooms standing spots
       rooms.get(Game.Rooms.KITCHEN).setSeats(this,1,4);
       rooms.get(Game.Rooms.BALLROOM).setSeats(this,10,5);
-      rooms.get(Game.Rooms.CONSERVATORY).setSeats(this,19,3);
+      rooms.get(Game.Rooms.CONSERVATORY).setSeats(this,20,3);
       rooms.get(Game.Rooms.DINING_ROOM).setSeats(this,3,13);
       rooms.get(Game.Rooms.BILLARD_ROOM).setSeats(this,19,9);
       rooms.get(Game.Rooms.LIBRARY).setSeats(this,19,16);
