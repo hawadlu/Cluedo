@@ -23,6 +23,8 @@ public class Suggest implements Action {
         Game.board.getTile(pos.x, pos.y).removePlayer(suspectPlayer);
         Board.rooms.get(room.name).addPlayer(suspectPlayer);
 
+        Game.clearOutput();
+
         // Go through each players hand after this player looking for a match
         int indexOfPlayer = Game.players.indexOf(player);
         for (int i = indexOfPlayer+1; i != indexOfPlayer; i = (i+1) % Game.players.size()) {
@@ -32,7 +34,6 @@ public class Suggest implements Action {
             // A match has been found in this hand
             if (!cardOptions.isEmpty()) {
                 // Allow the player to choose a card without current player seeing
-                Game.clearOutput();
                 System.out.println(otherPlayer.getName() + " can prove you wrong, let them choose a card to show you"
                         +"\nPress Enter if you are "+otherPlayer.getName());
                 Game.input.nextLine();
@@ -46,6 +47,9 @@ public class Suggest implements Action {
                 Game.input.nextLine();
 
                 return true;
+            } else {
+                // Inform the player of who can't prove them wrong
+                System.out.println(otherPlayer.getName() + " can't prove you wrong");
             }
         }
         // No matches were found
