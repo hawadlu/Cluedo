@@ -18,11 +18,10 @@ public class Move implements Action {
 
     /**
      * Check and apply a move
-     * @return true if the move is valid, false otherwise
      * @throws InvalidMoveException if the move is invalid
      */
     @Override
-    public boolean apply() throws InvalidMoveException {
+    public void apply() throws InvalidMoveException {
         // Will throw error if not a valid move
         validateMoves();
 
@@ -33,12 +32,11 @@ public class Move implements Action {
                 case "r": player.newPos.x += 1; break; //move right
                 case "u": player.newPos.y -= 1; break; //move up
                 case "d": player.newPos.y += 1; break; //move down
-                default: return false;
+                default: return;
             }
         }
 
         //Indicate that the move worked
-        return true;
     }
 
     /**
@@ -59,11 +57,11 @@ public class Move implements Action {
                 default: throw new InvalidMoveException("Unrecognised move type");
             }
 
-            if (!board.isValidMove(prev, next)) throw new InvalidMoveException("Cannot move to that tile");;
+            if (!board.isValidMove(prev, next)) throw new InvalidMoveException("Cannot move to that tile");
             prev = new Position(next);
 
             //Check if the player has already moved to this square in this turn.
-            Tile nextTile = board.getTile(next.x, next.y);
+            Tile nextTile = board.getTile(next);
             if (player.tilesThisTurn.contains(nextTile) || tilesThisMove.contains(nextTile)) {
                 throw new InvalidMoveException("Cannot move on to the same place twice in one turn");
             } else {

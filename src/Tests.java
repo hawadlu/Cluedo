@@ -1,10 +1,6 @@
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -18,12 +14,11 @@ public class Tests {
     @Test
     public void testMain() throws IOException {
         System.out.println("main");
-        String[] args = null;
-        Game.main(args);
+        Game.main(null);
     }
 
     @Test
-    public void testSuggest() throws InvalidMoveException {
+    public void testSuggest() {
         List<Player> players = createPlayers(6);
 
         dealCards(players, 6);
@@ -33,14 +28,14 @@ public class Tests {
         Player testPlayer = players.remove(0);
 
         //Test the suggest mechanism with some random cards
-        Suggest suggest = new Suggest(Game.Rooms.BILLARD_ROOM, Game.Players.PEACOCK, Game.Weapons.ROPE, testPlayer);
+        Suggest suggest = new Suggest(Game.Rooms.BILLIARD_ROOM, Game.Players.PEACOCK, Game.Weapons.ROPE, testPlayer);
         suggest.apply();
 
     }
 
-    /**
-     * THESE METHODS ARE HERE SO THAT THEY CAN BE TESTED WITHOUT USER INPUTS VIA THE CONSOLE
-     * BECAUSE THESE DON'T WORK WITH JUNIT.
+    /*
+      THESE METHODS ARE HERE SO THAT THEY CAN BE TESTED WITHOUT USER INPUTS VIA THE CONSOLE
+      BECAUSE THESE DON'T WORK WITH JUNIT.
      */
 
     /**
@@ -98,53 +93,7 @@ public class Tests {
      * @param numPlayers the number of players playing the game
      */
     public void dealCards(List<Player> players, int numPlayers){
-        //Create ArrayLists of each card type
-        ArrayList<Card<Game.Players>> playerCards = new ArrayList<>();
-        ArrayList<Card<Game.Weapons>> weaponCards = new ArrayList<>();
-        ArrayList<Card<Game.Rooms>> roomCards = new ArrayList<>();
-
-        for(Game.Players p : Game.Players.values()){ playerCards.add(new Card<>(p)); }
-        for(Game.Weapons w : Game.Weapons.values()){ weaponCards.add(new Card<>(w)); }
-        for(Game.Rooms r : Game.Rooms.values()){ roomCards.add(new Card<>(r)); }
-
-        //Shuffling
-        Collections.shuffle(playerCards);
-        Collections.shuffle(weaponCards);
-        Collections.shuffle(roomCards);
-
-        //Add to accuse
-        Game.Players accusePlayer = playerCards.get(0).getEnum();
-        playerCards.remove(0);
-        Game.Rooms accuseRoom = roomCards.get(0).getEnum();
-        roomCards.remove(0);
-        Game.Weapons accuseWeapon = weaponCards.get(0).getEnum();
-        weaponCards.remove(0);
-        /* TESTING
-        System.out.println("Accuse List: "+ accusePlayer.toString()+", "+accuseRoom.toString()+", "+accuseWeapon.toString());
-         */
-
-        //Add rest to big list
-        ArrayList<Card<?>> remainingCards = new ArrayList<>();
-        remainingCards.addAll(playerCards);
-        remainingCards.addAll(roomCards);
-        remainingCards.addAll(weaponCards);
-
-        //Shuffle all the cards
-        Collections.shuffle(remainingCards);
-
-        //Divide Among players
-        int currentPlayer = 0;
-        for(Card<?> c : remainingCards){
-            players.get(currentPlayer).addToHand(c);
-            currentPlayer ++;
-            currentPlayer %= numPlayers;
-        }
-
-        /* TESTING
-        System.out.println("Each Players Cards: ");
-        for(Player p : players){
-            System.out.println(p.toString() + ": "+p.getHand().toString());
-        }
-         */
+        Game game = new Game();
+        game.dealCards(players, numPlayers);
     }
 }

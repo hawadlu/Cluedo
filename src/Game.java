@@ -32,7 +32,7 @@ public class Game {
         KITCHEN,
         BALLROOM,
         STUDY,
-        BILLARD_ROOM,
+        BILLIARD_ROOM,
         CONSERVATORY,
         DINING_ROOM,
         HALL,
@@ -200,11 +200,8 @@ public class Game {
         }
 
         // Set players to their starting positions
-        for (Player player : players) {
-            int x = player.newPos.x;
-            int y = player.newPos.y;
-            board.getTile(x, y).setPlayer(player);
-        }
+        for (Player player : players)
+            board.getTile(player.newPos).setPlayer(player);
 
         // Run the game
         int currentPlayer = 0;

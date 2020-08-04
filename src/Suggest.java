@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Map;
-import java.util.stream.Stream;
 
 public class Suggest implements Action {
     private final Card<Game.Players> suspect;
@@ -16,11 +14,11 @@ public class Suggest implements Action {
     }
 
     @Override
-    public boolean apply() {
+    public void apply() {
         // Move the suggested player to the room
         Player suspectPlayer = Game.playerMap.get(suspect.getEnum());
         Position pos = suspectPlayer.getPos();
-        Game.board.getTile(pos.x, pos.y).removePlayer(suspectPlayer);
+        Game.board.getTile(pos).removePlayer(suspectPlayer);
         Board.rooms.get(room.name).addPlayer(suspectPlayer);
 
         Game.clearOutput();
@@ -46,7 +44,7 @@ public class Suggest implements Action {
                         +"\nPress Enter if you are "+player.getName()+" to continue");
                 Game.input.nextLine();
 
-                return true;
+                return;
             } else {
                 // Inform the player of who can't prove them wrong
                 System.out.println(otherPlayer.getName() + " can't prove you wrong");
@@ -56,6 +54,5 @@ public class Suggest implements Action {
         System.out.println("No one can prove you wrong!");
         System.out.println("Press Enter to Continue");
         Game.input.nextLine();
-        return false;
     }
 }

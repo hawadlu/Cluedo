@@ -72,7 +72,7 @@ public class Player {
                             takingTurn = false;
                             break;
                         case SUGGEST:
-                            room = board.getTile(newPos.x, newPos.y).getEnum();
+                            room = board.getTile(newPos).getEnum();
                             lastRoom = room;
                             suggested = true;
                             movement = 0;
@@ -93,7 +93,7 @@ public class Player {
 
         //Update lastRoom, will be null if outside of room, used in accuse
         if (!suggested) lastRoom = null;
-        else lastRoom = board.getTile(newPos.x, newPos.y).getEnum();
+        else lastRoom = board.getTile(newPos).getEnum();
     }
 
     /**
@@ -103,8 +103,8 @@ public class Player {
      */
     public Actions[] getActions(Board board) {
         List<Actions> actions = new ArrayList<>();
-        Game.Rooms currentRoom = board.getTile(newPos.x, newPos.y).getEnum();
-        boolean inRoom = board.getTile(newPos.x, newPos.y).isRoom();
+        Game.Rooms currentRoom = board.getTile(newPos).getEnum();
+        boolean inRoom = board.getTile(newPos).isRoom();
 
         actions.add(Actions.VIEW_HAND);
 
@@ -127,7 +127,7 @@ public class Player {
      * @param board the board that the game is playing on
      */
     public void leaveRoom(Board board) {
-        Room room = board.getTile(newPos.x, newPos.y).getRoom();
+        Room room = board.getTile(newPos).getRoom();
         int numDoors = room.getNumberOfDoors();
         List<Position> doors = new ArrayList<>();
 
@@ -141,7 +141,7 @@ public class Player {
         // Ask what door they want to leave from
         for (int i = 0; i < numDoors; i++) {
             Position doorPos = room.getDoor(i);
-            if (!board.getTile(doorPos.x, doorPos.y).hasPlayer()) {
+            if (!board.getTile(doorPos).hasPlayer()) {
                 options.add("Door " + (i + 1));
                 doors.add(doorPos);
             }
@@ -186,7 +186,7 @@ public class Player {
             if (response.trim().length() == 0) return;
 
             // Add the current position to the set of visited tiles
-            tilesThisTurn.add(board.getTile(newPos.x, newPos.y));
+            tilesThisTurn.add(board.getTile(newPos));
 
             // Process the requested move
             String[] actions = response.split("");
@@ -201,7 +201,7 @@ public class Player {
                 movement -= actions.length;
 
                 // If entered room, set movement to 0
-                if(board.getTile(newPos.x, newPos.y).getEnum() != null)
+                if(board.getTile(newPos).getEnum() != null)
                     movement = 0;
 
                 // Execute the movement on the board

@@ -18,7 +18,7 @@ public class Accuse implements Action {
     }
 
     @Override
-    public boolean apply() {
+    public void apply() {
         //Check to see if the accused matches
         if (Game.accuseRoom.equals(room) && Game.accusePlayer.equals(suspect) && Game.accuseWeapon.equals(weapon)) {
             Game.gameOver = true;
@@ -29,6 +29,5 @@ public class Accuse implements Action {
         }
         System.out.println("Press 'enter' to continue.");
         Game.input.nextLine();
-        return true;
     }
 }
