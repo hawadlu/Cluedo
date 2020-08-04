@@ -44,8 +44,7 @@ public class Player {
         boolean takingTurn = true;
 
         while (takingTurn) {
-            System.out.println(board);
-            System.out.println(this.getName() + "'s Turn");
+            System.out.println(this.getName() + "'s Turn - "+movement+" moves left");
             Actions action = Game.chooseFromArray(getActions(board), "What would you like to do?");
 
             switch (action) {
@@ -56,6 +55,7 @@ public class Player {
                 case MOVE:
                     System.out.println(board);
                     makeMove(board);
+                    System.out.println(board);
                     break;
 
                 case SUGGEST:
@@ -75,8 +75,10 @@ public class Player {
                             room = board.getTile(newPos.x, newPos.y).getEnum();
                             lastRoom = room;
                             suggested = true;
+                            movement = 0;
                             new Suggest(room, player, weapon, this).apply();
                     }
+                    System.out.println(board);
                     break;
 
                 case LEAVE_ROOM:
