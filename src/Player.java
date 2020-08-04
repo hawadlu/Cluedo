@@ -159,6 +159,8 @@ public class Player {
             oldPos = new Position(newPos);
             movement -= 1;
 
+            tilesThisTurn.addAll(room.tiles);
+
             room.toggleDoorNumbers();
             System.out.println(board);
         }

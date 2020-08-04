@@ -1,9 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Construct a board of positions
@@ -181,8 +178,8 @@ public class Board {
    /**
     * Gets Tile from position object
     *
-    * @param pos the position of the tile
-    * @return the tile at the co-ords
+    * @param pos the position of the tile wanted
+    * @return the tile at the position
     */
    public Tile getTile(Position pos){
       return board[pos.y][pos.x];
