@@ -27,6 +27,7 @@ public class Suggest implements Action {
         int indexOfPlayer = Game.players.indexOf(player);
         for (int i = indexOfPlayer+1; i != indexOfPlayer; i = (i+1) % Game.players.size()) {
             Player otherPlayer = Game.players.get(i);
+            if (otherPlayer.getHand().size() == 0) continue;
             ArrayList<Card<?>> cardOptions = otherPlayer.addMatches(room, suspect, weapon);
 
             // A match has been found in this hand
