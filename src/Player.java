@@ -64,15 +64,24 @@ public class Player {
                     Game.Players player = Game.chooseFromArray(Game.Players.values(), "Please choose a Suspect:");
                     Game.Weapons weapon = Game.chooseFromArray(Game.Weapons.values(), "Please choose a Weapon:");
                     Game.Rooms room;
+                    String confirm;
 
                     switch (action) {
                         case ACCUSE:
                             room = Game.chooseFromArray(Game.Rooms.values(), "Please choose a Room:");
+
+                            confirm = Game.chooseFromArray(new String[]{"Yes", "No"}, "Are you sure you want to Accuse "+player+" with the "+weapon+" in the "+room+"?");
+                            if (confirm.equals("No")) break;
+
                             new Accuse(room, player, weapon, this).apply();
                             takingTurn = false;
                             break;
                         case SUGGEST:
                             room = board.getTile(newPos).getEnum();
+
+                            confirm = Game.chooseFromArray(new String[]{"Yes", "No"}, "Are you sure you want to Suggest "+player+" with the "+weapon+" in the "+room+"?");
+                            if (confirm.equals("No")) break;
+
                             lastRoom = room;
                             suggested = true;
                             movement = 0;
