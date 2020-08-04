@@ -44,8 +44,8 @@ public class Player {
         boolean takingTurn = true;
 
         while (takingTurn) {
-            System.out.println(Game.getPlainText() + board);
-            System.out.println(Game.getColour(this.getName().name()) + this.getName() + "'s Turn");
+            System.out.println(board);
+            System.out.println(this.getName() + "'s Turn");
             Actions action = Game.chooseFromArray(getActions(board), "What would you like to do?");
 
             switch (action) {
