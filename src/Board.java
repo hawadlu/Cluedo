@@ -1,8 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * Construct a board of positions
@@ -23,52 +21,52 @@ public class Board {
 
       //sets room tiles
       ArrayList<Tile> Kitchen = new ArrayList<>();
-      Kitchen = allocateTiles(Kitchen, 0,5,0,6);
+      allocateTiles(Kitchen, 0,5,0,6);
       rooms.put(Game.Rooms.KITCHEN, new Room(Kitchen, Game.Rooms.KITCHEN));
 
       ArrayList<Tile> BallRoom = new ArrayList<>();
-      BallRoom = allocateTiles(BallRoom, 10,13,0,1);
-      BallRoom = allocateTiles(BallRoom, 8,15,2,7);
+      allocateTiles(BallRoom, 10,13,0,1);
+      allocateTiles(BallRoom, 8,15,2,7);
       rooms.put(Game.Rooms.BALLROOM, new Room(BallRoom, Game.Rooms.BALLROOM));
 
       ArrayList<Tile> Conservatory = new ArrayList<>();
-      Conservatory = allocateTiles(Conservatory, 18,23,0,4);
-      Conservatory = allocateTiles(Conservatory, 19,23,5,5);
+      allocateTiles(Conservatory, 18,23,0,4);
+      allocateTiles(Conservatory, 19,23,5,5);
       rooms.put(Game.Rooms.CONSERVATORY, new Room(Conservatory, Game.Rooms.CONSERVATORY));
 
       ArrayList<Tile> DinningRoom = new ArrayList<>();
-      DinningRoom = allocateTiles(DinningRoom, 0,4,9,9);
-      DinningRoom = allocateTiles(DinningRoom, 0,7,10,15);
+      allocateTiles(DinningRoom, 0,4,9,9);
+      allocateTiles(DinningRoom, 0,7,10,15);
       rooms.put(Game.Rooms.DINING_ROOM, new Room(DinningRoom, Game.Rooms.DINING_ROOM));
 
       ArrayList<Tile> BilliardRoom = new ArrayList<>();
-      BilliardRoom = allocateTiles(BilliardRoom, 18,23,8,12);
-      rooms.put(Game.Rooms.BILLARD_ROOM, new Room(BilliardRoom, Game.Rooms.BILLARD_ROOM));
+      allocateTiles(BilliardRoom, 18,23,8,12);
+      rooms.put(Game.Rooms.BILLIARD_ROOM, new Room(BilliardRoom, Game.Rooms.BILLIARD_ROOM));
 
       ArrayList<Tile> Library = new ArrayList<>();
-      Library = allocateTiles(Library, 17,17,15,17);
-      Library = allocateTiles(Library, 18,23,14,18);
+      allocateTiles(Library, 17,17,15,17);
+      allocateTiles(Library, 18,23,14,18);
       rooms.put(Game.Rooms.LIBRARY, new Room(Library, Game.Rooms.LIBRARY));
 
       ArrayList<Tile> Lounge = new ArrayList<>();
-      Lounge = allocateTiles(Lounge, 0,6,19,24);
+      allocateTiles(Lounge, 0,6,19,24);
       rooms.put(Game.Rooms.LOUNGE, new Room(Lounge, Game.Rooms.LOUNGE));
 
       ArrayList<Tile> Hall = new ArrayList<>();
-      Hall = allocateTiles(Hall, 9,14,18,24);
+      allocateTiles(Hall, 9,14,18,24);
       rooms.put(Game.Rooms.HALL, new Room(Hall, Game.Rooms.HALL));
 
       ArrayList<Tile> Study = new ArrayList<>();
-      Study = allocateTiles(Study, 17,23,21,24);
+      allocateTiles(Study, 17,23,21,24);
       rooms.put(Game.Rooms.STUDY, new Room(Study, Game.Rooms.STUDY));
 
       //blocked tiles
       ArrayList<Tile> Blocked = new ArrayList<>();
-      Blocked = allocateTiles(Blocked, 6,6,0,1);
-      Blocked = allocateTiles(Blocked, 7,8,0,0);
-      Blocked = allocateTiles(Blocked, 15,16,0,0);
-      Blocked = allocateTiles(Blocked, 17,17,0,1);
-      Blocked = allocateTiles(Blocked, 10,14,10,16);
+      allocateTiles(Blocked, 6,6,0,1);
+      allocateTiles(Blocked, 7,8,0,0);
+      allocateTiles(Blocked, 15,16,0,0);
+      allocateTiles(Blocked, 17,17,0,1);
+      allocateTiles(Blocked, 10,14,10,16);
       Blocked.add(board[8][0]);
       Blocked.add(board[7][23]);
       Blocked.add(board[13][23]);
@@ -97,9 +95,9 @@ public class Board {
       board[16][6].setDoor(rooms.get(Game.Rooms.DINING_ROOM),new Position(6,16));
 
       //Billiard room
-      board[9][17].setDoor(rooms.get(Game.Rooms.BILLARD_ROOM),new Position(17,9));
-      board[13][22].setDoor(rooms.get(Game.Rooms.BILLARD_ROOM),new Position(22,13));
-      board[13][22].setRoomName(Game.Rooms.BILLARD_ROOM);
+      board[9][17].setDoor(rooms.get(Game.Rooms.BILLIARD_ROOM),new Position(17,9));
+      board[13][22].setDoor(rooms.get(Game.Rooms.BILLIARD_ROOM),new Position(22,13));
+      board[13][22].setRoomName(Game.Rooms.BILLIARD_ROOM);
 
       //Library room
       board[13][20].setDoor(rooms.get(Game.Rooms.LIBRARY),new Position(20,13));
@@ -124,34 +122,31 @@ public class Board {
       rooms.get(Game.Rooms.BALLROOM).setSeats(this,10,5);
       rooms.get(Game.Rooms.CONSERVATORY).setSeats(this,20,3);
       rooms.get(Game.Rooms.DINING_ROOM).setSeats(this,3,13);
-      rooms.get(Game.Rooms.BILLARD_ROOM).setSeats(this,19,9);
+      rooms.get(Game.Rooms.BILLIARD_ROOM).setSeats(this,19,9);
       rooms.get(Game.Rooms.LIBRARY).setSeats(this,19,16);
       rooms.get(Game.Rooms.LOUNGE).setSeats(this,2,20);
       rooms.get(Game.Rooms.HALL).setSeats(this,10,20);
       rooms.get(Game.Rooms.STUDY).setSeats(this,19,22);
    }
 
-   /**Helper method to set room tiles
+   /**
+    * Helper method to set room tiles
     *
-    * @param tiles
-    * @param x1
-    * @param x2
-    * @param y1
-    * @param y2
-    * @return
+    * @param tiles list of tiles to add new tiles to
+    * @param x1 left-most co-ord of area to add
+    * @param x2 right-most co-ord of area to add
+    * @param y1 top-most co-ord of area to add
+    * @param y2 bottom-most co-ord of area to add
     */
 
-   public ArrayList<Tile> allocateTiles(ArrayList<Tile> tiles, int x1, int x2, int y1, int y2){
-      for(int i=y1; i<=y2; i++){
-         for(int j=x1; j<=x2; j++){
-            tiles.add(board[i][j]);
-         }
-      }
-      return tiles;
+   public void allocateTiles(ArrayList<Tile> tiles, int x1, int x2, int y1, int y2){
+      for(int i=y1; i<=y2; i++)
+         tiles.addAll(Arrays.asList(board[i]).subList(x1, x2 + 1));
    }
 
     /**
      * Checks to see if this move in the board class is valid.
+     *
      * @param current the x pos
      * @param next the y pos
      * @return boolean indicating valid/invalid.
@@ -181,23 +176,24 @@ public class Board {
     }
 
    /**
-    * Gets Tile from x and y
-    * @param x
-    * @param y
-    * @return
+    * Gets Tile from position object
+    *
+    * @param pos the position of the tile wanted
+    * @return the tile at the position
     */
-    public Tile getTile(int x, int y){
-       return board[y][x];
-    }
+   public Tile getTile(Position pos){
+      return board[pos.y][pos.x];
+   }
 
    /**
     * Moves player on board
-    * @param currentPos
-    * @param nextPos
+    *
+    * @param currentPos the current position of the player
+    * @param nextPos the new position of the player
     */
     public void movePlayer(Position currentPos, Position nextPos){
-       Tile currentTile = board[currentPos.y][currentPos.x];
-       Tile nextTile = board[nextPos.y][nextPos.x];
+       Tile currentTile = getTile(currentPos);
+       Tile nextTile = getTile(nextPos);
        Player player = currentTile.player;
        nextTile.addPlayer(player);
        currentTile.removePlayer(player);

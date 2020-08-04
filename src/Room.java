@@ -69,16 +69,6 @@ public class Room {
         return doors.get(n).getPos();
     }
 
-
-    /**
-     * Checks if a player is in this room
-     * @param p is this player in this room
-     * @return boolean response
-     */
-    public boolean inRoom(Player p){
-        return players.contains(p);
-    }
-
     /**
      * Add a player into this room
      * @param p the player to be added to this room

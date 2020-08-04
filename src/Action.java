@@ -5,8 +5,7 @@
 public interface Action {
     /**
      * Apply this action
-     * @return has this action applied correctly
      * @throws InvalidMoveException thrown if an invalid move is made
      */
-    boolean apply() throws InvalidMoveException;
+    void apply() throws InvalidMoveException;
 }
