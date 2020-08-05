@@ -11,13 +11,6 @@ public class Card<T extends Enum<T>> {
         this.name = name;
     }
 
-    /**
-     * Get the enum (from Game class) that this is a card of
-     *
-     * @return enum Players/Weapons/Rooms from Game class
-     */
-    public T getEnum(){ return name;}
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -37,11 +30,9 @@ public class Card<T extends Enum<T>> {
     }
 
     /**
-     * Get the enum this card is for
+     * Get the enum (from Game class) that this is a card of
      *
-     * @return enum from Game - Rooms, Weapons, Players
+     * @return enum Players/Weapons/Rooms from Game class
      */
-    public T getName() {
-        return name;
-    }
+    public T getEnum(){ return name;}
 }

@@ -19,7 +19,7 @@ public class Suggest implements Action {
         Player suspectPlayer = Game.playerMap.get(suspect.getEnum());
         Position pos = suspectPlayer.getPos();
         Game.board.getTile(pos).removePlayer();
-        Board.rooms.get(room.getName()).addPlayer(suspectPlayer);
+        Board.rooms.get(room.getEnum()).addPlayer(suspectPlayer);
 
         Game.clearOutput();
 
