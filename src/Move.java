@@ -18,6 +18,7 @@ public class Move implements Action {
 
     /**
      * Check and apply a move
+     *
      * @throws InvalidMoveException if the move is invalid
      */
     @Override
@@ -26,12 +27,13 @@ public class Move implements Action {
         validateMoves();
 
         // Change the players position based on actions
+        Position pos = player.getNewPos();
         for (String action: actions) {
             switch (action) {
-                case "l": player.newPos.x -= 1; break; //move left
-                case "r": player.newPos.x += 1; break; //move right
-                case "u": player.newPos.y -= 1; break; //move up
-                case "d": player.newPos.y += 1; break; //move down
+                case "l": pos.x -= 1; break; //move left
+                case "r": pos.x += 1; break; //move right
+                case "u": pos.y -= 1; break; //move up
+                case "d": pos.y += 1; break; //move down
                 default: return;
             }
         }
@@ -43,8 +45,8 @@ public class Move implements Action {
      * Check if the list of proposed moves is valid;
      */
     private void validateMoves() throws InvalidMoveException {
-        Position next = new Position(player.newPos);
-        Position prev = new Position(player.newPos);
+        Position next = new Position(player.getNewPos());
+        Position prev = new Position(player.getNewPos());
         Set<Tile> tilesThisMove = new HashSet<>();
 
         for (String action: actions) {
@@ -62,13 +64,13 @@ public class Move implements Action {
 
             //Check if the player has already moved to this square in this turn.
             Tile nextTile = board.getTile(next);
-            if (player.tilesThisTurn.contains(nextTile) || tilesThisMove.contains(nextTile)) {
+            if (player.getTilesThisTurn().contains(nextTile) || tilesThisMove.contains(nextTile)) {
                 throw new InvalidMoveException("Cannot move on to the same place twice in one turn");
             } else {
                 tilesThisMove.add(nextTile);
             }
         }
-        player.tilesThisTurn.addAll(tilesThisMove);
+        player.getTilesThisTurn().addAll(tilesThisMove);
         //The move was valid if code gets here
     }
 }

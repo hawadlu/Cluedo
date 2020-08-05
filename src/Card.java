@@ -5,7 +5,7 @@ import java.util.Objects;
  * -Main class for 3 card subclasses to map to
  */
 public class Card<T extends Enum<T>> {
-    T name;
+    private final T name;
 
     Card(T name) {
         this.name = name;
@@ -13,6 +13,7 @@ public class Card<T extends Enum<T>> {
 
     /**
      * Get the enum (from Game class) that this is a card of
+     *
      * @return enum Players/Weapons/Rooms from Game class
      */
     public T getEnum(){ return name;}
@@ -32,6 +33,15 @@ public class Card<T extends Enum<T>> {
 
     @Override
     public String toString() {
-        return name.toString();//.substring(0, 2);
+        return name.toString();
+    }
+
+    /**
+     * Get the enum this card is for
+     *
+     * @return enum from Game - Rooms, Weapons, Players
+     */
+    public T getName() {
+        return name;
     }
 }

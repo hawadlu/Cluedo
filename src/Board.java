@@ -9,7 +9,7 @@ import java.util.*;
  */
 public class Board {
    public static HashMap<Game.Rooms, Room> rooms = new HashMap<>();
-   Tile[][] board = new Tile[25][24];
+   private final Tile[][] board = new Tile[25][24];
 
    public Board(){
 
@@ -19,7 +19,7 @@ public class Board {
          }
       }
 
-      //sets room tiles
+      // Sets room tiles
       ArrayList<Tile> Kitchen = new ArrayList<>();
       allocateTiles(Kitchen, 0,5,0,6);
       rooms.put(Game.Rooms.KITCHEN, new Room(Kitchen, Game.Rooms.KITCHEN));
@@ -60,7 +60,7 @@ public class Board {
       allocateTiles(Study, 17,23,21,24);
       rooms.put(Game.Rooms.STUDY, new Room(Study, Game.Rooms.STUDY));
 
-      //blocked tiles
+      // Blocked tiles
       ArrayList<Tile> Blocked = new ArrayList<>();
       allocateTiles(Blocked, 6,6,0,1);
       allocateTiles(Blocked, 7,8,0,0);
@@ -77,47 +77,47 @@ public class Board {
       Blocked.add(board[24][15]);
       rooms.put(null, new Room(Blocked, null));
 
-      //sets doors
-      //Kitchen
+      // Sets doors
+      // Kitchen
       board[7][4].setDoor(rooms.get(Game.Rooms.KITCHEN),new Position(4,7));
 
-      //ball room
+      // Ballroom
       board[5][7].setDoor(rooms.get(Game.Rooms.BALLROOM),new Position(7,5));
       board[8][9].setDoor(rooms.get(Game.Rooms.BALLROOM),new Position(9,8));
       board[8][14].setDoor(rooms.get(Game.Rooms.BALLROOM),new Position(14,8));
       board[5][16].setDoor(rooms.get(Game.Rooms.BALLROOM),new Position(16,5));
 
-      //conservatory
+      // Conservatory
       board[5][18].setDoor(rooms.get(Game.Rooms.CONSERVATORY),new Position(18,5));
 
-      //Dinning room
+      // Dining room
       board[12][8].setDoor(rooms.get(Game.Rooms.DINING_ROOM),new Position(8,12));
       board[16][6].setDoor(rooms.get(Game.Rooms.DINING_ROOM),new Position(6,16));
 
-      //Billiard room
+      // Billiard room
       board[9][17].setDoor(rooms.get(Game.Rooms.BILLIARD_ROOM),new Position(17,9));
       board[13][22].setDoor(rooms.get(Game.Rooms.BILLIARD_ROOM),new Position(22,13));
       board[13][22].setRoomName(Game.Rooms.BILLIARD_ROOM);
 
-      //Library room
+      // Library room
       board[13][20].setDoor(rooms.get(Game.Rooms.LIBRARY),new Position(20,13));
       board[13][20].setRoomName(Game.Rooms.LIBRARY);
       board[16][16].setDoor(rooms.get(Game.Rooms.LIBRARY),new Position(16,16));
 
-      //Lounge room
+      // Lounge room
       board[18][6].setDoor(rooms.get(Game.Rooms.LOUNGE),new Position(6,18));
 
-      //Hall room
+      // Hall room
       board[17][11].setDoor(rooms.get(Game.Rooms.HALL),new Position(11,17));
       board[17][11].setRoomName(Game.Rooms.HALL);
       board[17][12].setDoor(rooms.get(Game.Rooms.HALL),new Position(12,17));
       board[17][12].setRoomName(Game.Rooms.HALL);
       board[20][15].setDoor(rooms.get(Game.Rooms.HALL),new Position(15,20));
 
-      //Study room
+      // Study room
       board[20][17].setDoor(rooms.get(Game.Rooms.STUDY),new Position(17,20));
 
-      //sets rooms standing spots
+      // Sets room standing spots
       rooms.get(Game.Rooms.KITCHEN).setSeats(this,1,4);
       rooms.get(Game.Rooms.BALLROOM).setSeats(this,10,5);
       rooms.get(Game.Rooms.CONSERVATORY).setSeats(this,20,3);
@@ -138,7 +138,6 @@ public class Board {
     * @param y1 top-most co-ord of area to add
     * @param y2 bottom-most co-ord of area to add
     */
-
    public void allocateTiles(ArrayList<Tile> tiles, int x1, int x2, int y1, int y2){
       for(int i=y1; i<=y2; i++)
          tiles.addAll(Arrays.asList(board[i]).subList(x1, x2 + 1));
@@ -152,25 +151,25 @@ public class Board {
      * @return boolean indicating valid/invalid.
      */
     public boolean isValidMove(Position current, Position next) {
-       //checks if the next position is outside of the board
+       // Checks if the next position is outside of the board
        if(next.x < 0 || next.x > 23 || next.y < 0 || next.y > 24)
           return false;
 
        Tile nextTile = board[next.y][next.x];
        Tile currentTile = board[current.y][current.x];
 
-       //checks if another player is already on that tile
-       if(nextTile.player != null)
+       // Checks if another player is already on that tile
+       if(nextTile.getPlayer() != null)
           return false;
 
-       //checks non room to non room move
+       // Checks non room to non room move
        if(!currentTile.isRoom() && !nextTile.isRoom())
           return true;
 
-       //checks non room to room move
+       // Checks non room to room move
        if(!currentTile.isRoom() && nextTile.isRoom())
           if(currentTile.isDoor())
-             return currentTile.roomName == null || currentTile.roomName == nextTile.roomName;
+             return currentTile.getRoomName() == null || currentTile.getRoomName() == nextTile.getRoomName();
 
        return false;
     }
@@ -194,9 +193,9 @@ public class Board {
     public void movePlayer(Position currentPos, Position nextPos){
        Tile currentTile = getTile(currentPos);
        Tile nextTile = getTile(nextPos);
-       Player player = currentTile.player;
+       Player player = currentTile.getPlayer();
        nextTile.addPlayer(player);
-       currentTile.removePlayer(player);
+       currentTile.removePlayer();
 
     }
 
