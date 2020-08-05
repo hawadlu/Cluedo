@@ -5,10 +5,10 @@
  *  -End game if correct, current player loses if incorrect
  */
 public class Accuse implements Action {
-    Game.Rooms room;
-    Game.Players suspect;
-    Game.Weapons weapon;
-    Player player;
+    private final Game.Rooms room;
+    private final Game.Players suspect;
+    private final Game.Weapons weapon;
+    private final Player player;
 
     Accuse(Game.Rooms room, Game.Players suspect, Game.Weapons weapon, Player player) {
         this.room = room;
@@ -24,9 +24,10 @@ public class Accuse implements Action {
             Game.gameOver = true;
             System.out.println("You have won!");
         } else {
-            player.hasLost = true;
+            player.setHasLost(true);
             System.out.println("Your accusation is incorrect. You have lost.");
         }
+
         System.out.println("Press 'enter' to continue.");
         Game.input.nextLine();
     }

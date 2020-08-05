@@ -5,7 +5,7 @@ import java.util.Objects;
  *  - Use with 2d array?
  */
 public class Position {
-    int x, y;
+    public int x, y;
 
     Position(int x, int y){
         this.x = x;

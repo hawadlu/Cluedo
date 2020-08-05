@@ -5,15 +5,14 @@ import java.util.*;
  * -Contains their hand, pos & if they've lost
  */
 public class Player {
-    Game.Players name;
-    ArrayList<Card<?>> hand;
-    boolean hasLost;
-    Position newPos;
-    Position oldPos;
-    Game.Rooms lastRoom;
-    HashSet<Tile> tilesThisTurn = new HashSet<>();
-    boolean suggested = false;
-
+    private final Game.Players name;
+    private final ArrayList<Card<?>> hand;
+    private boolean hasLost;
+    private Position newPos;
+    private Position oldPos;
+    private Game.Rooms lastRoom;
+    private HashSet<Tile> tilesThisTurn = new HashSet<>();
+    private boolean suggested = false;
     private int movement = 0;
 
     private enum Actions {VIEW_HAND, MOVE, SUGGEST, ACCUSE, LEAVE_ROOM, END_TURN }
@@ -31,6 +30,7 @@ public class Player {
      * Player takes their turn.
      * Gets the choice to move if they have been moved to another room
      * Has the choice of suggest / accuse
+     *
      * @param board the board that the game is running on
      */
     public void takeTurn(Board board) {
@@ -107,6 +107,7 @@ public class Player {
 
     /**
      * Generate an array of actions that can be taken
+     *
      * @param board the board the game is being played on
      * @return the array of actions that can be taken
      */
@@ -133,6 +134,7 @@ public class Player {
 
     /**
      * Attempt to leave the room the player is in
+     *
      * @param board the board that the game is playing on
      */
     public void leaveRoom(Board board) {
@@ -162,13 +164,16 @@ public class Player {
         // Leave the room
         if(!doorString.equals("Stay in room")) {
             int door = options.indexOf(doorString);
+            System.out.println("TEST ~~~~~ "+door);
+            System.out.println("TEST ~~~~~ "+doors.toString());
+            System.out.println("TEST ~~~~~ "+doorString);
             board.movePlayer(newPos, doors.get(door));
 
-            newPos = new Position(room.getDoor(door));
+            newPos = new Position(doors.get(door));
             oldPos = new Position(newPos);
             movement -= 1;
 
-            tilesThisTurn.addAll(room.tiles);
+            tilesThisTurn.addAll(room.getTiles());
 
             room.toggleDoorNumbers();
             System.out.println(board);
@@ -177,6 +182,7 @@ public class Player {
 
     /**
      * Make a move action
+     *
      * @param board the board the game is running on
      */
     public void makeMove(Board board){
@@ -227,31 +233,24 @@ public class Player {
     }
 
     /**
-     * Get this players hand
-     * @return arraylist of cards in this players hand
+     * Look through this hand for any matches
+     *
+     * @param room Game.Rooms
+     * @param suspect Game.Players
+     * @param weapon Game.Weapons
+     * @return arraylist of the matches
      */
-    public ArrayList<Card<?>> getHand(){ return hand; }
-
-    /**
-     * Adds a card to players hand
-     * Use to Create a player
-     * @param card the card to add to the hand
-     */
-    public void addToHand(Card<?> card){
-        this.hand.add(card);
-    }
-
-    /**
-     * Get name of this player
-     * @return enum from Players in Game class
-     */
-    public Game.Players getName() {
-        return name;
+    public ArrayList<Card<?>> addMatches(Card<Game.Rooms> room, Card<Game.Players> suspect, Card<Game.Weapons> weapon) {
+        ArrayList<Card<?>> matches = new ArrayList<>();
+        for (Card<?> card : hand)
+            if (card.equals(room) || card.equals(suspect) || card.equals(weapon))
+                matches.add(card);
+        return matches;
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(name, hand, hasLost, newPos, oldPos);
+    public String toString() {
+        return name.toString().substring(0, 2);
     }
 
     @Override
@@ -267,35 +266,88 @@ public class Player {
     }
 
     @Override
-    public String toString() {
-        return name.toString().substring(0, 2);
+    public int hashCode() {
+        return Objects.hash(name, hand, hasLost, newPos, oldPos);
     }
 
+    /*
+    GETTERS AND SETTERS
+     */
+
+    /**
+     * Get this players hand
+     *
+     * @return arraylist of cards in this players hand
+     */
+    public ArrayList<Card<?>> getHand(){ return hand; }
+
+    /**
+     * Get name of this player
+     *
+     * @return enum from Players in Game class
+     */
+    public Game.Players getName() {
+        return name;
+    }
+
+    /**
+     * Get the position of this player
+     *
+     * @return the position of this player
+     */
     public Position getPos(){ return newPos; }
 
+    /**
+     * Get the tiles that this player has been in this and last turn
+     *
+     * @return a hashset of tiles that this player was in this and last turn
+     */
+    public HashSet<Tile> getTilesThisTurn() {
+        return tilesThisTurn;
+    }
+
+    /**
+     * Get the newest position of this player
+     *
+     * @return newest position of this player
+     */
+    public Position getNewPos() {
+        return newPos;
+    }
+
+    /**
+     * Adds a card to players hand
+     * Use to Create a player
+     *
+     * @param card the card to add to the hand
+     */
+    public void addToHand(Card<?> card){
+        this.hand.add(card);
+    }
+
+    /**
+     * Set the newest position of this player
+     *
+     * @param newPos the new position to be set as this players newest position
+     */
     public void setNewPos(Position newPos) {
         this.newPos = newPos;
     }
 
     /**
-     * Look through this hand for any matches
-     * @param room Game.Rooms
-     * @param suspect Game.Players
-     * @param weapon Game.Weapons
-     * @return arraylist of the matches
+     * Set whether this player has lost or not
+     *
+     * @param hasLost whether this player has lost or not
      */
-    public ArrayList<Card<?>> addMatches(Card<Game.Rooms> room, Card<Game.Players> suspect, Card<Game.Weapons> weapon) {
-        ArrayList<Card<?>> matches = new ArrayList<>();
-        for (Card<?> card : hand)
-            if (card.equals(room) || card.equals(suspect) || card.equals(weapon))
-                matches.add(card);
-        return matches;
-    }
-
     public void setHasLost(boolean hasLost) {
         this.hasLost = hasLost;
     }
 
+    /**
+     * Has this player lost?
+     *
+     * @return boolean response
+     */
     public boolean hasLost() {
         return hasLost;
     }

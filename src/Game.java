@@ -16,7 +16,6 @@ public class Game {
     public static boolean gameOver = false;
     public static List<Player> players;
     public static Map<Players, Player> playerMap;
-
     public static Board board;
 
     public enum Players {
@@ -201,7 +200,7 @@ public class Game {
 
         // Set players to their starting positions
         for (Player player : players)
-            board.getTile(player.newPos).setPlayer(player);
+            board.getTile(player.getNewPos()).setPlayer(player);
 
         // Run the game
         int currentPlayer = 0;
@@ -209,7 +208,7 @@ public class Game {
             Player player = players.get(currentPlayer % numPlayers);
             if(!lostPlayers.contains(player)) {
                 player.takeTurn(board);
-                if (player.hasLost){ lostPlayers.add(player); }
+                if (player.hasLost()){ lostPlayers.add(player); }
             }
             if(lostPlayers.size() == players.size()) {
                 System.out.println("All players have lost, game is over.");
@@ -270,7 +269,6 @@ public class Game {
     public static void clearOutput() {
         System.out.print(String.join("", Collections.nCopies(30, "\n")));
     }
-
 
     public static void main(String[] args) throws FileNotFoundException {
         Game game = new Game();
