@@ -52,7 +52,7 @@ public class Game {
      * Shows the initial instructions.
      * Ask if the user just wants to play or view the instructions
      */
-    public void showMenu() throws FileNotFoundException {
+    public void showMenu() throws InvalidFileException {
         System.out.println("Note: The board was designed using the 'Consolas' font and may not display properly in other fonts.");
         System.out.println();
 
@@ -69,10 +69,12 @@ public class Game {
     /**
      * Show the instructions
      */
-    public void showInstructions() throws FileNotFoundException {
+    public void showInstructions() throws InvalidFileException {
         File instructions = new File("Assets/Instructions.txt");
-        Scanner scanner = new Scanner(instructions);
-        while (scanner.hasNextLine()) System.out.println(scanner.nextLine());
+        try {
+            Scanner scanner = new Scanner(instructions);
+            while (scanner.hasNextLine()) System.out.println(scanner.nextLine());
+        }catch(FileNotFoundException e){ throw new InvalidFileException("Assets/Instructions.txt"); }
         System.out.println();
         showMenu();
     }
@@ -105,7 +107,7 @@ public class Game {
      * @param numPlayers the number of players that will be playing the game
      * @return an arraylist of players
      */
-    public ArrayList<Player> createPlayers(int numPlayers) {
+    public ArrayList<Player> createPlayers(int numPlayers) throws InvalidFileException {
         ArrayList<Player> players = new ArrayList<>();
         // Make a list of available players so that chosen players can be removed from the list
         ArrayList<Players> availablePlayers = new ArrayList<>(Arrays.asList(Players.values()));
@@ -182,7 +184,7 @@ public class Game {
     /**
      * Play the game
      */
-    public void playGame() {
+    public void playGame() throws InvalidFileException {
         // Setup the game
         gameOver = false;
         int numPlayers = getNumPlayers();
@@ -270,7 +272,7 @@ public class Game {
         System.out.print(String.join("", Collections.nCopies(30, "\n")));
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws InvalidFileException {
         Game game = new Game();
         game.showMenu();
     }
