@@ -1,4 +1,9 @@
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.*;
+import java.util.List;
 
 /**
  * Physical PLayer.
@@ -14,16 +19,20 @@ public class Player {
     private HashSet<Tile> tilesThisTurn = new HashSet<>();
     private boolean suggested = false;
     private int movement = 0;
+    private final BufferedImage image;
 
     private enum Actions {VIEW_HAND, MOVE, SUGGEST, ACCUSE, LEAVE_ROOM, END_TURN }
 
-    Player(Game.Players name, Position startPos) {
+    Player(Game.Players name, Position startPos) throws InvalidFileException {
         this.name = name;
         hand = new ArrayList<>();
         hasLost = false;
         newPos = startPos;
         oldPos = new Position(startPos);
         lastRoom = null;
+        try {
+            image = ImageIO.read(new File("Assets/" + name.toString() + ".png"));
+        }catch(Exception e){ throw new InvalidFileException(name.toString() + ".png"); }
     }
 
     /**
@@ -350,5 +359,15 @@ public class Player {
      */
     public boolean hasLost() {
         return hasLost;
+    }
+
+    /**
+     * Drawing a player at current position
+     *
+     * @param g graphics
+     * @param pos position of current player
+     */
+    protected void drawPlayer(Graphics g, Position pos){
+        g.drawImage(image, pos.x, pos.y, null);
     }
 }
