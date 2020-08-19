@@ -37,7 +37,7 @@ public class Player {
         System.out.println(board);
 
         // Simulates rolling dice for movement
-        movement = (int)(Math.random() * 6) + (int)(Math.random() * 6) + 2;
+        movement = Game.rollDice();
 
         tilesThisTurn = new HashSet<>();
         suggested = false;

@@ -18,6 +18,8 @@ public class Game {
     public static Map<Players, Player> playerMap;
     public static Board board;
 
+    private static Die die1 = new Die(), die2 = new Die();
+
     public enum Players {
         SCARLET,
         PLUM,
@@ -261,6 +263,14 @@ public class Game {
             currentPlayer ++;
             currentPlayer %= numPlayers;
         }
+    }
+
+    /**
+     * Roll the dice and get the result
+     * @return the total number rolled on the dice
+     */
+    public static int rollDice() {
+        return die1.roll() + die2.roll();
     }
 
     /**
