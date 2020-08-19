@@ -3,6 +3,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
+/**
+ * Weapons class for visual representation
+ * of Weapons in rooms
+ */
 public class Weapon {
     private Game.Rooms lastRoom;
     private Game.Rooms currentRoom;
