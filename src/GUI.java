@@ -3,7 +3,13 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * This class handles all of the drawing of the board
+ */
 public class GUI {
+    /**
+     * These objects handle the four quadrants of the gui
+     */
     ActionPanel actionPanel = new ActionPanel();
     ConsolePanel consolePanel = new ConsolePanel();
     BoardPanel boardPanel = new BoardPanel();
@@ -29,6 +35,10 @@ public class GUI {
         window.setVisible(true);
     }
 
+    /**
+     * This sets up the gui.
+     * @param customGrid the grid layout
+     */
     public void setup(CustomGrid customGrid) {
         customGrid.setLayout(new GridBagLayout());
         customGrid.setConstraints(new GridBagConstraints());
@@ -46,6 +56,10 @@ public class GUI {
         customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 1, 1, heightThirds, widthFifths * 4, 2, 1, cardPanel);
     }
 
+    /**
+     * Add a message to the console
+     * @param message the message
+     */
     public void addToConsole(String message) {consolePanel.addMessage(message);}
 
     /**
@@ -70,22 +84,16 @@ class ConsolePanel extends JPanel {
         textArea = new JTextArea(1, 5);
         textArea.setEditable(false);
 
-        //todo remove
-        for (int i = 0; i < 1000; i++) {
-            addMessage("Some message: " + i);
-        }
-
         buildMessages();
         this.add(textArea, BorderLayout.CENTER);
 
         scroll = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.add(scroll);
-
-        System.out.println(this.getHeight());
-        System.out.println(textArea.getHeight());
-        System.out.println(scroll.getHeight());
     }
 
+    /**
+     * Add all of the console messages to the gui
+     */
     void buildMessages () {
         for (String str: consoleMessages) {
             textArea.append(str);
@@ -102,6 +110,9 @@ class ConsolePanel extends JPanel {
         consoleMessages.add(0, message);
     }
 
+    /**
+     * redraw the console
+     */
     public void redraw() {
         textArea.setText(null);
         buildMessages();
@@ -112,6 +123,9 @@ class BoardPanel extends JPanel {}
 
 class CardPanel extends JPanel {}
 
+/**
+ * This class handles customs grids.
+ */
 class CustomGrid {
     Container gridContainer;
     GridBagConstraints constraints;
@@ -132,10 +146,18 @@ class CustomGrid {
         gridContainer.add(testPanel, constraints);
     }
 
+    /**
+     * Set the layout
+     * @param layout layout obj
+     */
     public void setLayout(GridBagLayout layout) {
         gridContainer.setLayout(layout);
     }
 
+    /**
+     * Set the constraints
+     * @param gridBagConstraints constraints obj
+     */
     public void setConstraints(GridBagConstraints gridBagConstraints) {
         this.constraints = gridBagConstraints;
     }
