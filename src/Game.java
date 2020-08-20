@@ -298,7 +298,8 @@ public class Game {
         System.out.print(String.join("", Collections.nCopies(30, "\n")));
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
+        new GUI();
         Game game = new Game();
         game.showMenu();
     }
