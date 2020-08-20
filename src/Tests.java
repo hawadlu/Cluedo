@@ -12,7 +12,7 @@ public class Tests {
     // ================================================
 
     @Test
-    public void testMain() {
+    public void testMain() throws FileNotFoundException {
         System.out.println("main");
         Game.main(null);
     }

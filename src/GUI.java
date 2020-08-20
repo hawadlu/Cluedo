@@ -31,10 +31,10 @@ public class GUI {
         customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 1, 0, 500, 200, 2, 1, boardPanel);
 
         consolePanel.setBackground(Color.black);
-        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 0, 1, 100, 100, 1, 1, consolePanel);
+        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 3, 0, 100, 100, 1, 2, consolePanel);
 
         cardPanel.setBackground(Color.red);
-        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 1, 1, 100, 500, 2, 1, cardPanel);
+        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 0, 1, 100, 500, 3, 1, cardPanel);
 
     }
 }
