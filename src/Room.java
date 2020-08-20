@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Room {
     private final ArrayList<RoomTile> roomTiles;
-    private final ArrayList<Tile> playerSeats = new ArrayList<>();
+    private final ArrayList<RoomTile> playerSeats = new ArrayList<>();
     private final ArrayList<DoorTile> doors = new ArrayList<>();
     private boolean highlighted = false;
 
@@ -25,8 +25,7 @@ public class Room {
 
         for(int i=0; i<2; i++){
             for(int j=0; j<3; j++){
-                playerSeats.add(b.getTile(new Position(x+j, y+i)));
-               // b.getTile(new Position(x+j, y+i)).setPos(new Position(x+j,y+i));
+                playerSeats.add((RoomTile) b.getTile(new Position(x+j, y+i)));
             }
         }
     }
@@ -75,9 +74,9 @@ public class Room {
      * @param p the player to be added to this room
      */
     public void addPlayer(Player p){
-        for(Tile t: playerSeats){
+        for(RoomTile t: playerSeats){
             if(t.getPlayer()==null){
-                t.addPlayer(p);
+                t.setPlayer(p);
                 p.setNewPos(t.getPos());
                 break;
             }

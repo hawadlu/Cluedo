@@ -1,14 +1,14 @@
 public class DoorTile extends Tile{
     private Game.Rooms roomName=null;
     private Player player=null;
-    private Boolean door=false;
     private Boolean toggleDoor=false;
     private int doorNumber=0;
-    private Position pos=null;
+    private final Position pos;
 
-    public DoorTile(Game.Rooms room, Position pos){
+    public DoorTile(Room room, Position pos){
         roomName = room;
         this.pos=pos;
+        room.addDoor(this);
     }
 
     /**
@@ -47,15 +47,6 @@ public class DoorTile extends Tile{
     // BOOLEAN CHECKERS
 
     /**
-     * Is this tile a door?
-     *
-     * @return boolean response
-     */
-    public boolean isDoor(){
-        return door;
-    }
-
-    /**
      * Check if this tile has a player
      *
      * @return boolean response
@@ -64,17 +55,14 @@ public class DoorTile extends Tile{
         return player != null;
     }
 
-
-    /*
-    GETTERS AND SETTERS
-     */
+    //GETTERS AND SETTERS
 
     /**
-     * Gets the room enum
+     * Gets the room
      *
-     * @return room enum
+     * @return the room this door is associated with
      */
-    public Game.Rooms getEnum(){
+    public Room getRoom(){
         return roomName;
     }
 
@@ -97,26 +85,6 @@ public class DoorTile extends Tile{
     }
 
     /**
-     * Set the name of this room
-     *
-     * @param roomName new name for this room
-     */
-    public void setRoomName(Game.Rooms roomName){
-        this.roomName=roomName;
-    }
-
-    /**
-     * Set this tile to be a door
-     *
-     * @param r the room to add this door to
-     */
-    public void setDoor(Room r, Position pos){
-        door=true;
-        this.pos=pos;
-        r.addDoor(this);
-    }
-
-    /**
      * Sets room door number
      *
      * @param i is the new door number
@@ -133,5 +101,4 @@ public class DoorTile extends Tile{
     public void setPlayer(Player p){
         player = p;
     }
-
 }
