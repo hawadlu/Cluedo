@@ -2,67 +2,69 @@ import java.awt.*;
 import javax.swing.*;
 
 public class GUI {
-    public static void addComponentsToPane(Container pane) {
-        pane.setLayout(new GridBagLayout());
-        GridBagConstraints c = new GridBagConstraints();
-
-        JPanel testPanel = new JPanel();
-        testPanel.setBackground(Color.cyan);
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.gridx = 0;
-        c.gridy = 0;
-        c.ipady = 500;
-        c.ipadx = 100;
-        pane.add(testPanel, c);
-
-        testPanel = new JPanel();
-        testPanel.setBackground(Color.orange);
-        c.fill = GridBagConstraints.HORIZONTAL;
-        c.weightx = 0.5;
-        c.gridx = 1;
-        c.gridy = 0;
-        c.ipadx = 200;
-        c.ipady = 500;
-        c.gridwidth = 2;
-        pane.add(testPanel, c);
-
-        testPanel = new JPanel();
-        testPanel.setBackground(Color.black);
-        c.weightx = 0.0;
-        c.gridwidth = 3;
-        c.gridx = 0;
-        c.gridy = 1;
-        c.ipady = 100;
-        c.ipadx = 100;
-        c.gridwidth = 1;
-        pane.add(testPanel, c);
-
-        testPanel = new JPanel();
-        testPanel.setBackground(Color.red);
-        c.weightx = 0.0;
-        c.gridwidth = 3;
-        c.gridx = 1;
-        c.gridy = 1;
-        c.ipadx = 500;
-        c.gridwidth = 1;
-        pane.add(testPanel, c);
-    }
-
     GUI() {
         //Create and set up the window.
         JFrame frame = new JFrame("Cluedo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
 
-        //Set up the content pane.
-        addComponentsToPane(frame.getContentPane());
+        CustomGrid baseLayout = new CustomGrid(frame.getContentPane());
+        setup(baseLayout);
 
         //Display the window.
         frame.pack();
         frame.setVisible(true);
     }
+
+    public void setup(CustomGrid customGrid) {
+        customGrid.setLayout(new GridBagLayout());
+        customGrid.setConstraints(new GridBagConstraints());
+
+        JPanel testPanel = new JPanel();
+        testPanel.setBackground(Color.cyan);
+
+        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 0, 0, 500, 100, 1, 1, testPanel);
+
+        testPanel = new JPanel();
+        testPanel.setBackground(Color.orange);
+
+        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 1, 0, 500, 200, 2, 1, testPanel);
+
+        testPanel = new JPanel();
+        testPanel.setBackground(Color.black);
+        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 0, 1, 100, 100, 1, 1, testPanel);
+
+        testPanel = new JPanel();
+        testPanel.setBackground(Color.red);
+        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 1, 1, 100, 500, 2, 1, testPanel);
+
+    }
 }
 
 class CustomGrid {
+    Container gridContainer;
+    GridBagConstraints constraints;
 
+    CustomGrid(Container gridContainer) {
+        this.gridContainer = gridContainer;
+    }
+
+    public void addElement(int fill, int weightX, int gridx, int gridy, int ipady, int ipadx, int gridWidth, int gridHeight, JPanel testPanel) {
+        constraints.fill = fill;
+        constraints.weightx = weightX;
+        constraints.gridx = gridx;
+        constraints.gridy = gridy;
+        constraints.ipady = ipady;
+        constraints.ipadx = ipadx;
+        constraints.gridwidth = gridWidth;
+        constraints.gridheight = gridHeight;
+        gridContainer.add(testPanel, constraints);
+    }
+
+    public void setLayout(GridBagLayout layout) {
+        gridContainer.setLayout(layout);
+    }
+
+    public void setConstraints(GridBagConstraints gridBagConstraints) {
+        this.constraints = gridBagConstraints;
+    }
 }
