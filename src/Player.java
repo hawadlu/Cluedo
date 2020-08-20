@@ -31,7 +31,7 @@ public class Player {
         oldPos = new Position(startPos);
         lastRoom = null;
         try {
-            image = ImageIO.read(new File("Assets/PlayerPieces" + name.toString() + ".png"));
+            image = ImageIO.read(new File("Assets/PlayerPieces/" + name.toString() + ".png"));
         }catch(Exception e){ throw new InvalidFileException(name.toString() + ".png"); }
     }
 

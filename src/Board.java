@@ -79,39 +79,39 @@ public class Board {
 
       // Sets doors
       // Kitchen
-      board[7][4]=new DoorTile(Game.Rooms.KITCHEN,new Position(4,7));
+      board[7][4] = new DoorTile(rooms.get(Game.Rooms.KITCHEN), new Position(4,7));
 
       // Ballroom
-      board[5][7]=new DoorTile(Game.Rooms.BALLROOM,new Position(7,5));
-      board[8][9]=new DoorTile(Game.Rooms.BALLROOM,new Position(9,8));
-      board[8][14]=new DoorTile(Game.Rooms.BALLROOM,new Position(14,8));
-      board[5][16]=new DoorTile(Game.Rooms.BALLROOM,new Position(16,5));
+      board[5][7] = new DoorTile(rooms.get(Game.Rooms.BALLROOM), new Position(7,5));
+      board[8][9] = new DoorTile(rooms.get(Game.Rooms.BALLROOM), new Position(9,8));
+      board[8][14] = new DoorTile(rooms.get(Game.Rooms.BALLROOM), new Position(14,8));
+      board[5][16] = new DoorTile(rooms.get(Game.Rooms.BALLROOM), new Position(16,5));
 
       // Conservatory
-      board[5][18]=new DoorTile(Game.Rooms.CONSERVATORY,new Position(18,5));
+      board[5][18] = new DoorTile(rooms.get(Game.Rooms.CONSERVATORY), new Position(18,5));
 
       // Dining room
-      board[12][8]=new DoorTile(Game.Rooms.DINING_ROOM,new Position(8,12));
-      board[16][6]=new DoorTile(Game.Rooms.DINING_ROOM,new Position(6,16));
+      board[12][8] = new DoorTile(rooms.get(Game.Rooms.DINING_ROOM), new Position(8,12));
+      board[16][6] = new DoorTile(rooms.get(Game.Rooms.DINING_ROOM), new Position(6,16));
 
       // Billiard room
-      board[9][17]=new DoorTile(Game.Rooms.BILLIARD_ROOM,new Position(17,9));
-      board[13][22]=new DoorTile(Game.Rooms.BILLIARD_ROOM,new Position(22,13));
+      board[9][17] = new DoorTile(rooms.get(Game.Rooms.BILLIARD_ROOM), new Position(17,9));
+      board[13][22] = new DoorTile(rooms.get(Game.Rooms.BILLIARD_ROOM), new Position(22,13));
 
       // Library room
-      board[13][20]=new DoorTile(Game.Rooms.LIBRARY,new Position(20,13));
-      board[16][16]=new DoorTile(Game.Rooms.LIBRARY,new Position(16,16));
+      board[13][20] = new DoorTile(rooms.get(Game.Rooms.LIBRARY), new Position(20,13));
+      board[16][16] = new DoorTile(rooms.get(Game.Rooms.LIBRARY), new Position(16,16));
 
       // Lounge room
-      board[18][6]=new DoorTile(Game.Rooms.LOUNGE,new Position(6,18));
+      board[18][6] = new DoorTile(rooms.get(Game.Rooms.LOUNGE), new Position(6,18));
 
       // Hall room
-      board[17][11]=new DoorTile(Game.Rooms.HALL,new Position(11,17));
-      board[17][12]=new DoorTile(Game.Rooms.HALL,new Position(12,17));
-      board[20][15]=new DoorTile(Game.Rooms.HALL,new Position(15,20));
+      board[17][11] = new DoorTile(rooms.get(Game.Rooms.HALL), new Position(11,17));
+      board[17][12] = new DoorTile(rooms.get(Game.Rooms.HALL), new Position(12,17));
+      board[20][15] = new DoorTile(rooms.get(Game.Rooms.HALL), new Position(15,20));
 
       // Study room
-      board[20][17]=new DoorTile(Game.Rooms.STUDY,new Position(17,20));
+      board[20][17] = new DoorTile(rooms.get(Game.Rooms.STUDY), new Position(17,20));
 
       // Sets room standing spots
       rooms.get(Game.Rooms.KITCHEN).setSeats(this,1,4);
@@ -169,7 +169,7 @@ public class Board {
 
        // Checks non room to room move
        if(!currentTile.isRoom() && currentTile.isDoor())
-          return ((DoorTile) currentTile).getEnum() == ((RoomTile) nextTile).getEnum();
+          return ((DoorTile) currentTile).getRoom() == ((RoomTile) nextTile).getRoom();
 
        return false;
     }

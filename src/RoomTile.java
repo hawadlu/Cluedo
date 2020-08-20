@@ -84,14 +84,6 @@ public class RoomTile implements Tile {
         return pos;
     }
 
-    /**
-     * Get this tile's room name as a enum from Game
-     *
-     * @return room enum - Game.Rooms, or null if no room
-     */
-    public Game.Rooms getRoomName() {
-        return roomName;
-    }
 
     /**
      * Get the player on this tile
