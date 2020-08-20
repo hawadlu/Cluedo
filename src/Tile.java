@@ -34,4 +34,20 @@ public interface Tile {
      * Removes player from tile
      */
     void removePlayer();
+
+    /**
+     * Is this tile a room
+     * @return boolean response
+     */
+    default boolean isRoom() {
+        return this instanceof RoomTile;
+    }
+
+    /**
+     * Is this tile a room
+     * @return boolean response
+     */
+    default boolean isDoor() {
+        return this instanceof DoorTile;
+    }
 }
