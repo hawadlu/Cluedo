@@ -18,7 +18,7 @@ public class Game {
     public static Map<Players, Player> playerMap;
     public static Board board;
 
-    private static Die die1 = new Die(), die2 = new Die();
+    private final static Die die1 = new Die(), die2 = new Die();
 
     public enum Players {
         SCARLET,
@@ -54,13 +54,19 @@ public class Game {
      * Shows the initial instructions.
      * Ask if the user just wants to play or view the instructions
      */
-    public void showMenu() throws InvalidFileException {
+    public void showMenu() {
         System.out.println("Note: The board was designed using the 'Consolas' font and may not display properly in other fonts.");
         System.out.println();
 
         String response = chooseFromArray(new String[]{"Instructions", "Play"}, "Welcome to Cluedo!");
 
-        if (response.equals("Instructions")) showInstructions();
+        if (response.equals("Instructions"))
+            try {
+                showInstructions();
+            } catch (InvalidFileException e) {
+                System.out.println("Instructions not found");
+                showMenu();
+            }
         else if (response.equals("Play")) playGame();
         else {
             System.out.println("Invalid response, try again!");
@@ -109,7 +115,7 @@ public class Game {
      * @param numPlayers the number of players that will be playing the game
      * @return an arraylist of players
      */
-    public ArrayList<Player> createPlayers(int numPlayers) throws InvalidFileException {
+    public ArrayList<Player> createPlayers(int numPlayers) {
         ArrayList<Player> players = new ArrayList<>();
         // Make a list of available players so that chosen players can be removed from the list
         ArrayList<Players> availablePlayers = new ArrayList<>(Arrays.asList(Players.values()));
@@ -118,7 +124,13 @@ public class Game {
         for (int i = 0; i < numPlayers; i++) {
             Players player = chooseFromArray(availablePlayers.toArray(new Players[]{}), "Player "+(i+1)+" choose your character:");
             Position startPos = getStartingPosition(player);
-            players.add(new Player(player, startPos));
+
+            try {
+                players.add(new Player(player, startPos));
+            } catch (InvalidFileException e) {
+                System.out.println("No image available for "+player);
+                i--;
+            }
 
             availablePlayers.remove(player);
         }
@@ -126,9 +138,13 @@ public class Game {
         // Make player objects for the remaining characters that aren't playing
         for (Players player : availablePlayers) {
             Position startPos = getStartingPosition(player);
-            Player npc = new Player(player, startPos);
-            npc.setHasLost(true);
-            players.add(npc);
+            try {
+                Player npc = new Player(player, startPos);
+                npc.setHasLost(true);
+                players.add(npc);
+            } catch (InvalidFileException e) {
+                System.out.println("No image available for "+player);
+            }
         }
 
         return players;
@@ -186,7 +202,7 @@ public class Game {
     /**
      * Play the game
      */
-    public void playGame() throws InvalidFileException {
+    public void playGame() {
         // Setup the game
         gameOver = false;
         int numPlayers = getNumPlayers();
@@ -204,7 +220,7 @@ public class Game {
 
         // Set players to their starting positions
         for (Player player : players)
-            board.getTile(player.getNewPos()).setPlayer(player);
+            board.getTile(player.getNewPos()).addPlayer(player);
 
         // Run the game
         int currentPlayer = 0;
@@ -282,7 +298,8 @@ public class Game {
         System.out.print(String.join("", Collections.nCopies(30, "\n")));
     }
 
-    public static void main(String[] args) throws InvalidFileException {
+    public static void main(String[] args) throws FileNotFoundException {
+        new GUI();
         Game game = new Game();
         game.showMenu();
     }
