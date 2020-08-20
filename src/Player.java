@@ -245,6 +245,47 @@ public class Player {
     }
 
     /**
+     * Recursive method, highlight tiles that are free
+     * highlights all tiles within movement.
+     *
+     * @param board board that players are playing on
+     * @param movement int of moves
+     * @param pos curr pos of tile
+     */
+    public void findPath(Board board, int movement, Position pos){
+        //Add tile to available tiles
+        tilesThisTurn.add(board.getTile(pos));
+
+        if(movement > 0){
+            //Checking North
+            highlightTile(board, pos, new Position(pos.x, pos.y-1), movement);
+
+            //Checking South
+            highlightTile(board, pos, new Position(pos.x, pos.y+1), movement);
+
+            //Checking East
+            highlightTile(board, pos, new Position(pos.x+1, pos.y), movement);
+
+            //Checking West
+            highlightTile(board, pos, new Position(pos.x-1, pos.y), movement);
+        }
+    }
+
+    /**
+     * Checks whether this tile can be highlighted.
+     *
+     * @param board
+     * @param current
+     * @param next
+     * @param movement
+     */
+    public void highlightTile(Board board, Position current, Position next, int movement) {
+        if (board.isValidMove(current, next) && !board.getTile(next).isHighlighted) {
+            findPath(board, movement - 1, next);
+        }
+    }
+
+    /**
      * Look through this hand for any matches
      *
      * @param room Game.Rooms
