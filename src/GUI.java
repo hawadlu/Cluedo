@@ -2,6 +2,11 @@ import java.awt.*;
 import javax.swing.*;
 
 public class GUI {
+    ActionPanel actionPanel = new ActionPanel();
+    ConsolePanel consolePanel = new ConsolePanel();
+    BoardPanel boardPanel = new BoardPanel();
+    CardPanel cardPanel = new CardPanel();
+
     GUI() {
         //Create and set up the window.
         JFrame frame = new JFrame("Cluedo");
@@ -19,26 +24,28 @@ public class GUI {
         customGrid.setLayout(new GridBagLayout());
         customGrid.setConstraints(new GridBagConstraints());
 
-        JPanel testPanel = new JPanel();
-        testPanel.setBackground(Color.cyan);
+        actionPanel.setBackground(Color.cyan);
+        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 0, 0, 500, 100, 1, 1, actionPanel);
 
-        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 0, 0, 500, 100, 1, 1, testPanel);
+        boardPanel.setBackground(Color.orange);
+        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 1, 0, 500, 200, 2, 1, boardPanel);
 
-        testPanel = new JPanel();
-        testPanel.setBackground(Color.orange);
+        consolePanel.setBackground(Color.black);
+        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 0, 1, 100, 100, 1, 1, consolePanel);
 
-        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 1, 0, 500, 200, 2, 1, testPanel);
-
-        testPanel = new JPanel();
-        testPanel.setBackground(Color.black);
-        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 0, 1, 100, 100, 1, 1, testPanel);
-
-        testPanel = new JPanel();
-        testPanel.setBackground(Color.red);
-        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 1, 1, 100, 500, 2, 1, testPanel);
+        cardPanel.setBackground(Color.red);
+        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 1, 1, 100, 500, 2, 1, cardPanel);
 
     }
 }
+
+class ActionPanel extends JPanel {}
+
+class ConsolePanel extends JPanel {}
+
+class BoardPanel extends JPanel {}
+
+class CardPanel extends JPanel {}
 
 class CustomGrid {
     Container gridContainer;
