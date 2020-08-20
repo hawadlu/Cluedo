@@ -204,7 +204,7 @@ public class Game {
 
         // Set players to their starting positions
         for (Player player : players)
-            board.getTile(player.getNewPos()).setPlayer(player);
+            board.getTile(player.getNewPos()).addPlayer(player);
 
         // Run the game
         int currentPlayer = 0;

@@ -1,13 +1,13 @@
 import java.util.ArrayList;
 
 public class Room {
-    private final ArrayList<Tile> tiles;
+    private final ArrayList<RoomTile> roomTiles;
     private final ArrayList<Tile> playerSeats = new ArrayList<>();
-    private final ArrayList<Tile> doors = new ArrayList<>();
+    private final ArrayList<DoorTile> doors = new ArrayList<>();
 
-    public Room(ArrayList<Tile> tiles, Game.Rooms name){
-        this.tiles=tiles;
-        for(Tile t: tiles){
+    public Room(ArrayList<RoomTile> tiles, Game.Rooms name){
+        this.roomTiles=tiles;
+        for(RoomTile t: tiles){
             t.setRoom(this);
             t.setRoomName(name);
         }
@@ -25,7 +25,7 @@ public class Room {
         for(int i=0; i<2; i++){
             for(int j=0; j<3; j++){
                 playerSeats.add(b.getTile(new Position(x+j, y+i)));
-                b.getTile(new Position(x+j, y+i)).setPos(new Position(x+j,y+i));
+               // b.getTile(new Position(x+j, y+i)).setPos(new Position(x+j,y+i));
             }
         }
     }
@@ -35,7 +35,7 @@ public class Room {
      *
      * @param t the tile which is the door to add to this room
      */
-    public void addDoor(Tile t){
+    public void addDoor(DoorTile t){
         doors.add(t);
         t.setDoorNumber(doors.indexOf(t));
     }
@@ -44,7 +44,7 @@ public class Room {
      * Toggles display of the rooms doors
      */
     public void toggleDoorNumbers(){
-        for(Tile t: doors){
+        for(DoorTile t: doors){
             t.toggleDoor();
         }
     }
@@ -76,7 +76,7 @@ public class Room {
     public void addPlayer(Player p){
         for(Tile t: playerSeats){
             if(t.getPlayer()==null){
-                t.setPlayer(p);
+                t.addPlayer(p);
                 p.setNewPos(t.getPos());
                 break;
             }
@@ -88,7 +88,7 @@ public class Room {
      *
      * @return arraylist of the tiles in this room
      */
-    public ArrayList<Tile> getTiles() {
-        return tiles;
+    public ArrayList<RoomTile> getTiles() {
+        return roomTiles;
     }
 }

@@ -15,107 +15,103 @@ public class Board {
 
       for(int i =0; i< board.length; i++){
          for(int j =0; j< board[i].length; j++){
-            board[i][j] = new Tile();
+            board[i][j] = new HallwayTile(new Position(j,i));
          }
       }
 
       // Sets room tiles
-      ArrayList<Tile> Kitchen = new ArrayList<>();
+      ArrayList<RoomTile> Kitchen = new ArrayList<>();
       allocateTiles(Kitchen, 0,5,0,6);
       rooms.put(Game.Rooms.KITCHEN, new Room(Kitchen, Game.Rooms.KITCHEN));
 
-      ArrayList<Tile> BallRoom = new ArrayList<>();
+      ArrayList<RoomTile> BallRoom = new ArrayList<>();
       allocateTiles(BallRoom, 10,13,0,1);
       allocateTiles(BallRoom, 8,15,2,7);
       rooms.put(Game.Rooms.BALLROOM, new Room(BallRoom, Game.Rooms.BALLROOM));
 
-      ArrayList<Tile> Conservatory = new ArrayList<>();
+      ArrayList<RoomTile> Conservatory = new ArrayList<>();
       allocateTiles(Conservatory, 18,23,0,4);
       allocateTiles(Conservatory, 19,23,5,5);
       rooms.put(Game.Rooms.CONSERVATORY, new Room(Conservatory, Game.Rooms.CONSERVATORY));
 
-      ArrayList<Tile> DinningRoom = new ArrayList<>();
+      ArrayList<RoomTile> DinningRoom = new ArrayList<>();
       allocateTiles(DinningRoom, 0,4,9,9);
       allocateTiles(DinningRoom, 0,7,10,15);
       rooms.put(Game.Rooms.DINING_ROOM, new Room(DinningRoom, Game.Rooms.DINING_ROOM));
 
-      ArrayList<Tile> BilliardRoom = new ArrayList<>();
+      ArrayList<RoomTile> BilliardRoom = new ArrayList<>();
       allocateTiles(BilliardRoom, 18,23,8,12);
       rooms.put(Game.Rooms.BILLIARD_ROOM, new Room(BilliardRoom, Game.Rooms.BILLIARD_ROOM));
 
-      ArrayList<Tile> Library = new ArrayList<>();
+      ArrayList<RoomTile> Library = new ArrayList<>();
       allocateTiles(Library, 17,17,15,17);
       allocateTiles(Library, 18,23,14,18);
       rooms.put(Game.Rooms.LIBRARY, new Room(Library, Game.Rooms.LIBRARY));
 
-      ArrayList<Tile> Lounge = new ArrayList<>();
+      ArrayList<RoomTile> Lounge = new ArrayList<>();
       allocateTiles(Lounge, 0,6,19,24);
       rooms.put(Game.Rooms.LOUNGE, new Room(Lounge, Game.Rooms.LOUNGE));
 
-      ArrayList<Tile> Hall = new ArrayList<>();
+      ArrayList<RoomTile> Hall = new ArrayList<>();
       allocateTiles(Hall, 9,14,18,24);
       rooms.put(Game.Rooms.HALL, new Room(Hall, Game.Rooms.HALL));
 
-      ArrayList<Tile> Study = new ArrayList<>();
+      ArrayList<RoomTile> Study = new ArrayList<>();
       allocateTiles(Study, 17,23,21,24);
       rooms.put(Game.Rooms.STUDY, new Room(Study, Game.Rooms.STUDY));
 
       // Blocked tiles
-      ArrayList<Tile> Blocked = new ArrayList<>();
+      ArrayList<RoomTile> Blocked = new ArrayList<>();
       allocateTiles(Blocked, 6,6,0,1);
       allocateTiles(Blocked, 7,8,0,0);
       allocateTiles(Blocked, 15,16,0,0);
       allocateTiles(Blocked, 17,17,0,1);
       allocateTiles(Blocked, 10,14,10,16);
-      Blocked.add(board[8][0]);
-      Blocked.add(board[7][23]);
-      Blocked.add(board[13][23]);
-      Blocked.add(board[16][0]);
-      Blocked.add(board[18][0]);
-      Blocked.add(board[20][23]);
-      Blocked.add(board[24][8]);
-      Blocked.add(board[24][15]);
+      allocateTiles(Blocked, 0,0,8,8);
+      allocateTiles(Blocked, 23,23,7,7);
+      allocateTiles(Blocked, 23,23,13,13);
+      allocateTiles(Blocked, 0,0,16,16);
+      allocateTiles(Blocked, 0,0,18,18);
+      allocateTiles(Blocked, 23,23,20,20);
+      allocateTiles(Blocked, 8,8,24,24);
+      allocateTiles(Blocked, 15,15,24,24);
       rooms.put(null, new Room(Blocked, null));
 
       // Sets doors
       // Kitchen
-      board[7][4].setDoor(rooms.get(Game.Rooms.KITCHEN),new Position(4,7));
+      board[7][4]=new DoorTile(Game.Rooms.KITCHEN,new Position(4,7));
 
       // Ballroom
-      board[5][7].setDoor(rooms.get(Game.Rooms.BALLROOM),new Position(7,5));
-      board[8][9].setDoor(rooms.get(Game.Rooms.BALLROOM),new Position(9,8));
-      board[8][14].setDoor(rooms.get(Game.Rooms.BALLROOM),new Position(14,8));
-      board[5][16].setDoor(rooms.get(Game.Rooms.BALLROOM),new Position(16,5));
+      board[5][7]=new DoorTile(Game.Rooms.BALLROOM,new Position(7,5));
+      board[8][9]=new DoorTile(Game.Rooms.BALLROOM,new Position(9,8));
+      board[8][14]=new DoorTile(Game.Rooms.BALLROOM,new Position(14,8));
+      board[5][16]=new DoorTile(Game.Rooms.BALLROOM,new Position(16,5));
 
       // Conservatory
-      board[5][18].setDoor(rooms.get(Game.Rooms.CONSERVATORY),new Position(18,5));
+      board[5][18]=new DoorTile(Game.Rooms.CONSERVATORY,new Position(18,5));
 
       // Dining room
-      board[12][8].setDoor(rooms.get(Game.Rooms.DINING_ROOM),new Position(8,12));
-      board[16][6].setDoor(rooms.get(Game.Rooms.DINING_ROOM),new Position(6,16));
+      board[12][8]=new DoorTile(Game.Rooms.DINING_ROOM,new Position(8,12));
+      board[16][6]=new DoorTile(Game.Rooms.DINING_ROOM,new Position(6,16));
 
       // Billiard room
-      board[9][17].setDoor(rooms.get(Game.Rooms.BILLIARD_ROOM),new Position(17,9));
-      board[13][22].setDoor(rooms.get(Game.Rooms.BILLIARD_ROOM),new Position(22,13));
-      board[13][22].setRoomName(Game.Rooms.BILLIARD_ROOM);
+      board[9][17]=new DoorTile(Game.Rooms.BILLIARD_ROOM,new Position(17,9));
+      board[13][22]=new DoorTile(Game.Rooms.BILLIARD_ROOM,new Position(22,13));
 
       // Library room
-      board[13][20].setDoor(rooms.get(Game.Rooms.LIBRARY),new Position(20,13));
-      board[13][20].setRoomName(Game.Rooms.LIBRARY);
-      board[16][16].setDoor(rooms.get(Game.Rooms.LIBRARY),new Position(16,16));
+      board[13][20]=new DoorTile(Game.Rooms.LIBRARY,new Position(20,13));
+      board[16][16]=new DoorTile(Game.Rooms.LIBRARY,new Position(16,16));
 
       // Lounge room
-      board[18][6].setDoor(rooms.get(Game.Rooms.LOUNGE),new Position(6,18));
+      board[18][6]=new DoorTile(Game.Rooms.LOUNGE,new Position(6,18));
 
       // Hall room
-      board[17][11].setDoor(rooms.get(Game.Rooms.HALL),new Position(11,17));
-      board[17][11].setRoomName(Game.Rooms.HALL);
-      board[17][12].setDoor(rooms.get(Game.Rooms.HALL),new Position(12,17));
-      board[17][12].setRoomName(Game.Rooms.HALL);
-      board[20][15].setDoor(rooms.get(Game.Rooms.HALL),new Position(15,20));
+      board[17][11]=new DoorTile(Game.Rooms.HALL,new Position(11,17));
+      board[17][12]=new DoorTile(Game.Rooms.HALL,new Position(12,17));
+      board[20][15]=new DoorTile(Game.Rooms.HALL,new Position(15,20));
 
       // Study room
-      board[20][17].setDoor(rooms.get(Game.Rooms.STUDY),new Position(17,20));
+      board[20][17]=new DoorTile(Game.Rooms.STUDY,new Position(17,20));
 
       // Sets room standing spots
       rooms.get(Game.Rooms.KITCHEN).setSeats(this,1,4);
@@ -138,9 +134,14 @@ public class Board {
     * @param y1 top-most co-ord of area to add
     * @param y2 bottom-most co-ord of area to add
     */
-   public void allocateTiles(ArrayList<Tile> tiles, int x1, int x2, int y1, int y2){
-      for(int i=y1; i<=y2; i++)
-         tiles.addAll(Arrays.asList(board[i]).subList(x1, x2 + 1));
+   public void allocateTiles(ArrayList<RoomTile> tiles, int x1, int x2, int y1, int y2){
+      for(int i=y1;i<=y2; i++){
+         for(int j=x1; j<=x2; j++){
+            RoomTile newRoomTile =new RoomTile(new Position(j,i));
+            board[i][j] = newRoomTile;
+            tiles.add(newRoomTile);
+         }
+      }
    }
 
     /**
@@ -163,13 +164,13 @@ public class Board {
           return false;
 
        // Checks non room to non room move
-       if(!currentTile.isRoom() && !nextTile.isRoom())
+       if(!(currentTile instanceof RoomTile) && !(nextTile instanceof RoomTile))
           return true;
 
        // Checks non room to room move
-       if(!currentTile.isRoom() && nextTile.isRoom())
-          if(currentTile.isDoor())
-             return currentTile.getRoomName() == null || currentTile.getRoomName() == nextTile.getRoomName();
+       if(!(currentTile instanceof RoomTile))
+          if(currentTile instanceof DoorTile)
+             return ((DoorTile) currentTile).getEnum() == null || ((DoorTile) currentTile).getEnum() == ((RoomTile) nextTile).getEnum();
 
        return false;
     }
