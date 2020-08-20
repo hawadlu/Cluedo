@@ -1,5 +1,7 @@
 import java.awt.*;
+import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 public class GUI {
     ActionPanel actionPanel = new ActionPanel();
@@ -7,17 +9,18 @@ public class GUI {
     BoardPanel boardPanel = new BoardPanel();
     CardPanel cardPanel = new CardPanel();
 
-    GUI() {
-        //Create and set up the window.
-        JFrame frame = new JFrame("Cluedo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    JFrame window = new JFrame("Cluedo");
+    CustomGrid baseLayout;
 
-        CustomGrid baseLayout = new CustomGrid(frame.getContentPane());
+    GUI() {
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        baseLayout = new CustomGrid(window.getContentPane());
         setup(baseLayout);
 
         //Display the window.
-        frame.pack();
-        frame.setVisible(true);
+        window.pack();
+        window.setVisible(true);
     }
 
     public void setup(CustomGrid customGrid) {
@@ -30,18 +33,74 @@ public class GUI {
         boardPanel.setBackground(Color.orange);
         customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 1, 0, 500, 200, 2, 1, boardPanel);
 
-        consolePanel.setBackground(Color.black);
-        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 3, 0, 100, 100, 1, 2, consolePanel);
+        consolePanel.setBackground(Color.magenta);
+        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 0, 1, 100, 100, 1, 1, consolePanel);
 
         cardPanel.setBackground(Color.red);
-        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 0, 1, 100, 500, 3, 1, cardPanel);
+        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 1, 1, 100, 500, 2, 1, cardPanel);
+    }
 
+    public void addToConsole(String message) {consolePanel.addMessage(message);}
+
+    /**
+     * redraw the gui
+     */
+    public void redraw() {
+        consolePanel.redraw();
     }
 }
 
 class ActionPanel extends JPanel {}
 
-class ConsolePanel extends JPanel {}
+class ConsolePanel extends JPanel {
+    ArrayList<String> consoleMessages = new ArrayList<>();
+    JTextArea textArea;
+    JScrollPane scroll;
+
+    ConsolePanel() {
+        this.setBorder(new EmptyBorder(0, 0, 0, 0));
+        this.setLayout(new BorderLayout(0, 0));
+
+        textArea = new JTextArea(1, 5);
+        textArea.setEditable(false);
+
+        //todo remove
+        for (int i = 0; i < 1000; i++) {
+            addMessage("Some message: " + i);
+        }
+
+        buildMessages();
+        this.add(textArea, BorderLayout.CENTER);
+
+        scroll = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        this.add(scroll);
+
+        System.out.println(this.getHeight());
+        System.out.println(textArea.getHeight());
+        System.out.println(scroll.getHeight());
+    }
+
+    void buildMessages () {
+        for (String str: consoleMessages) {
+            textArea.append(str);
+            textArea.append("\n");
+        }
+    }
+
+    /**
+     * Add a message to the console. Max len of console is 30
+     * @param message the message
+     */
+    void addMessage(String message) {
+        if (consoleMessages.size() >= 30) consoleMessages.remove(29);
+        consoleMessages.add(0, message);
+    }
+
+    public void redraw() {
+        textArea.setText(null);
+        buildMessages();
+    }
+}
 
 class BoardPanel extends JPanel {}
 

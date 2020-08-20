@@ -299,7 +299,16 @@ public class Game {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        new GUI();
+        GUI gui = new GUI();
+
+
+        //todo remove
+        for (int i = 0; i < 9999; i++) {
+            gui.addToConsole("Some message: " + i);
+        }
+
+        gui.redraw();
+
         Game game = new Game();
         game.showMenu();
     }
