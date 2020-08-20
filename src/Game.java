@@ -271,6 +271,7 @@ public class Game {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
+        new GUI();
         Game game = new Game();
         game.showMenu();
     }
