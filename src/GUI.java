@@ -12,6 +12,12 @@ public class GUI {
     JFrame window = new JFrame("Cluedo");
     CustomGrid baseLayout;
 
+    int width = 1440;
+    int height = 900;
+
+    int widthFifths = width / 5;
+    int heightThirds = height / 3;
+
     GUI() {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -28,16 +34,16 @@ public class GUI {
         customGrid.setConstraints(new GridBagConstraints());
 
         actionPanel.setBackground(Color.cyan);
-        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 0, 0, 500, 100, 1, 1, actionPanel);
+        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 0, 0, heightThirds * 2, widthFifths, 1, 1, actionPanel);
 
         boardPanel.setBackground(Color.orange);
-        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 1, 0, 500, 200, 2, 1, boardPanel);
+        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 1, 0, heightThirds * 2, widthFifths * 4, 2, 1, boardPanel);
 
         consolePanel.setBackground(Color.magenta);
-        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 0, 1, 100, 100, 1, 1, consolePanel);
+        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 0, 1, heightThirds, widthFifths, 1, 1, consolePanel);
 
         cardPanel.setBackground(Color.red);
-        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 1, 1, 100, 500, 2, 1, cardPanel);
+        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 1, 1, heightThirds, widthFifths * 4, 2, 1, cardPanel);
     }
 
     public void addToConsole(String message) {consolePanel.addMessage(message);}
