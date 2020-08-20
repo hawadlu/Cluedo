@@ -164,13 +164,12 @@ public class Board {
           return false;
 
        // Checks non room to non room move
-       if(!(currentTile instanceof RoomTile) && !(nextTile instanceof RoomTile))
+       if(!currentTile.isRoom() && !nextTile.isRoom())
           return true;
 
        // Checks non room to room move
-       if(!(currentTile instanceof RoomTile))
-          if(currentTile instanceof DoorTile)
-             return ((DoorTile) currentTile).getEnum() == null || ((DoorTile) currentTile).getEnum() == ((RoomTile) nextTile).getEnum();
+       if(!currentTile.isRoom() && currentTile.isDoor())
+          return ((DoorTile) currentTile).getEnum() == ((RoomTile) nextTile).getEnum();
 
        return false;
     }

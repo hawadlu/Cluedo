@@ -86,7 +86,7 @@ public class Player {
                             takingTurn = false;
                             break;
                         case SUGGEST:
-                            room = board.getTile(newPos).getEnum();
+                            room = ((RoomTile)board.getTile(newPos)).getEnum();
 
                             confirm = Game.chooseFromArray(new String[]{"Yes", "No"}, "Are you sure you want to Suggest "+player+" with the "+weapon+" in the "+room+"?");
                             if (confirm.equals("No")) break;
@@ -111,7 +111,8 @@ public class Player {
 
         //Update lastRoom, will be null if outside of room, used in accuse
         if (!suggested) lastRoom = null;
-        else lastRoom = board.getTile(newPos).getEnum();
+        else lastRoom = board.getTile(newPos).isRoom() ?
+                ((RoomTile)board.getTile(newPos)).getEnum() : null;
     }
 
     /**
@@ -122,7 +123,6 @@ public class Player {
      */
     public Actions[] getActions(Board board) {
         List<Actions> actions = new ArrayList<>();
-        Game.Rooms currentRoom = board.getTile(newPos).getEnum();
         boolean inRoom = board.getTile(newPos).isRoom();
 
         actions.add(Actions.VIEW_HAND);
@@ -132,8 +132,11 @@ public class Player {
         else if (movement > 0)
             actions.add(Actions.MOVE);
 
-        if (inRoom && !suggested && currentRoom != lastRoom)
-            actions.add(Actions.SUGGEST);
+        if (inRoom && !suggested) {
+            Game.Rooms currentRoom = ((RoomTile)board.getTile(newPos)).getEnum();
+            if (currentRoom != lastRoom)
+                actions.add(Actions.SUGGEST);
+        }
 
         actions.add(Actions.ACCUSE);
         actions.add(Actions.END_TURN);
@@ -147,7 +150,7 @@ public class Player {
      * @param board the board that the game is playing on
      */
     public void leaveRoom(Board board) {
-        Room room = board.getTile(newPos).getRoom();
+        Room room = ((RoomTile)board.getTile(newPos)).getRoom();
         int numDoors = room.getNumberOfDoors();
         List<Position> doors = new ArrayList<>();
 
@@ -227,7 +230,7 @@ public class Player {
                 movement -= actions.length;
 
                 // If entered room, set movement to 0
-                if(board.getTile(newPos).getEnum() != null)
+                if(board.getTile(newPos).isRoom())
                     movement = 0;
 
                 // Execute the movement on the board
