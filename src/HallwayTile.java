@@ -1,4 +1,4 @@
-public class HallwayTile implements Tile{
+public class HallwayTile extends Tile {
     private Player player=null;
     private Position pos=null;
 

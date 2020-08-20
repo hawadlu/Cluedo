@@ -1,4 +1,4 @@
-public class RoomTile implements Tile {
+public class RoomTile extends Tile {
     private Room room=null;
     private Game.Rooms roomName=null;
     private Player player=null;

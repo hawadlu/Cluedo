@@ -214,8 +214,9 @@ public class Player {
             // Player chooses to stop moving
             if (response.trim().length() == 0) return;
 
-            // Add the current position to the set of visited tiles
-            tilesThisTurn.add(board.getTile(newPos));
+            // Highlight available path
+            findPath(board, movement, oldPos);
+            System.out.println(tilesThisTurn);
 
             // Process the requested move
             String[] actions = response.split("");
@@ -255,6 +256,7 @@ public class Player {
     public void findPath(Board board, int movement, Position pos){
         //Add tile to available tiles
         tilesThisTurn.add(board.getTile(pos));
+        board.getTile(pos).setHighlighted();
 
         if(movement > 0){
             //Checking North
@@ -280,7 +282,7 @@ public class Player {
      * @param movement
      */
     public void highlightTile(Board board, Position current, Position next, int movement) {
-        if (board.isValidMove(current, next) && !board.getTile(next).isHighlighted) {
+        if (board.isValidMove(current, next) && !board.getTile(next).isHighlighted()) {
             findPath(board, movement - 1, next);
         }
     }

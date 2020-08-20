@@ -4,6 +4,7 @@ public class Room {
     private final ArrayList<RoomTile> roomTiles;
     private final ArrayList<Tile> playerSeats = new ArrayList<>();
     private final ArrayList<DoorTile> doors = new ArrayList<>();
+    private boolean highlighted = false;
 
     public Room(ArrayList<RoomTile> tiles, Game.Rooms name){
         this.roomTiles=tiles;
@@ -91,4 +92,11 @@ public class Room {
     public ArrayList<RoomTile> getTiles() {
         return roomTiles;
     }
+
+    /**
+     * Returns whether this tile is highlighted
+     *
+     * @return boolean if tile is highlighted
+     */
+    public boolean isHighlighted(){ return highlighted; }
 }

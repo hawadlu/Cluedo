@@ -1,4 +1,4 @@
-public class DoorTile implements Tile{
+public class DoorTile extends Tile{
     private Game.Rooms roomName=null;
     private Player player=null;
     private Boolean door=false;
