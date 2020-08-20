@@ -12,7 +12,7 @@ public class Tests {
     // ================================================
 
     @Test
-    public void testMain() throws IOException {
+    public void testMain() {
         System.out.println("main");
         Game.main(null);
     }
@@ -57,9 +57,10 @@ public class Tests {
             // Catch choosing a player that doesnt have a starting position set
             try {
                 Position startPos = getStartingPosition(player);
+
                 players.add(new Player(player, startPos));
             }
-            catch (Exception e) {
+            catch (Exception | InvalidFileException e) {
                 System.out.println(e.toString());
                 i--;
             }
