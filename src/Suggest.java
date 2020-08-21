@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Suggest implements Action {
     private final Card<Game.Players> suspect;
@@ -15,6 +17,8 @@ public class Suggest implements Action {
 
     @Override
     public void apply() {
+        Game.print(player.getName()+" has suggested "+suspect+" with the "+weapon+" in the "+room);
+
         // Move the suggested player to the room
         Player suspectPlayer = Game.playerMap.get(suspect.getEnum());
         Position pos = suspectPlayer.getPos();
@@ -22,6 +26,8 @@ public class Suggest implements Action {
         Board.rooms.get(room.getEnum()).addPlayer(suspectPlayer);
 
         Game.clearOutput();
+
+        List<String> couldntProveWrong = new ArrayList<>();
 
         // Go through each players hand after this player looking for a match
         int indexOfPlayer = Game.players.indexOf(player);
@@ -45,13 +51,19 @@ public class Suggest implements Action {
                         +"\nPress Enter if you are "+player.getName()+" to continue");
                 Game.input.nextLine();
 
+                if (couldntProveWrong.size() > 0)
+                    Game.print(couldntProveWrong.toString()+" couldn't prove "+player.getName()+" wrong");
+                Game.print(otherPlayer.getName()+" proved "+player.getName()+" wrong!");
+
                 return;
             } else {
                 // Inform the player of who can't prove them wrong
+                couldntProveWrong.add(otherPlayer.getName()+"");
                 System.out.println(otherPlayer.getName() + " can't prove you wrong");
             }
         }
         // No matches were found
+        Game.print("No one can prove "+player.getName()+" wrong!");
         System.out.println("No one can prove you wrong!");
         System.out.println("Press Enter to Continue");
         Game.input.nextLine();
