@@ -49,16 +49,37 @@ public class GUI {
         customGrid.setConstraints(new GridBagConstraints());
 
         actionPanel.setBackground(Color.cyan);
-        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 0, 0, heightThirds * 2, widthFifths, 1, 1, actionPanel);
+        customGrid.setFill(GridBagConstraints.HORIZONTAL);
+        customGrid.setAnchor(GridBagConstraints.CENTER);
+        customGrid.setWeight(0, 0);
+        customGrid.setGrid(0, 0, 1, 1);
+        customGrid.setPadding(widthFifths, heightThirds * 2);
+        customGrid.addElement(actionPanel);
 
         boardPanel.setBackground(Color.orange);
-        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 1, 0, heightThirds * 2, widthFifths * 4, 2, 1, boardPanel);
+        customGrid.setFill(GridBagConstraints.HORIZONTAL);
+        customGrid.setAnchor(GridBagConstraints.CENTER);
+        customGrid.setWeight(0, 0);
+        customGrid.setGrid(1, 0, 2, 1);
+        customGrid.setPadding(widthFifths * 4, heightThirds * 2);
+        customGrid.addElement(boardPanel);
 
         consolePanel.setBackground(Color.magenta);
-        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 0, 1, heightThirds, widthFifths, 1, 1, consolePanel);
+        customGrid.setFill(GridBagConstraints.HORIZONTAL);
+        customGrid.setAnchor(GridBagConstraints.CENTER);
+        customGrid.setWeight(0, 0);
+        customGrid.setGrid(0, 1, 1, 1);
+        customGrid.setPadding(widthFifths, heightThirds);
+        customGrid.addElement(consolePanel);
 
         cardPanel.setBackground(Color.red);
-        customGrid.addElement(GridBagConstraints.HORIZONTAL,0, 1, 1, heightThirds, widthFifths * 4, 2, 1, cardPanel);
+        customGrid.setFill(GridBagConstraints.HORIZONTAL);
+        customGrid.setAnchor(GridBagConstraints.CENTER);
+        customGrid.setWeight(0, 0);
+        customGrid.setGrid(1, 1, 2, 1);
+        customGrid.setPadding(widthFifths * 4, 0);
+        customGrid.addElement(cardPanel);
+        cardPanel.intialiseDefaultText();
     }
 
     /**
@@ -164,7 +185,31 @@ class BoardPanel extends JPanel {
     }
 }
 
-class CardPanel extends JPanel {}
+class CardPanel extends JPanel {
+    JLabel defaultText = new JLabel("Cluedo");
+
+    void intialiseDefaultText() {
+        Font labelFont = defaultText.getFont();
+        String labelText = defaultText.getText();
+
+        int stringWidth = defaultText.getFontMetrics(labelFont).stringWidth(labelText);
+        int componentWidth = defaultText.getWidth();
+
+    // Find out how much the font can grow in width.
+        double widthRatio = (double)componentWidth / (double)stringWidth;
+
+        int newFontSize = (int)(labelFont.getSize() * widthRatio);
+        int componentHeight = defaultText.getHeight();
+
+        // Pick a new font size so it will not be larger than the height of label.
+        int fontSizeToUse = Math.min(newFontSize, componentHeight);
+
+        // Set the label's font size to the newly determined size.
+        defaultText.setFont(new Font(labelFont.getName(), Font.PLAIN, fontSizeToUse));
+
+        this.add(defaultText);
+    }
+}
 
 /**
  * This class handles customs grids.
@@ -177,16 +222,22 @@ class CustomGrid {
         this.gridContainer = gridContainer;
     }
 
-    public void addElement(int fill, int weightX, int gridx, int gridy, int ipady, int ipadx, int gridWidth, int gridHeight, JPanel testPanel) {
-        constraints.fill = fill;
+    public void addElement(JPanel testPanel) {gridContainer.add(testPanel, constraints);}
+    public void setFill(int fill) {constraints.fill = fill;}
+    public void setAnchor(int anchor) {constraints.anchor = anchor;}
+    public void setWeight(int weightX, int weightY) {
         constraints.weightx = weightX;
-        constraints.gridx = gridx;
-        constraints.gridy = gridy;
-        constraints.ipady = ipady;
-        constraints.ipadx = ipadx;
+        constraints.weighty = weightY;
+    }
+    public void setGrid(int gridX, int gridY, int gridWidth, int gridHeight) {
+        constraints.gridx = gridX;
+        constraints.gridy = gridY;
         constraints.gridwidth = gridWidth;
         constraints.gridheight = gridHeight;
-        gridContainer.add(testPanel, constraints);
+    }
+    public void setPadding(int xPad, int yPad) {
+        constraints.ipadx = xPad;
+        constraints.ipady = yPad;
     }
 
     /**
