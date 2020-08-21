@@ -22,7 +22,6 @@ public class Tests {
             }
             gui.redraw();
         }
-        gui.updateBoard(ImageIO.read(new File("Assets/Test Files/Test 2.png")));
         gui.redraw();
         try {
             Thread.sleep(5000);

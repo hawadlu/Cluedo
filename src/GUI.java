@@ -22,11 +22,11 @@ public class GUI {
     JFrame window = new JFrame("Cluedo");
     CustomGrid baseLayout;
 
-    int width = 1440;
+    int width = 1200;
     int height = 900;
 
-    int widthFifths = width / 5;
-    int heightThirds = height / 3;
+    int widthQuarters = width / 4;
+    int heightQuarters = height / 4;
 
     GUI() throws IOException {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,7 +52,7 @@ public class GUI {
         customGrid.setAnchor(GridBagConstraints.CENTER);
         customGrid.setWeight(0, 0);
         customGrid.setGrid(0, 0, 1, 1);
-        customGrid.setPadding(widthFifths, heightThirds * 2);
+        customGrid.setPadding(widthQuarters, heightQuarters * 3);
         customGrid.addElement(actionPanel);
 
         boardPanel.setBackground(Color.orange);
@@ -60,7 +60,7 @@ public class GUI {
         customGrid.setAnchor(GridBagConstraints.CENTER);
         customGrid.setWeight(0, 0);
         customGrid.setGrid(1, 0, 2, 1);
-        customGrid.setPadding(widthFifths * 4, heightThirds * 2);
+        customGrid.setPadding(widthQuarters * 3, heightQuarters * 3);
         customGrid.addElement(boardPanel);
 
         consolePanel.setBackground(Color.magenta);
@@ -68,7 +68,7 @@ public class GUI {
         customGrid.setAnchor(GridBagConstraints.CENTER);
         customGrid.setWeight(0, 0);
         customGrid.setGrid(0, 1, 1, 1);
-        customGrid.setPadding(widthFifths, heightThirds);
+        customGrid.setPadding(widthQuarters, heightQuarters);
         customGrid.addElement(consolePanel);
 
         cardPanel.setBackground(Color.red);
@@ -77,10 +77,10 @@ public class GUI {
         customGrid.setAnchor(GridBagConstraints.CENTER);
         customGrid.setWeight(0, 0);
         customGrid.setGrid(1, 1, 2, 1);
-        customGrid.setPadding(widthFifths * 4, heightThirds - cardPanel.getElemHeight());
+        customGrid.setPadding(widthQuarters * 3, heightQuarters - cardPanel.getElemHeight());
         customGrid.addElement(cardPanel);
 
-        System.out.println("set padding to: " + (heightThirds - cardPanel.getElemHeight()) + " height thirds: " + heightThirds + " elem height: " + cardPanel.getElemHeight());
+        System.out.println("set padding to: " + (heightQuarters - cardPanel.getElemHeight()) + " height thirds: " + heightQuarters + " elem height: " + cardPanel.getElemHeight());
     }
 
     /**
@@ -88,14 +88,6 @@ public class GUI {
      * @param message the message
      */
     public void addToConsole(String message) {consolePanel.addMessage(message);}
-
-    /**
-     * Update the board image
-     * @param newBoard the new board
-     */
-    public void updateBoard(BufferedImage newBoard) {
-        boardPanel.updateImage(newBoard);
-    }
 
     /**
      * redraw the gui
@@ -162,6 +154,7 @@ class ConsolePanel extends JPanel {
 /**
  * This class handles displaying the board
  */
+//todo expand this to take the entire height
 class BoardPanel extends JPanel {
     private BufferedImage board;
 
@@ -180,13 +173,20 @@ class BoardPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        int xOffest = (this.getWidth() / 2) - (board.getWidth() / 2);
-        int yOffest = (this.getHeight() / 2) - (board.getHeight() / 2);
-        g.drawImage(board, xOffest, yOffest, this);
+        int xOffset = (this.getWidth() / 2) - ((board.getWidth() * 26) / 2);
+        int yOffset = (this.getHeight() / 2) - ((board.getWidth() * 25) / 2);
+        for (int i = xOffset; i < (board.getWidth() * 26) + xOffset; i += 20) {
+            for (int j = yOffset; j < (board.getWidth() * 25) + yOffset; j += 20) {
+                g.drawImage(board, i, j, this);
+            }
+        }
     }
 }
 
+//todo make this into a pullout panel from the bottom.
 class CardPanel extends JPanel {
+    ArrayList<Card> cards = new ArrayList<>();
+
     JLabel defaultText = new JLabel("Cluedo");
     int fontSize;
 
