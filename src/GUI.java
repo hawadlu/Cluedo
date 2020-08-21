@@ -22,11 +22,11 @@ public class GUI {
     JFrame window = new JFrame("Cluedo");
     CustomGrid baseLayout;
 
-    int width = 1200;
+    int width = 1400;
     int height = 900;
 
-    int widthQuarters = width / 4;
-    int heightQuarters = height / 4;
+    int widthSixths = width / 6;
+    int heightThirds = height / 3;
 
     GUI() throws IOException {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,15 +52,15 @@ public class GUI {
         customGrid.setAnchor(GridBagConstraints.CENTER);
         customGrid.setWeight(0, 0);
         customGrid.setGrid(0, 0, 1, 1);
-        customGrid.setPadding(widthQuarters, heightQuarters * 3);
+        customGrid.setPadding(widthSixths, heightThirds * 2);
         customGrid.addElement(actionPanel);
 
         boardPanel.setBackground(Color.orange);
         customGrid.setFill(GridBagConstraints.HORIZONTAL);
         customGrid.setAnchor(GridBagConstraints.CENTER);
         customGrid.setWeight(0, 0);
-        customGrid.setGrid(1, 0, 2, 1);
-        customGrid.setPadding(widthQuarters * 3, heightQuarters * 3);
+        customGrid.setGrid(1, 0, 1, 2);
+        customGrid.setPadding(widthSixths * 4, height);
         customGrid.addElement(boardPanel);
 
         consolePanel.setBackground(Color.magenta);
@@ -68,19 +68,17 @@ public class GUI {
         customGrid.setAnchor(GridBagConstraints.CENTER);
         customGrid.setWeight(0, 0);
         customGrid.setGrid(0, 1, 1, 1);
-        customGrid.setPadding(widthQuarters, heightQuarters);
+        customGrid.setPadding(widthSixths, heightThirds);
         customGrid.addElement(consolePanel);
 
         cardPanel.setBackground(Color.red);
-        cardPanel.initialiseDefaultText(100);
-        customGrid.setFill(GridBagConstraints.HORIZONTAL);
+        //cardPanel.initialiseDefaultText(100);
+        customGrid.setFill(GridBagConstraints.VERTICAL);
         customGrid.setAnchor(GridBagConstraints.CENTER);
         customGrid.setWeight(0, 0);
-        customGrid.setGrid(1, 1, 2, 1);
-        customGrid.setPadding(widthQuarters * 3, heightQuarters - cardPanel.getElemHeight());
+        customGrid.setGrid(2, 0, 1, 2);
+        customGrid.setPadding(widthSixths, 0);
         customGrid.addElement(cardPanel);
-
-        System.out.println("set padding to: " + (heightQuarters - cardPanel.getElemHeight()) + " height thirds: " + heightQuarters + " elem height: " + cardPanel.getElemHeight());
     }
 
     /**
@@ -185,21 +183,49 @@ class BoardPanel extends JPanel {
 
 //todo make this into a pullout panel from the bottom.
 class CardPanel extends JPanel {
-    ArrayList<Card> cards = new ArrayList<>();
+    ArrayList<String> consoleMessages = new ArrayList<>();
+    JTextArea textArea;
+    JScrollPane scroll;
 
-    JLabel defaultText = new JLabel("Cluedo");
-    int fontSize;
+    CardPanel() {
+        this.setBorder(new EmptyBorder(0, 0, 0, 0));
+        this.setLayout(new BorderLayout(0, 0));
 
-    void initialiseDefaultText(int size) {
-        defaultText.setHorizontalAlignment(JLabel.CENTER);
-        fontSize = size;
-        defaultText.setFont(new Font(defaultText.getFont().getName(), Font.PLAIN, fontSize));
-        this.add(defaultText);
+        textArea = new JTextArea(1, 5);
+        textArea.setEditable(false);
+
+        buildMessages();
+        this.add(textArea, BorderLayout.CENTER);
+
+        scroll = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        this.add(scroll);
     }
 
-    int getElemHeight() {
-        //todo add the cards
-        return fontSize;
+    /**
+     * Add all of the console messages to the gui
+     */
+    void buildMessages () {
+        for (String str: consoleMessages) {
+            textArea.append(str);
+            textArea.append("\n");
+        }
+    }
+
+    /**
+     * Add a message to the console. Max len of console is 30
+     * @param message the message
+     */
+    void addMessage(String message) {
+        if (consoleMessages.size() >= 30) consoleMessages.remove(29);
+        consoleMessages.add(0, message);
+    }
+
+    /**
+     * redraw the console
+     */
+    public void redraw() {
+        textArea.setText(null);
+        buildMessages();
     }
 }
 
@@ -247,5 +273,24 @@ class CustomGrid {
      */
     public void setConstraints(GridBagConstraints gridBagConstraints) {
         this.constraints = gridBagConstraints;
+    }
+}
+
+/**
+ * Class for displaying images
+ */
+class ImagePanel extends JPanel {
+    private BufferedImage image;
+    final JPanel parentComponent;
+
+    public ImagePanel(BufferedImage image, JPanel parentComponent) {
+        this.image = image;
+        this.parentComponent = parentComponent;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.drawImage(image, 0, 0, this);
     }
 }
