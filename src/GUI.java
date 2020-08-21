@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -65,7 +64,7 @@ public class GUI {
         customGrid.addElement(boardPanel);
 
         consolePanel.setBackground(Color.magenta);
-        customGrid.setFill(GridBagConstraints.HORIZONTAL);
+        customGrid.setFill(GridBagConstraints.CENTER);
         customGrid.setAnchor(GridBagConstraints.CENTER);
         customGrid.setWeight(0, 0);
         customGrid.setGrid(0, 1, 1, 1);
@@ -73,13 +72,15 @@ public class GUI {
         customGrid.addElement(consolePanel);
 
         cardPanel.setBackground(Color.red);
+        cardPanel.initialiseDefaultText(100);
         customGrid.setFill(GridBagConstraints.HORIZONTAL);
         customGrid.setAnchor(GridBagConstraints.CENTER);
         customGrid.setWeight(0, 0);
         customGrid.setGrid(1, 1, 2, 1);
-        customGrid.setPadding(widthFifths * 4, 0);
+        customGrid.setPadding(widthFifths * 4, heightThirds - cardPanel.getElemHeight());
         customGrid.addElement(cardPanel);
-        cardPanel.intialiseDefaultText();
+
+        System.out.println("set padding to: " + (heightThirds - cardPanel.getElemHeight()) + " height thirds: " + heightThirds + " elem height: " + cardPanel.getElemHeight());
     }
 
     /**
@@ -187,29 +188,21 @@ class BoardPanel extends JPanel {
 
 class CardPanel extends JPanel {
     JLabel defaultText = new JLabel("Cluedo");
+    int fontSize;
 
-    void intialiseDefaultText() {
-        Font labelFont = defaultText.getFont();
-        String labelText = defaultText.getText();
-
-        int stringWidth = defaultText.getFontMetrics(labelFont).stringWidth(labelText);
-        int componentWidth = defaultText.getWidth();
-
-    // Find out how much the font can grow in width.
-        double widthRatio = (double)componentWidth / (double)stringWidth;
-
-        int newFontSize = (int)(labelFont.getSize() * widthRatio);
-        int componentHeight = defaultText.getHeight();
-
-        // Pick a new font size so it will not be larger than the height of label.
-        int fontSizeToUse = Math.min(newFontSize, componentHeight);
-
-        // Set the label's font size to the newly determined size.
-        defaultText.setFont(new Font(labelFont.getName(), Font.PLAIN, fontSizeToUse));
-
+    void initialiseDefaultText(int size) {
+        defaultText.setHorizontalAlignment(JLabel.CENTER);
+        fontSize = size;
+        defaultText.setFont(new Font(defaultText.getFont().getName(), Font.PLAIN, fontSize));
         this.add(defaultText);
     }
+
+    int getElemHeight() {
+        //todo add the cards
+        return fontSize;
+    }
 }
+
 
 /**
  * This class handles customs grids.
