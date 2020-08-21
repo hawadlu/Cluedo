@@ -413,7 +413,7 @@ public class Player {
      * @param g graphics
      * @param pos position of current player
      */
-    protected void drawPlayer(Graphics g, Position pos){
+    protected void draw(Graphics g, Position pos){
         g.drawImage(image, pos.x, pos.y, null);
     }
 }

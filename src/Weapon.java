@@ -28,7 +28,7 @@ public class Weapon {
      * @param g graphics
      * @param pos position of current weapon
      */
-    protected void drawWeapon(Graphics g, Position pos){
+    protected void draw(Graphics g, Position pos){
         g.drawImage(image, pos.x, pos.y, null);
     }
 }
