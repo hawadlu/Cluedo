@@ -18,6 +18,7 @@ public class Game {
     public static List<Player> players;
     public static Map<Players, Player> playerMap;
     public static Board board;
+    public static GUI gui;
 
     private final static Die die1 = new Die(), die2 = new Die();
 
@@ -152,37 +153,6 @@ public class Game {
     }
 
     /**
-     * Get the user to choose an option from an array of options of a given type
-     *
-     * @param options the array of options
-     * @param text the text at the top of the list of options, e.g. "Choose a weapon:"
-     * @param <T> the type of the individual options
-     * @return the option that was chosen
-     */
-    public static <T> T chooseFromArray(T[] options, String text) {
-        // Display available options
-        System.out.println(text+" (Enter a number 1-"+options.length+")");
-        for (int i = 0; i < options.length; i++) {
-            System.out.println(i+1 + ". "+options[i]);
-        }
-
-        // Get input
-        Scanner inputStr = new Scanner(input.nextLine());
-        int index = 0;
-
-        // Error check input
-        while (index < 1 || index > options.length) {
-            while (!inputStr.hasNextInt()) {
-                System.out.println("Please enter a number 1-"+options.length);
-                inputStr = new Scanner(input.nextLine());
-            }
-            index = inputStr.nextInt();
-        }
-
-        return options[index-1];
-    }
-
-    /**
      * Gets the default starting position of a player
      *
      * @param player the player enum to find the position of
@@ -293,14 +263,59 @@ public class Game {
     }
 
     /**
+     * Print a message to the GUI console
+     * @param text the message to print
+     */
+    public static void print(String text) {
+        gui.addToConsole(text);
+        gui.redraw();
+    }
+
+    public static void main(String[] args) throws IOException {
+        gui = new GUI();
+        Game game = new Game();
+        game.showMenu();
+    }
+
+
+
+    // OLD METHODS TO BE DELETED
+
+    /**
      * 'Clear' the output of the console by printing a bunch of newline characters
      */
     public static void clearOutput() {
         System.out.print(String.join("", Collections.nCopies(30, "\n")));
     }
 
-    public static void main(String[] args) throws IOException {
-        Game game = new Game();
-        game.showMenu();
+    /**
+     * Get the user to choose an option from an array of options of a given type
+     *
+     * @param options the array of options
+     * @param text the text at the top of the list of options, e.g. "Choose a weapon:"
+     * @param <T> the type of the individual options
+     * @return the option that was chosen
+     */
+    public static <T> T chooseFromArray(T[] options, String text) {
+        // Display available options
+        System.out.println(text+" (Enter a number 1-"+options.length+")");
+        for (int i = 0; i < options.length; i++) {
+            System.out.println(i+1 + ". "+options[i]);
+        }
+
+        // Get input
+        Scanner inputStr = new Scanner(input.nextLine());
+        int index = 0;
+
+        // Error check input
+        while (index < 1 || index > options.length) {
+            while (!inputStr.hasNextInt()) {
+                System.out.println("Please enter a number 1-"+options.length);
+                inputStr = new Scanner(input.nextLine());
+            }
+            index = inputStr.nextInt();
+        }
+
+        return options[index-1];
     }
 }

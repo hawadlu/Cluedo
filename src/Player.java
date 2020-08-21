@@ -215,8 +215,8 @@ public class Player {
             if (response.trim().length() == 0) return;
 
             // Highlight available path
-            findPath(board, movement, oldPos);
-            System.out.println(tilesThisTurn);
+            //findPath(board, movement, oldPos);
+            //System.out.println(tilesThisTurn);
 
             // Process the requested move
             String[] actions = response.split("");

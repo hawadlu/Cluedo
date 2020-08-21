@@ -20,11 +20,14 @@ public class Accuse implements Action {
     @Override
     public void apply() {
         //Check to see if the accused matches
+        Game.print(player.getName()+" has accused "+suspect+" of using the "+weapon+" in the "+room);
         if (Game.accuseRoom.equals(room) && Game.accusePlayer.equals(suspect) && Game.accuseWeapon.equals(weapon)) {
             Game.gameOver = true;
+            Game.print(player.getName()+" was correct and has won!");
             System.out.println("You have won!");
         } else {
             player.setHasLost(true);
+            Game.print(player.getName()+" was wrong and has lost!");
             System.out.println("Your accusation is incorrect. You have lost.");
         }
 
