@@ -256,7 +256,7 @@ public class Player {
     public void findPath(Board board, int movement, Position pos){
         //Add tile to available tiles
         tilesThisTurn.add(board.getTile(pos));
-        board.getTile(pos).setHighlighted();
+        board.getTile(pos).toggleHighlight();
 
         if(movement > 0){
             //Checking North
