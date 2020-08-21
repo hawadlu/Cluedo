@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -298,17 +299,7 @@ public class Game {
         System.out.print(String.join("", Collections.nCopies(30, "\n")));
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
-        GUI gui = new GUI();
-
-
-        //todo remove
-        for (int i = 0; i < 9999; i++) {
-            gui.addToConsole("Some message: " + i);
-        }
-
-        gui.redraw();
-
+    public static void main(String[] args) throws IOException {
         Game game = new Game();
         game.showMenu();
     }
