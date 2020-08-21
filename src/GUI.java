@@ -1,6 +1,5 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -23,11 +22,11 @@ public class GUI {
     JFrame window = new JFrame("Cluedo");
     CustomGrid baseLayout;
 
-    int width = 1440;
+    int width = 1200;
     int height = 900;
 
-    int widthFifths = width / 5;
-    int heightThirds = height / 3;
+    int widthQuarters = width / 4;
+    int heightQuarters = height / 4;
 
     GUI() throws IOException {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -53,7 +52,7 @@ public class GUI {
         customGrid.setAnchor(GridBagConstraints.CENTER);
         customGrid.setWeight(0, 0);
         customGrid.setGrid(0, 0, 1, 1);
-        customGrid.setPadding(widthFifths, heightThirds * 2);
+        customGrid.setPadding(widthQuarters, heightQuarters * 3);
         customGrid.addElement(actionPanel);
 
         boardPanel.setBackground(Color.orange);
@@ -61,25 +60,27 @@ public class GUI {
         customGrid.setAnchor(GridBagConstraints.CENTER);
         customGrid.setWeight(0, 0);
         customGrid.setGrid(1, 0, 2, 1);
-        customGrid.setPadding(widthFifths * 4, heightThirds * 2);
+        customGrid.setPadding(widthQuarters * 3, heightQuarters * 3);
         customGrid.addElement(boardPanel);
 
         consolePanel.setBackground(Color.magenta);
-        customGrid.setFill(GridBagConstraints.HORIZONTAL);
+        customGrid.setFill(GridBagConstraints.CENTER);
         customGrid.setAnchor(GridBagConstraints.CENTER);
         customGrid.setWeight(0, 0);
         customGrid.setGrid(0, 1, 1, 1);
-        customGrid.setPadding(widthFifths, heightThirds);
+        customGrid.setPadding(widthQuarters, heightQuarters);
         customGrid.addElement(consolePanel);
 
         cardPanel.setBackground(Color.red);
+        cardPanel.initialiseDefaultText(100);
         customGrid.setFill(GridBagConstraints.HORIZONTAL);
         customGrid.setAnchor(GridBagConstraints.CENTER);
         customGrid.setWeight(0, 0);
         customGrid.setGrid(1, 1, 2, 1);
-        customGrid.setPadding(widthFifths * 4, 0);
+        customGrid.setPadding(widthQuarters * 3, heightQuarters - cardPanel.getElemHeight());
         customGrid.addElement(cardPanel);
-        cardPanel.intialiseDefaultText();
+
+        System.out.println("set padding to: " + (heightQuarters - cardPanel.getElemHeight()) + " height thirds: " + heightQuarters + " elem height: " + cardPanel.getElemHeight());
     }
 
     /**
@@ -87,14 +88,6 @@ public class GUI {
      * @param message the message
      */
     public void addToConsole(String message) {consolePanel.addMessage(message);}
-
-    /**
-     * Update the board image
-     * @param newBoard the new board
-     */
-    public void updateBoard(BufferedImage newBoard) {
-        boardPanel.updateImage(newBoard);
-    }
 
     /**
      * redraw the gui
@@ -161,6 +154,7 @@ class ConsolePanel extends JPanel {
 /**
  * This class handles displaying the board
  */
+//todo expand this to take the entire height
 class BoardPanel extends JPanel {
     private BufferedImage board;
 
@@ -179,37 +173,36 @@ class BoardPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        int xOffest = (this.getWidth() / 2) - (board.getWidth() / 2);
-        int yOffest = (this.getHeight() / 2) - (board.getHeight() / 2);
-        g.drawImage(board, xOffest, yOffest, this);
+        int xOffset = (this.getWidth() / 2) - ((board.getWidth() * 26) / 2);
+        int yOffset = (this.getHeight() / 2) - ((board.getWidth() * 25) / 2);
+        for (int i = xOffset; i < (board.getWidth() * 26) + xOffset; i += 20) {
+            for (int j = yOffset; j < (board.getWidth() * 25) + yOffset; j += 20) {
+                g.drawImage(board, i, j, this);
+            }
+        }
     }
 }
 
+//todo make this into a pullout panel from the bottom.
 class CardPanel extends JPanel {
+    ArrayList<Card> cards = new ArrayList<>();
+
     JLabel defaultText = new JLabel("Cluedo");
+    int fontSize;
 
-    void intialiseDefaultText() {
-        Font labelFont = defaultText.getFont();
-        String labelText = defaultText.getText();
-
-        int stringWidth = defaultText.getFontMetrics(labelFont).stringWidth(labelText);
-        int componentWidth = defaultText.getWidth();
-
-    // Find out how much the font can grow in width.
-        double widthRatio = (double)componentWidth / (double)stringWidth;
-
-        int newFontSize = (int)(labelFont.getSize() * widthRatio);
-        int componentHeight = defaultText.getHeight();
-
-        // Pick a new font size so it will not be larger than the height of label.
-        int fontSizeToUse = Math.min(newFontSize, componentHeight);
-
-        // Set the label's font size to the newly determined size.
-        defaultText.setFont(new Font(labelFont.getName(), Font.PLAIN, fontSizeToUse));
-
+    void initialiseDefaultText(int size) {
+        defaultText.setHorizontalAlignment(JLabel.CENTER);
+        fontSize = size;
+        defaultText.setFont(new Font(defaultText.getFont().getName(), Font.PLAIN, fontSize));
         this.add(defaultText);
     }
+
+    int getElemHeight() {
+        //todo add the cards
+        return fontSize;
+    }
 }
+
 
 /**
  * This class handles customs grids.

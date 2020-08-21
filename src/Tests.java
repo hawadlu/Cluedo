@@ -1,7 +1,4 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +10,7 @@ public class Tests {
         GUI gui = new GUI();
 
         //todo remove
-        for (int i = 0; i < 99; i++) {
+        for (int i = 0; i < 40; i++) {
             gui.addToConsole("Some message: " + i);
             try {
                 Thread.sleep(40);
@@ -22,7 +19,6 @@ public class Tests {
             }
             gui.redraw();
         }
-        gui.updateBoard(ImageIO.read(new File("Assets/Test Files/Test 2.png")));
         gui.redraw();
         try {
             Thread.sleep(5000);
