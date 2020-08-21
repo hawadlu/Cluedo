@@ -1,28 +1,13 @@
 public abstract class Tile {
-    Player player=null;
-    Position pos=null;
-    boolean highlighted=false;
+    protected Player player=null;
+    protected final Position pos;
+    protected boolean highlighted=false;
 
-    /**
-     * Check if this tile has a player
-     *
-     * @return boolean response
-     */
-    abstract boolean hasPlayer();
+    Tile(Position pos) {
+        this.pos = pos;
+    }
 
-    /**
-     * Gets this door position, used for leaving rooms
-     *
-     * @return door position
-     */
-    abstract Position getPos();
-
-    /**
-     * Get the player on this tile
-     *
-     * @return the player on this tile, null if no player
-     */
-    abstract Player getPlayer();
+    // Abstract Methods
 
     /**
      * Set the player on this tile
@@ -31,10 +16,42 @@ public abstract class Tile {
      */
     abstract void addPlayer(Player p);
 
+
+    // Common Methods
+
+    /**
+     * Check if this tile has a player
+     *
+     * @return boolean response
+     */
+    public boolean hasPlayer() {
+        return player != null;
+    }
+
+    /**
+     * Gets this door position, used for leaving rooms
+     *
+     * @return door position
+     */
+    public Position getPos() {
+        return pos;
+    }
+
+    /**
+     * Get the player on this tile
+     *
+     * @return the player on this tile, null if no player
+     */
+    public Player getPlayer() {
+        return player;
+    }
+
     /**
      * Removes player from tile
      */
-    abstract void removePlayer();
+    public void removePlayer() {
+        player = null;
+    }
 
     /**
      * Is this tile a room
@@ -62,5 +79,5 @@ public abstract class Tile {
     /**
      * toggle highlighted
      */
-    public void setHighlighted(){ highlighted = !highlighted; }
+    public void toggleHighlight(){ highlighted = !highlighted; }
 }

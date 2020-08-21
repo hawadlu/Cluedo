@@ -1,13 +1,12 @@
 public class DoorTile extends Tile{
-    private Game.Rooms roomName=null;
-    private Player player=null;
+    private final Room room;
     private Boolean toggleDoor=false;
     private int doorNumber=0;
-    private final Position pos;
 
     public DoorTile(Room room, Position pos){
-        roomName = room;
-        this.pos=pos;
+        super(pos);
+
+        this.room = room;
         room.addDoor(this);
     }
 
@@ -27,13 +26,6 @@ public class DoorTile extends Tile{
             player = p;
     }
 
-    /**
-     * Removes player from tile
-     */
-    public void removePlayer(){
-        player = null;
-    }
-
     @Override
     public String toString() {
         if(player!=null){
@@ -44,16 +36,6 @@ public class DoorTile extends Tile{
         return "• ";
     }
 
-    // BOOLEAN CHECKERS
-
-    /**
-     * Check if this tile has a player
-     *
-     * @return boolean response
-     */
-    public boolean hasPlayer() {
-        return player != null;
-    }
 
     //GETTERS AND SETTERS
 
@@ -63,25 +45,7 @@ public class DoorTile extends Tile{
      * @return the room this door is associated with
      */
     public Room getRoom(){
-        return roomName;
-    }
-
-    /**
-     * Gets this door position, used for leaving rooms
-     *
-     * @return door position
-     */
-    public Position getPos(){
-        return pos;
-    }
-
-    /**
-     * Get the player on this tile
-     *
-     * @return the player on this tile, null if no player
-     */
-    public Player getPlayer() {
-        return player;
+        return room;
     }
 
     /**
