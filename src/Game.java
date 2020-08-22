@@ -274,6 +274,7 @@ public class Game {
     public static void main(String[] args) throws IOException {
         gui = new GUI();
         Game game = new Game();
+        GUI gui = new GUI();
         game.showMenu();
     }
 
