@@ -1,4 +1,6 @@
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -28,12 +30,23 @@ public class GUI {
     BoardPanel boardPanel = new BoardPanel(ImageIO.read(new File("Assets/Test Files/Test 1.png")),  new Dimension(widthFifths * 3, heightSixths * 4));
     CardPanel cardPanel = new CardPanel();
 
+    JPanel topBar = new JPanel();
+    JPanel content = new JPanel();
+
     GUI() throws IOException {
+        window.setLayout(new BoxLayout(window.getContentPane(), BoxLayout.Y_AXIS));
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);// todo might update this at a later stage
 
-        baseLayout = new CustomGrid(window.getContentPane());
-        setup(baseLayout);
+        window.add(topBar);
+        window.add(content);
+
+        //Add the menu bar
+        generateMenuBar(true);
+
+        //Add the content
+        baseLayout = new CustomGrid(content);
+        setupGameLayout(baseLayout);
 
         //Display the window.
         window.pack();
@@ -44,7 +57,7 @@ public class GUI {
      * This sets up the gui.
      * @param customGrid the grid layout
      */
-    public void setup(CustomGrid customGrid) throws IOException {
+    public void setupGameLayout(CustomGrid customGrid) throws IOException {
         customGrid.setLayout(new GridBagLayout());
         customGrid.setConstraints(new GridBagConstraints());
 
@@ -84,6 +97,70 @@ public class GUI {
     }
 
     /**
+     * Generates the menu bar
+     * @return
+     */
+    private void generateMenuBar(Boolean showInstructions) {
+        topBar.removeAll();
+
+        //choose instructions title
+        String instructionTitle;
+        if (showInstructions) instructionTitle = "Show Instructions";
+        else instructionTitle = "Hide Instructions";
+
+        //Menu Headings
+        JMenuBar menuBar = new JMenuBar();
+        JMenu playMenu = new JMenu("Game Options");
+        JMenuItem debug = new JMenu("Debug");
+        JMenuItem quit = new JMenuItem("Quit");
+
+        //Items
+        JMenuItem playGame = new JMenuItem("Play");
+        JMenuItem restartGame = new JMenuItem("Restart");
+        JMenuItem instructions = new JMenuItem(instructionTitle);
+        JMenuItem printActivePlayer = new JMenuItem("Print Active Player");
+        JMenuItem printActivePlayerCards = new JMenuItem("Print Active Player Cards");
+        JMenuItem printGameRooms = new JMenuItem("Print Game Rooms");
+        JMenuItem printFinal = new JMenuItem("Print Winning combo");
+        JMenuItem printAllPlayers = new JMenuItem("Print All Players");
+        JMenuItem printAllWeapons = new JMenuItem("Print All Weapons");
+
+
+        //Add components
+        playMenu.add(playGame);
+        playMenu.add(restartGame);
+        debug.add(printActivePlayer);
+        debug.add(printActivePlayerCards);
+        debug.add(printGameRooms);
+        debug.add(printFinal);
+        debug.add(printAllPlayers);
+        debug.add(printAllWeapons);
+
+        menuBar.add(playMenu);
+        menuBar.add(instructions);
+        menuBar.add(debug);
+        menuBar.add(quit);
+        topBar.add(menuBar);
+
+        //Bind the menu items
+        quit.addActionListener(actionEvent -> System.exit(0)); //exit the program
+        instructions.addActionListener(actionEvent -> showInstructions());
+    }
+
+    /**
+     * Show the instructions
+     */
+    private void showInstructions() {
+        generateMenuBar(false);
+        content.removeAll();
+
+        
+
+
+        redraw();
+    }
+
+    /**
      * Add a message to the console
      * @param message the message
      */
@@ -93,6 +170,7 @@ public class GUI {
      * redraw the gui
      */
     public void redraw() {
+        topBar.revalidate();
         consolePanel.redraw();
         boardPanel.repaint();
     }
@@ -115,7 +193,6 @@ class ActionPanel extends JPanel {
  * The console contains the last 30 actions of the game
  */
 class ConsolePanel extends JPanel {
-    //todo maybe make the text bottom up?
     ArrayList<String> consoleMessages = new ArrayList<>();
     JTextArea textArea = new JTextArea();
     JScrollPane scroll;
@@ -166,7 +243,6 @@ class ConsolePanel extends JPanel {
 /**
  * This class handles displaying the board
  */
-//todo expand this to take the entire height
 class BoardPanel extends JPanel {
     private BufferedImage board;
 
@@ -196,7 +272,6 @@ class BoardPanel extends JPanel {
     }
 }
 
-//todo make this into a pullout panel from the bottom.
 class CardPanel extends JPanel {
 
     JScrollPane scroll;
