@@ -11,25 +11,26 @@ import javax.swing.border.EmptyBorder;
  * This class handles all of the drawing of the board
  */
 public class GUI {
-    /**
-     * These objects handle the four quadrants of the gui
-     */
-    ActionPanel actionPanel = new ActionPanel();
-    ConsolePanel consolePanel = new ConsolePanel();
-    BoardPanel boardPanel = new BoardPanel(ImageIO.read(new File("Assets/Test Files/Test 1.png")));
-    CardPanel cardPanel = new CardPanel();
-
     JFrame window = new JFrame("Cluedo");
     CustomGrid baseLayout;
 
     int width = 1400;
     int height = 900;
 
-    int widthSixths = width / 6;
-    int heightThirds = height / 3;
+    int widthFifths = width / 5;
+    int heightSixths = height / 6;
+
+    /**
+     * These objects handle the four quadrants of the gui
+     */
+    ActionPanel actionPanel = new ActionPanel(new Dimension(widthFifths, heightSixths * 4));
+    ConsolePanel consolePanel = new ConsolePanel(new Dimension(widthFifths, heightSixths * 4));
+    BoardPanel boardPanel = new BoardPanel(ImageIO.read(new File("Assets/Test Files/Test 1.png")),  new Dimension(widthFifths * 3, heightSixths * 4));
+    CardPanel cardPanel = new CardPanel();
 
     GUI() throws IOException {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setResizable(false);// todo might update this at a later stage
 
         baseLayout = new CustomGrid(window.getContentPane());
         setup(baseLayout);
@@ -49,26 +50,26 @@ public class GUI {
 
         actionPanel.setBackground(Color.cyan);
         customGrid.setFill(GridBagConstraints.HORIZONTAL);
-        customGrid.setAnchor(GridBagConstraints.CENTER);
+        customGrid.setAnchor(GridBagConstraints.FIRST_LINE_START);
         customGrid.setWeight(0, 0);
         customGrid.setGrid(0, 0, 1, 1);
-        customGrid.setPadding(widthSixths, heightThirds * 2);
+//        customGrid.setPadding(widthFifths, heightSixths * 4);
         customGrid.addElement(actionPanel);
 
         boardPanel.setBackground(Color.orange);
         customGrid.setFill(GridBagConstraints.HORIZONTAL);
         customGrid.setAnchor(GridBagConstraints.CENTER);
         customGrid.setWeight(0, 0);
-        customGrid.setGrid(1, 0, 1, 2);
-        customGrid.setPadding(widthSixths * 4, height);
+        customGrid.setGrid(1, 0, 1, 1);
+//        customGrid.setPadding(widthFifths * 3, heightSixths * 4);
         customGrid.addElement(boardPanel);
 
         consolePanel.setBackground(Color.magenta);
         customGrid.setFill(GridBagConstraints.CENTER);
         customGrid.setAnchor(GridBagConstraints.CENTER);
         customGrid.setWeight(0, 0);
-        customGrid.setGrid(0, 1, 1, 1);
-        customGrid.setPadding(widthSixths, heightThirds);
+        customGrid.setGrid(2, 0, 1, 1);
+//        customGrid.setPadding(widthFifths, heightSixths * 4);
         customGrid.addElement(consolePanel);
 
         cardPanel.setBackground(Color.red);
@@ -76,8 +77,8 @@ public class GUI {
         customGrid.setFill(GridBagConstraints.VERTICAL);
         customGrid.setAnchor(GridBagConstraints.CENTER);
         customGrid.setWeight(0, 0);
-        customGrid.setGrid(2, 0, 1, 2);
-        customGrid.setPadding(widthSixths, 0);
+        customGrid.setGrid(0, 2, 3, 1);
+//        customGrid.setPadding(widthFifths * 5, heightSixths * 2);
         customGrid.addElement(cardPanel);
         cardPanel.addCards();
     }
@@ -97,23 +98,37 @@ public class GUI {
     }
 }
 
-class ActionPanel extends JPanel {}
+class ActionPanel extends JPanel {
+    JPanel container = new JPanel();
+
+    ActionPanel(Dimension size) {
+        container.setPreferredSize(size);
+        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+        container.add(new Button("I'm a button"));
+        container.add(new Button("I'm also a button"));
+        this.add(container);
+    }
+}
 
 /**
  * This class handles displaying the console.
  * The console contains the last 30 actions of the game
  */
 class ConsolePanel extends JPanel {
+    //todo maybe make the text bottom up?
     ArrayList<String> consoleMessages = new ArrayList<>();
-    JTextArea textArea;
+    JTextArea textArea = new JTextArea();
     JScrollPane scroll;
 
-    ConsolePanel() {
+    ConsolePanel(Dimension size) {
+        this.setPreferredSize(size);
+
         this.setBorder(new EmptyBorder(0, 0, 0, 0));
         this.setLayout(new BorderLayout(0, 0));
 
         textArea = new JTextArea(1, 5);
         textArea.setEditable(false);
+        textArea.setBackground(Color.YELLOW);
 
         buildMessages();
         this.add(textArea, BorderLayout.CENTER);
@@ -157,8 +172,9 @@ class ConsolePanel extends JPanel {
 class BoardPanel extends JPanel {
     private BufferedImage board;
 
-    BoardPanel(BufferedImage image) {
+    BoardPanel(BufferedImage image, Dimension size) {
         this.board = image;
+        this.setPreferredSize(size);
     }
 
     /**
@@ -191,26 +207,18 @@ class CardPanel extends JPanel {
     public void addCards() throws IOException {
         this.removeAll(); //might not be necessary
         JPanel container = new JPanel();
-        JScrollPane scroll = new JScrollPane();
-        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+        JScrollPane scroll;
+        container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
         this.setBorder(new EmptyBorder(0, 0, 0, 0));
         this.setLayout(new BorderLayout(0, 0));
 
-        for (int i = 0; i < 10; i++) container.add(drawCardPanel());
-
+        for (int i = 0; i < 9; i++) {
+            container.add(container.add(new JLabel(new ImageIcon(ImageIO.read(new File("Assets/Test Files/Test Card 1.png"))))));
+        }
         this.add(container, BorderLayout.CENTER);
 
         scroll = new JScrollPane(container, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.add(scroll);
-    }
-
-    //todo deal with actual cards here
-    private Component drawCardPanel() throws IOException {
-        JPanel container = new JPanel();
-        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-        container.add(new JLabel(new ImageIcon(ImageIO.read(new File("Assets/Test Files/Test Card 1.png")))));
-        container.add(new Button("Something"));
-        return container;
     }
 }
 
@@ -258,24 +266,5 @@ class CustomGrid {
      */
     public void setConstraints(GridBagConstraints gridBagConstraints) {
         this.constraints = gridBagConstraints;
-    }
-}
-
-/**
- * Class for displaying images
- */
-class ImagePanel extends JPanel {
-    private BufferedImage image;
-    final JPanel parentComponent;
-
-    public ImagePanel(BufferedImage image, JPanel parentComponent) {
-        this.image = image;
-        this.parentComponent = parentComponent;
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(image, 0, 0, this);
     }
 }
