@@ -93,7 +93,8 @@ public class GUI {
         customGrid.setGrid(0, 2, 3, 1);
 //        customGrid.setPadding(widthFifths * 5, heightSixths * 2);
         customGrid.addElement(cardPanel);
-        cardPanel.addCards();
+        try { cardPanel.setupCards();
+        }catch(InvalidFileException e){}
     }
 
     /**
@@ -274,39 +275,47 @@ class BoardPanel extends JPanel {
 
 class CardPanel extends JPanel {
 
-    JScrollPane scroll;
-    JPanel container;
-
-    public void addCards() throws IOException {
-        // todo, this method doesnt look like it provides functionality
-        // todo, game breaks without it lol
-        this.removeAll(); //might not be necessary
+    /**
+     * Sets up cards with default image
+     * Populates container for start usage
+     *
+     * @throws InvalidFileException if default card file is not found
+     */
+    public void setupCards() throws InvalidFileException {
+        //Setup variables
         JPanel container = new JPanel();
-        JScrollPane scroll;
         container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
         this.setBorder(new EmptyBorder(0, 0, 0, 0));
         this.setLayout(new BorderLayout(0, 0));
 
-        for (int i = 0; i < 9; i++) {
-            container.add(container.add(new JLabel(new ImageIcon(ImageIO.read(new File("Assets/Test Files/Test Card 1.png"))))));
-        }
+        //Draws cards with a 7px strut between cards
+        try {
+            for (int i = 0; i < 9; i++) {
+                container.add(container.add(new JLabel(new ImageIcon(ImageIO.read(
+                        new File("Assets/Cards/DEFAULT.png"))))));
+                if (i < 8) container.add(Box.createHorizontalStrut(6));
+            }
+        }catch(IOException e){ throw new InvalidFileException("Assets/Cards/DEFAULT.png"); }
         this.add(container, BorderLayout.CENTER);
-
-        scroll = new JScrollPane(container, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        this.add(scroll);
     }
 
+    /**
+     * Draws players cards on their turn
+     *
+     * @param cards list in the players hand.
+     */
     public void drawCards(ArrayList<Card<?>> cards) {
-        this.removeAll(); //might not be necessary
+        //Setup variables
+        this.removeAll();
         JPanel container = new JPanel();
         container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
         this.setBorder(new EmptyBorder(0, 0, 0, 0));
         this.setLayout(new BorderLayout(0, 0));
 
+        //Draws each card with a strut
         for (int i = 0; i < cards.size(); i++) {
             container.add(container.add(cards.get(i).getImage()));
-            //Adds space between cards
-            if(i<cards.size()-1) container.add(Box.createHorizontalStrut(7));
+            if(i<cards.size()-1) container.add(Box.createHorizontalStrut((12-cards.size())*2));
         }
         this.add(container, BorderLayout.CENTER);
 
