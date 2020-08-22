@@ -89,6 +89,7 @@ public class Game {
     }
 
     /**
+     *
      * Get the number of players from the user
      *
      * @return the number of players playing the game
