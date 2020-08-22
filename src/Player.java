@@ -10,7 +10,8 @@ import java.util.List;
  * -Contains their hand, pos & if they've lost
  */
 public class Player {
-    private final Game.Players name;
+    private final Game.Suspects suspect;
+    private String name;
     private final ArrayList<Card<?>> hand;
     private boolean hasLost;
     private Position newPos;
@@ -23,16 +24,16 @@ public class Player {
 
     private enum Actions {VIEW_HAND, MOVE, SUGGEST, ACCUSE, LEAVE_ROOM, END_TURN }
 
-    Player(Game.Players name, Position startPos) throws InvalidFileException {
-        this.name = name;
+    Player(Game.Suspects suspect, Position startPos) throws InvalidFileException {
+        this.suspect = suspect;
         hand = new ArrayList<>();
         hasLost = false;
         newPos = startPos;
         oldPos = new Position(startPos);
         lastRoom = null;
         try {
-            image = ImageIO.read(new File("Assets/PlayerPieces/" + name.toString() + ".png"));
-        }catch(Exception e){ throw new InvalidFileException(name.toString() + ".png"); }
+            image = ImageIO.read(new File("Assets/PlayerPieces/" + suspect.toString() + ".png"));
+        }catch(Exception e){ throw new InvalidFileException(suspect.toString() + ".png"); }
     }
 
     /**
@@ -70,7 +71,7 @@ public class Player {
                 case SUGGEST:
                 case ACCUSE:
                     // Choose a suspect and weapon to accuse/suggest
-                    Game.Players player = Game.chooseFromArray(Game.Players.values(), "Please choose a Suspect:");
+                    Game.Suspects player = Game.chooseFromArray(Game.Suspects.values(), "Please choose a Suspect:");
                     Game.Weapons weapon = Game.chooseFromArray(Game.Weapons.values(), "Please choose a Weapon:");
                     Game.Rooms room;
                     String confirm;
@@ -203,7 +204,7 @@ public class Player {
             oldPos = new Position(newPos);
 
             System.out.println(board);
-            System.out.println(name +" has "+movement+" moves left.");
+            System.out.println(suspect +" has "+movement+" moves left.");
 
             // Request intended movement
             System.out.println("'L' for Left, 'R' for Right, 'U' for Up and 'D' for Down" +
@@ -276,10 +277,10 @@ public class Player {
     /**
      * Checks whether this tile can be highlighted.
      *
-     * @param board
-     * @param current
-     * @param next
-     * @param movement
+     * @param board the board being played on
+     * @param current the current position
+     * @param next the position being moved to
+     * @param movement the amount of movement left
      */
     public void highlightTile(Board board, Position current, Position next, int movement) {
         if (board.isValidMove(current, next) && !board.getTile(next).isHighlighted()) {
@@ -295,7 +296,7 @@ public class Player {
      * @param weapon Game.Weapons
      * @return arraylist of the matches
      */
-    public ArrayList<Card<?>> addMatches(Card<Game.Rooms> room, Card<Game.Players> suspect, Card<Game.Weapons> weapon) {
+    public ArrayList<Card<?>> addMatches(Card<Game.Rooms> room, Card<Game.Suspects> suspect, Card<Game.Weapons> weapon) {
         ArrayList<Card<?>> matches = new ArrayList<>();
         for (Card<?> card : hand)
             if (card.equals(room) || card.equals(suspect) || card.equals(weapon))
@@ -305,7 +306,7 @@ public class Player {
 
     @Override
     public String toString() {
-        return name.toString().substring(0, 2);
+        return suspect+"";
     }
 
     @Override
@@ -314,7 +315,7 @@ public class Player {
         if (o == null || getClass() != o.getClass()) return false;
         Player player = (Player) o;
         return hasLost == player.hasLost &&
-                name == player.name &&
+                suspect == player.suspect &&
                 Objects.equals(hand, player.hand) &&
                 Objects.equals(newPos, player.newPos) &&
                 Objects.equals(oldPos, player.oldPos);
@@ -322,12 +323,11 @@ public class Player {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, hand, hasLost, newPos, oldPos);
+        return Objects.hash(suspect, hand, hasLost, newPos, oldPos);
     }
 
-    /*
-    GETTERS AND SETTERS
-     */
+
+    // GETTERS AND SETTERS
 
     /**
      * Get this players hand
@@ -337,12 +337,28 @@ public class Player {
     public ArrayList<Card<?>> getHand(){ return hand; }
 
     /**
-     * Get name of this player
+     * Get the suspect this player is playing as
      *
-     * @return enum from Players in Game class
+     * @return enum from Suspects in Game class
      */
-    public Game.Players getName() {
+    public Game.Suspects getSuspect() {
+        return suspect;
+    }
+
+    /**
+     * Get the name of this player
+     * @return name of the person playing this suspect
+     */
+    public String getName() {
         return name;
+    }
+
+    /**
+     * Set the name of this player
+     * @param name name of the person playing this suspect
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
