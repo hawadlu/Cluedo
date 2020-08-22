@@ -1,5 +1,9 @@
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 
 /**
@@ -199,10 +203,64 @@ public class Board {
 
     }
 
+   public BufferedImage[][] draw() throws InvalidFileException {
+      BufferedImage[][] images = new BufferedImage[25][24];
+      try {
+         Scanner sc = new Scanner(new File("Assets/CluedoBoard.txt"));
+         int posY=0;
+         while(sc.hasNextLine()){
+            Scanner line = new Scanner(sc.nextLine());
+            int posX=0;
+            while(line.hasNext()){
+               String next = line.next();
+               String fileName="";
+
+               if(board[posY][posX].isHighlighted()){
+                  fileName+="Assets/HighlightedPieces/";
+               }else{
+                  fileName+="Assets/TilePieces/";
+               }
+
+               try {
+                  if(next.equals("R")){
+                     fileName+="room";
+                     if(posY==0 || board[posY-1][posX] instanceof HallwayTile) {
+                        fileName += "N";
+                     }  else if(posY==24 || board[posY+1][posX] instanceof HallwayTile)
+                        fileName += "S";
+
+                     if(posX==0 || board[posY][posX-1] instanceof HallwayTile) {
+                        fileName += "W";
+                     }else if(posX==23 || board[posY][posX+1] instanceof HallwayTile)
+                        fileName += "E";
+                     fileName += ".png";
+                  }else if(next.equals("T")){
+                     fileName+="hallway.png";
+                  }else if(next.equals("D")){
+                     fileName+="room.png";
+                  }else if(next.equals("W")){
+                     fileName+="room"+line.next()+".png";
+                  }
+                  if(next.equals("N")){
+                     images[posY][posX]=null;
+                  }else {
+                     images[posY][posX] = ImageIO.read(new File(fileName));
+                  }
+               } catch (IOException e) { throw new InvalidFileException("Invalid filename"); }
+               posX++;
+            }
+            posY++;
+         }
+      }catch(FileNotFoundException e){
+         System.out.println("File error: " + e);
+      }
+      return images;
+   }
+
+
    @Override
    public String toString() {
       StringBuilder toReturn = new StringBuilder();
-
       try {
          Scanner sc = new Scanner(new File("Assets/textcluedo.txt"));
          int posY=0;
