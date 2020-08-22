@@ -46,6 +46,9 @@ public class Player {
     public void takeTurn(Board board) {
         System.out.println(board);
 
+        //Draws cards in hand
+        Game.gui.cardPanel.drawCards(hand);
+
         // Simulates rolling dice for movement
         movement = Game.rollDice();
 

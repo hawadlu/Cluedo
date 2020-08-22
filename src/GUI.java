@@ -278,6 +278,8 @@ class CardPanel extends JPanel {
     JPanel container;
 
     public void addCards() throws IOException {
+        // todo, this method doesnt look like it provides functionality
+        // todo, game breaks without it lol
         this.removeAll(); //might not be necessary
         JPanel container = new JPanel();
         JScrollPane scroll;
@@ -292,6 +294,22 @@ class CardPanel extends JPanel {
 
         scroll = new JScrollPane(container, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.add(scroll);
+    }
+
+    public void drawCards(ArrayList<Card<?>> cards) {
+        this.removeAll(); //might not be necessary
+        JPanel container = new JPanel();
+        container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
+        this.setBorder(new EmptyBorder(0, 0, 0, 0));
+        this.setLayout(new BorderLayout(0, 0));
+
+        for (int i = 0; i < cards.size(); i++) {
+            container.add(container.add(cards.get(i).getImage()));
+            //Adds space between cards
+            if(i<cards.size()-1) container.add(Box.createHorizontalStrut(7));
+        }
+        this.add(container, BorderLayout.CENTER);
+
     }
 }
 

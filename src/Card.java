@@ -1,3 +1,8 @@
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.Objects;
 
 /**
@@ -6,9 +11,14 @@ import java.util.Objects;
  */
 public class Card<T extends Enum<T>> {
     private final T name;
+    private final JLabel image;
 
-    Card(T name) {
+    Card(T name) throws InvalidFileException {
         this.name = name;
+        try {
+            image = new JLabel(new ImageIcon(ImageIO.read(
+                    new File("Assets/Cards/" + name.toString() + ".png"))));
+        }catch(Exception e){ throw new InvalidFileException("Assets/Cards/"+ name.toString() + ".png"); }
     }
 
     @Override
@@ -35,4 +45,6 @@ public class Card<T extends Enum<T>> {
      * @return enum Players/Weapons/Rooms from Game class
      */
     public T getEnum(){ return name;}
+
+    public JLabel getImage(){ return image; }
 }

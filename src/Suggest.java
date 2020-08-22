@@ -2,16 +2,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Suggest implements Action {
-    private final Card<Game.Suspects> suspect;
-    private final Card<Game.Rooms> room;
-    private final Card<Game.Weapons> weapon;
+    private Card<Game.Suspects> suspect;
+    private Card<Game.Rooms> room;
+    private Card<Game.Weapons> weapon;
     private final Player player;
 
     Suggest(Game.Rooms room, Game.Suspects suspect, Game.Weapons weapon, Player player) {
-        this.suspect = new Card<>(suspect);
-        this.room = new Card<>(room);
-        this.weapon = new Card<>(weapon);
-        this.player = player;
+        try {
+            this.suspect = new Card<>(suspect);
+            this.room = new Card<>(room);
+            this.weapon = new Card<>(weapon);
+        }catch(InvalidFileException e){ System.out.println(e.toString()); }
+            this.player = player;
     }
 
     @Override

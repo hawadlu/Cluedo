@@ -220,7 +220,7 @@ public class Game {
 
      * @param players the list of players playing the game to be dealt cards to
      */
-    public void dealCards(List<Player> players){
+    public void dealCards(List<Player> players) {
         int numPlayers = players.size();
 
         //Create ArrayLists of each card type
@@ -228,9 +228,17 @@ public class Game {
         ArrayList<Card<Weapons>> weaponCards = new ArrayList<>();
         ArrayList<Card<Rooms>> roomCards = new ArrayList<>();
 
-        for(Suspects p : Suspects.values()){ playerCards.add(new Card<>(p)); }
-        for(Weapons w : Weapons.values()){ weaponCards.add(new Card<>(w)); }
-        for(Rooms r : Rooms.values()){ roomCards.add(new Card<>(r)); }
+        try {
+            for (Suspects p : Suspects.values()) {
+                playerCards.add(new Card<>(p));
+            }
+            for (Weapons w : Weapons.values()) {
+                weaponCards.add(new Card<>(w));
+            }
+            for (Rooms r : Rooms.values()) {
+                roomCards.add(new Card<>(r));
+            }
+        }catch(InvalidFileException e){ System.out.println(e.toString()); }
 
         //Shuffling
         Collections.shuffle(playerCards);
@@ -283,7 +291,7 @@ public class Game {
         gui = new GUI();
         Game game = new Game();
         game.setupGame();
-        //game.playGame();
+        game.playGame();
     }
 
 
