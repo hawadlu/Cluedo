@@ -127,10 +127,8 @@ class ConsolePanel extends JPanel {
      * Add all of the console messages to the gui
      */
     void buildMessages () {
-        for (String str: consoleMessages) {
-            textArea.append(str);
-            textArea.append("\n");
-        }
+        for (String str: consoleMessages)
+            textArea.append(str+"\n");
     }
 
     /**
@@ -185,7 +183,7 @@ class BoardPanel extends JPanel {
 
 //todo make this into a pullout panel from the bottom.
 class CardPanel extends JPanel {
-    ArrayList<Card> cards = new ArrayList<>();
+    ArrayList<Card<?>> cards = new ArrayList<>();
 
     JLabel defaultText = new JLabel("Cluedo");
     int fontSize;

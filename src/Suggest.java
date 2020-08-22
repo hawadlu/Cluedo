@@ -17,8 +17,6 @@ public class Suggest implements Action {
 
     @Override
     public void apply() {
-        Game.print(player.getName()+" has suggested "+suspect+" with the "+weapon+" in the "+room);
-
         // Move the suggested player to the room
         Player suspectPlayer = Game.playerMap.get(suspect.getEnum());
         Position pos = suspectPlayer.getPos();
@@ -31,7 +29,7 @@ public class Suggest implements Action {
 
         // Go through each players hand after this player looking for a match
         int indexOfPlayer = Game.players.indexOf(player);
-        for (int i = indexOfPlayer+1; i != indexOfPlayer; i = (i+1) % Game.players.size()) {
+        for (int i = (indexOfPlayer+1) % Game.players.size(); i != indexOfPlayer; i = (i+1) % Game.players.size()) {
             Player otherPlayer = Game.players.get(i);
             if (otherPlayer.getHand().size() == 0) continue;
             ArrayList<Card<?>> cardOptions = otherPlayer.addMatches(room, suspect, weapon);
@@ -51,10 +49,28 @@ public class Suggest implements Action {
                         +"\nPress Enter if you are "+player.getName()+" to continue");
                 Game.input.nextLine();
 
-                if (couldntProveWrong.size() > 0)
-                    Game.print(couldntProveWrong.toString()+" couldn't prove "+player.getName()+" wrong");
-                Game.print(otherPlayer.getName()+" proved "+player.getName()+" wrong!");
+                // Generate console output text
+                int size = couldntProveWrong.size();
+                if (size > 0) {
+                    StringBuilder output = new StringBuilder();
 
+                    if (size == 1)
+                        output.append(couldntProveWrong.get(0));
+                    else
+                        for (int j = 0; j < size; j++)
+                            if (j == size-1)
+                                output.append(couldntProveWrong.get(j));
+                            else if (j == size-2)
+                                output.append(couldntProveWrong.get(j)).append(" and ");
+                            else output.append(couldntProveWrong.get(j)).append(", ");
+
+                    Game.print(output + " couldn't prove " + player.getName() + " wrong");
+                }
+                Game.print(otherPlayer.getName()+" proved "+player.getName()+" wrong!");
+                Game.print(suspect+" with the "+weapon+" in the "+room);
+                Game.print("\n"+player.getName()+" suggested:");
+
+                // Stop searching for further matches
                 return;
             } else {
                 // Inform the player of who can't prove them wrong
@@ -64,6 +80,8 @@ public class Suggest implements Action {
         }
         // No matches were found
         Game.print("No one can prove "+player.getName()+" wrong!");
+        Game.print(suspect+" with the "+weapon+" in the "+room);
+        Game.print("\n"+player.getName()+" suggested:");
         System.out.println("No one can prove you wrong!");
         System.out.println("Press Enter to Continue");
         Game.input.nextLine();
