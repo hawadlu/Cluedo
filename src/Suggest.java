@@ -1,14 +1,13 @@
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class Suggest implements Action {
-    private final Card<Game.Players> suspect;
+    private final Card<Game.Suspects> suspect;
     private final Card<Game.Rooms> room;
     private final Card<Game.Weapons> weapon;
     private final Player player;
 
-    Suggest(Game.Rooms room, Game.Players suspect, Game.Weapons weapon, Player player) {
+    Suggest(Game.Rooms room, Game.Suspects suspect, Game.Weapons weapon, Player player) {
         this.suspect = new Card<>(suspect);
         this.room = new Card<>(room);
         this.weapon = new Card<>(weapon);
@@ -25,7 +24,7 @@ public class Suggest implements Action {
 
         Game.clearOutput();
 
-        List<String> couldntProveWrong = new ArrayList<>();
+        List<String> cannotProveWrong = new ArrayList<>();
 
         // Go through each players hand after this player looking for a match
         int indexOfPlayer = Game.players.indexOf(player);
@@ -50,19 +49,19 @@ public class Suggest implements Action {
                 Game.input.nextLine();
 
                 // Generate console output text
-                int size = couldntProveWrong.size();
+                int size = cannotProveWrong.size();
                 if (size > 0) {
                     StringBuilder output = new StringBuilder();
 
                     if (size == 1)
-                        output.append(couldntProveWrong.get(0));
+                        output.append(cannotProveWrong.get(0));
                     else
                         for (int j = 0; j < size; j++)
                             if (j == size-1)
-                                output.append(couldntProveWrong.get(j));
+                                output.append(cannotProveWrong.get(j));
                             else if (j == size-2)
-                                output.append(couldntProveWrong.get(j)).append(" and ");
-                            else output.append(couldntProveWrong.get(j)).append(", ");
+                                output.append(cannotProveWrong.get(j)).append(" and ");
+                            else output.append(cannotProveWrong.get(j)).append(", ");
 
                     Game.print(output + " couldn't prove " + player.getName() + " wrong");
                 }
@@ -74,7 +73,7 @@ public class Suggest implements Action {
                 return;
             } else {
                 // Inform the player of who can't prove them wrong
-                couldntProveWrong.add(otherPlayer.getName()+"");
+                cannotProveWrong.add(otherPlayer.getName()+"");
                 System.out.println(otherPlayer.getName() + " can't prove you wrong");
             }
         }

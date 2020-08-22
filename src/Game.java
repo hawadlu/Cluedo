@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,19 +11,20 @@ import java.util.*;
  * -Checks if game is finished
  */
 public class Game {
-    public static Players accusePlayer;
-    public static Rooms accuseRoom;
-    public static Weapons accuseWeapon;
+    public static Suspects murderer;
+    public static Rooms murderRoom;
+    public static Weapons murderWeapon;
     public static Scanner input = new Scanner(System.in);
-    public static boolean gameOver = false;
+    public static boolean gameOver;
     public static List<Player> players;
-    public static Map<Players, Player> playerMap;
+    public static Map<Suspects, Player> playerMap;
     public static Board board;
     public static GUI gui;
 
     private final static Die die1 = new Die(), die2 = new Die();
+    private ArrayList<Player> playingPlayers;
 
-    public enum Players {
+    public enum Suspects {
         SCARLET,
         PLUM,
         WHITE,
@@ -90,77 +92,33 @@ public class Game {
     }
 
     /**
-     *
-     * Get the number of players from the user
-     *
-     * @return the number of players playing the game
+     * Create the players, setting them all as NPC's to start with
      */
-    public int getNumPlayers() {
-        System.out.println("How many players are playing? (2-6 Players only)");
-        Scanner inputStr = new Scanner(input.nextLine());
-        int num = 0;
+    public void createPlayers() {
+        players = new ArrayList<>();
+        playerMap = new HashMap<>();
 
-        // Error check input
-        while (num < 2 || num > 6) {
-            while (!inputStr.hasNextInt()) {
-                System.out.println("Please enter a number 2-6");
-                inputStr = new Scanner(input.nextLine());
+        for (Suspects suspect : Suspects.values()) {
+            Position startPos = getStartingPosition(suspect);
+            try {
+                Player newPlayer = new Player(suspect, startPos);
+                newPlayer.setHasLost(true);
+                players.add(newPlayer);
+                playerMap.put(suspect, newPlayer);
+            } catch (InvalidFileException e) {
+                System.out.println("No image available for "+suspect);
             }
-            num = inputStr.nextInt();
         }
-
-        return num;
     }
 
     /**
-     * Create the players that will be playing the game
+     * Gets the default starting position of a suspect
      *
-     * @param numPlayers the number of players that will be playing the game
-     * @return an arraylist of players
-     */
-    public ArrayList<Player> createPlayers(int numPlayers) {
-        ArrayList<Player> players = new ArrayList<>();
-        // Make a list of available players so that chosen players can be removed from the list
-        ArrayList<Players> availablePlayers = new ArrayList<>(Arrays.asList(Players.values()));
-
-        // Make player objects for each player that wants to play
-        for (int i = 0; i < numPlayers; i++) {
-            Players player = chooseFromArray(availablePlayers.toArray(new Players[]{}), "Player "+(i+1)+" choose your character:");
-            Position startPos = getStartingPosition(player);
-
-            try {
-                players.add(new Player(player, startPos));
-            } catch (InvalidFileException e) {
-                System.out.println("No image available for "+player);
-                i--;
-            }
-
-            availablePlayers.remove(player);
-        }
-
-        // Make player objects for the remaining characters that aren't playing
-        for (Players player : availablePlayers) {
-            Position startPos = getStartingPosition(player);
-            try {
-                Player npc = new Player(player, startPos);
-                npc.setHasLost(true);
-                players.add(npc);
-            } catch (InvalidFileException e) {
-                System.out.println("No image available for "+player);
-            }
-        }
-
-        return players;
-    }
-
-    /**
-     * Gets the default starting position of a player
-     *
-     * @param player the player enum to find the position of
+     * @param suspect the suspect enum to find the starting position of
      * @return a position object, containing the starting position coordinates
      */
-    public Position getStartingPosition(Players player){
-        switch (player) {
+    public Position getStartingPosition(Suspects suspect){
+        switch (suspect) {
             case WHITE: return new Position(9, 0);
             case GREEN: return new Position(14, 0);
             case PEACOCK: return new Position(23, 6);
@@ -172,41 +130,87 @@ public class Game {
     }
 
     /**
-     * Play the game
+     * Create a dropdown to get the player to choose one of the provided options
+     * @param options the options the player can choose from
+     * @param title the title on the popup box
+     * @param message the message above the dropdown
+     * @param <T> the type of object of the options
+     * @return the option that was chosen by the player
      */
-    public void playGame() {
-        // Setup the game
-        gameOver = false;
-        int numPlayers = getNumPlayers();
-        players = createPlayers(numPlayers);
-        ArrayList<Player> lostPlayers = new ArrayList<>();
-        playerMap = new HashMap<>();
-        dealCards(players, numPlayers);
-        board = new Board();
+    @SuppressWarnings("unchecked")
+    public static <T> T makeDropDown(T[] options, String title, String message) {
+        T chosen = null;
+        while (chosen == null)
+            chosen = (T) JOptionPane.showInputDialog(gui.window, message, title,
+                    JOptionPane.PLAIN_MESSAGE, null, options, 2);
+        return chosen;
+    }
 
-        // Populate lostPlayers and playerMap
-        for (Player player : players) {
-            if (player.hasLost()) lostPlayers.add(player);
-            playerMap.put(player.getName(), player);
-        }
+    /**
+     * Setup the game to be ready to be played
+     * - Sets gameover to false
+     * - Creates board
+     * - Creates players
+     * - Deals cards to players
+     */
+    public void setupGame() {
+        gameOver = false;
+        createPlayers();
+        board = new Board();
 
         // Set players to their starting positions
         for (Player player : players)
             board.getTile(player.getNewPos()).addPlayer(player);
+        gui.redraw();
 
-        // Run the game
+        // Get number of players
+        Integer numPlayers = makeDropDown(new Integer[]{2, 3, 4, 5, 6}, "Number of Players",
+                                            "How many people are playing?");
+
+        // Setup the playable players
+        playingPlayers = new ArrayList<>();
+        ArrayList<Suspects> availablePlayers = new ArrayList<>(Arrays.asList(Suspects.values()));
+        for (int i = 1; i <= numPlayers; i++) {
+            // Choose character
+            Suspects[] options = availablePlayers.toArray(new Suspects[]{});
+            Suspects chosen = makeDropDown(options, "Player "+i+" Creation",
+                                            "Player "+i+" choose your character:");
+            Player chosenPlayer = playerMap.get(chosen);
+            chosenPlayer.setHasLost(false);
+            availablePlayers.remove(chosen);
+            playingPlayers.add(chosenPlayer);
+
+            // Get name
+            String name = null;
+            while (name == null)
+                name = JOptionPane.showInputDialog(gui.window,
+                        "Player "+i+" enter your name:", "Player "+i+" Creation",
+                        JOptionPane.PLAIN_MESSAGE);
+            chosenPlayer.setName(name);
+
+            Game.print(chosenPlayer.getName()+" ("+chosenPlayer+") created!");
+        }
+
+        dealCards(playingPlayers);
+    }
+
+    /**
+     * Play the game
+     */
+    public void playGame() {
         int currentPlayer = 0;
         while (!gameOver) {
-            Player player = players.get(currentPlayer % numPlayers);
-            if(!lostPlayers.contains(player)) {
-                player.takeTurn(board);
-                if (player.hasLost()){ lostPlayers.add(player); }
-            }
-            if(lostPlayers.size() == players.size()) {
+            Player player = players.get(currentPlayer % playingPlayers.size());
+            player.takeTurn(board);
+
+            if (player.hasLost()){
+                playingPlayers.remove(player);
+            } else currentPlayer++;
+
+            if(playingPlayers.size() == 0) {
                 System.out.println("All players have lost, game is over.");
                 gameOver = true;
             }
-            currentPlayer++;
         }
     }
 
@@ -215,15 +219,16 @@ public class Game {
      * shuffles the remaining cards and deals them out to the players
 
      * @param players the list of players playing the game to be dealt cards to
-     * @param numPlayers the number of players playing the game
      */
-    public void dealCards(List<Player> players, int numPlayers){
+    public void dealCards(List<Player> players){
+        int numPlayers = players.size();
+
         //Create ArrayLists of each card type
-        ArrayList<Card<Players>> playerCards = new ArrayList<>();
+        ArrayList<Card<Suspects>> playerCards = new ArrayList<>();
         ArrayList<Card<Weapons>> weaponCards = new ArrayList<>();
         ArrayList<Card<Rooms>> roomCards = new ArrayList<>();
 
-        for(Players p : Players.values()){ playerCards.add(new Card<>(p)); }
+        for(Suspects p : Suspects.values()){ playerCards.add(new Card<>(p)); }
         for(Weapons w : Weapons.values()){ weaponCards.add(new Card<>(w)); }
         for(Rooms r : Rooms.values()){ roomCards.add(new Card<>(r)); }
 
@@ -233,9 +238,9 @@ public class Game {
         Collections.shuffle(roomCards);
 
         //Add to accuse
-        accusePlayer = playerCards.get(0).getEnum();     playerCards.remove(0);
-        accuseRoom = roomCards.get(0).getEnum();       roomCards.remove(0);
-        accuseWeapon = weaponCards.get(0).getEnum();     weaponCards.remove(0);
+        murderer = playerCards.get(0).getEnum();     playerCards.remove(0);
+        murderRoom = roomCards.get(0).getEnum();       roomCards.remove(0);
+        murderWeapon = weaponCards.get(0).getEnum();     weaponCards.remove(0);
 
         //Add rest to big list
         ArrayList<Card<?>> remainingCards = new ArrayList<>();
@@ -260,7 +265,9 @@ public class Game {
      * @return the total number rolled on the dice
      */
     public static int rollDice() {
-        return die1.roll() + die2.roll();
+        int total = die1.roll() + die2.roll();
+        gui.redraw();
+        return total;
     }
 
     /**
@@ -269,14 +276,14 @@ public class Game {
      */
     public static void print(String text) {
         gui.addToConsole(text);
-        gui.redraw();
+        gui.consolePanel.redraw();
     }
 
     public static void main(String[] args) throws IOException {
         gui = new GUI();
         Game game = new Game();
-        GUI gui = new GUI();
-        game.showMenu();
+        game.setupGame();
+        //game.playGame();
     }
 
 

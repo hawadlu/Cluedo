@@ -6,11 +6,11 @@
  */
 public class Accuse implements Action {
     private final Game.Rooms room;
-    private final Game.Players suspect;
+    private final Game.Suspects suspect;
     private final Game.Weapons weapon;
     private final Player player;
 
-    Accuse(Game.Rooms room, Game.Players suspect, Game.Weapons weapon, Player player) {
+    Accuse(Game.Rooms room, Game.Suspects suspect, Game.Weapons weapon, Player player) {
         this.room = room;
         this.suspect = suspect;
         this.weapon = weapon;
@@ -20,7 +20,7 @@ public class Accuse implements Action {
     @Override
     public void apply() {
         //Check to see if the accused matches
-        if (Game.accuseRoom.equals(room) && Game.accusePlayer.equals(suspect) && Game.accuseWeapon.equals(weapon)) {
+        if (Game.murderRoom.equals(room) && Game.murderer.equals(suspect) && Game.murderWeapon.equals(weapon)) {
             Game.gameOver = true;
             Game.print(player.getName()+" is correct and has won!");
             System.out.println("You have won!");
