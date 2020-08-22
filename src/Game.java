@@ -301,6 +301,7 @@ public class Game {
 
     public static void main(String[] args) throws IOException {
         Game game = new Game();
+        GUI gui = new GUI();
         game.showMenu();
     }
 }

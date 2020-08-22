@@ -43,7 +43,7 @@ public class GUI {
      * This sets up the gui.
      * @param customGrid the grid layout
      */
-    public void setup(CustomGrid customGrid) {
+    public void setup(CustomGrid customGrid) throws IOException {
         customGrid.setLayout(new GridBagLayout());
         customGrid.setConstraints(new GridBagConstraints());
 
@@ -79,6 +79,7 @@ public class GUI {
         customGrid.setGrid(2, 0, 1, 2);
         customGrid.setPadding(widthSixths, 0);
         customGrid.addElement(cardPanel);
+        cardPanel.addCards();
     }
 
     /**
@@ -183,49 +184,33 @@ class BoardPanel extends JPanel {
 
 //todo make this into a pullout panel from the bottom.
 class CardPanel extends JPanel {
-    ArrayList<String> consoleMessages = new ArrayList<>();
-    JTextArea textArea;
-    JScrollPane scroll;
 
-    CardPanel() {
+    JScrollPane scroll;
+    JPanel container;
+
+    public void addCards() throws IOException {
+        this.removeAll(); //might not be necessary
+        JPanel container = new JPanel();
+        JScrollPane scroll = new JScrollPane();
+        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
         this.setBorder(new EmptyBorder(0, 0, 0, 0));
         this.setLayout(new BorderLayout(0, 0));
 
-        textArea = new JTextArea(1, 5);
-        textArea.setEditable(false);
+        for (int i = 0; i < 10; i++) container.add(drawCardPanel());
 
-        buildMessages();
-        this.add(textArea, BorderLayout.CENTER);
+        this.add(container, BorderLayout.CENTER);
 
-        scroll = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        scroll = new JScrollPane(container, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.add(scroll);
     }
 
-    /**
-     * Add all of the console messages to the gui
-     */
-    void buildMessages () {
-        for (String str: consoleMessages) {
-            textArea.append(str);
-            textArea.append("\n");
-        }
-    }
-
-    /**
-     * Add a message to the console. Max len of console is 30
-     * @param message the message
-     */
-    void addMessage(String message) {
-        if (consoleMessages.size() >= 30) consoleMessages.remove(29);
-        consoleMessages.add(0, message);
-    }
-
-    /**
-     * redraw the console
-     */
-    public void redraw() {
-        textArea.setText(null);
-        buildMessages();
+    //todo deal with actual cards here
+    private Component drawCardPanel() throws IOException {
+        JPanel container = new JPanel();
+        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+        container.add(new JLabel(new ImageIcon(ImageIO.read(new File("Assets/Test Files/Test Card 1.png")))));
+        container.add(new Button("Something"));
+        return container;
     }
 }
 
