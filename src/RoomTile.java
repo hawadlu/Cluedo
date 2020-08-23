@@ -45,7 +45,9 @@ public class RoomTile extends Tile {
      * @return the room associated with this tile, null if no room
      */
     public Room getRoom(){
+
         return room;
+
     }
 
     /**
