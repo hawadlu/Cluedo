@@ -156,7 +156,6 @@ public class Game {
     public void setupGame() {
         gameOver = false;
         createPlayers();
-        board = new Board();
 
         // Set players to their starting positions
         for (Player player : players)
@@ -288,6 +287,7 @@ public class Game {
     }
 
     public static void main(String[] args) throws IOException {
+        board = new Board();
         gui = new GUI();
         Game game = new Game();
         game.setupGame();

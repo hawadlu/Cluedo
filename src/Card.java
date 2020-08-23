@@ -1,13 +1,11 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.Objects;
 
 /**
  * Card class
- * -Main class for 3 card subclasses to map to
+ * -Main class for 3 card subclasses to map to.
  */
 public class Card<T extends Enum<T>> {
     private final T name;

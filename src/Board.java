@@ -241,10 +241,23 @@ public class Board {
                   }else if(next.equals("W")){
                      fileName+="room"+line.next()+".png";
                   }
+
                   if(next.equals("N")){
                      images[posY][posX]=null;
                   }else {
-                     images[posY][posX] = ImageIO.read(new File(fileName));
+                     if(board[posY][posX].hasPlayer()){
+                        BufferedImage image = ImageIO.read(new File(fileName));
+                        BufferedImage overlay = ImageIO.read(new File("Assets/PlayerPieces"+board[posY][posX].getPlayer().getName()));
+                        BufferedImage combined = new BufferedImage(image.getWidth(),image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+
+                        Graphics2D g2 = combined.createGraphics();
+                        g2.drawImage(image, 0,0,null);
+                        g2.drawImage(overlay, 0,0,null);
+                        g2.dispose();
+                        images[posY][posX] = combined;
+                     }else {
+                        images[posY][posX] = ImageIO.read(new File(fileName));
+                     }
                   }
                } catch (IOException e) { throw new InvalidFileException("Invalid filename"); }
                posX++;
