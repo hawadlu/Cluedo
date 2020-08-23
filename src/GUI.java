@@ -31,15 +31,17 @@ public class GUI {
     /**
      * These objects handle the four quadrants of the gui
      */
-    ActionPanel actionPanel = new ActionPanel(new Dimension(widthFifths, heightSixths * 4));
+    ActionPanel actionPanel = new ActionPanel(new Dimension(widthFifths, heightSixths * 4),
+            new Dimension(widthFifths, heightSixths * 2));
     ConsolePanel consolePanel = new ConsolePanel(new Dimension(widthFifths, heightSixths * 4));
-    BoardPanel boardPanel = new BoardPanel(ImageIO.read(new File("Assets/Test Files/Test 1.png")),  new Dimension(widthFifths * 3, heightSixths * 4));
+    BoardPanel boardPanel = new BoardPanel(ImageIO.read(new File("Assets/Test Files/Test 1.png")),
+            new Dimension(widthFifths * 3, heightSixths * 4));
     CardPanel cardPanel = new CardPanel();
 
     //Add the content
     CustomGrid gameLayout;
 
-    GUI() throws IOException {
+    GUI() throws IOException, InvalidFileException {
         window.setLayout(new BoxLayout(window.getContentPane(), BoxLayout.Y_AXIS));
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);// todo might update this at a later stage
@@ -70,7 +72,7 @@ public class GUI {
 
         actionPanel.setBackground(Color.cyan);
         gameLayout.setFill(GridBagConstraints.HORIZONTAL);
-        gameLayout.setAnchor(GridBagConstraints.FIRST_LINE_START);
+        //gameLayout.setAnchor(GridBagConstraints.FIRST_LINE_START);
         gameLayout.setWeight(0, 0);
         gameLayout.setGrid(0, 0, 1, 1);
 //        customGrid.setPadding(widthFifths, heightSixths * 4);
@@ -110,7 +112,7 @@ public class GUI {
      * Generates the menu bar
      * @return
      */
-    private void generateMenuBar(Boolean showInstructions) throws IOException {
+    private void generateMenuBar(Boolean showInstructions) {
         topBar.removeAll();
 
         //choose instructions title
@@ -228,37 +230,53 @@ public class GUI {
 
 class ActionPanel extends JPanel {
     JPanel container;
+    JPanel buttons;
 
-    ActionPanel(Dimension size) {
+    ActionPanel(Dimension size, Dimension buttonSize) throws InvalidFileException{
+        //Top container with logo, player and dice
         container = new JPanel();
         container.setPreferredSize(size);
-        container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-        container.setAlignmentX(Component.CENTER_ALIGNMENT);
+        container.setLayout(new FlowLayout(FlowLayout.CENTER));
+
+        //Bottom container with buttons
+        buttons = new JPanel();
+        buttons.setPreferredSize(buttonSize);
+        buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
+
         try {
             container.add(container.add(new JLabel(new ImageIcon(ImageIO.read(
                     new File("Assets/Other/CLUEDO_LOGO.png"))))));
-        }catch(IOException e){ }
-        container.add(new Button("I'm a button"));
-        container.add(new Button("I'm also a button"));
+        }catch(IOException e){ throw new InvalidFileException("Assets/Other/CLUEDO_LOGO.png"); }
         this.add(container);
     }
 
-    public void drawButtons(Player.Actions[] actions, Player player) {
+    public void drawButtons(Player.Actions[] actions, Player player) throws InvalidFileException{
         container.removeAll();
+
+        //Drawing logo
         try {
-            container.add(container.add(new JLabel(new ImageIcon(ImageIO.read(
-                    new File("Assets/Other/CLUEDO_LOGO.png"))))));
-        }catch(IOException e){ }
+            JLabel logo = new JLabel(new ImageIcon(ImageIO.read(new File("Assets/Other/CLUEDO_LOGO.png"))));
+            logo.setHorizontalAlignment(JLabel.CENTER);
+            container.add(container.add(logo));
+        }catch(IOException e){ throw new InvalidFileException("Assets/Other/CLUEDO_LOGO.png"); }
+
+        //Writing text
         JTextArea textArea = new JTextArea(1, 1);
         textArea.setFont(textArea.getFont().deriveFont(18f));
         textArea.append(player.getSuspect() + "  |  " + player.getName());
         container.add(textArea);
+
+        //Making buttons
+        //Bottom container with buttons
+        buttons.removeAll();
         for(int i=0; i< actions.length; i++){
             System.out.println(actions[i].toString());
-            container.add(new Button(actions[i].toString()));
+            buttons.add(new Button(actions[i].toString()));
         }
+        container.add(buttons);
         this.add(container);
         revalidate();
+        repaint();
     }
 }
 

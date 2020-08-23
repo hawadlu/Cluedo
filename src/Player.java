@@ -43,7 +43,7 @@ public class Player {
      *
      * @param board the board that the game is running on
      */
-    public void takeTurn(Board board) {
+    public void takeTurn(Board board) throws InvalidFileException {
         System.out.println(board);
 
         //Draws cards in hand
