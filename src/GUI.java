@@ -34,7 +34,7 @@ public class GUI {
     ActionPanel actionPanel = new ActionPanel(new Dimension(widthFifths, heightSixths * 4));
     ConsolePanel consolePanel = new ConsolePanel(new Dimension(widthFifths, heightSixths * 4));
     BoardPanel boardPanel = new BoardPanel(ImageIO.read(new File("Assets/Test Files/Test 1.png")),  new Dimension(widthFifths * 3, heightSixths * 4));
-    CardPanel cardPanel = new CardPanel(new Dimension(widthFifths * 4, heightSixths * 2));
+    CardPanel cardPanel = new CardPanel();
 
     //Add the content
     CustomGrid gameLayout;
