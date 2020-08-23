@@ -6,7 +6,7 @@ import javax.imageio.ImageIO;
 
 public class Tests {
     @Test
-    public void testGUI() throws IOException {
+    public void testGUI() throws IOException, InvalidFileException {
         GUI gui = new GUI();
 
         //todo remove

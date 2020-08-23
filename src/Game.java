@@ -207,7 +207,8 @@ public class Game {
         int currentPlayer = 0;
         while (!gameOver) {
             Player player = playingPlayers.get(currentPlayer);
-            player.takeTurn(board);
+            try { player.takeTurn(board);
+            } catch (InvalidFileException e) { e.printStackTrace(); }
 
             if (player.hasLost()) playingPlayers.remove(currentPlayer);
             else currentPlayer++;
@@ -286,7 +287,7 @@ public class Game {
         gui.consolePanel.redraw();
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InvalidFileException {
         board = new Board();
         gui = new GUI();
         Game game = new Game();
