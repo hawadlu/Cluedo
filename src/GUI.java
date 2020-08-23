@@ -227,14 +227,38 @@ public class GUI {
 }
 
 class ActionPanel extends JPanel {
-    JPanel container = new JPanel();
+    JPanel container;
 
     ActionPanel(Dimension size) {
+        container = new JPanel();
         container.setPreferredSize(size);
         container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+        container.setAlignmentX(Component.CENTER_ALIGNMENT);
+        try {
+            container.add(container.add(new JLabel(new ImageIcon(ImageIO.read(
+                    new File("Assets/Other/CLUEDO_LOGO.png"))))));
+        }catch(IOException e){ }
         container.add(new Button("I'm a button"));
         container.add(new Button("I'm also a button"));
         this.add(container);
+    }
+
+    public void drawButtons(Player.Actions[] actions, Player player) {
+        container.removeAll();
+        try {
+            container.add(container.add(new JLabel(new ImageIcon(ImageIO.read(
+                    new File("Assets/Other/CLUEDO_LOGO.png"))))));
+        }catch(IOException e){ }
+        JTextArea textArea = new JTextArea(1, 1);
+        textArea.setFont(textArea.getFont().deriveFont(18f));
+        textArea.append(player.getSuspect() + "  |  " + player.getName());
+        container.add(textArea);
+        for(int i=0; i< actions.length; i++){
+            System.out.println(actions[i].toString());
+            container.add(new Button(actions[i].toString()));
+        }
+        this.add(container);
+        revalidate();
     }
 }
 

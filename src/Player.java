@@ -22,7 +22,7 @@ public class Player {
     private int movement = 0;
     private final BufferedImage image;
 
-    private enum Actions {VIEW_HAND, MOVE, SUGGEST, ACCUSE, LEAVE_ROOM, END_TURN }
+    public enum Actions {MOVE, SUGGEST, ACCUSE, LEAVE_ROOM, END_TURN }
 
     Player(Game.Suspects suspect, Position startPos) throws InvalidFileException {
         this.suspect = suspect;
@@ -58,13 +58,13 @@ public class Player {
 
         while (takingTurn) {
             System.out.println(this.getName() + "'s Turn - "+movement+" moves left");
+
+            //Drawing buttons for actions
+            Game.gui.actionPanel.drawButtons(getActions(board), this);
+
             Actions action = Game.chooseFromArray(getActions(board), "What would you like to do?");
 
             switch (action) {
-                case VIEW_HAND:
-                    System.out.println("Your hand: " + getHand());
-                    break;
-
                 case MOVE:
                     System.out.println(board);
                     makeMove(board);
@@ -128,8 +128,6 @@ public class Player {
     public Actions[] getActions(Board board) {
         List<Actions> actions = new ArrayList<>();
         boolean inRoom = board.getTile(newPos).isRoom();
-
-        actions.add(Actions.VIEW_HAND);
 
         if (inRoom && movement > 0)
             actions.add(Actions.LEAVE_ROOM);
