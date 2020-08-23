@@ -246,8 +246,10 @@ public class Board {
                      images[posY][posX]=null;
                   }else {
                      if(board[posY][posX].hasPlayer()){
+                        //fixme something is broken here. 
                         BufferedImage image = ImageIO.read(new File(fileName));
-                        BufferedImage overlay = ImageIO.read(new File("Assets/PlayerPieces"+board[posY][posX].getPlayer().getName()));
+                        System.out.println("Assets/PlayerPieces/"+board[posY][posX].getPlayer()+".png");
+                        BufferedImage overlay = ImageIO.read(new File("Assets/PlayerPieces/"+board[posY][posX].getPlayer()+".png"));
                         BufferedImage combined = new BufferedImage(image.getWidth(),image.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
                         Graphics2D g2 = combined.createGraphics();
@@ -259,7 +261,7 @@ public class Board {
                         images[posY][posX] = ImageIO.read(new File(fileName));
                      }
                   }
-               } catch (IOException e) { throw new InvalidFileException("Invalid filename"); }
+               } catch (IOException e) { throw new InvalidFileException("Invalid filename: " + fileName); }
                posX++;
             }
             posY++;
