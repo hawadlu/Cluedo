@@ -34,8 +34,7 @@ public class GUI {
     ActionPanel actionPanel = new ActionPanel(new Dimension(widthFifths, heightSixths * 4),
             new Dimension(widthFifths, heightSixths * 2));
     ConsolePanel consolePanel = new ConsolePanel(new Dimension(widthFifths, heightSixths * 4));
-    BoardPanel boardPanel = new BoardPanel(ImageIO.read(new File("Assets/Test Files/Test 1.png")),
-            new Dimension(widthFifths * 3, heightSixths * 4));
+    BoardPanel boardPanel = new BoardPanel(new Dimension(widthFifths * 3, heightSixths * 4));
     CardPanel cardPanel = new CardPanel();
 
     //Add the content
@@ -336,26 +335,19 @@ class ConsolePanel extends JPanel {
  * This class handles displaying the board
  */
 class BoardPanel extends JPanel {
-    private BufferedImage board;
+    int imgWidth;
 
-    BoardPanel(BufferedImage image, Dimension size) {
-        this.board = image;
+    BoardPanel(Dimension size) throws IOException {
         this.setPreferredSize(size);
-    }
-
-    /**
-     * Change to a new image of the board
-     * @param newImage
-     */
-    public void updateImage(BufferedImage newImage) {
-        this.board = newImage;
+        //Find the appropriate image width
+        imgWidth = ImageIO.read(new File("Assets/TilePieces/hallway.png")).getWidth();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        int xOffset = (this.getWidth() / 2) - ((board.getWidth() * 26) / 2);
-        int yOffset = (this.getHeight() / 2) - ((board.getWidth() * 25) / 2);
+        int xOffset = (this.getWidth() / 2) - ((imgWidth * 26) / 2);
+        int yOffset = (this.getHeight() / 2) - ((imgWidth * 25) / 2);
 
         try {
             BufferedImage[][] toDraw = Game.board.draw();
@@ -368,8 +360,8 @@ class BoardPanel extends JPanel {
                 }
             }
 
-            for (int i = xOffset, x = 0; i < (board.getWidth() * 26) + xOffset && x < toDraw[0].length; i += toDraw[1][1].getHeight(), x++) {
-                for (int j = yOffset, y = 0; j < (board.getWidth() * 25) + yOffset && y < toDraw.length; j += toDraw[1][1].getHeight(), y++) {
+            for (int i = xOffset, x = 0; i < (imgWidth * 26) + xOffset && x < toDraw[0].length; i += toDraw[1][1].getHeight(), x++) {
+                for (int j = yOffset, y = 0; j < (imgWidth * 25) + yOffset && y < toDraw.length; j += toDraw[1][1].getHeight(), y++) {
                     g.drawImage(toDraw[y][x], i, j, this);
                 }
             }
