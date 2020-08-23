@@ -344,9 +344,15 @@ class BoardPanel extends JPanel {
 
             System.out.println(toDraw.length);
 
-            for (int i = xOffset; i < (board.getWidth() * 26) + xOffset; i += 20) {
-                for (int j = yOffset; j < (board.getWidth() * 25) + yOffset; j += 20) {
-                    g.drawImage(board, i, j, this);
+            for (int i = 0; i < toDraw.length; i++) {
+                for (int j = 0; j < toDraw[0].length; j++) {
+
+                }
+            }
+
+            for (int i = xOffset, x = 0; i < (board.getWidth() * 26) + xOffset && x < toDraw[0].length; i += toDraw[1][1].getHeight(), x++) {
+                for (int j = yOffset, y = 0; j < (board.getWidth() * 25) + yOffset && y < toDraw.length; j += toDraw[1][1].getHeight(), y++) {
+                    g.drawImage(toDraw[y][x], i, j, this);
                 }
             }
         } catch (InvalidFileException e) {
