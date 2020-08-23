@@ -34,7 +34,7 @@ public class GUI {
     ActionPanel actionPanel = new ActionPanel(new Dimension(widthFifths, heightSixths * 4));
     ConsolePanel consolePanel = new ConsolePanel(new Dimension(widthFifths, heightSixths * 4));
     BoardPanel boardPanel = new BoardPanel(ImageIO.read(new File("Assets/Test Files/Test 1.png")),  new Dimension(widthFifths * 3, heightSixths * 4));
-    CardPanel cardPanel = new CardPanel(new Dimension(widthFifths * 4, heightSixths * 2));
+    CardPanel cardPanel = new CardPanel();
 
     //Add the content
     CustomGrid gameLayout;
@@ -190,7 +190,7 @@ public class GUI {
         display.setBackground(new Color(238, 238, 238));
 
         //Parse the instructions
-        File instructionFile = new File("Assets/Test Files/Test Instructions.txt");
+        File instructionFile = new File("Assets/Instructions.txt");
         FileReader fileIn = new FileReader(instructionFile);
         BufferedReader reader = new BufferedReader(fileIn);
 
@@ -314,10 +314,19 @@ class BoardPanel extends JPanel {
         super.paintComponent(g);
         int xOffset = (this.getWidth() / 2) - ((board.getWidth() * 26) / 2);
         int yOffset = (this.getHeight() / 2) - ((board.getWidth() * 25) / 2);
-        for (int i = xOffset; i < (board.getWidth() * 26) + xOffset; i += 20) {
-            for (int j = yOffset; j < (board.getWidth() * 25) + yOffset; j += 20) {
-                g.drawImage(board, i, j, this);
+
+        try {
+            BufferedImage[][] toDraw = Game.board.draw();
+
+            System.out.println(toDraw.length);
+
+            for (int i = xOffset; i < (board.getWidth() * 26) + xOffset; i += 20) {
+                for (int j = yOffset; j < (board.getWidth() * 25) + yOffset; j += 20) {
+                    g.drawImage(board, i, j, this);
+                }
             }
+        } catch (InvalidFileException e) {
+            e.printStackTrace();
         }
     }
 }
