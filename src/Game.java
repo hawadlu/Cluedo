@@ -182,7 +182,7 @@ public class Game {
 
             // Get name
             String name = null;
-            while (name == null)
+            while (name == null || name.trim().length() == 0)
                 name = JOptionPane.showInputDialog(gui.window,
                         "Player "+i+" enter your name:", "Player "+i+" Creation",
                         JOptionPane.PLAIN_MESSAGE);
@@ -229,16 +229,10 @@ public class Game {
         ArrayList<Card<Rooms>> roomCards = new ArrayList<>();
 
         try {
-            for (Suspects p : Suspects.values()) {
-                playerCards.add(new Card<>(p));
-            }
-            for (Weapons w : Weapons.values()) {
-                weaponCards.add(new Card<>(w));
-            }
-            for (Rooms r : Rooms.values()) {
-                roomCards.add(new Card<>(r));
-            }
-        }catch(InvalidFileException e){ System.out.println(e.toString()); }
+            for (Suspects s : Suspects.values()) playerCards.add(new Card<>(s));
+            for (Weapons w : Weapons.values()) weaponCards.add(new Card<>(w));
+            for (Rooms r : Rooms.values()) roomCards.add(new Card<>(r));
+        } catch(InvalidFileException e) { System.out.println(e.toString()); }
 
         //Shuffling
         Collections.shuffle(playerCards);
