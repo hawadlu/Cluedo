@@ -214,7 +214,7 @@ public class Board {
             while(line.hasNext()){
                String next = line.next();
                String fileName="";
-
+               System.out.println(next);
                if(board[posY][posX].isHighlighted()){
                   fileName+="Assets/HighlightedPieces/";
                }else{
@@ -238,15 +238,15 @@ public class Board {
                      fileName+="hallway.png";
                   }else if(next.equals("D")){
                      fileName+="room.png";
-                  }else if(next.equals("W")){
-                     fileName+="room"+line.next()+".png";
+                  }else if(next.charAt(0)=='W'){
+                     fileName+="room"+next.charAt(1)+".png";
                   }
 
                   if(next.equals("N")){
                      images[posY][posX]=null;
                   }else {
                      if(board[posY][posX].hasPlayer()){
-                        //fixme something is broken here. 
+                 
                         BufferedImage image = ImageIO.read(new File(fileName));
                         System.out.println("Assets/PlayerPieces/"+board[posY][posX].getPlayer()+".png");
                         BufferedImage overlay = ImageIO.read(new File("Assets/PlayerPieces/"+board[posY][posX].getPlayer()+".png"));
