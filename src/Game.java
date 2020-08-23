@@ -170,6 +170,7 @@ public class Game {
         // Setup the playable players
         playingPlayers = new ArrayList<>();
         ArrayList<Suspects> availablePlayers = new ArrayList<>(Arrays.asList(Suspects.values()));
+        ArrayList<String> takenNames = new ArrayList<>();
         for (int i = 1; i <= numPlayers; i++) {
             // Choose character
             Suspects[] options = availablePlayers.toArray(new Suspects[]{});
@@ -181,11 +182,17 @@ public class Game {
             playingPlayers.add(chosenPlayer);
 
             // Get name
-            String name = null;
-            while (name == null)
+            String name = "";
+            while (name.length() == 0 || name.length() > 10 || takenNames.contains(name.toLowerCase())) {
                 name = JOptionPane.showInputDialog(gui.window,
-                        "Player "+i+" enter your name:", "Player "+i+" Creation",
+                        "Player " + i + " enter your name:" +
+                                (name.length() > 10 ? "(Max 10 characters)" : (
+                                takenNames.contains(name.toLowerCase()) ? "\n(That name has already been taken)" : "")),
+                        "Player " + i + " Creation",
                         JOptionPane.PLAIN_MESSAGE);
+                name = name==null ? "" : name.trim();
+            }
+            takenNames.add(name.toLowerCase());
             chosenPlayer.setName(name);
 
             Game.print(chosenPlayer.getName()+" ("+chosenPlayer+") created!");
@@ -200,17 +207,16 @@ public class Game {
     public void playGame() {
         int currentPlayer = 0;
         while (!gameOver) {
-            Player player = players.get(currentPlayer % playingPlayers.size());
+            Player player = playingPlayers.get(currentPlayer);
             player.takeTurn(board);
 
-            if (player.hasLost()){
-                playingPlayers.remove(player);
-            } else currentPlayer++;
+            if (player.hasLost()) playingPlayers.remove(currentPlayer);
+            else currentPlayer++;
 
             if(playingPlayers.size() == 0) {
                 System.out.println("All players have lost, game is over.");
                 gameOver = true;
-            }
+            } else currentPlayer = currentPlayer % playingPlayers.size();
         }
     }
 
@@ -229,16 +235,10 @@ public class Game {
         ArrayList<Card<Rooms>> roomCards = new ArrayList<>();
 
         try {
-            for (Suspects p : Suspects.values()) {
-                playerCards.add(new Card<>(p));
-            }
-            for (Weapons w : Weapons.values()) {
-                weaponCards.add(new Card<>(w));
-            }
-            for (Rooms r : Rooms.values()) {
-                roomCards.add(new Card<>(r));
-            }
-        }catch(InvalidFileException e){ System.out.println(e.toString()); }
+            for (Suspects s : Suspects.values()) playerCards.add(new Card<>(s));
+            for (Weapons w : Weapons.values()) weaponCards.add(new Card<>(w));
+            for (Rooms r : Rooms.values()) roomCards.add(new Card<>(r));
+        } catch(InvalidFileException e) { System.out.println(e.toString()); }
 
         //Shuffling
         Collections.shuffle(playerCards);
@@ -269,7 +269,7 @@ public class Game {
     }
 
     /**
-     * Roll the dice and get the result
+     * Roll the dice, get the result and redraw the dice
      * @return the total number rolled on the dice
      */
     public static int rollDice() {

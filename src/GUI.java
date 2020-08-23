@@ -2,7 +2,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
@@ -22,16 +24,20 @@ public class GUI {
     int widthFifths = width / 5;
     int heightSixths = height / 6;
 
+
+    JPanel topBar = new JPanel();
+    JPanel content = new JPanel();
+
     /**
      * These objects handle the four quadrants of the gui
      */
     ActionPanel actionPanel = new ActionPanel(new Dimension(widthFifths, heightSixths * 4));
     ConsolePanel consolePanel = new ConsolePanel(new Dimension(widthFifths, heightSixths * 4));
     BoardPanel boardPanel = new BoardPanel(ImageIO.read(new File("Assets/Test Files/Test 1.png")),  new Dimension(widthFifths * 3, heightSixths * 4));
-    CardPanel cardPanel = new CardPanel();
+    CardPanel cardPanel = new CardPanel(new Dimension(widthFifths * 4, heightSixths * 2));
 
-    JPanel topBar = new JPanel();
-    JPanel content = new JPanel();
+    //Add the content
+    CustomGrid gameLayout;
 
     GUI() throws IOException {
         window.setLayout(new BoxLayout(window.getContentPane(), BoxLayout.Y_AXIS));
@@ -41,12 +47,8 @@ public class GUI {
         window.add(topBar);
         window.add(content);
 
-        //Add the menu bar
-        generateMenuBar(true);
-
-        //Add the content
-        baseLayout = new CustomGrid(content);
-        setupGameLayout(baseLayout);
+        //Setup the game layout
+        setupGameLayout();
 
         //Display the window.
         window.pack();
@@ -55,53 +57,60 @@ public class GUI {
 
     /**
      * This sets up the gui.
-     * @param customGrid the grid layout
      */
-    public void setupGameLayout(CustomGrid customGrid) throws IOException {
-        customGrid.setLayout(new GridBagLayout());
-        customGrid.setConstraints(new GridBagConstraints());
+    public void setupGameLayout() throws IOException {
+        //Setup the menu bar
+        generateMenuBar(true);
+
+        content.removeAll();
+        gameLayout = new CustomGrid(content);
+
+        gameLayout.setLayout(new GridBagLayout());
+        gameLayout.setConstraints(new GridBagConstraints());
 
         actionPanel.setBackground(Color.cyan);
-        customGrid.setFill(GridBagConstraints.HORIZONTAL);
-        customGrid.setAnchor(GridBagConstraints.FIRST_LINE_START);
-        customGrid.setWeight(0, 0);
-        customGrid.setGrid(0, 0, 1, 1);
+        gameLayout.setFill(GridBagConstraints.HORIZONTAL);
+        gameLayout.setAnchor(GridBagConstraints.FIRST_LINE_START);
+        gameLayout.setWeight(0, 0);
+        gameLayout.setGrid(0, 0, 1, 1);
 //        customGrid.setPadding(widthFifths, heightSixths * 4);
-        customGrid.addElement(actionPanel);
+        gameLayout.addElement(actionPanel);
 
         boardPanel.setBackground(Color.orange);
-        customGrid.setFill(GridBagConstraints.HORIZONTAL);
-        customGrid.setAnchor(GridBagConstraints.CENTER);
-        customGrid.setWeight(0, 0);
-        customGrid.setGrid(1, 0, 1, 1);
+        gameLayout.setFill(GridBagConstraints.HORIZONTAL);
+        gameLayout.setAnchor(GridBagConstraints.CENTER);
+        gameLayout.setWeight(0, 0);
+        gameLayout.setGrid(1, 0, 1, 1);
 //        customGrid.setPadding(widthFifths * 3, heightSixths * 4);
-        customGrid.addElement(boardPanel);
+        gameLayout.addElement(boardPanel);
 
         consolePanel.setBackground(Color.magenta);
-        customGrid.setFill(GridBagConstraints.CENTER);
-        customGrid.setAnchor(GridBagConstraints.CENTER);
-        customGrid.setWeight(0, 0);
-        customGrid.setGrid(2, 0, 1, 1);
+        gameLayout.setFill(GridBagConstraints.CENTER);
+        gameLayout.setAnchor(GridBagConstraints.CENTER);
+        gameLayout.setWeight(0, 0);
+        gameLayout.setGrid(2, 0, 1, 1);
 //        customGrid.setPadding(widthFifths, heightSixths * 4);
-        customGrid.addElement(consolePanel);
+        gameLayout.addElement(consolePanel);
 
         cardPanel.setBackground(Color.red);
         //cardPanel.initialiseDefaultText(100);
-        customGrid.setFill(GridBagConstraints.VERTICAL);
-        customGrid.setAnchor(GridBagConstraints.CENTER);
-        customGrid.setWeight(0, 0);
-        customGrid.setGrid(0, 2, 3, 1);
+        gameLayout.setFill(GridBagConstraints.VERTICAL);
+        gameLayout.setAnchor(GridBagConstraints.CENTER);
+        gameLayout.setWeight(0, 0);
+        gameLayout.setGrid(0, 2, 3, 1);
 //        customGrid.setPadding(widthFifths * 5, heightSixths * 2);
-        customGrid.addElement(cardPanel);
+        gameLayout.addElement(cardPanel);
         try { cardPanel.setupCards();
         }catch(InvalidFileException e){}
+        
+        redraw();
     }
 
     /**
      * Generates the menu bar
      * @return
      */
-    private void generateMenuBar(Boolean showInstructions) {
+    private void generateMenuBar(Boolean showInstructions) throws IOException {
         topBar.removeAll();
 
         //choose instructions title
@@ -145,18 +154,56 @@ public class GUI {
 
         //Bind the menu items
         quit.addActionListener(actionEvent -> System.exit(0)); //exit the program
-        instructions.addActionListener(actionEvent -> showInstructions());
+        if (showInstructions) {
+            instructions.addActionListener(actionEvent -> {
+                try {
+                    showInstructions();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        } else {
+            instructions.addActionListener(actionEvent -> {
+                try {
+                    setupGameLayout();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            });
+        }
     }
 
     /**
      * Show the instructions
      */
-    private void showInstructions() {
+    private void showInstructions() throws IOException {
         generateMenuBar(false);
         content.removeAll();
 
-        
+        // create the middle panel components
+        JTextArea display = new JTextArea ( 50, 100);
+        display.setEditable (false); // set textArea non-editable
+        JScrollPane scroll = new JScrollPane ( display );
+        scroll.setBorder(null);
+        scroll.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
 
+        display.setBackground(new Color(238, 238, 238));
+
+        //Parse the instructions
+        File instructionFile = new File("Assets/Test Files/Test Instructions.txt");
+        FileReader fileIn = new FileReader(instructionFile);
+        BufferedReader reader = new BufferedReader(fileIn);
+
+        String line;
+        while ((line = reader.readLine()) != null) {
+            display.append(line);
+            display.append("\n");
+        }
+
+        fileIn.close();
+
+        //Add Textarea in to middle panel
+        content.add(scroll);
 
         redraw();
     }
@@ -172,8 +219,10 @@ public class GUI {
      */
     public void redraw() {
         topBar.revalidate();
+        content.revalidate();
         consolePanel.redraw();
         boardPanel.repaint();
+        cardPanel.repaint();
     }
 }
 
