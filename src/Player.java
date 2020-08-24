@@ -227,6 +227,9 @@ public class Player {
             if (tile.isHighlighted()) tile.toggleHighlight();
 
         Game.gui.boardPanel.repaint();
+
+        // Inform the taking turn loop that an action has been taken
+        synchronized (this) { this.notifyAll(); }
     }
 
     /**
