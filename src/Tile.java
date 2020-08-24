@@ -82,7 +82,7 @@ abstract class Tile {
     public void toggleHighlight(){ highlighted = !highlighted; }
 
     /**
-     * toggle highlighted
+     * set tile as highlighted
      */
     public void setHighlighted(){ highlighted = true; }
 }

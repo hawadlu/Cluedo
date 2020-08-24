@@ -22,6 +22,7 @@ public class Player {
     private int movement = 0;
     private final BufferedImage image;
     private boolean takingTurn = false;
+    public boolean hasMoved = false;
 
     public enum Actions {MOVE, SUGGEST, ACCUSE, END_TURN }
 
@@ -57,6 +58,7 @@ public class Player {
         tilesThisTurn = new HashSet<>();
         suggested = false;
         takingTurn = true;
+        hasMoved = false;
 
         // Auto find path if not moved into a room by a suggestion
         if (Arrays.stream(getActions(board)).noneMatch(act -> act==Actions.MOVE))
@@ -95,6 +97,8 @@ public class Player {
                 //todo can press move twice when player in room, causing portal gun effect :)
                 movement = Game.rollDice();
                 oldPos = new Position(newPos);
+
+                //Complete flood search from each entrance
                 if (board.getTile(oldPos).isRoom()) {
                     for (int i=0; i<((RoomTile) board.getTile(oldPos)).getRoom().getNumberOfDoors(); i++) {
                         findPath(board, movement-1, ((RoomTile) board.getTile(oldPos)).getRoom().getDoor(i));
@@ -102,6 +106,7 @@ public class Player {
                 }
                 findPath(board, movement, oldPos);
                 Game.gui.boardPanel.repaint();
+                hasMoved = true;
                 break;
 
             case SUGGEST:
@@ -155,13 +160,14 @@ public class Player {
         List<Actions> actions = new ArrayList<>();
         boolean inRoom = board.getTile(newPos).isRoom();
 
+        System.out.println(inRoom + ": "+!suggested);
         if (inRoom && !suggested) {
             Game.Rooms currentRoom = ((RoomTile)board.getTile(newPos)).getEnum();
             if (currentRoom != lastRoom)
                 actions.add(Actions.SUGGEST);
         }
 
-        if (actions.contains(Actions.SUGGEST) && movement > 0)
+        if (actions.contains(Actions.SUGGEST) && !hasMoved)
             actions.add(0, Actions.MOVE);
 
         actions.add(Actions.ACCUSE);
