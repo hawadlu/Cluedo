@@ -164,7 +164,7 @@ public class Game {
 
         // Get number of players
         Integer numPlayers = makeDropDown(new Integer[]{2, 3, 4, 5, 6}, "Number of Players",
-                "How many people are playing?");
+                                            "How many people are playing?");
 
         // Setup the playable players
         playingPlayers = new ArrayList<>();
@@ -174,7 +174,7 @@ public class Game {
             // Choose character
             Suspects[] options = availablePlayers.toArray(new Suspects[]{});
             Suspects chosen = makeDropDown(options, "Player "+i+" Creation",
-                    "Player "+i+" choose your character:");
+                                            "Player "+i+" choose your character:");
             Player chosenPlayer = playerMap.get(chosen);
             chosenPlayer.setHasLost(false);
             availablePlayers.remove(chosen);
@@ -186,7 +186,7 @@ public class Game {
                 name = JOptionPane.showInputDialog(gui.window,
                         "Player " + i + " enter your name:" +
                                 (name.length() > 10 ? "(Max 10 characters)" : (
-                                        takenNames.contains(name.toLowerCase()) ? "\n(That name has already been taken)" : "")),
+                                takenNames.contains(name.toLowerCase()) ? "\n(That name has already been taken)" : "")),
                         "Player " + i + " Creation",
                         JOptionPane.PLAIN_MESSAGE);
                 name = name==null ? "" : name.trim();

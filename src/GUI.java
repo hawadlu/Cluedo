@@ -1,7 +1,6 @@
-import javafx.geometry.Pos;
-
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -104,7 +103,7 @@ public class GUI {
         gameLayout.addElement(cardPanel);
         try { cardPanel.setupCards();
         }catch(InvalidFileException e){}
-
+        
         redraw();
     }
 
@@ -243,7 +242,6 @@ class ActionPanel extends JPanel {
         buttons.setPreferredSize(buttonSize);
         buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
 
-        //Drawing Logo
         try {
             container.add(container.add(new JLabel(new ImageIcon(ImageIO.read(
                     new File("Assets/Other/CLUEDO_LOGO.png"))))));
@@ -267,9 +265,6 @@ class ActionPanel extends JPanel {
         textArea.append(player.getSuspect() + "  |  " + player.getName());
         container.add(textArea);
 
-        //Drawing Dice
-
-
         //Making buttons
         //Bottom container with buttons
         buttons.removeAll();
@@ -277,14 +272,8 @@ class ActionPanel extends JPanel {
             //System.out.println(action.toString());
             JButton button = new JButton(action.toString());
             buttons.add(button);
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (action == Player.Actions.MOVE) {
-                        Game.currentPlayer.makeMove(Game.board);
-                        Game.gui.boardPanel.repaint();
-                    }
-                }
+            button.addActionListener(e -> {
+                player.takeAction(action, Game.board);
             });
         }
         container.add(buttons);
@@ -334,7 +323,7 @@ class ConsolePanel extends JPanel {
      */
     void addMessage(String message) {
         if (consoleMessages.size() >= 30) consoleMessages.remove(29);
-        consoleMessages.add(0, message);
+        consoleMessages.add(0, " "+message);
     }
 
     /**
@@ -351,69 +340,32 @@ class ConsolePanel extends JPanel {
  */
 class BoardPanel extends JPanel {
     int imgWidth;
-    int boardLength = Game.board.getLength() + 1;
-    int boardHeight = Game.board.getHeight() + 1;
 
     BoardPanel(Dimension size) throws IOException {
         this.setPreferredSize(size);
         //Find the appropriate image width
         imgWidth = ImageIO.read(new File("Assets/TilePieces/hallway.png")).getWidth();
-
-        //Setup the mouse listener
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                Tile clickedTile = calcTilePos(new Position(e.getX(), e.getY()));
-                if (clickedTile != null) System.out.println("Mouse clicked at x " + e.getX() + " y " + e.getY());
-                else System.out.println("The click was out of bounds for coordinates x " + e.getX() + " y " + e.getY());
-            }
-        });
     }
-
-    /**
-     * Based on the mouse click calculate the title that was clicked on.
-     * @param position the position of the mouse click
-     * @return The selected tile
-     * Null if click is out of bounds.
-     */
-    private Tile calcTilePos(Position position) {
-        //calculate the start four corners of the board
-        Position topLeft = new Position(getXOffset(), getYOffset());
-        Position bottomRight = new Position(getXOffset() + (imgWidth * (boardLength - 2)), getYOffset() + (imgWidth * boardHeight));
-
-        //Check if the click lies within the board
-        if (position.x > topLeft.x && position.x < bottomRight.x && position.y > topLeft.y && position.y < bottomRight.y) {
-            Position relativePos = new Position(Math.floorDiv(position.x - getXOffset(), imgWidth), Math.floorDiv(position.y - getYOffset(), imgWidth));
-            if (Game.board.getTile(relativePos) != null) {
-                System.out.println("Calculated tile position x " + relativePos.x + " y " + relativePos.y);
-                return Game.board.getTile(relativePos); //Make sure this is not a null tile
-            }
-        }
-        return null;
-    }
-
-    int getXOffset() {return (this.getWidth() / 2) - ((imgWidth * boardLength) / 2);}
-    int getYOffset() {return (this.getHeight() / 2) - ((imgWidth * boardHeight) / 2);}
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        int xOffset = getXOffset();
-        int yOffset = getYOffset();
+        int xOffset = (this.getWidth() / 2) - ((imgWidth * 26) / 2);
+        int yOffset = (this.getHeight() / 2) - ((imgWidth * 25) / 2);
 
         try {
             BufferedImage[][] toDraw = Game.board.draw();
 
             //System.out.println(toDraw.length);
 
-//            for (int i = 0; i < toDraw.length; i++) {
-//                for (int j = 0; j < toDraw[0].length; j++) {
-//
-//                }
-//            }
+            for (int i = 0; i < toDraw.length; i++) {
+                for (int j = 0; j < toDraw[0].length; j++) {
 
-            for (int i = xOffset, x = 0; i < (imgWidth * boardLength) + xOffset && x < toDraw[0].length; i += toDraw[1][1].getHeight(), x++) {
-                for (int j = yOffset, y = 0; j < (imgWidth * boardHeight) + yOffset && y < toDraw.length; j += toDraw[1][1].getHeight(), y++) {
+                }
+            }
+
+            for (int i = xOffset, x = 0; i < (imgWidth * 26) + xOffset && x < toDraw[0].length; i += toDraw[1][1].getHeight(), x++) {
+                for (int j = yOffset, y = 0; j < (imgWidth * 25) + yOffset && y < toDraw.length; j += toDraw[1][1].getHeight(), y++) {
                     g.drawImage(toDraw[y][x], i, j, this);
                 }
             }

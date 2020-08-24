@@ -13,7 +13,7 @@ public class Suggest implements Action {
             this.room = new Card<>(room);
             this.weapon = new Card<>(weapon);
         }catch(InvalidFileException e){ System.out.println(e.toString()); }
-        this.player = player;
+            this.player = player;
     }
 
     @Override
