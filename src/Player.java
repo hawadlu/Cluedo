@@ -57,9 +57,7 @@ public class Player {
         boolean takingTurn = true;
 
         while (takingTurn) {
-            System.out.println(this.getName() + "'s Turn - "+movement+" moves left");
-
-            //Drawing buttons and die for actions
+            //Drawing buttons for actions
             Game.gui.actionPanel.drawButtons(getActions(board), this);
 
             Actions action = Game.chooseFromArray(getActions(board), "What would you like to do?");
