@@ -230,6 +230,7 @@ public class GUI {
 class ActionPanel extends JPanel {
     JPanel container;
     JPanel buttons;
+    JPanel dice;
 
     ActionPanel(Dimension size, Dimension buttonSize) throws InvalidFileException{
         //Top container with logo, player and dice
@@ -237,9 +238,12 @@ class ActionPanel extends JPanel {
         container.setPreferredSize(size);
         container.setLayout(new FlowLayout(FlowLayout.CENTER));
 
+        dice = new JPanel();
+        dice.setLayout(new BoxLayout(dice, BoxLayout.X_AXIS));
+
         //Bottom container with buttons
         buttons = new JPanel();
-        buttons.setPreferredSize(buttonSize);
+        //buttons.setPreferredSize(buttonSize);
         buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
 
         try {
@@ -249,8 +253,10 @@ class ActionPanel extends JPanel {
         this.add(container);
     }
 
-    public void drawButtons(Player.Actions[] actions, Player player) throws InvalidFileException{
+    public void drawButtons(Player.Actions[] actions, Player player, int movement) throws InvalidFileException{
         container.removeAll();
+        dice.removeAll();
+        buttons.removeAll();
 
         //Drawing logo
         try {
@@ -265,16 +271,24 @@ class ActionPanel extends JPanel {
         textArea.append(player.getSuspect() + "  |  " + player.getName());
         container.add(textArea);
 
+        //Drawing dice
+        if(movement > 6){
+            dice.add(Die.getImage(6));
+            movement -=6;
+        }
+        dice.add(Die.getImage(movement));
+        container.add(dice);
+
         //Making buttons
         //Bottom container with buttons
         buttons.removeAll();
         for (Player.Actions action : actions) {
-            //System.out.println(action.toString());
             JButton button = new JButton(action.toString());
-            buttons.add(button);
+            button.setPreferredSize(new Dimension(150, 90));
             button.addActionListener(e -> {
                 player.takeAction(action, Game.board);
             });
+            buttons.add(button);
         }
         container.add(buttons);
         this.add(container);
