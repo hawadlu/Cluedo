@@ -80,4 +80,9 @@ abstract class Tile {
      * toggle highlighted
      */
     public void toggleHighlight(){ highlighted = !highlighted; }
+
+    /**
+     * toggle highlighted
+     */
+    public void setHighlighted(){ highlighted = true; }
 }
