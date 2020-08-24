@@ -2,7 +2,7 @@ N N N N N N N N N T N N N N T N N N N N N N N N
 R R R R R R N T T T R R R R T T T N R R R R R R
 R R R R R R T T R R R R R R R R T T R R R R R R
 R R R R R R T T R R R R R R R R T T R R R R R R
-R R R R R R T T R R R R R R R R T T R R R R R R
+R R R R R R T T R R R R R R R R T T WSW R R R R R
 R R R R R R T T D R R R R R R D T T T WS R R R R
 N R R R D R T T R R R R R R R R T T T T T T T T
 T T T T T T T T R D R R R R D R T T T T T T T N

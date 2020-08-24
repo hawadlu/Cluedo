@@ -268,7 +268,7 @@ public class Board {
                   }else if(next.charAt(0)=='W'){
                      fileName+="room";
                      for(int i = 1; i<next.length();i++)
-                        fileName+=next.charAt(i)+".png";
+                        fileName+=next.charAt(i);
                      fileName+=".png";
                   }
 
