@@ -1,4 +1,5 @@
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -22,14 +23,13 @@ public class Die {
     /**
      * Draw the die
      *
-     * @param g the graphics plane to draw on
-     * @param pos the position to draw the die at
+     * @param num on dice displayed
+     * @return a new JLabel for drawing the image
      */
-    public void draw(Graphics g, Position pos) throws InvalidFileException {
+    public static JLabel getImage(int num) throws InvalidFileException {
         try {
-            String fileName = "Assets/DieFaces/DieFace" + number + ".png";
-            BufferedImage image = ImageIO.read(new File(fileName));
-            g.drawImage(image, pos.x, pos.y, null);
-        } catch (IOException e) { throw new InvalidFileException("DieFace" + number + ".png"); }
+            return new JLabel(new ImageIcon(ImageIO.read(
+                    new File("Assets/DieFaces/DieFace" + num + ".png"))));
+        } catch (IOException e) { throw new InvalidFileException("DieFace" + num + ".png"); }
     }
 }
