@@ -1,3 +1,7 @@
+import jdk.nashorn.internal.scripts.JD;
+
+import javax.swing.*;
+
 /**
  * Accuse Action
  *  -On a players 2nd action after move they can choose to accuse
@@ -23,16 +27,13 @@ public class Accuse implements Action {
         if (Game.murderRoom.equals(room) && Game.murderer.equals(suspect) && Game.murderWeapon.equals(weapon)) {
             Game.gameOver = true;
             Game.print(player.getName()+" is correct and has won!");
-            System.out.println("You have won!");
+            JOptionPane.showMessageDialog(Game.gui.window, "Your accusation is correct, you have won!\nPress OK to continue");
         } else {
             player.setHasLost(true);
             Game.print(player.getName()+" is wrong and has lost!");
-            System.out.println("Your accusation is incorrect. You have lost.");
+            JOptionPane.showMessageDialog(Game.gui.window, "Your accusation is incorrect, you have lost.\nPress OK to continue");
         }
         Game.print(suspect+" of using the "+weapon+" in the "+room);
         Game.print(player.getName()+" accused:");
-
-        System.out.println("Press 'enter' to continue.");
-        Game.input.nextLine();
     }
 }
