@@ -1,4 +1,4 @@
-public abstract class Tile {
+abstract class Tile {
     protected Player player=null;
     protected final Position pos;
     protected boolean highlighted=false;

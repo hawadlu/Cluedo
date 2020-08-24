@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -32,7 +34,7 @@ public class GUI {
      * These objects handle the four quadrants of the gui
      */
     ActionPanel actionPanel = new ActionPanel(new Dimension(widthFifths, heightSixths * 4),
-            new Dimension(widthFifths, heightSixths * 2));
+            new Dimension(widthFifths, heightSixths * 2), new Dimension(widthFifths, heightSixths));
     ConsolePanel consolePanel = new ConsolePanel(new Dimension(widthFifths, heightSixths * 4));
     BoardPanel boardPanel = new BoardPanel(new Dimension(widthFifths * 3, heightSixths * 4));
     CardPanel cardPanel = new CardPanel();
@@ -69,7 +71,7 @@ public class GUI {
         gameLayout.setLayout(new GridBagLayout());
         gameLayout.setConstraints(new GridBagConstraints());
 
-        actionPanel.setBackground(Color.cyan);
+        //actionPanel.setBackground(Color.cyan);
         gameLayout.setFill(GridBagConstraints.HORIZONTAL);
         //gameLayout.setAnchor(GridBagConstraints.FIRST_LINE_START);
         gameLayout.setWeight(0, 0);
@@ -77,7 +79,7 @@ public class GUI {
 //        customGrid.setPadding(widthFifths, heightSixths * 4);
         gameLayout.addElement(actionPanel);
 
-        boardPanel.setBackground(Color.orange);
+        boardPanel.setBackground(new Color(36, 123, 22));
         gameLayout.setFill(GridBagConstraints.HORIZONTAL);
         gameLayout.setAnchor(GridBagConstraints.CENTER);
         gameLayout.setWeight(0, 0);
@@ -230,17 +232,22 @@ public class GUI {
 class ActionPanel extends JPanel {
     JPanel container;
     JPanel buttons;
+    JPanel dice;
 
-    ActionPanel(Dimension size, Dimension buttonSize) throws InvalidFileException{
+    ActionPanel(Dimension size, Dimension buttonSize, Dimension diceSize) throws InvalidFileException{
         //Top container with logo, player and dice
         container = new JPanel();
         container.setPreferredSize(size);
         container.setLayout(new FlowLayout(FlowLayout.CENTER));
 
+        dice = new JPanel();
+        dice.setPreferredSize(diceSize);
+        dice.setLayout(new BoxLayout(dice, BoxLayout.X_AXIS));
+
         //Bottom container with buttons
         buttons = new JPanel();
         buttons.setPreferredSize(buttonSize);
-        buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
+        buttons.setLayout(new GridLayout(5,1));
 
         try {
             container.add(container.add(new JLabel(new ImageIcon(ImageIO.read(
@@ -249,8 +256,10 @@ class ActionPanel extends JPanel {
         this.add(container);
     }
 
-    public void drawButtons(Player.Actions[] actions, Player player) throws InvalidFileException{
+    public void drawButtons(Player.Actions[] actions, Player player, int movement) throws InvalidFileException{
         container.removeAll();
+        dice.removeAll();
+        buttons.removeAll();
 
         //Drawing logo
         try {
@@ -265,16 +274,31 @@ class ActionPanel extends JPanel {
         textArea.append(player.getSuspect() + "  |  " + player.getName());
         container.add(textArea);
 
+        //Drawing dice
+        if(movement > 6){
+            dice.add(Die.getImage(6));
+            movement -=6;
+        }
+        dice.add(Die.getImage(movement));
+        container.add(dice);
+
         //Making buttons
         //Bottom container with buttons
+
+        //Creating space if buttons arent present
         buttons.removeAll();
+        for(int i=0; i<actions.length-4; i++){
+            buttons.add(Box.createVerticalStrut(1));
+        }
+
+        //Creating buttons
         for (Player.Actions action : actions) {
-            //System.out.println(action.toString());
             JButton button = new JButton(action.toString());
-            buttons.add(button);
+            button.setPreferredSize(new Dimension(100, 90));
             button.addActionListener(e -> {
                 player.takeAction(action, Game.board);
             });
+            buttons.add(button);
         }
         container.add(buttons);
         this.add(container);
@@ -340,32 +364,66 @@ class ConsolePanel extends JPanel {
  */
 class BoardPanel extends JPanel {
     int imgWidth;
+    int boardLength = Game.board.getLength() + 1;
+    int boardHeight = Game.board.getHeight() + 1;
 
     BoardPanel(Dimension size) throws IOException {
         this.setPreferredSize(size);
         //Find the appropriate image width
         imgWidth = ImageIO.read(new File("Assets/TilePieces/hallway.png")).getWidth();
+
+        //Setup the mouse listener
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Tile clickedTile = calcTilePos(new Position(e.getX(), e.getY()));
+                if (clickedTile != null) {
+                    System.out.println("Mouse clicked at x " + e.getX() + " y " + e.getY());
+                    if (clickedTile.isHighlighted()) Game.currentPlayer.moveTo(clickedTile);
+                }
+                else System.out.println("The click was out of bounds for coordinates x " + e.getX() + " y " + e.getY());
+            }
+        });
     }
+
+    /**
+     * Based on the mouse click calculate the title that was clicked on.
+     * @param position the position of the mouse click
+     * @return The selected tile
+     * Null if click is out of bounds.
+     */
+    private Tile calcTilePos(Position position) {
+        //calculate the start four corners of the board
+        Position topLeft = new Position(getXOffset(), getYOffset());
+        Position bottomRight = new Position(getXOffset() + (imgWidth * (boardLength - 2)), getYOffset() + (imgWidth * boardHeight));
+
+        //Check if the click lies within the board
+        if (position.x > topLeft.x && position.x < bottomRight.x && position.y > topLeft.y && position.y < bottomRight.y) {
+            Position relativePos = new Position(Math.floorDiv(position.x - getXOffset(), imgWidth), Math.floorDiv(position.y - getYOffset(), imgWidth));
+            if (Game.board.getTile(relativePos) != null) {
+                System.out.println("Calculated tile position x " + relativePos.x + " y " + relativePos.y);
+                return Game.board.getTile(relativePos); //Make sure this is not a null tile
+            }
+        }
+        return null;
+    }
+
+    int getXOffset() {return (this.getWidth() / 2 - imgWidth * boardLength / 2);}
+    int getYOffset() {return ((this.getHeight() / 2 - (imgWidth * boardHeight) / 2) / 2);}
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        int xOffset = (this.getWidth() / 2) - ((imgWidth * 26) / 2);
-        int yOffset = (this.getHeight() / 2) - ((imgWidth * 25) / 2);
+        int xOffset = getXOffset();
+        int yOffset = getYOffset();
 
         try {
             BufferedImage[][] toDraw = Game.board.draw();
 
             //System.out.println(toDraw.length);
 
-            for (int i = 0; i < toDraw.length; i++) {
-                for (int j = 0; j < toDraw[0].length; j++) {
-
-                }
-            }
-
-            for (int i = xOffset, x = 0; i < (imgWidth * 26) + xOffset && x < toDraw[0].length; i += toDraw[1][1].getHeight(), x++) {
-                for (int j = yOffset, y = 0; j < (imgWidth * 25) + yOffset && y < toDraw.length; j += toDraw[1][1].getHeight(), y++) {
+            for (int i = xOffset, x = 0; x < toDraw[0].length; i += toDraw[1][1].getHeight(), x++) {
+                for (int j = yOffset, y = 0; y < toDraw.length; j += toDraw[1][1].getHeight(), y++) {
                     g.drawImage(toDraw[y][x], i, j, this);
                 }
             }
