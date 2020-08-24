@@ -104,7 +104,7 @@ public class GUI {
         gameLayout.addElement(cardPanel);
         try { cardPanel.setupCards();
         }catch(InvalidFileException e){}
-        
+
         redraw();
     }
 
