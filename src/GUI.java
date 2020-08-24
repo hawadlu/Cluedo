@@ -377,7 +377,10 @@ class BoardPanel extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 Tile clickedTile = calcTilePos(new Position(e.getX(), e.getY()));
-                if (clickedTile != null) System.out.println("Mouse clicked at x " + e.getX() + " y " + e.getY());
+                if (clickedTile != null) {
+                    System.out.println("Mouse clicked at x " + e.getX() + " y " + e.getY());
+                    if (clickedTile.isHighlighted()) Game.currentPlayer.moveTo(clickedTile);
+                }
                 else System.out.println("The click was out of bounds for coordinates x " + e.getX() + " y " + e.getY());
             }
         });
@@ -417,7 +420,7 @@ class BoardPanel extends JPanel {
         try {
             BufferedImage[][] toDraw = Game.board.draw();
 
-            System.out.println(toDraw.length);
+            //System.out.println(toDraw.length);
 
             for (int i = xOffset, x = 0; x < toDraw[0].length; i += toDraw[1][1].getHeight(), x++) {
                 for (int j = yOffset, y = 0; y < toDraw.length; j += toDraw[1][1].getHeight(), y++) {
