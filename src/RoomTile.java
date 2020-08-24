@@ -1,6 +1,7 @@
 public class RoomTile extends Tile {
     private Room room=null;
     private Game.Rooms roomName=null;
+    public Weapon weapon = null;
 
     RoomTile(Position pos) {
         super(pos);
@@ -13,6 +14,15 @@ public class RoomTile extends Tile {
      */
     public void addPlayer(Player p){
         room.addPlayer(p);
+    }
+
+    /**
+     * Puts w weapon on tile
+     *
+     * @param w the weapon to be added to the tile
+     */
+    public void addWeapon(Weapon w){
+        room.addWeapon(w);
     }
 
     @Override
@@ -75,5 +85,32 @@ public class RoomTile extends Tile {
      */
     public void setPlayer(Player p){
         player = p;
+    }
+
+    /**
+     * Set the player on this tile
+     *
+     * @param p the player to give this tile
+     */
+    public void setWeapon(Weapon w){
+        weapon = w;
+    }
+
+    /**
+     * Get the player on this tile
+     *
+     * @return the player on this tile, null if no player
+     */
+    public Weapon getWeapon() {
+        return weapon;
+    }
+
+    /**
+     * Check if this tile has a Weapon
+     *
+     * @return boolean response
+     */
+    public boolean hasWeapon() {
+        return weapon != null;
     }
 }
