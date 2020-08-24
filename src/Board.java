@@ -240,7 +240,7 @@ public class Board {
                try {
                   if(next.equals("R")){
                      fileName+="room";
-                     if(board[posY][posX].isRoom() && ((RoomTile) board[posY][posX]).getEnum()!=null){
+                     if(posY>0 && posY <24 && posX>0 && posX<23 && board[posY][posX].isRoom() && ((RoomTile) board[posY][posX]).getEnum()!=null){
                         if((board[posY-1][posX].isRoom() && ((RoomTile) board[posY-1][posX]).getEnum()==null)) {
                            fileName += "N";
                         }  else if((board[posY+1][posX].isRoom() && ((RoomTile) board[posY+1][posX]).getEnum()==null))
