@@ -130,6 +130,12 @@ public class Board {
    }
 
    /**
+    * Get the length and height of the board
+    */
+   public int getLength() {return board.length;}
+   public int getHeight() {return board[0].length;}
+
+   /**
     * Helper method to set room tiles
     *
     * @param tiles list of tiles to add new tiles to
