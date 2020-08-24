@@ -137,6 +137,18 @@ public class Board {
       rooms.get(Game.Rooms.LOUNGE).setSeats(this,2,20);
       rooms.get(Game.Rooms.HALL).setSeats(this,10,20);
       rooms.get(Game.Rooms.STUDY).setSeats(this,19,22);
+
+      // Sets weapon room spots
+      rooms.get(Game.Rooms.KITCHEN).setWeapons(this,4,3);
+      rooms.get(Game.Rooms.BALLROOM).setWeapons(this,13,4);
+      rooms.get(Game.Rooms.CONSERVATORY).setWeapons(this,18,2);
+      rooms.get(Game.Rooms.DINING_ROOM).setWeapons(this,1,12);
+      rooms.get(Game.Rooms.BILLIARD_ROOM).setWeapons(this,19,9);
+      rooms.get(Game.Rooms.LIBRARY).setWeapons(this,22,15);
+      rooms.get(Game.Rooms.LOUNGE).setWeapons(this,0,20);
+      rooms.get(Game.Rooms.HALL).setWeapons(this,13,19);
+      rooms.get(Game.Rooms.STUDY).setWeapons(this,22,21);
+      
    }
 
    /**
@@ -266,28 +278,28 @@ public class Board {
                   }else if(next.equals("D")){
                      fileName+="room.png";
                   }else if(next.charAt(0)=='W'){
-                     fileName+="room";
-                     for(int i = 1; i<next.length();i++)
-                        fileName+=next.charAt(i)+".png";
-                     fileName+=".png";
+                     fileName+="room"+next.charAt(1)+".png";
                   }
 
                   if(next.equals("N")){
                      images[posY][posX]=null;
                   }else {
-                     if(board[posY][posX].hasPlayer()){
-                 
+                     if(board[posY][posX].hasPlayer() || (board[posY][posX].isRoom() && ((RoomTile) board[posY][posX]).hasWeapon())){
                         BufferedImage image = ImageIO.read(new File(fileName));
-                        //System.out.println("Assets/PlayerPieces/"+board[posY][posX].getPlayer()+".png");
-                        BufferedImage overlay = ImageIO.read(new File("Assets/PlayerPieces/"+board[posY][posX].getPlayer()+".png"));
-                        BufferedImage combined = new BufferedImage(image.getWidth(),image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+                        BufferedImage overlay = null;
+                        if(board[posY][posX].hasPlayer()){
+                           overlay = ImageIO.read(new File("Assets/PlayerPieces/"+board[posY][posX].getPlayer()+".png"));
 
+                        }else {
+                          overlay = ImageIO.read(new File("Assets/WeaponPieces/" + ((RoomTile) board[posY][posX]).getWeapon() + ".png"));
+                        }
+                        BufferedImage combined = new BufferedImage(image.getWidth(),image.getHeight(), BufferedImage.TYPE_INT_ARGB);
                         Graphics2D g2 = combined.createGraphics();
                         g2.drawImage(image, 0,0,null);
                         g2.drawImage(overlay, 0,0,null);
                         g2.dispose();
                         images[posY][posX] = combined;
-                     }else {
+                     }else{
                         images[posY][posX] = ImageIO.read(new File(fileName));
                      }
                   }
