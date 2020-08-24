@@ -94,7 +94,6 @@ public class Player {
     public void takeAction(Actions action, Board board) {
         switch (action) {
             case MOVE:
-                //todo can press move twice when player in room, causing portal gun effect :)
                 movement = Game.rollDice();
                 oldPos = new Position(newPos);
 
@@ -114,16 +113,20 @@ public class Player {
                 Game.print("\n");
 
                 // Choose a suspect and weapon to accuse/suggest
-                Game.Suspects player = Game.chooseFromArray(Game.Suspects.values(), "Please choose a Suspect:");
-                Game.Weapons weapon = Game.chooseFromArray(Game.Weapons.values(), "Please choose a Weapon:");
+                Game.Suspects player = Game.makeDropDown(Game.Suspects.values(),
+                        "Suggest Suspect", "Who do you think is a killer?");
+                Game.Weapons weapon = Game.makeDropDown(Game.Weapons.values(),
+                        "Suggest Weapon", "What was the weapon?");
                 Game.Rooms room;
                 String confirm;
 
                 switch (action) {
                     case ACCUSE:
-                        room = Game.chooseFromArray(Game.Rooms.values(), "Please choose a Room:");
+                        room = Game.makeDropDown(Game.Rooms.values(),
+                                "Suggest Room", "Which room was the murder?");
 
-                        confirm = Game.chooseFromArray(new String[]{"Yes", "No"}, "Are you sure you want to Accuse "+player+" with the "+weapon+" in the "+room+"?");
+                        confirm = Game.makeDropDown(new String[]{"Yes", "No"}, "Confirmation",
+                                "Are you sure you want to Accuse: \n"+player+" with the "+weapon+" in the "+room+"?");
                         if (confirm.equals("No")) break;
 
                         new Accuse(room, player, weapon, this).apply();
@@ -132,7 +135,8 @@ public class Player {
                     case SUGGEST:
                         room = ((RoomTile)board.getTile(newPos)).getEnum();
 
-                        confirm = Game.chooseFromArray(new String[]{"Yes", "No"}, "Are you sure you want to Suggest "+player+" with the "+weapon+" in the "+room+"?");
+                        confirm = Game.makeDropDown(new String[]{"Yes", "No"}, "Confirmation",
+                                "Are you sure you want to Suggest: \n"+player+" with the "+weapon+" in the "+room+"?");
                         if (confirm.equals("No")) break;
 
                         lastRoom = room;
@@ -160,7 +164,8 @@ public class Player {
         List<Actions> actions = new ArrayList<>();
         boolean inRoom = board.getTile(newPos).isRoom();
 
-        System.out.println(inRoom + ": "+!suggested);
+        //todo, inRoom returns false each time because newPos isnt updated before this point
+        //todo, moves highlighted -> this method run -> then move is carried out.
         if (inRoom && !suggested) {
             Game.Rooms currentRoom = ((RoomTile)board.getTile(newPos)).getEnum();
             if (currentRoom != lastRoom)
@@ -377,15 +382,5 @@ public class Player {
      */
     public boolean hasLost() {
         return hasLost;
-    }
-
-    /**
-     * Drawing a player at current position
-     *
-     * @param g graphics
-     * @param pos position of current player
-     */
-    protected void draw(Graphics g, Position pos){
-        g.drawImage(image, pos.x, pos.y, null);
     }
 }
