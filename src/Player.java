@@ -56,7 +56,7 @@ public class Player {
         takingTurn = true;
 
         while (takingTurn) {
-            //Drawing buttons for actions
+            //Drawing Buttons & dice in Action Panel
             Game.gui.actionPanel.drawButtons(getActions(board), this, movement);
 
             // Wait for an action to be taken

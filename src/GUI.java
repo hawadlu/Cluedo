@@ -34,7 +34,7 @@ public class GUI {
      * These objects handle the four quadrants of the gui
      */
     ActionPanel actionPanel = new ActionPanel(new Dimension(widthFifths, heightSixths * 4),
-            new Dimension(widthFifths, heightSixths * 2));
+            new Dimension(widthFifths, heightSixths * 2), new Dimension(widthFifths, heightSixths));
     ConsolePanel consolePanel = new ConsolePanel(new Dimension(widthFifths, heightSixths * 4));
     BoardPanel boardPanel = new BoardPanel(new Dimension(widthFifths * 3, heightSixths * 4));
     CardPanel cardPanel = new CardPanel();
@@ -71,7 +71,7 @@ public class GUI {
         gameLayout.setLayout(new GridBagLayout());
         gameLayout.setConstraints(new GridBagConstraints());
 
-        actionPanel.setBackground(Color.cyan);
+        //actionPanel.setBackground(Color.cyan);
         gameLayout.setFill(GridBagConstraints.HORIZONTAL);
         //gameLayout.setAnchor(GridBagConstraints.FIRST_LINE_START);
         gameLayout.setWeight(0, 0);
@@ -79,7 +79,7 @@ public class GUI {
 //        customGrid.setPadding(widthFifths, heightSixths * 4);
         gameLayout.addElement(actionPanel);
 
-        boardPanel.setBackground(Color.orange);
+        boardPanel.setBackground(new Color(36, 123, 22));
         gameLayout.setFill(GridBagConstraints.HORIZONTAL);
         gameLayout.setAnchor(GridBagConstraints.CENTER);
         gameLayout.setWeight(0, 0);
@@ -234,19 +234,20 @@ class ActionPanel extends JPanel {
     JPanel buttons;
     JPanel dice;
 
-    ActionPanel(Dimension size, Dimension buttonSize) throws InvalidFileException{
+    ActionPanel(Dimension size, Dimension buttonSize, Dimension diceSize) throws InvalidFileException{
         //Top container with logo, player and dice
         container = new JPanel();
         container.setPreferredSize(size);
         container.setLayout(new FlowLayout(FlowLayout.CENTER));
 
         dice = new JPanel();
+        dice.setPreferredSize(diceSize);
         dice.setLayout(new BoxLayout(dice, BoxLayout.X_AXIS));
 
         //Bottom container with buttons
         buttons = new JPanel();
-        //buttons.setPreferredSize(buttonSize);
-        buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
+        buttons.setPreferredSize(buttonSize);
+        buttons.setLayout(new GridLayout(5,1));
 
         try {
             container.add(container.add(new JLabel(new ImageIcon(ImageIO.read(
@@ -283,10 +284,17 @@ class ActionPanel extends JPanel {
 
         //Making buttons
         //Bottom container with buttons
+
+        //Creating space if buttons arent present
         buttons.removeAll();
+        for(int i=0; i<actions.length-4; i++){
+            buttons.add(Box.createVerticalStrut(1));
+        }
+
+        //Creating buttons
         for (Player.Actions action : actions) {
             JButton button = new JButton(action.toString());
-            button.setPreferredSize(new Dimension(150, 90));
+            button.setPreferredSize(new Dimension(100, 90));
             button.addActionListener(e -> {
                 player.takeAction(action, Game.board);
             });
