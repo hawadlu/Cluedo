@@ -124,7 +124,7 @@ public class GUI {
 
         //Menu Headings
         JMenuBar menuBar = new JMenuBar();
-        JMenu playMenu = new JMenu("Game Options");
+        JMenu restart = new JMenu("Restart");
         JMenuItem debug = new JMenu("Debug");
         JMenuItem quit = new JMenuItem("Quit");
 
@@ -132,25 +132,22 @@ public class GUI {
         JMenuItem playGame = new JMenuItem("Play");
         JMenuItem restartGame = new JMenuItem("Restart");
         JMenuItem instructions = new JMenuItem(instructionTitle);
-        JMenuItem printActivePlayer = new JMenuItem("Print Active Player");
-        JMenuItem printActivePlayerCards = new JMenuItem("Print Active Player Cards");
-        JMenuItem printGameRooms = new JMenuItem("Print Game Rooms");
+        JMenuItem printCurrentPlayer = new JMenuItem("Print Current Player");
+        JMenuItem printCurrentPlayerCards = new JMenuItem("Print Current Player Cards");
+        JMenuItem printActivePlayers = new JMenuItem("Print Active Players");
+        JMenuItem printNPCPlayers = new JMenuItem("Print NPC Players");
         JMenuItem printFinal = new JMenuItem("Print Winning combo");
-        JMenuItem printAllPlayers = new JMenuItem("Print All Players");
-        JMenuItem printAllWeapons = new JMenuItem("Print All Weapons");
+
 
 
         //Add components
-        playMenu.add(playGame);
-        playMenu.add(restartGame);
-        debug.add(printActivePlayer);
-        debug.add(printActivePlayerCards);
-        debug.add(printGameRooms);
+        debug.add(printCurrentPlayer);
+        debug.add(printCurrentPlayerCards);
+        debug.add(printActivePlayers);
         debug.add(printFinal);
-        debug.add(printAllPlayers);
-        debug.add(printAllWeapons);
+        debug.add(printNPCPlayers);
 
-        menuBar.add(playMenu);
+        menuBar.add(restart);
         menuBar.add(instructions);
         menuBar.add(debug);
         menuBar.add(quit);
@@ -158,6 +155,29 @@ public class GUI {
 
         //Bind the menu items
         quit.addActionListener(actionEvent -> System.exit(0)); //exit the program
+        printCurrentPlayer.addActionListener(actionEvent -> System.out.println("Active player: " + Game.currentPlayer));
+        printCurrentPlayerCards.addActionListener(actionEvent -> {
+            System.out.println("Active player: " + Game.currentPlayer);
+            System.out.println("Cards: " + Game.currentPlayer.getHand());
+        });
+        printActivePlayers.addActionListener(actionEvent -> System.out.println("Active players: " + Game.getActivePlayers()));
+        printNPCPlayers.addActionListener(actionEvent -> {
+            ArrayList<Player> npc = new ArrayList<>(Game.players);
+            npc.removeAll(Game.getActivePlayers());
+            System.out.println("NPC: " + npc);
+        });
+        printFinal.addActionListener(actionEvent -> System.out.println("Murderer (" + Game.murderer + ")\nRoom (" + Game.murderRoom + ")\nWeapon (" + Game.murderWeapon + ")"));
+        restartGame.addActionListener(actionEvent -> {
+            try {
+                Game.restart();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (InvalidFileException e) {
+                e.printStackTrace();
+            }
+        });
+
+        //show/hide instructions
         if (showInstructions) {
             instructions.addActionListener(actionEvent -> {
                 try {
@@ -175,6 +195,7 @@ public class GUI {
                 }
             });
         }
+
     }
 
     /**
@@ -293,7 +314,7 @@ class ActionPanel extends JPanel {
 
         //Creating buttons
         for (Player.Actions action : actions) {
-            JButton button = new JButton(action.toString());
+            JButton button = new JButton(action.toString().replace("_", " "));
             button.setPreferredSize(new Dimension(100, 90));
             button.addActionListener(e -> {
                 player.takeAction(action, Game.board);
