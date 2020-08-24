@@ -61,8 +61,8 @@ public class Player {
             takeAction(Actions.MOVE, board);
 
         while (takingTurn) {
-            //Drawing buttons for actions
-            Game.gui.actionPanel.drawButtons(getActions(board), this);
+            //Drawing Buttons & dice in Action Panel
+            Game.gui.actionPanel.drawButtons(getActions(board), this, movement);
 
             // Wait for an action to be taken
             synchronized (this) {
