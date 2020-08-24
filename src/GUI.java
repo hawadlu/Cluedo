@@ -243,6 +243,7 @@ class ActionPanel extends JPanel {
         buttons.setPreferredSize(buttonSize);
         buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
 
+        //Drawing Logo
         try {
             container.add(container.add(new JLabel(new ImageIcon(ImageIO.read(
                     new File("Assets/Other/CLUEDO_LOGO.png"))))));
@@ -265,6 +266,9 @@ class ActionPanel extends JPanel {
         textArea.setFont(textArea.getFont().deriveFont(18f));
         textArea.append(player.getSuspect() + "  |  " + player.getName());
         container.add(textArea);
+
+        //Drawing Dice
+
 
         //Making buttons
         //Bottom container with buttons
