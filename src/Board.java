@@ -214,7 +214,7 @@ public class Board {
             while(line.hasNext()){
                String next = line.next();
                String fileName="";
-               System.out.println(next);
+               //System.out.println(next);
                if(board[posY][posX].isHighlighted()){
                   fileName+="Assets/HighlightedPieces/";
                }else{
@@ -248,7 +248,7 @@ public class Board {
                      if(board[posY][posX].hasPlayer()){
                  
                         BufferedImage image = ImageIO.read(new File(fileName));
-                        System.out.println("Assets/PlayerPieces/"+board[posY][posX].getPlayer()+".png");
+                        //System.out.println("Assets/PlayerPieces/"+board[posY][posX].getPlayer()+".png");
                         BufferedImage overlay = ImageIO.read(new File("Assets/PlayerPieces/"+board[posY][posX].getPlayer()+".png"));
                         BufferedImage combined = new BufferedImage(image.getWidth(),image.getHeight(), BufferedImage.TYPE_INT_ARGB);
 

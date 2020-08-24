@@ -268,9 +268,19 @@ class ActionPanel extends JPanel {
         //Making buttons
         //Bottom container with buttons
         buttons.removeAll();
-        for(int i=0; i< actions.length; i++){
-            System.out.println(actions[i].toString());
-            buttons.add(new Button(actions[i].toString()));
+        for (Player.Actions action : actions) {
+            //System.out.println(action.toString());
+            JButton button = new JButton(action.toString());
+            buttons.add(button);
+            button.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    if (action == Player.Actions.MOVE) {
+                        Game.currentPlayer.makeMove(Game.board);
+                        Game.gui.boardPanel.repaint();
+                    }
+                }
+            });
         }
         container.add(buttons);
         this.add(container);
@@ -352,7 +362,7 @@ class BoardPanel extends JPanel {
         try {
             BufferedImage[][] toDraw = Game.board.draw();
 
-            System.out.println(toDraw.length);
+            //System.out.println(toDraw.length);
 
             for (int i = 0; i < toDraw.length; i++) {
                 for (int j = 0; j < toDraw[0].length; j++) {
