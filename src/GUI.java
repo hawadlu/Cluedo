@@ -272,14 +272,8 @@ class ActionPanel extends JPanel {
             //System.out.println(action.toString());
             JButton button = new JButton(action.toString());
             buttons.add(button);
-            button.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (action == Player.Actions.MOVE) {
-                        Game.currentPlayer.makeMove(Game.board);
-                        Game.gui.boardPanel.repaint();
-                    }
-                }
+            button.addActionListener(e -> {
+                player.takeAction(action, Game.board);
             });
         }
         container.add(buttons);
@@ -329,7 +323,7 @@ class ConsolePanel extends JPanel {
      */
     void addMessage(String message) {
         if (consoleMessages.size() >= 30) consoleMessages.remove(29);
-        consoleMessages.add(0, message);
+        consoleMessages.add(0, " "+message);
     }
 
     /**
