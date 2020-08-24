@@ -50,10 +50,15 @@ public class Player {
 
         // Simulates rolling dice for movement
         movement = Game.rollDice();
+        //movement = 10; //fixme moving scarlet from start with 10 movement has error and plum cannot move more than 6
 
         tilesThisTurn = new HashSet<>();
         suggested = false;
         takingTurn = true;
+
+        // Auto find path if not moved into a room by a suggestion
+        if (Arrays.stream(getActions(board)).noneMatch(act -> act==Actions.MOVE))
+            takeAction(Actions.MOVE, board);
 
         while (takingTurn) {
             //Drawing Buttons & dice in Action Panel
@@ -66,16 +71,27 @@ public class Player {
             }
         }
 
+        // Unhighlight tiles
+        if (movement > 0)
+            for (Tile tile : tilesThisTurn)
+                if (tile.isHighlighted()) tile.toggleHighlight();
+
         //Update lastRoom, will be null if outside of room, used in accuse
         if (!suggested) lastRoom = null;
         else lastRoom = board.getTile(newPos).isRoom() ?
                 ((RoomTile)board.getTile(newPos)).getEnum() : null;
     }
 
+    /**
+     * Have this player take the provided action
+     * @param action The action to be taken
+     * @param board The board being played on
+     */
     public void takeAction(Actions action, Board board) {
         switch (action) {
             case MOVE:
-                makeMove(board);
+                oldPos = new Position(newPos);
+                findPath(board, movement, oldPos);
                 Game.gui.boardPanel.repaint();
                 break;
 
@@ -134,16 +150,14 @@ public class Player {
         List<Actions> actions = new ArrayList<>();
         boolean inRoom = board.getTile(newPos).isRoom();
 
-        if (inRoom && movement > 0)
-            actions.add(Actions.LEAVE_ROOM);
-        else if (movement > 0)
-            actions.add(Actions.MOVE);
-
         if (inRoom && !suggested) {
             Game.Rooms currentRoom = ((RoomTile)board.getTile(newPos)).getEnum();
             if (currentRoom != lastRoom)
                 actions.add(Actions.SUGGEST);
         }
+
+        if (actions.contains(Actions.SUGGEST) && movement > 0)
+            actions.add(0, Actions.MOVE);
 
         actions.add(Actions.ACCUSE);
         actions.add(Actions.END_TURN);
@@ -183,9 +197,6 @@ public class Player {
         // Leave the room
         if(!doorString.equals("Stay in room")) {
             int door = options.indexOf(doorString);
-            System.out.println("TEST ~~~~~ "+door);
-            System.out.println("TEST ~~~~~ "+doors.toString());
-            System.out.println("TEST ~~~~~ "+doorString);
             board.movePlayer(newPos, doors.get(door));
 
             newPos = new Position(doors.get(door));
@@ -200,61 +211,19 @@ public class Player {
     }
 
     /**
-     * Make a move action
-     *
-     * @param board the board the game is running on
+     * Move this player to the provided tile
+     * @param newTile tile to move to
      */
-    public void makeMove(Board board){
-        // Take movement commands until run out of movement
-        while(movement > 0){
-            oldPos = new Position(newPos);
+    public void moveTo(Tile newTile) {
+        newPos = newTile.getPos();
+        Game.board.movePlayer(oldPos, newPos);
+        movement = 0;
 
-            /*
-            System.out.println(board);
-            System.out.println(suspect +" has "+movement+" moves left.");
+        // Unhighlight tiles
+        for (Tile tile : tilesThisTurn)
+            if (tile.isHighlighted()) tile.toggleHighlight();
 
-            // Request intended movement
-            System.out.println("'L' for Left, 'R' for Right, 'U' for Up and 'D' for Down" +
-                    "\n(You can make multiple moves at once e.g. LLDLLU)" +
-                        "\nEnter nothing to stop moving");
-            String response = new Scanner(System.in).nextLine().toLowerCase();
-
-            // Player chooses to stop moving
-            if (response.trim().length() == 0) return;
-             */
-
-            // Highlight available path
-            findPath(board, movement, oldPos);
-            break;
-            //System.out.println(tilesThisTurn);
-
-            // Process the requested move
-            /*
-            String[] actions = response.split("");
-            try {
-                // Check to see if the player is trying to move more than their remaining movement
-                if (actions.length > movement) throw new InvalidMoveException("Move too long");
-
-                // Try to apply the move
-                new Move(board, this, actions).apply();
-
-                // Move worked, reduce movement
-                movement -= actions.length;
-
-                // If entered room, set movement to 0
-                if(board.getTile(newPos).isRoom())
-                    movement = 0;
-
-                // Execute the movement on the board
-                board.movePlayer(oldPos, newPos);
-                oldPos = new Position(newPos);
-
-            } catch(InvalidMoveException e) {
-                System.out.println("Try again (Press Enter to Continue)");
-                Game.input.nextLine();
-            }
-            */
-        }
+        Game.gui.boardPanel.repaint();
     }
 
     /**
@@ -266,6 +235,17 @@ public class Player {
      * @param pos curr pos of tile
      */
     public void findPath(Board board, int movement, Position pos){
+        if (tilesThisTurn.contains(board.getTile(pos))) return;
+
+        if (board.getTile(pos).isRoom()) {
+            for (RoomTile tile : ((RoomTile) board.getTile(pos)).getRoom().getTiles()) {
+                tilesThisTurn.add(tile);
+                tile.toggleHighlight();
+            }
+            return;
+        }
+
+
         //Add tile to available tiles
         tilesThisTurn.add(board.getTile(pos));
         board.getTile(pos).toggleHighlight();
