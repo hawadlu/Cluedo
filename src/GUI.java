@@ -256,7 +256,7 @@ class ActionPanel extends JPanel {
         this.add(container);
     }
 
-    public void drawButtons(Player.Actions[] actions, Player player, int movement) throws InvalidFileException{
+    public void drawButtons(Player.Actions[] actions, Player player, Die[] die) throws InvalidFileException{
         container.removeAll();
         dice.removeAll();
         buttons.removeAll();
@@ -275,11 +275,8 @@ class ActionPanel extends JPanel {
         container.add(textArea);
 
         //Drawing dice
-        if(movement > 6){
-            dice.add(Die.getImage(6));
-            movement -=6;
-        }
-        dice.add(Die.getImage(movement));
+        dice.add(die[0].getImage());
+        dice.add(die[1].getImage());
         container.add(dice);
 
         //Making buttons

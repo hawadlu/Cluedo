@@ -49,8 +49,10 @@ public class Player {
         Game.gui.cardPanel.drawCards(hand);
 
         // Simulates rolling dice for movement
-        movement = Game.rollDice();
-        //movement = 10; //fixme moving scarlet from start with 10 movement has error and plum cannot move more than 6
+        Die[] dice = Game.getDice();
+        dice[0].setBlank();
+        dice[1].setBlank();
+        movement = 0;
 
         tilesThisTurn = new HashSet<>();
         suggested = false;
@@ -62,7 +64,7 @@ public class Player {
 
         while (takingTurn) {
             //Drawing Buttons & dice in Action Panel
-            Game.gui.actionPanel.drawButtons(getActions(board), this, movement);
+            Game.gui.actionPanel.drawButtons(getActions(board), this, dice);
 
             // Wait for an action to be taken
             synchronized (this) {
@@ -90,6 +92,7 @@ public class Player {
     public void takeAction(Actions action, Board board) {
         switch (action) {
             case MOVE:
+                movement = Game.rollDice();
                 oldPos = new Position(newPos);
                 findPath(board, movement, oldPos);
                 Game.gui.boardPanel.repaint();
@@ -235,8 +238,6 @@ public class Player {
      * @param pos curr pos of tile
      */
     public void findPath(Board board, int movement, Position pos){
-        if (tilesThisTurn.contains(board.getTile(pos))) return;
-
         if (board.getTile(pos).isRoom()) {
             for (RoomTile tile : ((RoomTile) board.getTile(pos)).getRoom().getTiles()) {
                 tilesThisTurn.add(tile);
