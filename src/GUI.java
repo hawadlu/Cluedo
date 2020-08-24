@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 /**
@@ -87,7 +88,7 @@ public class GUI {
 //        customGrid.setPadding(widthFifths * 3, heightSixths * 4);
         gameLayout.addElement(boardPanel);
 
-        consolePanel.setBackground(Color.magenta);
+        consolePanel.setBackground(Color.red);
         gameLayout.setFill(GridBagConstraints.CENTER);
         gameLayout.setAnchor(GridBagConstraints.CENTER);
         gameLayout.setWeight(0, 0);
@@ -95,7 +96,7 @@ public class GUI {
 //        customGrid.setPadding(widthFifths, heightSixths * 4);
         gameLayout.addElement(consolePanel);
 
-        cardPanel.setBackground(Color.red);
+        cardPanel.setBackground(Color.white);
         //cardPanel.initialiseDefaultText(100);
         gameLayout.setFill(GridBagConstraints.VERTICAL);
         gameLayout.setAnchor(GridBagConstraints.CENTER);
@@ -324,7 +325,8 @@ class ConsolePanel extends JPanel {
 
         textArea = new JTextArea(1, 5);
         textArea.setEditable(false);
-        textArea.setBackground(Color.YELLOW);
+        textArea.setBackground(Color.WHITE);
+        //textArea.set
 
         buildMessages();
         this.add(textArea, BorderLayout.CENTER);

@@ -23,7 +23,7 @@ public class Player {
     private final BufferedImage image;
     private boolean takingTurn = false;
 
-    public enum Actions {MOVE, SUGGEST, ACCUSE, LEAVE_ROOM, END_TURN }
+    public enum Actions {MOVE, SUGGEST, ACCUSE, END_TURN }
 
     Player(Game.Suspects suspect, Position startPos) throws InvalidFileException {
         this.suspect = suspect;
@@ -50,7 +50,6 @@ public class Player {
 
         // Simulates rolling dice for movement
         movement = Game.rollDice();
-        //movement = 10; //fixme moving scarlet from start with 10 movement has error and plum cannot move more than 6
 
         tilesThisTurn = new HashSet<>();
         suggested = false;
@@ -90,7 +89,13 @@ public class Player {
     public void takeAction(Actions action, Board board) {
         switch (action) {
             case MOVE:
+                //todo can press move twice when player in room, causing portal gun effect :)
                 oldPos = new Position(newPos);
+                if (board.getTile(oldPos).isRoom()) {
+                    for (int i=0; i<((RoomTile) board.getTile(oldPos)).getRoom().getNumberOfDoors(); i++) {
+                        findPath(board, movement-1, ((RoomTile) board.getTile(oldPos)).getRoom().getDoor(i));
+                    }
+                }
                 findPath(board, movement, oldPos);
                 Game.gui.boardPanel.repaint();
                 break;
@@ -128,10 +133,6 @@ public class Player {
                 }
                 break;
 
-            case LEAVE_ROOM:
-                leaveRoom(board);
-                break;
-
             case END_TURN:
                 takingTurn = false;
                 break;
@@ -165,50 +166,6 @@ public class Player {
         return actions.toArray(new Actions[]{});
     }
 
-    /**
-     * Attempt to leave the room the player is in
-     *
-     * @param board the board that the game is playing on
-     */
-    public void leaveRoom(Board board) {
-        Room room = ((RoomTile)board.getTile(newPos)).getRoom();
-        int numDoors = room.getNumberOfDoors();
-        List<Position> doors = new ArrayList<>();
-
-        // Display doors on board
-        room.toggleDoorNumbers();
-        System.out.println(board);
-
-        // Create Questions
-        List<String> options = new ArrayList<>();
-
-        // Ask what door they want to leave from
-        for (int i = 0; i < numDoors; i++) {
-            Position doorPos = room.getDoor(i);
-            if (!board.getTile(doorPos).hasPlayer()) {
-                options.add("Door " + (i + 1));
-                doors.add(doorPos);
-            }
-        }
-        options.add("Stay in room");
-        String doorString = Game.chooseFromArray(options.toArray(new String[]{}),
-                "What door would you like to leave from?\n");
-
-        // Leave the room
-        if(!doorString.equals("Stay in room")) {
-            int door = options.indexOf(doorString);
-            board.movePlayer(newPos, doors.get(door));
-
-            newPos = new Position(doors.get(door));
-            oldPos = new Position(newPos);
-            movement -= 1;
-
-            tilesThisTurn.addAll(room.getTiles());
-
-            room.toggleDoorNumbers();
-            System.out.println(board);
-        }
-    }
 
     /**
      * Move this player to the provided tile
@@ -235,12 +192,10 @@ public class Player {
      * @param pos curr pos of tile
      */
     public void findPath(Board board, int movement, Position pos){
-        if (tilesThisTurn.contains(board.getTile(pos))) return;
-
         if (board.getTile(pos).isRoom()) {
             for (RoomTile tile : ((RoomTile) board.getTile(pos)).getRoom().getTiles()) {
                 tilesThisTurn.add(tile);
-                tile.toggleHighlight();
+                tile.setHighlighted();
             }
             return;
         }
@@ -248,7 +203,7 @@ public class Player {
 
         //Add tile to available tiles
         tilesThisTurn.add(board.getTile(pos));
-        board.getTile(pos).toggleHighlight();
+        board.getTile(pos).setHighlighted();
 
         if(movement > 0){
             //Checking North
@@ -274,7 +229,7 @@ public class Player {
      * @param movement the amount of movement left
      */
     public void highlightTile(Board board, Position current, Position next, int movement) {
-        if (board.isValidMove(current, next) && !board.getTile(next).isHighlighted()) {
+        if (board.isValidMove(current, next)) {
             findPath(board, movement - 1, next);
         }
     }
