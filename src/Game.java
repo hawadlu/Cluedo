@@ -23,7 +23,7 @@ public class Game {
     public static Player currentPlayer;
 
     private final static Die die1 = new Die(), die2 = new Die();
-    private ArrayList<Player> playingPlayers;
+    private static ArrayList<Player> playingPlayers;
 
     public enum Suspects {
         SCARLET,
@@ -286,12 +286,29 @@ public class Game {
     }
 
     /**
+     * Restart the game
+     * todo remove the duplicate code?
+     * todo fix this so that it works properly
+     */
+    public static void restart() throws IOException, InvalidFileException {
+        board = new Board();
+        gui = new GUI();
+        Game game = new Game();
+        game.setupGame();
+        game.playGame();
+    }
+
+    /**
      * Print a message to the GUI console
      * @param text the message to print
      */
     public static void print(String text) {
         gui.addToConsole(text);
         gui.consolePanel.redraw();
+    }
+
+    public static Collection<Player> getActivePlayers() {
+        return Collections.unmodifiableCollection(playingPlayers);
     }
 
     public static void main(String[] args) throws IOException, InvalidFileException {
