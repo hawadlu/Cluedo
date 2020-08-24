@@ -30,7 +30,7 @@ public class Accuse implements Action {
             System.out.println("Your accusation is incorrect. You have lost.");
         }
         Game.print(suspect+" of using the "+weapon+" in the "+room);
-        Game.print("\n"+player.getName()+" accused:");
+        Game.print(player.getName()+" accused:");
 
         System.out.println("Press 'enter' to continue.");
         Game.input.nextLine();
