@@ -240,22 +240,22 @@ public class Board {
                try {
                   if(next.equals("R")){
                      fileName+="room";
-                     if(posY>0 && posY <24 && posX>0 && posX<23 && board[posY][posX].isRoom() && ((RoomTile) board[posY][posX]).getEnum()!=null){
+                     if(posY>0 && posY <24 && board[posY][posX].isRoom() && ((RoomTile) board[posY][posX]).getEnum()!=null){
                         if((board[posY-1][posX].isRoom() && ((RoomTile) board[posY-1][posX]).getEnum()==null)) {
                            fileName += "N";
                         }  else if((board[posY+1][posX].isRoom() && ((RoomTile) board[posY+1][posX]).getEnum()==null))
                            fileName += "S";
-
-                        if((board[posY][posX-1].isRoom() && ((RoomTile) board[posY][posX-1]).getEnum()==null)) {
-                           fileName += "W";
-                        }else if((board[posY][posX+1].isRoom() && ((RoomTile) board[posY][posX+1]).getEnum()==null))
-                           fileName += "E";
                      }
                      if(posY==0 || board[posY-1][posX] instanceof HallwayTile) {
                         fileName += "N";
                      }  else if(posY==24 || board[posY+1][posX] instanceof HallwayTile)
                         fileName += "S";
-
+                     if(posX>0 && posX<23 && board[posY][posX].isRoom() && ((RoomTile) board[posY][posX]).getEnum()!=null){
+                        if((board[posY][posX-1].isRoom() && ((RoomTile) board[posY][posX-1]).getEnum()==null)) {
+                           fileName += "W";
+                        }else if((board[posY][posX+1].isRoom() && ((RoomTile) board[posY][posX+1]).getEnum()==null))
+                           fileName += "E";
+                     }
                      if(posX==0 || board[posY][posX-1] instanceof HallwayTile) {
                         fileName += "W";
                      }else if(posX==23 || board[posY][posX+1] instanceof HallwayTile)
