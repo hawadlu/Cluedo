@@ -270,13 +270,19 @@ public class Game {
     }
 
     /**
-     * Roll the dice, get the result and redraw the dice
+     * Roll the dice, get the result
      * @return the total number rolled on the dice
      */
     public static int rollDice() {
-        int total = die1.roll() + die2.roll();
-        gui.redraw();
-        return total;
+        return die1.roll() + die2.roll();
+    }
+
+    /**
+     * Get the dice
+     * @return an array of the 2 die
+     */
+    public static Die[] getDice() {
+        return new Die[]{die1, die2};
     }
 
     /**

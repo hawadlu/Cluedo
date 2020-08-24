@@ -21,15 +21,21 @@ public class Die {
     }
 
     /**
+     * Set this die to be blank
+     */
+    public void setBlank() {
+        number = 0;
+    }
+
+    /**
      * Draw the die
      *
-     * @param num on dice displayed
      * @return a new JLabel for drawing the image
      */
-    public static JLabel getImage(int num) throws InvalidFileException {
+    public JLabel getImage() throws InvalidFileException {
         try {
             return new JLabel(new ImageIcon(ImageIO.read(
-                    new File("Assets/DieFaces/DieFace" + num + ".png"))));
-        } catch (IOException e) { throw new InvalidFileException("DieFace" + num + ".png"); }
+                    new File("Assets/DieFaces/DieFace" + number + ".png"))));
+        } catch (IOException e) { throw new InvalidFileException("DieFace" + number + ".png"); }
     }
 }
