@@ -12,6 +12,7 @@ public class Weapon {
     private Game.Rooms currentRoom;
     private final Game.Weapons name;
     private final BufferedImage image;
+    private Position newPos;
 
     Weapon(Game.Weapons name, Game.Rooms room) throws InvalidFileException {
         this.name = name;
@@ -20,6 +21,16 @@ public class Weapon {
         try {
             image = ImageIO.read(new File("Assets/" + name.toString() + ".png"));
         }catch(Exception e){ throw new InvalidFileException(name.toString() + ".png"); }
+    }
+
+
+    /**
+     * Set the newest position of this weapon
+     *
+     * @param newPos the new position to be set as this weapons newest position
+     */
+    public void setNewPos(Position newPos) {
+        this.newPos = newPos;
     }
 
     /**

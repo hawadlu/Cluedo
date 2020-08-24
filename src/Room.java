@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class Room {
     private final ArrayList<RoomTile> roomTiles;
     private final ArrayList<RoomTile> playerSeats = new ArrayList<>();
+    private final ArrayList<RoomTile> weaponSpots = new ArrayList<>();
     private final ArrayList<DoorTile> doors = new ArrayList<>();
     private boolean highlighted = false;
 
@@ -26,6 +27,22 @@ public class Room {
         for(int i=0; i<2; i++){
             for(int j=0; j<3; j++){
                 playerSeats.add((RoomTile) b.getTile(new Position(x+j, y+i)));
+            }
+        }
+    }
+
+    /**
+     * Allocates room tile spots for weapons in 2x3 area
+     *
+     * @param b board game is being played on
+     * @param x leftmost position of 3x2 area
+     * @param y topmost position of 3x2 area
+     */
+    public void setWeapons(Board b, int x, int y){
+
+        for(int i=0; i<3; i++){
+            for(int j=0; j<2; j++){
+                weaponSpots.add((RoomTile) b.getTile(new Position(x+j, y+i)));
             }
         }
     }
@@ -82,6 +99,23 @@ public class Room {
             }
         }
     }
+
+    /**
+     * Add a weapon into this room
+     *
+     * @param w the weapon to be added to this room
+     */
+    public void addWeapon(Weapon w){
+        for(RoomTile t: weaponSpots){
+            if(t.getPlayer()==null){
+                t.setWeapon(w);
+                w.setNewPos(t.getPos());
+                break;
+            }
+        }
+    }
+
+
 
     /**
      * Get the tiles of this room
