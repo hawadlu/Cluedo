@@ -276,7 +276,9 @@ class ActionPanel extends JPanel {
         container.add(textArea);
 
         //Drawing dice
+        dice.add(Box.createHorizontalStrut(20));
         dice.add(die[0].getImage());
+        dice.add(Box.createHorizontalStrut(40));
         dice.add(die[1].getImage());
         container.add(dice);
 
