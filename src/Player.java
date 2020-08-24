@@ -109,6 +109,7 @@ public class Player {
                 break;
 
             case SUGGEST:
+                System.out.println("The player would like to make a suggestion, but this behaviour has not yet been coded.");
             case ACCUSE:
                 Game.print("\n");
 
@@ -194,6 +195,13 @@ public class Player {
         // Unhighlight tiles
         for (Tile tile : tilesThisTurn)
             if (tile.isHighlighted()) tile.toggleHighlight();
+
+        //Redraw the action panel
+        try {
+            Game.gui.actionPanel.drawButtons(getActions(Game.board), this, Game.getDice());
+        } catch (InvalidFileException e) {
+            e.printStackTrace();
+        }
 
         Game.gui.boardPanel.repaint();
     }
