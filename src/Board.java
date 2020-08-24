@@ -191,7 +191,6 @@ public class Board {
     * @return the tile at the position
     */
    public Tile getTile(Position pos){
-      System.out.println("Access tile at x " + pos.x + " y " + pos.y + " board.len " + board.length + " board[0].len " + board[0].length);
       return board[pos.y][pos.x];
    }
 

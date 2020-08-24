@@ -349,8 +349,8 @@ class BoardPanel extends JPanel {
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Position tilePos = calcTilePos(new Position(e.getX(), e.getY()));
-                if (tilePos != null) System.out.println("Mouse clicked at x " + e.getX() + " y " + e.getY() + " calculated tile x, y is x " + tilePos.x + " y " + tilePos.y);
+                Tile clickedTile = calcTilePos(new Position(e.getX(), e.getY()));
+                if (clickedTile != null) System.out.println("Mouse clicked at x " + e.getX() + " y " + e.getY());
                 else System.out.println("The click was out of bounds for coordinates x " + e.getX() + " y " + e.getY());
             }
         });
@@ -359,10 +359,10 @@ class BoardPanel extends JPanel {
     /**
      * Based on the mouse click calculate the title that was clicked on.
      * @param position the position of the mouse click
-     * @return position the x, y pos of the the tile relative to the top left tile.
+     * @return The selected tile
      * Null if click is out of bounds.
      */
-    private Position calcTilePos(Position position) {
+    private Tile calcTilePos(Position position) {
         //calculate the start four corners of the board
         Position topLeft = new Position(getXOffset(), getYOffset());
         Position bottomRight = new Position(getXOffset() + (imgWidth * (boardLength - 2)), getYOffset() + (imgWidth * boardHeight));
@@ -370,7 +370,10 @@ class BoardPanel extends JPanel {
         //Check if the click lies within the board
         if (position.x > topLeft.x && position.x < bottomRight.x && position.y > topLeft.y && position.y < bottomRight.y) {
             Position relativePos = new Position(Math.floorDiv(position.x - getXOffset(), imgWidth), Math.floorDiv(position.y - getYOffset(), imgWidth));
-            if (Game.board.getTile(relativePos) != null) return relativePos; //Make sure this is not a null tile
+            if (Game.board.getTile(relativePos) != null) {
+                System.out.println("Calculated tile position x " + relativePos.x + " y " + relativePos.y);
+                return Game.board.getTile(relativePos); //Make sure this is not a null tile
+            }
         }
         return null;
     }
