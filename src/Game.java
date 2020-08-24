@@ -20,7 +20,6 @@ public class Game {
     public static Map<Suspects, Player> playerMap;
     public static Board board;
     public static GUI gui;
-    public static Player currentPlayer = null;
 
     private final static Die die1 = new Die(), die2 = new Die();
     private ArrayList<Player> playingPlayers;
@@ -205,19 +204,19 @@ public class Game {
      * Play the game
      */
     public void playGame() {
-        int playerIndex = 0;
+        int currentPlayer = 0;
         while (!gameOver) {
-            currentPlayer = playingPlayers.get(playerIndex);
-            try { currentPlayer.takeTurn(board);
+            Player player = playingPlayers.get(currentPlayer);
+            try { player.takeTurn(board);
             } catch (InvalidFileException e) { e.printStackTrace(); }
 
-            if (currentPlayer.hasLost()) playingPlayers.remove(playerIndex);
-            else playerIndex++;
+            if (player.hasLost()) playingPlayers.remove(currentPlayer);
+            else currentPlayer++;
 
             if(playingPlayers.size() == 0) {
                 System.out.println("All players have lost, game is over.");
                 gameOver = true;
-            } else playerIndex = playerIndex % playingPlayers.size();
+            } else currentPlayer = currentPlayer % playingPlayers.size();
         }
     }
 
@@ -299,13 +298,6 @@ public class Game {
 
 
     // OLD METHODS TO BE DELETED
-
-    /**
-     * 'Clear' the output of the console by printing a bunch of newline characters
-     */
-    public static void clearOutput() {
-        System.out.print(String.join("", Collections.nCopies(30, "\n")));
-    }
 
     /**
      * Get the user to choose an option from an array of options of a given type
