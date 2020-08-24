@@ -266,7 +266,10 @@ public class Board {
                   }else if(next.equals("D")){
                      fileName+="room.png";
                   }else if(next.charAt(0)=='W'){
-                     fileName+="room"+next.charAt(1)+".png";
+                     fileName+="room";
+                     for(int i = 1; i<next.length();i++)
+                        fileName+=next.charAt(i)+".png";
+                     fileName+=".png";
                   }
 
                   if(next.equals("N")){
