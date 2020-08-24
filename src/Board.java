@@ -230,14 +230,15 @@ public class Board {
                try {
                   if(next.equals("R")){
                      fileName+="room";
-                     if(posY==0 || board[posY-1][posX] instanceof HallwayTile) {
+
+                     if(posY==0 || board[posY-1][posX] instanceof HallwayTile || (board[posY-1][posX] instanceof RoomTile && ((RoomTile) board[posY-1][posX]).getEnum()==null)) {
                         fileName += "N";
-                     }  else if(posY==24 || board[posY+1][posX] instanceof HallwayTile)
+                     }  else if(posY==24 || board[posY+1][posX] instanceof HallwayTile || (board[posY+1][posX] instanceof RoomTile && ((RoomTile) board[posY+1][posX]).getEnum()==null))
                         fileName += "S";
 
-                     if(posX==0 || board[posY][posX-1] instanceof HallwayTile) {
+                     if(posX==0 || board[posY][posX-1] instanceof HallwayTile|| (board[posY][posX-1] instanceof RoomTile && ((RoomTile) board[posY][posX-1]).getEnum()==null)) {
                         fileName += "W";
-                     }else if(posX==23 || board[posY][posX+1] instanceof HallwayTile)
+                     }else if(posX==23 || board[posY][posX+1] instanceof HallwayTile || (board[posY][posX+1] instanceof RoomTile && ((RoomTile) board[posY][posX+1]).getEnum()==null))
                         fileName += "E";
                      fileName += ".png";
                   }else if(next.equals("T")){
@@ -254,7 +255,7 @@ public class Board {
                      if(board[posY][posX].hasPlayer()){
                  
                         BufferedImage image = ImageIO.read(new File(fileName));
-                        System.out.println("Assets/PlayerPieces/"+board[posY][posX].getPlayer()+".png");
+                        //System.out.println("Assets/PlayerPieces/"+board[posY][posX].getPlayer()+".png");
                         BufferedImage overlay = ImageIO.read(new File("Assets/PlayerPieces/"+board[posY][posX].getPlayer()+".png"));
                         BufferedImage combined = new BufferedImage(image.getWidth(),image.getHeight(), BufferedImage.TYPE_INT_ARGB);
 

@@ -59,7 +59,7 @@ public class Player {
         while (takingTurn) {
             System.out.println(this.getName() + "'s Turn - "+movement+" moves left");
 
-            //Drawing buttons for actions
+            //Drawing buttons and die for actions
             Game.gui.actionPanel.drawButtons(getActions(board), this);
 
             Actions action = Game.chooseFromArray(getActions(board), "What would you like to do?");
@@ -204,6 +204,7 @@ public class Player {
         while(movement > 0){
             oldPos = new Position(newPos);
 
+            /*
             System.out.println(board);
             System.out.println(suspect +" has "+movement+" moves left.");
 
@@ -215,12 +216,15 @@ public class Player {
 
             // Player chooses to stop moving
             if (response.trim().length() == 0) return;
+             */
 
             // Highlight available path
-            //findPath(board, movement, oldPos);
+            findPath(board, movement, oldPos);
+            break;
             //System.out.println(tilesThisTurn);
 
             // Process the requested move
+            /*
             String[] actions = response.split("");
             try {
                 // Check to see if the player is trying to move more than their remaining movement
@@ -244,6 +248,7 @@ public class Player {
                 System.out.println("Try again (Press Enter to Continue)");
                 Game.input.nextLine();
             }
+            */
         }
     }
 

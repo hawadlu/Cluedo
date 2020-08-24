@@ -20,6 +20,7 @@ public class Game {
     public static Map<Suspects, Player> playerMap;
     public static Board board;
     public static GUI gui;
+    public static Player currentPlayer = null;
 
     private final static Die die1 = new Die(), die2 = new Die();
     private ArrayList<Player> playingPlayers;
@@ -204,19 +205,19 @@ public class Game {
      * Play the game
      */
     public void playGame() {
-        int currentPlayer = 0;
+        int playerIndex = 0;
         while (!gameOver) {
-            Player player = playingPlayers.get(currentPlayer);
-            try { player.takeTurn(board);
+            currentPlayer = playingPlayers.get(playerIndex);
+            try { currentPlayer.takeTurn(board);
             } catch (InvalidFileException e) { e.printStackTrace(); }
 
-            if (player.hasLost()) playingPlayers.remove(currentPlayer);
-            else currentPlayer++;
+            if (currentPlayer.hasLost()) playingPlayers.remove(playerIndex);
+            else playerIndex++;
 
             if(playingPlayers.size() == 0) {
                 System.out.println("All players have lost, game is over.");
                 gameOver = true;
-            } else currentPlayer = currentPlayer % playingPlayers.size();
+            } else playerIndex = playerIndex % playingPlayers.size();
         }
     }
 
