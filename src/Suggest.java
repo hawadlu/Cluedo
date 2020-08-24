@@ -24,6 +24,8 @@ public class Suggest implements Action {
         Game.board.getTile(pos).removePlayer();
         Board.rooms.get(room.getEnum()).addPlayer(suspectPlayer);
 
+        Game.clearOutput();
+
         List<String> cannotProveWrong = new ArrayList<>();
 
         // Go through each players hand after this player looking for a match
@@ -43,6 +45,7 @@ public class Suggest implements Action {
                 Card<?> toShow = Game.chooseFromArray(cardOptions.toArray(new Card<?>[]{}), "Choose a card to show to "+player.getName());
 
                 // Go back to the current players turn and display the chosen card
+                Game.clearOutput();
                 System.out.println(otherPlayer.getName() + " has chosen to show you "+toShow
                         +"\nPress Enter if you are "+player.getName()+" to continue");
                 Game.input.nextLine();
@@ -66,20 +69,22 @@ public class Suggest implements Action {
                 }
                 Game.print(otherPlayer.getName()+" proved "+player.getName()+" wrong!");
                 Game.print(suspect+" with the "+weapon+" in the "+room);
-                Game.print(player.getName()+" suggested:");
-                Game.print("\n");
+                Game.print("\n"+player.getName()+" suggested:");
 
                 // Stop searching for further matches
                 return;
             } else {
                 // Inform the player of who can't prove them wrong
                 cannotProveWrong.add(otherPlayer.getName()+"");
+                System.out.println(otherPlayer.getName() + " can't prove you wrong");
             }
         }
         // No matches were found
         Game.print("No one can prove "+player.getName()+" wrong!");
         Game.print(suspect+" with the "+weapon+" in the "+room);
-        Game.print(player.getName()+" suggested:");
-        Game.print("\n");
+        Game.print("\n"+player.getName()+" suggested:");
+        System.out.println("No one can prove you wrong!");
+        System.out.println("Press Enter to Continue");
+        Game.input.nextLine();
     }
 }
