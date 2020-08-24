@@ -21,6 +21,7 @@ public class Player {
     private boolean suggested = false;
     private int movement = 0;
     private final BufferedImage image;
+    private boolean takingTurn = false;
 
     public enum Actions {MOVE, SUGGEST, ACCUSE, LEAVE_ROOM, END_TURN }
 
@@ -44,8 +45,6 @@ public class Player {
      * @param board the board that the game is running on
      */
     public void takeTurn(Board board) throws InvalidFileException {
-        System.out.println(board);
-
         //Draws cards in hand
         Game.gui.cardPanel.drawCards(hand);
 
@@ -54,62 +53,16 @@ public class Player {
 
         tilesThisTurn = new HashSet<>();
         suggested = false;
-        boolean takingTurn = true;
+        takingTurn = true;
 
         while (takingTurn) {
-            System.out.println(this.getName() + "'s Turn - "+movement+" moves left");
-
-            //Drawing buttons and die for actions
+            //Drawing buttons for actions
             Game.gui.actionPanel.drawButtons(getActions(board), this);
 
-            Actions action = Game.chooseFromArray(getActions(board), "What would you like to do?");
-
-            switch (action) {
-                case MOVE:
-                    System.out.println(board);
-                    makeMove(board);
-                    System.out.println(board);
-                    break;
-
-                case SUGGEST:
-                case ACCUSE:
-                    // Choose a suspect and weapon to accuse/suggest
-                    Game.Suspects player = Game.chooseFromArray(Game.Suspects.values(), "Please choose a Suspect:");
-                    Game.Weapons weapon = Game.chooseFromArray(Game.Weapons.values(), "Please choose a Weapon:");
-                    Game.Rooms room;
-                    String confirm;
-
-                    switch (action) {
-                        case ACCUSE:
-                            room = Game.chooseFromArray(Game.Rooms.values(), "Please choose a Room:");
-
-                            confirm = Game.chooseFromArray(new String[]{"Yes", "No"}, "Are you sure you want to Accuse "+player+" with the "+weapon+" in the "+room+"?");
-                            if (confirm.equals("No")) break;
-
-                            new Accuse(room, player, weapon, this).apply();
-                            takingTurn = false;
-                            break;
-                        case SUGGEST:
-                            room = ((RoomTile)board.getTile(newPos)).getEnum();
-
-                            confirm = Game.chooseFromArray(new String[]{"Yes", "No"}, "Are you sure you want to Suggest "+player+" with the "+weapon+" in the "+room+"?");
-                            if (confirm.equals("No")) break;
-
-                            lastRoom = room;
-                            suggested = true;
-                            movement = 0;
-                            new Suggest(room, player, weapon, this).apply();
-                    }
-                    System.out.println(board);
-                    break;
-
-                case LEAVE_ROOM:
-                    leaveRoom(board);
-                    break;
-
-                case END_TURN:
-                    takingTurn = false;
-                    break;
+            // Wait for an action to be taken
+            synchronized (this) {
+                try { this.wait(); }
+                catch (InterruptedException ignored) { }
             }
         }
 
@@ -117,6 +70,58 @@ public class Player {
         if (!suggested) lastRoom = null;
         else lastRoom = board.getTile(newPos).isRoom() ?
                 ((RoomTile)board.getTile(newPos)).getEnum() : null;
+    }
+
+    public void takeAction(Actions action, Board board) {
+        switch (action) {
+            case MOVE:
+                makeMove(board);
+                Game.gui.boardPanel.repaint();
+                break;
+
+            case SUGGEST:
+            case ACCUSE:
+                Game.print("\n");
+
+                // Choose a suspect and weapon to accuse/suggest
+                Game.Suspects player = Game.chooseFromArray(Game.Suspects.values(), "Please choose a Suspect:");
+                Game.Weapons weapon = Game.chooseFromArray(Game.Weapons.values(), "Please choose a Weapon:");
+                Game.Rooms room;
+                String confirm;
+
+                switch (action) {
+                    case ACCUSE:
+                        room = Game.chooseFromArray(Game.Rooms.values(), "Please choose a Room:");
+
+                        confirm = Game.chooseFromArray(new String[]{"Yes", "No"}, "Are you sure you want to Accuse "+player+" with the "+weapon+" in the "+room+"?");
+                        if (confirm.equals("No")) break;
+
+                        new Accuse(room, player, weapon, this).apply();
+                        takingTurn = false;
+                        break;
+                    case SUGGEST:
+                        room = ((RoomTile)board.getTile(newPos)).getEnum();
+
+                        confirm = Game.chooseFromArray(new String[]{"Yes", "No"}, "Are you sure you want to Suggest "+player+" with the "+weapon+" in the "+room+"?");
+                        if (confirm.equals("No")) break;
+
+                        lastRoom = room;
+                        suggested = true;
+                        movement = 0;
+                        new Suggest(room, player, weapon, this).apply();
+                }
+                break;
+
+            case LEAVE_ROOM:
+                leaveRoom(board);
+                break;
+
+            case END_TURN:
+                takingTurn = false;
+                break;
+        }
+        // Inform the taking turn loop that an action has been taken
+        synchronized (this) { this.notifyAll(); }
     }
 
     /**
