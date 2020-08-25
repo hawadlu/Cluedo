@@ -323,7 +323,7 @@ public class Board {
 
    /**
     * Read the room names
-    * @return string containing the room names
+    * @return 2d array containing the room names
     */
    private String[][] readRoomNames() throws IOException {
       String[][] names = new String[getHeight() + 1][getLength()];
@@ -344,6 +344,15 @@ public class Board {
       return names;
    }
 
+   /**
+    * Lays one image on top of another
+    * @param bottom image to go on the bottom
+    * @param top image to go on the top
+    * @param roomNames array containing the room names (aligned with the tile positions)
+    * @param xPos x pos of the tile to draw
+    * @param yPos y pos of the tile to draw
+    * @return the composite image
+    */
    private BufferedImage overlayImages(BufferedImage bottom, BufferedImage top, String[][] roomNames, int xPos, int yPos) {
       BufferedImage combined = new BufferedImage(bottom.getWidth(), bottom.getHeight(), BufferedImage.TYPE_INT_ARGB);
       Graphics2D g2 = combined.createGraphics();
