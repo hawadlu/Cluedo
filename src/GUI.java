@@ -19,7 +19,6 @@ import javax.swing.border.EmptyBorder;
  */
 public class GUI {
     JFrame window = new JFrame("Cluedo");
-    CustomGrid baseLayout;
 
     int width = 1400;
     int height = 900;
@@ -137,6 +136,7 @@ public class GUI {
         JMenuItem printActivePlayers = new JMenuItem("Print Active Players");
         JMenuItem printNPCPlayers = new JMenuItem("Print NPC Players");
         JMenuItem printFinal = new JMenuItem("Print Winning combo");
+        JMenuItem printTileInfo = new JMenuItem("Print Tile info");
 
 
 
@@ -146,6 +146,7 @@ public class GUI {
         debug.add(printActivePlayers);
         debug.add(printFinal);
         debug.add(printNPCPlayers);
+        debug.add(printTileInfo);
 
         menuBar.add(restart);
         menuBar.add(instructions);
@@ -167,6 +168,17 @@ public class GUI {
             System.out.println("NPC: " + npc);
         });
         printFinal.addActionListener(actionEvent -> System.out.println("Murderer (" + Game.murderer + ")\nRoom (" + Game.murderRoom + ")\nWeapon (" + Game.murderWeapon + ")"));
+        printTileInfo.addActionListener(actionEvent -> {
+            int xCoordinate = Integer.parseInt(JOptionPane.showInputDialog("Enter x coordinate"));
+            int yCoordinate = Integer.parseInt(JOptionPane.showInputDialog("Enter y coordinate"));
+            Tile tile = Game.board.getTile(new Position(xCoordinate, yCoordinate));
+            System.out.println("Highlighted: " + tile.highlighted);
+            System.out.println("Player: " + tile.player);
+            System.out.println("Position: " + tile.pos);
+            System.out.println("Is door: " + tile.isDoor());
+            System.out.println("Is hallway: " + tile.isHallway());
+            System.out.println("Is not null room: " + tile.isNotNullRoom());
+        });
         restartGame.addActionListener(actionEvent -> {
             try {
                 Game.restart();
