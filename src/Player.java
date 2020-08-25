@@ -166,8 +166,6 @@ public class Player {
         List<Actions> actions = new ArrayList<>();
         boolean inRoom = board.getTile(newPos).isRoom();
 
-        //todo, inRoom returns false each time because newPos isnt updated before this point
-        //todo, moves highlighted -> this method run -> then move is carried out.
         if (inRoom && !suggested) {
             Game.Rooms currentRoom = ((RoomTile)board.getTile(newPos)).getEnum();
             if (currentRoom != lastRoom)
@@ -256,7 +254,7 @@ public class Player {
      * @param movement the amount of movement left
      */
     public void highlightTile(Board board, Position current, Position next, int movement) {
-        if (board.isValidMove(current, next)) {
+        if (board.isValidMove(current, next) && board.getTile(next) != null) {
             findPath(board, movement - 1, next);
         }
     }
