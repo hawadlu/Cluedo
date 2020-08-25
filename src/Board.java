@@ -15,8 +15,15 @@ import java.util.concurrent.RecursiveAction;
 public class Board {
    public static HashMap<Game.Rooms, Room> rooms = new HashMap<>();
    private final Tile[][] board = new Tile[25][24];
+   private String[][] roomNames = new String[25][24];
 
    public Board(){
+      //Read the room names
+      try {
+         roomNames = readRoomNames();
+      } catch (IOException e) {
+         e.printStackTrace();
+      }
 
       for(int i =0; i< board.length; i++){
          for(int j =0; j< board[i].length; j++){
@@ -299,8 +306,6 @@ public class Board {
 
                   fileName.append(".png");
 
-                   String[][] roomNames = readRoomNames();
-
                   // Combine tile image with any player or weapons on top of them
                  if(currentTile.hasPlayer() || (currentTile.isRoom() && ((RoomTile) currentTile).hasWeapon())){
                     BufferedImage image = ImageIO.read(new File(fileName.toString()));
@@ -360,8 +365,6 @@ public class Board {
 
       //Overlay text
       if (!roomNames[yPos][xPos].equals("nn")) {
-         //Load the font
-
          g2.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
          g2.drawString(roomNames[yPos][xPos], 0, 20);
       }

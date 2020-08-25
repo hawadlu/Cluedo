@@ -218,8 +218,10 @@ public class Player {
 
 
         //Add tile to available tiles
-        tilesThisTurn.add(board.getTile(pos));
-        board.getTile(pos).setHighlighted();
+        if(pos != oldPos) {
+            tilesThisTurn.add(board.getTile(pos));
+            board.getTile(pos).setHighlighted();
+        }
 
         if(movement > 0){
             //Checking North
@@ -245,7 +247,7 @@ public class Player {
      * @param movement the amount of movement left
      */
     public void highlightTile(Board board, Position current, Position next, int movement) {
-        if (board.isValidMove(current, next)) {
+        if (board.isValidMove(current, next) && (next.y != 0 || next.x == 9 || next.x == 14)) {
             findPath(board, movement - 1, next);
         }
     }

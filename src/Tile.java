@@ -52,12 +52,18 @@ abstract class Tile {
     public void removePlayer() {
         player = null;
     }
+    /**
+    * @return boolean response
+    */
+    public boolean isRoom() {
+        return this instanceof RoomTile;
+    }
 
     /**
      * Is this tile a room
      * @return boolean response
-     */
-    public boolean isRoom() {
+    */
+    public boolean isNotNullRoom() {
         return this instanceof RoomTile && ((RoomTile) this).getEnum() != null;
     }
 
