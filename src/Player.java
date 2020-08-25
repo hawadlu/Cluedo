@@ -80,6 +80,8 @@ public class Player {
             for (Tile tile : tilesThisTurn)
                 if (tile.isHighlighted()) tile.toggleHighlight();
 
+        Game.gui.boardPanel.repaint();
+
         //Update lastRoom, will be null if outside of room, used in accuse
         if (!suggested) lastRoom = null;
         else lastRoom = board.getTile(newPos).isRoom() ?
@@ -109,7 +111,6 @@ public class Player {
                 break;
 
             case SUGGEST:
-                System.out.println("The player would like to make a suggestion, but this behaviour has not yet been coded.");
             case ACCUSE:
                 Game.print("\n");
 
