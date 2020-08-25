@@ -148,7 +148,7 @@ public class Board {
       rooms.get(Game.Rooms.LOUNGE).setWeapons(this,0,20);
       rooms.get(Game.Rooms.HALL).setWeapons(this,13,19);
       rooms.get(Game.Rooms.STUDY).setWeapons(this,22,21);
-      
+
    }
 
    /**
@@ -231,89 +231,91 @@ public class Board {
 
     }
 
+    /**
+     * Create a 2d array of buffered images that represent this board
+     * @return 2d array of buffered images that represents this board
+     * @throws InvalidFileException if any png files cannot be found
+     */
    public BufferedImage[][] draw() throws InvalidFileException {
       BufferedImage[][] images = new BufferedImage[25][24];
+      String boardFile = "Assets/CluedoBoard.txt";
+
       try {
-         Scanner sc = new Scanner(new File("Assets/CluedoBoard.txt"));
+         Scanner sc = new Scanner(new File(boardFile));
          int posY=0;
-         while(sc.hasNextLine()){
+         while (sc.hasNextLine()) {
             Scanner line = new Scanner(sc.nextLine());
             int posX=0;
-            while(line.hasNext()){
+            while (line.hasNext()) {
                String next = line.next();
-               String fileName="";
-               //System.out.println(next);
-               if(board[posY][posX].isHighlighted()){
-                  fileName+="Assets/HighlightedPieces/";
-               }else{
-                  fileName+="Assets/TilePieces/";
-               }
+
+               // Skip making an image for null tiles
+                if(next.equals("N")) {
+                    images[posY][posX] = null;
+                    posX++;
+                    continue;
+                }
+
+               StringBuilder fileName= new StringBuilder("Assets/");
+
+               Tile currentTile = board[posY][posX];
+               Tile aboveTile = posY > 0 ? board[posY-1][posX] : null;
+               Tile belowTile = posY < 24 ? board[posY+1][posX] : null;
+               Tile leftTile = posX > 0 ? board[posY][posX-1] : null;
+               Tile rightTile = posX < 23 ? board[posY][posX+1] : null;
+
+               // Switch between highlighted and unhighlighted tiles
+               if (currentTile.isHighlighted()){ fileName.append("HighlightedPieces/"); }
+               else { fileName.append("TilePieces/"); }
 
                try {
-                  if(next.equals("R")){
-                     fileName+="room";
-                     if(posY>0 && posY <24 && board[posY][posX].isRoom() && ((RoomTile) board[posY][posX]).getEnum()!=null){
-                        if((board[posY-1][posX].isRoom() && ((RoomTile) board[posY-1][posX]).getEnum()==null)) {
-                           fileName += "N";
-                        }  else if((board[posY+1][posX].isRoom() && ((RoomTile) board[posY+1][posX]).getEnum()==null))
-                           fileName += "S";
-                     }
-                     if(posY==0 || board[posY-1][posX] instanceof HallwayTile) {
-                        fileName += "N";
-                     }  else if(posY==24 || board[posY+1][posX] instanceof HallwayTile)
-                        fileName += "S";
-                     if(posX>0 && posX<23 && board[posY][posX].isRoom() && ((RoomTile) board[posY][posX]).getEnum()!=null){
-                        if((board[posY][posX-1].isRoom() && ((RoomTile) board[posY][posX-1]).getEnum()==null)) {
-                           fileName += "W";
-                        }else if((board[posY][posX+1].isRoom() && ((RoomTile) board[posY][posX+1]).getEnum()==null))
-                           fileName += "E";
-                     }
-                     if(posX==0 || board[posY][posX-1] instanceof HallwayTile) {
-                        fileName += "W";
-                     }else if(posX==23 || board[posY][posX+1] instanceof HallwayTile)
-                        fileName += "E";
-                     fileName += ".png";
-                  }else if(next.equals("T")){
-                     fileName+="hallway.png";
-                  }else if(next.equals("D")){
-                     fileName+="room.png";
-                  }else if(next.charAt(0)=='W'){
-                     fileName+="room";
-                     for(int i = 1; i<next.length();i++)
-                        fileName+=next.charAt(i);
-                     fileName+=".png";
-                  }
+                   // Make walls
+                   if (next.equals("T")) fileName.append("hallway");
+                   else {
+                       fileName.append("room");
 
-                  if(next.equals("N")){
-                     images[posY][posX]=null;
-                  }else {
-                     if(board[posY][posX].hasPlayer() || (board[posY][posX].isRoom() && ((RoomTile) board[posY][posX]).hasWeapon())){
-                        BufferedImage image = ImageIO.read(new File(fileName));
-                        BufferedImage overlay = null;
-                        if(board[posY][posX].hasPlayer()){
-                           overlay = ImageIO.read(new File("Assets/PlayerPieces/"+board[posY][posX].getPlayer()+".png"));
+                       if (next.equals("R")) {
+                           // Put walls on the top/bottom of appropriate room tiles
+                           if (posY == 0 || !aboveTile.isSameRoom(currentTile))
+                               fileName.append("N");
+                           else if (posY >= 24 || !belowTile.isSameRoom(currentTile))
+                               fileName.append("S");
 
-                        }else {
-                          overlay = ImageIO.read(new File("Assets/WeaponPieces/" + ((RoomTile) board[posY][posX]).getWeapon() + ".png"));
-                        }
-                        BufferedImage combined = new BufferedImage(image.getWidth(),image.getHeight(), BufferedImage.TYPE_INT_ARGB);
-                        Graphics2D g2 = combined.createGraphics();
-                        g2.drawImage(image, 0,0,null);
-                        g2.drawImage(overlay, 0,0,null);
-                        g2.dispose();
-                        images[posY][posX] = combined;
-                     }else{
-                        images[posY][posX] = ImageIO.read(new File(fileName));
-                     }
-                  }
+                           // Put walls on the left/right of appropriate room tiles
+                           if (posX == 0 || !leftTile.isSameRoom(currentTile))
+                               fileName.append("W");
+                           else if (posX >= 23 || !rightTile.isSameRoom(currentTile))
+                               fileName.append("E");
+
+                           // Make the manually set walls
+                       } else if(next.charAt(0) == 'W')
+                           fileName.append(next.charAt(1));
+                   }
+
+                  fileName.append(".png");
+
+                  // Combine tile image with any player or weapons on top of them
+                 if(currentTile.hasPlayer() || (currentTile.isRoom() && ((RoomTile) currentTile).hasWeapon())){
+                    BufferedImage overlay, image = ImageIO.read(new File(fileName.toString()));
+
+                    if(currentTile.hasPlayer())
+                        overlay = currentTile.getPlayer().getImage();
+                    else overlay = ((RoomTile) currentTile).getWeapon().getImage();
+
+                    BufferedImage combined = new BufferedImage(image.getWidth(),image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+                    Graphics2D g2 = combined.createGraphics();
+                    g2.drawImage(image, 0,0,null);
+                    g2.drawImage(overlay, 0,0,null);
+                    g2.dispose();
+                    images[posY][posX] = combined;
+                 } else images[posY][posX] = ImageIO.read(new File(fileName.toString()));
+
                } catch (IOException e) { throw new InvalidFileException("Invalid filename: " + fileName); }
                posX++;
             }
             posY++;
          }
-      }catch(FileNotFoundException e){
-         System.out.println("File error: " + e);
-      }
+      } catch (FileNotFoundException e) { throw new InvalidFileException("Invalid filename: " + boardFile); }
       return images;
    }
 

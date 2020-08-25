@@ -19,7 +19,7 @@ public class Weapon {
         lastRoom = null;
         currentRoom = room;
         try {
-            image = ImageIO.read(new File("Assets/" + name.toString() + ".png"));
+            image = ImageIO.read(new File("Assets/WeaponPieces/" + name.toString() + ".png"));
         }catch(Exception e){ throw new InvalidFileException(name.toString() + ".png"); }
     }
 
@@ -34,12 +34,10 @@ public class Weapon {
     }
 
     /**
-     * Drawing a weapon at current position
-     *
-     * @param g graphics
-     * @param pos position of current weapon
+     * Get the image of this weapon
+     * @return bufferedimage of this weapon
      */
-    protected void draw(Graphics g, Position pos){
-        g.drawImage(image, pos.x, pos.y, null);
+    public BufferedImage getImage() {
+        return image;
     }
 }
