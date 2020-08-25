@@ -364,7 +364,7 @@ public class Board {
       g2.drawImage(bottom, 0, 0, null);
 
       //Overlay text
-      if (!roomNames[yPos][xPos].equals("nn")) {
+      if (!roomNames[yPos][xPos].equals("n")) {
          g2.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
          g2.drawString(roomNames[yPos][xPos], 0, 20);
       }
