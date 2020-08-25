@@ -1,10 +1,11 @@
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
+import java.nio.Buffer;
 import java.util.*;
+import java.util.concurrent.RecursiveAction;
 
 /**
  * Construct a board of positions
@@ -298,21 +299,18 @@ public class Board {
 
                   fileName.append(".png");
 
+                   String[][] roomNames = readRoomNames();
+
                   // Combine tile image with any player or weapons on top of them
                  if(currentTile.hasPlayer() || (currentTile.isRoom() && ((RoomTile) currentTile).hasWeapon())){
-                    BufferedImage overlay, image = ImageIO.read(new File(fileName.toString()));
+                    BufferedImage image = ImageIO.read(new File(fileName.toString()));
 
                     if(currentTile.hasPlayer())
-                        overlay = currentTile.getPlayer().getImage();
-                    else overlay = ((RoomTile) currentTile).getWeapon().getImage();
-
-                    BufferedImage combined = new BufferedImage(image.getWidth(),image.getHeight(), BufferedImage.TYPE_INT_ARGB);
-                    Graphics2D g2 = combined.createGraphics();
-                    g2.drawImage(image, 0,0,null);
-                    g2.drawImage(overlay, 0,0,null);
-                    g2.dispose();
-                    images[posY][posX] = combined;
-                 } else images[posY][posX] = ImageIO.read(new File(fileName.toString()));
+                        images[posY][posX] = overlayImages(image, currentTile.getPlayer().getImage(), roomNames, posX, posY);
+                    else {
+                       images[posY][posX] = overlayImages(image, ((RoomTile) currentTile).getWeapon().getImage(), roomNames, posX, posY);
+                    }
+                 } else images[posY][posX] = overlayImages(ImageIO.read(new File(fileName.toString())), null, roomNames, posX, posY);
 
                } catch (IOException e) { throw new InvalidFileException("Invalid filename: " + fileName); }
                posX++;
@@ -321,6 +319,47 @@ public class Board {
          }
       } catch (FileNotFoundException e) { throw new InvalidFileException("Invalid filename: " + boardFile); }
       return images;
+   }
+
+   /**
+    * Read the room names
+    * @return string containing the room names
+    */
+   private String[][] readRoomNames() throws IOException {
+      String[][] names = new String[getHeight() + 1][getLength()];
+      BufferedReader reader = null;
+      try {
+         reader = new BufferedReader(new FileReader(new File("Assets/RoomNames.txt")));
+      } catch (FileNotFoundException e) {
+         e.printStackTrace();
+      }
+
+      String line;
+      int count = 0;
+      while((line = reader.readLine()) != null) {
+         names[count] = line.split(",");
+         count++;
+      }
+
+      return names;
+   }
+
+   private BufferedImage overlayImages(BufferedImage bottom, BufferedImage top, String[][] roomNames, int xPos, int yPos) {
+      BufferedImage combined = new BufferedImage(bottom.getWidth(), bottom.getHeight(), BufferedImage.TYPE_INT_ARGB);
+      Graphics2D g2 = combined.createGraphics();
+      g2.drawImage(bottom, 0, 0, null);
+
+      //Overlay text
+      if (!roomNames[yPos][xPos].equals("nn")) {
+         //Load the font
+
+         g2.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+         g2.drawString(roomNames[yPos][xPos], 0, 20);
+      }
+
+      if (top != null) g2.drawImage(top, 0, 0, null);
+      g2.dispose();
+      return combined;
    }
 
 
