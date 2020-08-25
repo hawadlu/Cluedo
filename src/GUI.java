@@ -264,6 +264,7 @@ public class GUI {
         boardPanel.repaint();
         cardPanel.repaint();
     }
+
 }
 
 class ActionPanel extends JPanel {
