@@ -58,11 +58,36 @@ abstract class Tile {
      * @return boolean response
      */
     public boolean isRoom() {
-        return this instanceof RoomTile;
+        return this instanceof RoomTile && ((RoomTile) this).getEnum() != null;
     }
 
     /**
-     * Is this tile a room
+     * Is this tile the same type of room as the provided tile
+     * @return boolean response
+     */
+    public boolean isSameRoom(Tile otherRoom) {
+        return this instanceof RoomTile && otherRoom instanceof RoomTile &&
+                ((RoomTile) this).getEnum() == ((RoomTile) otherRoom).getEnum();
+    }
+
+    /**
+     * Is this a null tile
+     * @return boolean response
+     */
+    public boolean isNull() {
+        return this instanceof RoomTile && ((RoomTile) this).getEnum() == null;
+    }
+
+    /**
+     * Is this tile a hallway
+     * @return boolean response
+     */
+    public boolean isHallway() {
+        return this instanceof HallwayTile;
+    }
+
+    /**
+     * Is this tile a door
      * @return boolean response
      */
     public boolean isDoor() {

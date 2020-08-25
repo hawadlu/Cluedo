@@ -1,5 +1,4 @@
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.*;
@@ -166,8 +165,6 @@ public class Player {
         List<Actions> actions = new ArrayList<>();
         boolean inRoom = board.getTile(newPos).isRoom();
 
-        //todo, inRoom returns false each time because newPos isnt updated before this point
-        //todo, moves highlighted -> this method run -> then move is carried out.
         if (inRoom && !suggested) {
             Game.Rooms currentRoom = ((RoomTile)board.getTile(newPos)).getEnum();
             if (currentRoom != lastRoom)
@@ -183,7 +180,6 @@ public class Player {
         return actions.toArray(new Actions[]{});
     }
 
-
     /**
      * Move this player to the provided tile
      * @param newTile tile to move to
@@ -196,13 +192,6 @@ public class Player {
         // Unhighlight tiles
         for (Tile tile : tilesThisTurn)
             if (tile.isHighlighted()) tile.toggleHighlight();
-
-        //Redraw the action panel
-        try {
-            Game.gui.actionPanel.drawButtons(getActions(Game.board), this, Game.getDice());
-        } catch (InvalidFileException e) {
-            e.printStackTrace();
-        }
 
         Game.gui.boardPanel.repaint();
 
@@ -357,6 +346,14 @@ public class Player {
      */
     public Position getNewPos() {
         return newPos;
+    }
+
+    /**
+     * Get the image of this player
+     * @return bufferedimage of this player
+     */
+    public BufferedImage getImage() {
+        return image;
     }
 
     /**
