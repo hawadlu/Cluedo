@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class Suggest implements Action {
         Position pos = suspectPlayer.getPos();
         Game.board.getTile(pos).removePlayer();
         Board.rooms.get(room.getEnum()).addPlayer(suspectPlayer);
+        Game.gui.boardPanel.repaint();
 
         List<String> cannotProveWrong = new ArrayList<>();
 
@@ -36,16 +38,16 @@ public class Suggest implements Action {
             // A match has been found in this hand
             if (!cardOptions.isEmpty()) {
                 // Allow the player to choose a card without current player seeing
-                System.out.println(otherPlayer.getName() + " can prove you wrong, let them choose a card to show you"
-                        +"\nPress Enter if you are "+otherPlayer.getName());
-                Game.input.nextLine();
+                JOptionPane.showMessageDialog(Game.gui.window, otherPlayer.getName() +
+                        " can prove you wrong, let them choose a card to show you"
+                        +"\nPress OK if you are "+otherPlayer.getName());
 
-                Card<?> toShow = Game.chooseFromArray(cardOptions.toArray(new Card<?>[]{}), "Choose a card to show to "+player.getName());
+                Card<?> toShow = Game.makeDropDown(cardOptions.toArray(new Card<?>[]{}), "Show Card",
+                        "Choose a card to show to "+player.getName());
 
                 // Go back to the current players turn and display the chosen card
-                System.out.println(otherPlayer.getName() + " has chosen to show you "+toShow
-                        +"\nPress Enter if you are "+player.getName()+" to continue");
-                Game.input.nextLine();
+                JOptionPane.showMessageDialog(Game.gui.window, otherPlayer.getName() +
+                        " has chosen to show you "+ toShow);
 
                 // Generate console output text
                 int size = cannotProveWrong.size();
@@ -77,6 +79,7 @@ public class Suggest implements Action {
             }
         }
         // No matches were found
+        JOptionPane.showMessageDialog(Game.gui.window, "No one could prove you wrong!");
         Game.print("No one can prove "+player.getName()+" wrong!");
         Game.print(suspect+" with the "+weapon+" in the "+room);
         Game.print(player.getName()+" suggested:");
