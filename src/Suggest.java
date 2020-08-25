@@ -44,15 +44,17 @@ public class Suggest implements Action {
             // A match has been found in this hand
             if (!cardOptions.isEmpty()) {
                 // Allow the player to choose a card without current player seeing
-                JOptionPane.showMessageDialog(Game.gui.window, otherPlayer.getName() +
+                JOptionPane.showMessageDialog(null, otherPlayer.getName() +
                         " can prove you wrong, let them choose a card to show you"
                         +"\nPress OK if you are "+otherPlayer.getName());
 
                 Card<?> toShow = Game.makeDropDown(cardOptions.toArray(new Card<?>[]{}), "Show Card",
                         "Choose a card to show to "+player.getName());
 
+
                 // Go back to the current players turn and display the chosen card
-                JOptionPane.showMessageDialog(Game.gui.window, otherPlayer.getName() +
+                JOptionPane.showMessageDialog(null
+                        , otherPlayer.getName() +
                         " has chosen to show you "+ toShow);
 
                 // Generate console output text
