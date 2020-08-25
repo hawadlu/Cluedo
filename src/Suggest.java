@@ -26,6 +26,12 @@ public class Suggest implements Action {
 
         List<String> cannotProveWrong = new ArrayList<>();
 
+        // Move the suggested weapon to the room
+        Weapon suspectWeapon = Game.weaponMap.get(weapon.getEnum());
+        Position wepPos = suspectWeapon.getPos();
+        ((RoomTile) Game.board.getTile(wepPos)).removeWeapon();
+        Board.rooms.get(room.getEnum()).addWeapon(suspectWeapon);
+
         // Go through each players hand after this player looking for a match
         int indexOfPlayer = Game.players.indexOf(player);
         for (int i = (indexOfPlayer+1) % Game.players.size(); i != indexOfPlayer; i = (i+1) % Game.players.size()) {

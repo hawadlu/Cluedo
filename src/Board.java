@@ -216,6 +216,10 @@ public class Board {
       return board[pos.y][pos.x];
    }
 
+   public Room getRoom(Game.Rooms room){
+      return rooms.get(room);
+   }
+
    /**
     * Moves player on board
     *

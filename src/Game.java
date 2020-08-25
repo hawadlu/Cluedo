@@ -18,6 +18,8 @@ public class Game {
     public static boolean gameOver;
     public static List<Player> players;
     public static Map<Suspects, Player> playerMap;
+    public static List<Weapon> weapons;
+    public static Map<Weapons, Weapon> weaponMap;
     public static Board board;
     public static GUI gui;
     public static Player currentPlayer;
@@ -93,6 +95,27 @@ public class Game {
     }
 
     /**
+     * Create the Weapoms, starting them in random rooms
+     */
+    public void createWeapons() {
+        weapons = new ArrayList<>();
+        weaponMap = new HashMap<>();
+
+        for (Weapons weapon : Weapons.values()) {
+
+            Rooms room = Rooms.values()[(int) (Math.random() * 8)];
+
+            try {
+                Weapon newWeapon = new Weapon(weapon, room);
+                weapons.add(newWeapon);
+                weaponMap.put(weapon, newWeapon);
+            } catch (InvalidFileException e) {
+                System.out.println("No image available for "+weapon);
+            }
+        }
+    }
+
+    /**
      * Create the players, setting them all as NPC's to start with
      */
     public void createPlayers() {
@@ -157,6 +180,12 @@ public class Game {
     public void setupGame() {
         gameOver = false;
         createPlayers();
+        createWeapons();
+
+        // Set Weapons to their starting positions
+        for (Weapon weapon : weapons)
+            board.getRoom(weapon.getRoom()).addWeapon(weapon);
+        gui.redraw();
 
         // Set players to their starting positions
         for (Player player : players)

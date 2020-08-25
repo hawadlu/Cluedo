@@ -55,9 +55,7 @@ public class RoomTile extends Tile {
      * @return the room associated with this tile, null if no room
      */
     public Room getRoom(){
-
         return room;
-
     }
 
     /**
@@ -103,6 +101,13 @@ public class RoomTile extends Tile {
      */
     public Weapon getWeapon() {
         return weapon;
+    }
+
+    /**
+     * Removes player from tile
+     */
+    public void removeWeapon() {
+        weapon = null;
     }
 
     /**
