@@ -245,7 +245,7 @@ public class Player {
      * @param movement the amount of movement left
      */
     public void highlightTile(Board board, Position current, Position next, int movement) {
-        if (board.isValidMove(current, next)) {
+        if (board.isValidMove(current, next) && board.getTile(next) != null) {
             findPath(board, movement - 1, next);
         }
     }
