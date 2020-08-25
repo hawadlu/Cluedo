@@ -204,13 +204,16 @@ public class GUI {
     private void showInstructions() throws IOException {
         generateMenuBar(false);
         content.removeAll();
+        content.setLayout(new GridBagLayout());
 
         // create the middle panel components
-        JTextArea display = new JTextArea ( 50, 100);
+        JTextArea display = new JTextArea ( 50, 40);
         display.setEditable (false); // set textArea non-editable
+        display.setLineWrap(true);
+        display.setWrapStyleWord(true);
         JScrollPane scroll = new JScrollPane ( display );
         scroll.setBorder(null);
-        scroll.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS );
+        scroll.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED );
 
         display.setBackground(new Color(238, 238, 238));
 

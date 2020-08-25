@@ -10,7 +10,7 @@ and weapon of your choice of murder in the room you are in.
 
 After a suggestion players clockwise from you will attempt to prove your 
 suggestion wrong by showing you a card from your suggestion.
-(If a player has a card that means it wasnt chosen at the start)
+(If a player has a card that means it wasn't chosen at the start)
 
 If you accuse a suspect and are correct, you win. Otherwise you lose and
 can no longer take turns of your own, but still prove other players wrong
