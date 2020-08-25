@@ -299,7 +299,7 @@ public class Board {
                   fileName.append(".png");
 
                   // Combine tile image with any player or weapons on top of them
-                 if(currentTile.hasPlayer() || (currentTile.isRoom() && ((RoomTile) currentTile).hasWeapon())){
+                 if(currentTile.hasPlayer() || (currentTile.isNotNullRoom() && ((RoomTile) currentTile).hasWeapon())){
                     BufferedImage overlay, image = ImageIO.read(new File(fileName.toString()));
 
                     if(currentTile.hasPlayer())
