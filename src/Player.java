@@ -1,5 +1,4 @@
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.*;
@@ -107,10 +106,11 @@ public class Player {
 
                 //Complete flood search from each entrance
                 if (board.getTile(oldPos).isRoom()) {
-                    for (int i=0; i<((RoomTile) board.getTile(oldPos)).getRoom().getNumberOfDoors(); i++) {
-                        findPath(board, movement-1, ((RoomTile) board.getTile(oldPos)).getRoom().getDoor(i));
-                    }
+                    Room room = ((RoomTile) board.getTile(oldPos)).getRoom();
+                    for (int i=0; i<room.getNumberOfDoors(); i++)
+                        findPath(board, movement-1, room.getDoor(i));
                 }
+
                 findPath(board, movement, oldPos);
                 Game.gui.boardPanel.repaint();
                 hasMoved = true;
@@ -148,7 +148,7 @@ public class Player {
         List<Actions> actions = new ArrayList<>();
         boolean inRoom = board.getTile(newPos).isRoom();
 
-        if (inRoom && !suggested) {
+        if (inRoom && !suggested && movement == 0) {
             Game.Rooms currentRoom = ((RoomTile)board.getTile(newPos)).getEnum();
             if (currentRoom != lastRoom)
                 actions.add(Actions.SUGGEST);
@@ -191,6 +191,11 @@ public class Player {
      * @param pos curr pos of tile
      */
     public void findPath(Board board, int movement, Position pos){
+        if (board.getTile(pos).isRoom() && board.getTile(oldPos).isRoom() &&
+                ((RoomTile)board.getTile(pos)).getEnum() == ((RoomTile)board.getTile(oldPos)).getEnum())
+            return;
+
+        // If can move to a room tile, highlight the entire room
         if (board.getTile(pos).isRoom()) {
             for (RoomTile tile : ((RoomTile) board.getTile(pos)).getRoom().getTiles()) {
                 tilesThisTurn.add(tile);
@@ -198,7 +203,6 @@ public class Player {
             }
             return;
         }
-
 
         //Add tile to available tiles
         if(pos != oldPos) {
