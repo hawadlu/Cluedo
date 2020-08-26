@@ -1,5 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 import java.util.List;
@@ -140,7 +143,7 @@ public class Game {
      * - Creates players
      * - Deals cards to players
      */
-    public void setupGame() throws IOException {
+    public static void setupGame() throws IOException {
         gameOver = false;
         createPlayers();
         createWeapons();
@@ -225,7 +228,7 @@ public class Game {
      * Parse the extra information about each card
      * @return
      */
-    private void parseExtraCardInfo() throws IOException {
+    private static void parseExtraCardInfo() throws IOException {
         File infoFile = new File("Assets/Cards/Info.txt");
         FileReader fileReader = new FileReader(infoFile);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
