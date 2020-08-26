@@ -1,8 +1,14 @@
+import javafx.scene.shape.Box;
+
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
+import java.util.List;
 
 /**
  * Overall class to run game
@@ -22,7 +28,7 @@ public class Game {
     public static Map<Weapons, Weapon> weaponMap;
     public static Board board;
     public static GUI gui;
-    public static Player currentPlayer;
+    public static Player currentPlayer = null;
 
     private final static Die die1 = new Die(), die2 = new Die();
     private static ArrayList<Player> playingPlayers;
@@ -201,30 +207,54 @@ public class Game {
         ArrayList<Suspects> availablePlayers = new ArrayList<>(Arrays.asList(Suspects.values()));
         ArrayList<String> takenNames = new ArrayList<>();
         for (int i = 1; i <= numPlayers; i++) {
-            // Choose character
-            Suspects[] options = availablePlayers.toArray(new Suspects[]{});
-            Suspects chosen = makeDropDown(options, "Player "+i+" Creation",
-                                            "Player "+i+" choose your character:");
-            Player chosenPlayer = playerMap.get(chosen);
-            chosenPlayer.setHasLost(false);
-            availablePlayers.remove(chosen);
-            playingPlayers.add(chosenPlayer);
+            // Setup the character creation panel
+            JPanel panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
-            // Get name
+            // Setup the radio buttons for character selection
+            ButtonGroup radioButtons = new ButtonGroup();
+            JLabel textTitle = new JLabel();
+            textTitle.setText("Player "+i+": Who do you want to play as?");
+            panel.add(textTitle);
+            for (Suspects suspect : availablePlayers) {
+                JRadioButton radio = new JRadioButton((""+suspect));
+                radio.addActionListener(e -> Game.currentPlayer = playerMap.get(suspect));
+                radioButtons.add(radio);
+                panel.add(radio);
+            }
+
+            // Setup name input box
+            JTextPane textMessage = new JTextPane();
+            textMessage.setEditable(false);
+            panel.add(textMessage);
+            textMessage.setBackground(new Color(0,0,0,0));
+
+            // Get the users response
             String name = "";
-            while (name.length() == 0 || name.length() > 10 || takenNames.contains(name.toLowerCase())) {
-                name = JOptionPane.showInputDialog(gui.window,
-                        "Player " + i + " enter your name:" +
-                                (name.length() > 10 ? "(Max 10 characters)" : (
-                                takenNames.contains(name.toLowerCase()) ? "\n(That name has already been taken)" : "")),
-                        "Player " + i + " Creation",
-                        JOptionPane.PLAIN_MESSAGE);
+            while (currentPlayer == null ||
+                    name.length() == 0 || name.length() > 10 ||
+                    takenNames.contains(name.toLowerCase())) {
+
+                textMessage.setText("Enter your name:" +
+                                    (name.length() > 10 ? "\n(Max 10 characters)" :
+                                    (takenNames.contains(name.toLowerCase()) ?
+                                    "\n(That name has already been taken)" : "")));
+
+                name = JOptionPane.showInputDialog(gui.window, panel,
+                            "Player " + i + " Creation", JOptionPane.PLAIN_MESSAGE);
+
                 name = name==null ? "" : name.trim();
             }
-            takenNames.add(name.toLowerCase());
-            chosenPlayer.setName(name);
 
-            Game.print(chosenPlayer.getName()+" ("+chosenPlayer+") created!");
+            // Setup the player accordingly
+            currentPlayer.setHasLost(false);
+            availablePlayers.remove(currentPlayer.getSuspect());
+            playingPlayers.add(currentPlayer);
+            takenNames.add(name.toLowerCase());
+            currentPlayer.setName(name);
+
+            Game.print(currentPlayer.getName()+" ("+currentPlayer+") created!");
+            currentPlayer = null;
         }
 
         dealCards(playingPlayers);
