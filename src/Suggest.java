@@ -10,9 +10,9 @@ public class Suggest implements Action {
 
     Suggest(Game.Rooms room, Game.Suspects suspect, Game.Weapons weapon, Player player) {
         try {
-            this.suspect = new Card<>(suspect);
-            this.room = new Card<>(room);
-            this.weapon = new Card<>(weapon);
+            this.suspect = new Card<>(suspect, Game.extraInfo);
+            this.room = new Card<>(room, Game.extraInfo);
+            this.weapon = new Card<>(weapon, Game.extraInfo);
         }catch(InvalidFileException e){ System.out.println(e.toString()); }
             this.player = player;
     }

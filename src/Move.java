@@ -27,7 +27,7 @@ public class Move implements Action {
         validateMoves();
 
         // Change the players position based on actions
-        Position pos = player.getNewPos();
+        Position pos = player.getPos();
         for (String action: actions) {
             switch (action) {
                 case "l": pos.x -= 1; break; //move left
@@ -45,8 +45,8 @@ public class Move implements Action {
      * Check if the list of proposed moves is valid;
      */
     private void validateMoves() throws InvalidMoveException {
-        Position next = new Position(player.getNewPos());
-        Position prev = new Position(player.getNewPos());
+        Position next = new Position(player.getPos());
+        Position prev = new Position(player.getPos());
         Set<Tile> tilesThisMove = new HashSet<>();
 
         for (String action: actions) {

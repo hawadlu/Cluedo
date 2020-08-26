@@ -22,6 +22,7 @@ public class Game {
     public static Board board;
     public static GUI gui;
     public static Player currentPlayer;
+    public static HashMap<String, String> extraInfo = new HashMap<>();
 
     private final static Die die1 = new Die(), die2 = new Die();
     private static ArrayList<Player> playingPlayers;
@@ -139,7 +140,7 @@ public class Game {
      * - Creates players
      * - Deals cards to players
      */
-    public static void setupGame() {
+    public void setupGame() throws IOException {
         gameOver = false;
         createPlayers();
         createWeapons();
@@ -152,7 +153,7 @@ public class Game {
 
         // Set players to their starting positions
         for (Player player : players)
-            board.getTile(player.getNewPos()).addPlayer(player);
+            board.getTile(player.getPos()).addPlayer(player);
         gui.redraw();
 
         // Get number of players
@@ -214,7 +215,36 @@ public class Game {
             currentPlayer = null;
         }
 
+        //Parse the extra info for the cards
+        parseExtraCardInfo();
+
         dealCards(playingPlayers);
+    }
+
+    /**
+     * Parse the extra information about each card
+     * @return
+     */
+    private void parseExtraCardInfo() throws IOException {
+        File infoFile = new File("Assets/Cards/Info.txt");
+        FileReader fileReader = new FileReader(infoFile);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+
+        String line;
+        String title = null;
+        String state = "read info";
+
+        while((line = bufferedReader.readLine()) != null) {
+            if (state.equals("read info")) {
+                if (line.equals("NEW ITEM")) state = "read title";
+                else {
+                    extraInfo.put(title, line);
+                }
+            } else if (state.equals("read title")) {
+                title = line;
+                state = "read info";
+            }
+        }
     }
 
     /**
@@ -252,9 +282,9 @@ public class Game {
         ArrayList<Card<Rooms>> roomCards = new ArrayList<>();
 
         try {
-            for (Suspects s : Suspects.values()) playerCards.add(new Card<>(s));
-            for (Weapons w : Weapons.values()) weaponCards.add(new Card<>(w));
-            for (Rooms r : Rooms.values()) roomCards.add(new Card<>(r));
+            for (Suspects s : Suspects.values()) playerCards.add(new Card<>(s, extraInfo));
+            for (Weapons w : Weapons.values()) weaponCards.add(new Card<>(w, extraInfo));
+            for (Rooms r : Rooms.values()) roomCards.add(new Card<>(r, extraInfo));
         } catch(InvalidFileException e) { System.out.println(e.toString()); }
 
         //Shuffling
