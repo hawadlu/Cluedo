@@ -405,7 +405,6 @@ class BoardPanel extends JPanel {
         hoverInfo.setLineWrap(true);
         hoverInfo.setWrapStyleWord(true);
         hoverInfo.setBackground(new Color(36, 123, 22));
-        hoverInfo.setText("Hover over a player or a weapon to display its information here.");
 
         this.setPreferredSize(size);
         //Find the appropriate image width
@@ -434,6 +433,8 @@ class BoardPanel extends JPanel {
                 Object piece = pieceAtMouseLocation(e.getPoint());
                 if (piece != null) {
                     hoverInfo.setText(piece.toString());
+                } else {
+                    hoverInfo.setText("");
                 }
             }
         });
@@ -545,7 +546,7 @@ class CardPanel extends JPanel {
 
         //Draws each card with a strut
         for (int i = 0; i < cards.size(); i++) {
-            container.add(container.add(cards.get(i).getImage()));
+            container.add(cards.get(i).getImage());
             if(i<cards.size()-1) container.add(Box.createHorizontalStrut((12-cards.size())*2));
         }
         this.add(container, BorderLayout.CENTER);

@@ -172,7 +172,7 @@ public class Game {
 
     /**
      * Setup the game to be ready to be played
-     * - Sets gameover to false
+     * - Sets game over to false
      * - Creates board
      * - Creates players
      * - Deals cards to players
