@@ -345,19 +345,6 @@ public class Game {
     }
 
     /**
-     * Restart the game
-     * todo remove the duplicate code?
-     * todo fix this so that it works properly
-     */
-    public static void restart() throws IOException, InvalidFileException {
-        board = new Board();
-        gui = new GUI();
-        Game game = new Game();
-        game.setupGame();
-        game.playGame();
-    }
-
-    /**
      * Print a message to the GUI console
      * @param text the message to print
      */
@@ -368,6 +355,14 @@ public class Game {
 
     public static Collection<Player> getActivePlayers() {
         return Collections.unmodifiableCollection(playingPlayers);
+    }
+
+    /**
+     * Restart the game
+     * todo implement this
+     */
+    public static void restart() {
+
     }
 
     public static void main(String[] args) throws IOException, InvalidFileException {
