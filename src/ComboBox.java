@@ -1,8 +1,5 @@
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 import javax.swing.*;
 
 /**
@@ -26,8 +23,9 @@ public class ComboBox extends JFrame implements ItemListener, ActionListener {
     ComboBox(String action, Game.Rooms givenRoom, Player player){
         //Setup Combobox
         frame = new JFrame("Make "+ action);
+        frame.setResizable(false);
         frame.setLayout(new FlowLayout(FlowLayout.CENTER));
-        frame.setSize(new Dimension(400, 180));
+        frame.setSize(new Dimension(360, 180));
         frame.add(new JLabel("Please select all guesses, press CONFIRM when finished."));
         this.action = action;
         this.player = player;
@@ -65,6 +63,14 @@ public class ComboBox extends JFrame implements ItemListener, ActionListener {
         frame.revalidate();
         frame.repaint();
         frame.show();
+
+        //Allow user to carry on actions after window close
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent arg){
+                player.unlockSynchronize();
+            }
+        });
     }
 
     @Override
