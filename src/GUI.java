@@ -1,8 +1,5 @@
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -396,12 +393,25 @@ class BoardPanel extends JPanel {
     int boardLength = Game.board.getLength() + 1;
     int boardHeight = Game.board.getHeight() + 1;
 
+    JTextArea hoverInfo = new JTextArea(20, 10);
+
     BoardPanel(Dimension size) throws IOException {
+        this.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+        //Setup the hover text
+        this.add(hoverInfo);
+        hoverInfo.setEditable(false);
+        hoverInfo.setCaretColor(Color.white);
+        hoverInfo.setLineWrap(true);
+        hoverInfo.setWrapStyleWord(true);
+        hoverInfo.setBackground(new Color(36, 123, 22));
+        hoverInfo.setText("Hover over a player or a weapon to display its information here.");
+
         this.setPreferredSize(size);
         //Find the appropriate image width
         imgWidth = ImageIO.read(new File("Assets/TilePieces/hallway.png")).getWidth();
 
-        //Setup the mouse listener
+        //listen for clicking
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -413,6 +423,38 @@ class BoardPanel extends JPanel {
                 else System.out.println("The click was out of bounds for coordinates x " + e.getX() + " y " + e.getY());
             }
         });
+
+        //listen for movement
+        addMouseMotionListener(new MouseMotionAdapter() {
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                System.out.println("Mouse moved");
+
+                //Check if the mouse has entered known coordinated of a player or weapon
+                Object piece = pieceAtMouseLocation(e.getPoint());
+                if (piece != null) {
+                    hoverInfo.setText(piece.toString());
+                }
+            }
+        });
+    }
+
+    /**
+     * Checks a location on the board to see if there is a player or a weapon there.
+     * @return the player / weapon found at this tile
+     */
+    private Object pieceAtMouseLocation(Point p) {
+        Tile tilePosition = calcTilePos(new Position(p.x, p.y));
+        if (tilePosition == null) return null;
+
+        if (tilePosition.hasPlayer()) return tilePosition.getPlayer();
+
+        if (tilePosition instanceof RoomTile) {
+            RoomTile roomTile = (RoomTile) tilePosition;
+            if (roomTile.hasWeapon()) return roomTile.getWeapon();
+        }
+
+        return null;
     }
 
     /**

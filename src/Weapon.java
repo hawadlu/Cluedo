@@ -47,4 +47,9 @@ public class Weapon {
     public BufferedImage getImage() {
         return image;
     }
+
+    @Override
+    public String toString() {
+        return name.toString();
+    }
 }

@@ -189,7 +189,7 @@ public class Game {
 
         // Set players to their starting positions
         for (Player player : players)
-            board.getTile(player.getNewPos()).addPlayer(player);
+            board.getTile(player.getPos()).addPlayer(player);
         gui.redraw();
 
         // Get number of players

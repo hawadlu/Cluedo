@@ -342,15 +342,6 @@ public class Player {
     }
 
     /**
-     * Get the newest position of this player
-     *
-     * @return newest position of this player
-     */
-    public Position getNewPos() {
-        return newPos;
-    }
-
-    /**
      * Get the image of this player
      * @return bufferedimage of this player
      */
