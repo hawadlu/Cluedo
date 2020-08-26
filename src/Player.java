@@ -120,34 +120,19 @@ public class Player {
             case ACCUSE:
                 takingTurn = false;
                 new ComboBox("Accuse", null, this);
-
-                //todo IF U DELETE THIS IT WORKS BUT SKIPS TURN
-
-                // Wait for accuse frame to close
-                synchronized (moveLock) {
-                    try { moveLock.wait(); }
-                    catch (InterruptedException ignored) { }
-                }
-
                 break;
 
             case SUGGEST:
+                //todo cards not hiding idk why
+                Game.gui.cardPanel.hideCards(hand.size());
+                Game.gui.cardPanel.revalidate();
+                Game.gui.cardPanel.repaint();
+                
                 room = ((RoomTile)board.getTile(newPos)).getEnum();
                 lastRoom = room;
                 movement = 0;
-                Game.gui.cardPanel.hideCards(hand.size());
                 new ComboBox("Suggest", room, this);
-
-                //todo IF U DELETE THIS IT WORKS BUT SKIPS TURN
-
-                // Wait for suggest frame to close
-                synchronized (moveLock) {
-                    try { moveLock.wait(); }
-                    catch (InterruptedException ignored) { }
-                }
-
                 Game.gui.cardPanel.drawCards(hand);
-                //TODO maybe add wait here as well, but not needed
                 break;
 
             case END_TURN:
@@ -410,6 +395,6 @@ public class Player {
      */
     public void unlockSynchronize(){
         // Allows user to carry on making moves
-        synchronized (moveLock) { moveLock.notifyAll(); }
+        synchronized (this) { this.notifyAll(); }
     }
 }
