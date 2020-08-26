@@ -1,11 +1,8 @@
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.*;
-import java.nio.Buffer;
 import java.util.*;
-import java.util.concurrent.RecursiveAction;
 
 /**
  * Construct a board of positions

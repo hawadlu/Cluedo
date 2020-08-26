@@ -23,6 +23,13 @@ public class Player {
     private boolean takingTurn = false;
     public boolean hasMoved = false;
 
+    //Suggesting & accusing
+    private Game.Suspects player;
+    private Game.Weapons weapon;
+    private Game.Rooms room;
+    public static final Object moveLock = new Object();
+
+
     public enum Actions {MOVE, SUGGEST, ACCUSE, END_TURN }
 
     Player(Game.Suspects suspect, Position startPos) throws InvalidFileException {
@@ -92,7 +99,7 @@ public class Player {
      * @param action The action to be taken
      * @param board The board being played on
      */
-    public void takeAction(Actions action, Board board) {
+    public void takeAction(Actions action, Board board) throws InvalidFileException {
         switch (action) {
             case MOVE:
                 movement = Game.rollDice();
@@ -100,51 +107,32 @@ public class Player {
 
                 //Complete flood search from each entrance
                 if (board.getTile(oldPos).isRoom()) {
-                    for (int i=0; i<((RoomTile) board.getTile(oldPos)).getRoom().getNumberOfDoors(); i++) {
-                        findPath(board, movement-1, ((RoomTile) board.getTile(oldPos)).getRoom().getDoor(i));
-                    }
+                    Room room = ((RoomTile) board.getTile(oldPos)).getRoom();
+                    for (int i=0; i<room.getNumberOfDoors(); i++)
+                        findPath(board, movement-1, room.getDoor(i));
                 }
+
                 findPath(board, movement, oldPos);
                 Game.gui.boardPanel.repaint();
                 hasMoved = true;
                 break;
 
-            case SUGGEST:
             case ACCUSE:
-                Game.print("\n");
+                takingTurn = false;
+                new ComboBox("Accuse", null, this);
+                break;
 
-                // Choose a suspect and weapon to accuse/suggest
-                Game.Suspects player = Game.makeDropDown(Game.Suspects.values(),
-                        "Suggest Suspect", "Who do you think is a killer?");
-                Game.Weapons weapon = Game.makeDropDown(Game.Weapons.values(),
-                        "Suggest Weapon", "What was the weapon?");
-                Game.Rooms room;
-                String confirm;
-
-                switch (action) {
-                    case ACCUSE:
-                        room = Game.makeDropDown(Game.Rooms.values(),
-                                "Suggest Room", "Which room was the murder?");
-
-                        confirm = Game.makeDropDown(new String[]{"Yes", "No"}, "Confirmation",
-                                "Are you sure you want to Accuse: \n"+player+" with the "+weapon+" in the "+room+"?");
-                        if (confirm.equals("No")) break;
-
-                        new Accuse(room, player, weapon, this).apply();
-                        takingTurn = false;
-                        break;
-                    case SUGGEST:
-                        room = ((RoomTile)board.getTile(newPos)).getEnum();
-
-                        confirm = Game.makeDropDown(new String[]{"Yes", "No"}, "Confirmation",
-                                "Are you sure you want to Suggest: \n"+player+" with the "+weapon+" in the "+room+"?");
-                        if (confirm.equals("No")) break;
-
-                        lastRoom = room;
-                        suggested = true;
-                        movement = 0;
-                        new Suggest(room, player, weapon, this).apply();
-                }
+            case SUGGEST:
+                //todo cards not hiding idk why
+                Game.gui.cardPanel.hideCards(hand.size());
+                Game.gui.cardPanel.revalidate();
+                Game.gui.cardPanel.repaint();
+                
+                room = ((RoomTile)board.getTile(newPos)).getEnum();
+                lastRoom = room;
+                movement = 0;
+                new ComboBox("Suggest", room, this);
+                Game.gui.cardPanel.drawCards(hand);
                 break;
 
             case END_TURN:
@@ -165,7 +153,7 @@ public class Player {
         List<Actions> actions = new ArrayList<>();
         boolean inRoom = board.getTile(newPos).isRoom();
 
-        if (inRoom && !suggested) {
+        if (inRoom && !suggested && movement == 0) {
             Game.Rooms currentRoom = ((RoomTile)board.getTile(newPos)).getEnum();
             if (currentRoom != lastRoom)
                 actions.add(Actions.SUGGEST);
@@ -208,6 +196,11 @@ public class Player {
      * @param pos curr pos of tile
      */
     public void findPath(Board board, int movement, Position pos){
+        if (board.getTile(pos).isRoom() && board.getTile(oldPos).isRoom() &&
+                ((RoomTile)board.getTile(pos)).getEnum() == ((RoomTile)board.getTile(oldPos)).getEnum())
+            return;
+
+        // If can move to a room tile, highlight the entire room
         if (board.getTile(pos).isRoom()) {
             for (RoomTile tile : ((RoomTile) board.getTile(pos)).getRoom().getTiles()) {
                 tilesThisTurn.add(tile);
@@ -215,7 +208,6 @@ public class Player {
             }
             return;
         }
-
 
         //Add tile to available tiles
         if(pos != oldPos) {
@@ -384,5 +376,20 @@ public class Player {
      */
     public boolean hasLost() {
         return hasLost;
+    }
+
+    /**
+     * This player has suggested
+     */
+    public void setSuggested(){
+        suggested = true;
+    }
+
+    /**
+     * Unlock suggest/accuse lock to carry on playing
+     */
+    public void unlockSynchronize(){
+        // Allows user to carry on making moves
+        synchronized (this) { this.notifyAll(); }
     }
 }

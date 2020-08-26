@@ -1,5 +1,6 @@
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -57,7 +58,7 @@ public class GUI {
     /**
      * This sets up the gui.
      */
-    public void setupGameLayout() throws IOException {
+    public void setupGameLayout() {
         //Setup the menu bar
         generateMenuBar(true);
 
@@ -100,14 +101,13 @@ public class GUI {
 //        customGrid.setPadding(widthFifths * 5, heightSixths * 2);
         gameLayout.addElement(cardPanel);
         try { cardPanel.setupCards();
-        }catch(InvalidFileException e){}
+        }catch(InvalidFileException ignored){}
         
         redraw();
     }
 
     /**
      * Generates the menu bar
-     * @return
      */
     private void generateMenuBar(Boolean showInstructions) {
         topBar.removeAll();
@@ -123,8 +123,6 @@ public class GUI {
         JMenuItem quit = new JMenuItem("Quit");
 
         //Items
-        JMenuItem playGame = new JMenuItem("Play");
-        JMenuItem restart = new JMenuItem("Restart");
         JMenuItem instructions = new JMenuItem(instructionTitle);
         JMenuItem printCurrentPlayer = new JMenuItem("Print Current Player");
         JMenuItem printCurrentPlayerCards = new JMenuItem("Print Current Player Cards");
@@ -132,8 +130,6 @@ public class GUI {
         JMenuItem printNPCPlayers = new JMenuItem("Print NPC Players");
         JMenuItem printFinal = new JMenuItem("Print Winning combo");
         JMenuItem printTileInfo = new JMenuItem("Print Tile info");
-
-
 
         //Add components
         debug.add(printCurrentPlayer);
@@ -143,7 +139,6 @@ public class GUI {
         debug.add(printNPCPlayers);
         debug.add(printTileInfo);
 
-        menuBar.add(restart);
         menuBar.add(instructions);
         menuBar.add(debug);
         menuBar.add(quit);
@@ -174,7 +169,6 @@ public class GUI {
             System.out.println("Is hallway: " + tile.isHallway());
             System.out.println("Is not null room: " + tile.isNotNullRoom());
         });
-        restart.addActionListener(actionEvent -> Game.restart());
 
         //show/hide instructions
         if (showInstructions) {
@@ -186,13 +180,7 @@ public class GUI {
                 }
             });
         } else {
-            instructions.addActionListener(actionEvent -> {
-                try {
-                    setupGameLayout();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            });
+            instructions.addActionListener(actionEvent -> setupGameLayout());
         }
 
     }
@@ -328,7 +316,11 @@ class ActionPanel extends JPanel {
             JButton button = new JButton(action.toString().replace("_", " "));
             button.setPreferredSize(new Dimension(100, 90));
             button.addActionListener(e -> {
-                player.takeAction(action, Game.board);
+                try {
+                    player.takeAction(action, Game.board);
+                } catch (InvalidFileException invalidFileException) {
+                    invalidFileException.printStackTrace();
+                }
             });
             buttons.add(button);
         }
@@ -345,7 +337,7 @@ class ActionPanel extends JPanel {
  */
 class ConsolePanel extends JPanel {
     ArrayList<String> consoleMessages = new ArrayList<>();
-    JTextArea textArea = new JTextArea();
+    JTextArea textArea;
     JScrollPane scroll;
 
     ConsolePanel(Dimension size) {
@@ -422,11 +414,7 @@ class BoardPanel extends JPanel {
             @Override
             public void mouseClicked(MouseEvent e) {
                 Tile clickedTile = calcTilePos(new Position(e.getX(), e.getY()));
-                if (clickedTile != null) {
-                    System.out.println("Mouse clicked at x " + e.getX() + " y " + e.getY());
-                    if (clickedTile.isHighlighted()) Game.currentPlayer.moveTo(clickedTile);
-                }
-                else System.out.println("The click was out of bounds for coordinates x " + e.getX() + " y " + e.getY());
+                if (clickedTile != null && clickedTile.isHighlighted()) Game.currentPlayer.moveTo(clickedTile);
             }
         });
 
@@ -502,8 +490,6 @@ class BoardPanel extends JPanel {
 
         try {
             BufferedImage[][] toDraw = Game.board.draw();
-
-            //System.out.println(toDraw.length);
 
             for (int i = xOffset, x = 0; x < toDraw[0].length; i += toDraw[1][1].getHeight(), x++) {
                 for (int j = yOffset, y = 0; y < toDraw.length; j += toDraw[1][1].getHeight(), y++) {
@@ -581,6 +567,24 @@ class CardPanel extends JPanel {
         }
         this.add(container, BorderLayout.CENTER);
 
+    }
+
+    public void hideCards(int numOfCards) throws InvalidFileException{
+        //Setup variables
+        JPanel container = new JPanel();
+        container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
+        this.setBorder(new EmptyBorder(0, 0, 0, 0));
+        this.setLayout(new BorderLayout(0, 0));
+
+        //Draws default cards
+        try {
+            for (int i = 0; i < numOfCards; i++) {
+                container.add(container.add(new JLabel(new ImageIcon(ImageIO.read(
+                        new File("Assets/Cards/DEFAULT.png"))))));
+                if (i < 8) container.add(Box.createHorizontalStrut(6));
+            }
+        }catch(IOException e){ throw new InvalidFileException("Assets/Cards/DEFAULT.png"); }
+        this.add(container, BorderLayout.CENTER);
     }
 }
 

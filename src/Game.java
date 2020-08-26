@@ -1,6 +1,8 @@
 import javax.swing.*;
-import java.io.*;
+import java.awt.*;
+import java.io.IOException;
 import java.util.*;
+import java.util.List;
 
 /**
  * Overall class to run game
@@ -12,7 +14,6 @@ public class Game {
     public static Suspects murderer;
     public static Rooms murderRoom;
     public static Weapons murderWeapon;
-    public static Scanner input = new Scanner(System.in);
     public static boolean gameOver;
     public static List<Player> players;
     public static Map<Suspects, Player> playerMap;
@@ -57,46 +58,9 @@ public class Game {
     }
 
     /**
-     * Shows the initial instructions.
-     * Ask if the user just wants to play or view the instructions
+     * Create the Weapons, starting them in random rooms
      */
-    public void showMenu() {
-        System.out.println("Note: The board was designed using the 'Consolas' font and may not display properly in other fonts.");
-        System.out.println();
-
-        String response = chooseFromArray(new String[]{"Instructions", "Play"}, "Welcome to Cluedo!");
-
-        if (response.equals("Instructions"))
-            try {
-                showInstructions();
-            } catch (InvalidFileException e) {
-                System.out.println("Instructions not found");
-                showMenu();
-            }
-        else if (response.equals("Play")) playGame();
-        else {
-            System.out.println("Invalid response, try again!");
-            showMenu();
-        }
-    }
-
-    /**
-     * Show the instructions
-     */
-    public void showInstructions() throws InvalidFileException {
-        File instructions = new File("Assets/Instructions.txt");
-        try {
-            Scanner scanner = new Scanner(instructions);
-            while (scanner.hasNextLine()) System.out.println(scanner.nextLine());
-        }catch(FileNotFoundException e){ throw new InvalidFileException("Assets/Instructions.txt"); }
-        System.out.println();
-        showMenu();
-    }
-
-    /**
-     * Create the Weapoms, starting them in random rooms
-     */
-    public void createWeapons() {
+    private static void createWeapons() {
         weapons = new ArrayList<>();
         weaponMap = new HashMap<>();
 
@@ -117,7 +81,7 @@ public class Game {
     /**
      * Create the players, setting them all as NPC's to start with
      */
-    public void createPlayers() {
+    private static void createPlayers() {
         players = new ArrayList<>();
         playerMap = new HashMap<>();
 
@@ -140,7 +104,7 @@ public class Game {
      * @param suspect the suspect enum to find the starting position of
      * @return a position object, containing the starting position coordinates
      */
-    public Position getStartingPosition(Suspects suspect){
+    private static Position getStartingPosition(Suspects suspect){
         switch (suspect) {
             case WHITE: return new Position(9, 0);
             case GREEN: return new Position(14, 0);
@@ -180,6 +144,7 @@ public class Game {
         gameOver = false;
         createPlayers();
         createWeapons();
+        currentPlayer = null;
 
         // Set Weapons to their starting positions
         for (Weapon weapon : weapons)
@@ -200,30 +165,54 @@ public class Game {
         ArrayList<Suspects> availablePlayers = new ArrayList<>(Arrays.asList(Suspects.values()));
         ArrayList<String> takenNames = new ArrayList<>();
         for (int i = 1; i <= numPlayers; i++) {
-            // Choose character
-            Suspects[] options = availablePlayers.toArray(new Suspects[]{});
-            Suspects chosen = makeDropDown(options, "Player "+i+" Creation",
-                                            "Player "+i+" choose your character:");
-            Player chosenPlayer = playerMap.get(chosen);
-            chosenPlayer.setHasLost(false);
-            availablePlayers.remove(chosen);
-            playingPlayers.add(chosenPlayer);
+            // Setup the character creation panel
+            JPanel panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
-            // Get name
+            // Setup the radio buttons for character selection
+            ButtonGroup radioButtons = new ButtonGroup();
+            JLabel textTitle = new JLabel();
+            textTitle.setText("Player "+i+": Who do you want to play as?");
+            panel.add(textTitle);
+            for (Suspects suspect : availablePlayers) {
+                JRadioButton radio = new JRadioButton((""+suspect));
+                radio.addActionListener(e -> Game.currentPlayer = playerMap.get(suspect));
+                radioButtons.add(radio);
+                panel.add(radio);
+            }
+
+            // Setup name input box
+            JTextPane textMessage = new JTextPane();
+            textMessage.setEditable(false);
+            panel.add(textMessage);
+            textMessage.setBackground(new Color(0,0,0,0));
+
+            // Get the users response
             String name = "";
-            while (name.length() == 0 || name.length() > 10 || takenNames.contains(name.toLowerCase())) {
-                name = JOptionPane.showInputDialog(gui.window,
-                        "Player " + i + " enter your name:" +
-                                (name.length() > 10 ? "(Max 10 characters)" : (
-                                takenNames.contains(name.toLowerCase()) ? "\n(That name has already been taken)" : "")),
-                        "Player " + i + " Creation",
-                        JOptionPane.PLAIN_MESSAGE);
+            while (currentPlayer == null ||
+                    name.length() == 0 || name.length() > 10 ||
+                    takenNames.contains(name.toLowerCase())) {
+
+                textMessage.setText("Enter your name:" +
+                                    (name.length() > 10 ? "\n(Max 10 characters)" :
+                                    (takenNames.contains(name.toLowerCase()) ?
+                                    "\n(That name has already been taken)" : "")));
+
+                name = JOptionPane.showInputDialog(gui.window, panel,
+                            "Player " + i + " Creation", JOptionPane.PLAIN_MESSAGE);
+
                 name = name==null ? "" : name.trim();
             }
-            takenNames.add(name.toLowerCase());
-            chosenPlayer.setName(name);
 
-            Game.print(chosenPlayer.getName()+" ("+chosenPlayer+") created!");
+            // Setup the player accordingly
+            currentPlayer.setHasLost(false);
+            availablePlayers.remove(currentPlayer.getSuspect());
+            playingPlayers.add(currentPlayer);
+            takenNames.add(name.toLowerCase());
+            currentPlayer.setName(name);
+
+            Game.print(currentPlayer.getName()+" ("+currentPlayer+") created!");
+            currentPlayer = null;
         }
 
         //Parse the extra info for the cards
@@ -261,7 +250,7 @@ public class Game {
     /**
      * Play the game
      */
-    public void playGame() {
+    public static void playGame() {
         int playerIndex = 0;
         while (!gameOver) {
             currentPlayer = playingPlayers.get(playerIndex);
@@ -284,7 +273,7 @@ public class Game {
 
      * @param players the list of players playing the game to be dealt cards to
      */
-    public void dealCards(List<Player> players) {
+    private static void dealCards(List<Player> players) {
         int numPlayers = players.size();
 
         //Create ArrayLists of each card type
@@ -351,58 +340,18 @@ public class Game {
         gui.consolePanel.redraw();
     }
 
+    /**
+     * Get a list of players that are currently playing the game and haven't lost
+     * @return unmodifiable Collection of active players
+     */
     public static Collection<Player> getActivePlayers() {
         return Collections.unmodifiableCollection(playingPlayers);
-    }
-
-    /**
-     * Restart the game
-     * todo implement this
-     */
-    public static void restart() {
-
     }
 
     public static void main(String[] args) throws IOException, InvalidFileException {
         board = new Board();
         gui = new GUI();
-        Game game = new Game();
-        game.setupGame();
-        game.playGame();
-    }
-
-
-
-    // OLD METHODS TO BE DELETED
-
-    /**
-     * Get the user to choose an option from an array of options of a given type
-     *
-     * @param options the array of options
-     * @param text the text at the top of the list of options, e.g. "Choose a weapon:"
-     * @param <T> the type of the individual options
-     * @return the option that was chosen
-     */
-    public static <T> T chooseFromArray(T[] options, String text) {
-        // Display available options
-        System.out.println(text+" (Enter a number 1-"+options.length+")");
-        for (int i = 0; i < options.length; i++) {
-            System.out.println(i+1 + ". "+options[i]);
-        }
-
-        // Get input
-        Scanner inputStr = new Scanner(input.nextLine());
-        int index = 0;
-
-        // Error check input
-        while (index < 1 || index > options.length) {
-            while (!inputStr.hasNextInt()) {
-                System.out.println("Please enter a number 1-"+options.length);
-                inputStr = new Scanner(input.nextLine());
-            }
-            index = inputStr.nextInt();
-        }
-
-        return options[index-1];
+        setupGame();
+        playGame();
     }
 }

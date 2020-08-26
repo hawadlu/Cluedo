@@ -1,5 +1,3 @@
-import jdk.nashorn.internal.scripts.JD;
-
 import javax.swing.*;
 
 /**
@@ -35,5 +33,6 @@ public class Accuse implements Action {
         }
         Game.print(suspect+" of using the "+weapon+" in the "+room);
         Game.print(player.getName()+" accused:");
+        Game.print("\n");
     }
 }
