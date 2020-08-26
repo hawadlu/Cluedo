@@ -28,6 +28,7 @@ public class Player {
     private Game.Suspects player;
     private Game.Weapons weapon;
     private Game.Rooms room;
+    public static final Object moveLock = new Object();
 
 
     public enum Actions {MOVE, SUGGEST, ACCUSE, END_TURN }
@@ -99,7 +100,7 @@ public class Player {
      * @param action The action to be taken
      * @param board The board being played on
      */
-    public void takeAction(Actions action, Board board) {
+    public void takeAction(Actions action, Board board) throws InvalidFileException {
         switch (action) {
             case MOVE:
                 movement = Game.rollDice();
@@ -119,14 +120,33 @@ public class Player {
             case ACCUSE:
                 takingTurn = false;
                 new ComboBox("Accuse", null, this);
-                //TODO wait until player finish accusation before passing turn
+
+                //todo IF U DELETE THIS IT WORKS BUT SKIPS TURN
+
+                // Wait for accuse frame to close
+                synchronized (moveLock) {
+                    try { moveLock.wait(); }
+                    catch (InterruptedException ignored) { }
+                }
+
                 break;
 
             case SUGGEST:
                 room = ((RoomTile)board.getTile(newPos)).getEnum();
                 lastRoom = room;
                 movement = 0;
+                Game.gui.cardPanel.hideCards(hand.size());
                 new ComboBox("Suggest", room, this);
+
+                //todo IF U DELETE THIS IT WORKS BUT SKIPS TURN
+
+                // Wait for suggest frame to close
+                synchronized (moveLock) {
+                    try { moveLock.wait(); }
+                    catch (InterruptedException ignored) { }
+                }
+
+                Game.gui.cardPanel.drawCards(hand);
                 //TODO maybe add wait here as well, but not needed
                 break;
 
@@ -383,5 +403,13 @@ public class Player {
      */
     public void setSuggested(){
         suggested = true;
+    }
+
+    /**
+     * Unlock suggest/accuse lock to carry on playing
+     */
+    public void unlockSynchronize(){
+        // Allows user to carry on making moves
+        synchronized (moveLock) { moveLock.notifyAll(); }
     }
 }

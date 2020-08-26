@@ -307,7 +307,13 @@ class ActionPanel extends JPanel {
         for (Player.Actions action : actions) {
             JButton button = new JButton(action.toString().replace("_", " "));
             button.setPreferredSize(new Dimension(100, 90));
-            button.addActionListener(e -> player.takeAction(action, Game.board));
+            button.addActionListener(e -> {
+                try {
+                    player.takeAction(action, Game.board);
+                } catch (InvalidFileException invalidFileException) {
+                    invalidFileException.printStackTrace();
+                }
+            });
             buttons.add(button);
         }
         container.add(buttons);
@@ -483,6 +489,24 @@ class CardPanel extends JPanel {
         }
         this.add(container, BorderLayout.CENTER);
 
+    }
+
+    public void hideCards(int numOfCards) throws InvalidFileException{
+        //Setup variables
+        JPanel container = new JPanel();
+        container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
+        this.setBorder(new EmptyBorder(0, 0, 0, 0));
+        this.setLayout(new BorderLayout(0, 0));
+
+        //Draws cards with a 7px strut between cards
+        try {
+            for (int i = 0; i < numOfCards; i++) {
+                container.add(container.add(new JLabel(new ImageIcon(ImageIO.read(
+                        new File("Assets/Cards/DEFAULT.png"))))));
+                if (i < 8) container.add(Box.createHorizontalStrut(6));
+            }
+        }catch(IOException e){ throw new InvalidFileException("Assets/Cards/DEFAULT.png"); }
+        this.add(container, BorderLayout.CENTER);
     }
 }
 
