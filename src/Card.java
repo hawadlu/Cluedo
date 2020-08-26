@@ -1,6 +1,7 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.io.File;
+import java.util.HashMap;
 import java.util.Objects;
 
 /**
@@ -10,8 +11,10 @@ import java.util.Objects;
 public class Card<T extends Enum<T>> {
     private final T name;
     private final JLabel image;
+    private final String extraInfo;
 
-    Card(T name) throws InvalidFileException {
+    Card(T name, HashMap<String, String> cardInfo) throws InvalidFileException {
+        this.extraInfo = cardInfo.get(name.toString());
         this.name = name;
         try {
             image = new JLabel(new ImageIcon(ImageIO.read(
@@ -45,4 +48,6 @@ public class Card<T extends Enum<T>> {
     public T getEnum(){ return name;}
 
     public JLabel getImage(){ return image; }
+
+    public String getExtraInfo() {return name.toString() + ": " + extraInfo;}
 }

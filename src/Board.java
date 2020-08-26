@@ -358,6 +358,8 @@ public class Board {
     * @param yPos y pos of the tile to draw
     * @return the composite image
     */
+   //todo fix players drawing over library, billiard room and study text
+   //todo make study text draw the top of the room
    private BufferedImage overlayImages(BufferedImage bottom, BufferedImage top, String[][] roomNames, int xPos, int yPos) {
       BufferedImage combined = new BufferedImage(bottom.getWidth(), bottom.getHeight(), BufferedImage.TYPE_INT_ARGB);
       Graphics2D g2 = combined.createGraphics();

@@ -1,0 +1,66 @@
+NEW ITEM
+BALLROOM
+Especially useful for dancing.
+NEW ITEM
+BILLIARD_ROOM
+Room for games.
+NEW ITEM
+CANDLESTICK
+It'll do.
+NEW ITEM
+CONSERVATORY
+Sometimes an indoor garden.
+NEW ITEM
+DAGGER
+Deadly kitchen knife.
+NEW ITEM
+DEFAULT
+Nothing here.
+NEW ITEM
+DINING_ROOM
+Room with a fancy picnic table.
+NEW ITEM
+GREEN
+"I was preaching at the time."
+NEW ITEM
+HALL
+Not a school hall.
+NEW ITEM
+KITCHEN
+Room full of pans.
+NEW ITEM
+LEAD_PIPE
+Lead is poisonous!
+NEW ITEM
+LIBRARY
+Room full of books.
+NEW ITEM
+LOUNGE
+Anti gym.
+NEW ITEM
+MUSTARD
+"Please don't put me on your hot dog."
+NEW ITEM
+PEACOCK
+"I'm too fancy to commit murder."
+NEW ITEM
+PLUM
+"I'm not a fruit."
+NEW ITEM
+REVOLVER
+Probably louder than a knife.
+NEW ITEM
+ROPE
+Probably quieter than a knife
+NEW ITEM
+SCARLET
+"I live in hollywood."
+NEW ITEM
+SPANNER
+Belongs in the workshop.
+NEW ITEM
+STUDY
+Where people pretend to work.
+NEW ITEM
+WHITE
+"Huh?"

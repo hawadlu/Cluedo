@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 
 /**
@@ -34,7 +33,7 @@ public class GUI {
             new Dimension(widthFifths, heightSixths * 2), new Dimension(widthFifths, heightSixths));
     ConsolePanel consolePanel = new ConsolePanel(new Dimension(widthFifths, heightSixths * 4));
     BoardPanel boardPanel = new BoardPanel(new Dimension(widthFifths * 3, heightSixths * 4));
-    CardPanel cardPanel = new CardPanel();
+    CardPanel cardPanel = new CardPanel(this);
 
     //Add the content
     CustomGrid gameLayout;
@@ -243,6 +242,14 @@ public class GUI {
     public void addToConsole(String message) {consolePanel.addMessage(message);}
 
     /**
+     * Set the hover text that appears in the top left of the board
+     * @param text
+     */
+    public void setHoverText(String text) {
+        boardPanel.setHoverText(text);
+    }
+
+    /**
      * redraw the gui
      */
     public void redraw() {
@@ -427,17 +434,21 @@ class BoardPanel extends JPanel {
         addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseMoved(MouseEvent e) {
-                System.out.println("Mouse moved");
+                //System.out.println("Mouse moved");
 
                 //Check if the mouse has entered known coordinated of a player or weapon
                 Object piece = pieceAtMouseLocation(e.getPoint());
                 if (piece != null) {
-                    hoverInfo.setText(piece.toString());
+                    setHoverText(piece.toString());
                 } else {
-                    hoverInfo.setText("");
+                    setHoverText("");
                 }
             }
         });
+    }
+
+    public void setHoverText(String text) {
+        hoverInfo.setText(text);
     }
 
     /**
@@ -473,7 +484,7 @@ class BoardPanel extends JPanel {
         if (position.x > topLeft.x && position.x < bottomRight.x && position.y > topLeft.y && position.y < bottomRight.y) {
             Position relativePos = new Position(Math.floorDiv(position.x - getXOffset(), imgWidth), Math.floorDiv(position.y - getYOffset(), imgWidth));
             if (Game.board.getTile(relativePos) != null) {
-                System.out.println("Calculated tile position x " + relativePos.x + " y " + relativePos.y);
+                //System.out.println("Calculated tile position x " + relativePos.x + " y " + relativePos.y);
                 return Game.board.getTile(relativePos); //Make sure this is not a null tile
             }
         }
@@ -506,6 +517,11 @@ class BoardPanel extends JPanel {
 }
 
 class CardPanel extends JPanel {
+    GUI gui;
+
+    CardPanel(GUI gui) {
+        this.gui = gui;
+    }
 
     /**
      * Sets up cards with default image
@@ -546,13 +562,28 @@ class CardPanel extends JPanel {
 
         //Draws each card with a strut
         for (int i = 0; i < cards.size(); i++) {
-            container.add(cards.get(i).getImage());
+            Card currentCard = cards.get(i);
+            JComponent cardImage = currentCard.getImage();
+            container.add(cardImage);
             if(i<cards.size()-1) container.add(Box.createHorizontalStrut((12-cards.size())*2));
+
+            cardImage.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    gui.setHoverText(currentCard.getExtraInfo());
+                }
+
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    gui.setHoverText("");
+                }
+            });
         }
         this.add(container, BorderLayout.CENTER);
 
     }
 }
+
 
 
 /**
