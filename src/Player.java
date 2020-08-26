@@ -1,4 +1,5 @@
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.*;
@@ -22,6 +23,12 @@ public class Player {
     private final BufferedImage image;
     private boolean takingTurn = false;
     public boolean hasMoved = false;
+
+    //Suggesting & accusing
+    private Game.Suspects player;
+    private Game.Weapons weapon;
+    private Game.Rooms room;
+
 
     public enum Actions {MOVE, SUGGEST, ACCUSE, END_TURN }
 
@@ -109,42 +116,18 @@ public class Player {
                 hasMoved = true;
                 break;
 
-            case SUGGEST:
             case ACCUSE:
-                Game.print("\n");
+                takingTurn = false;
+                new ComboBox("Accuse", null, this);
+                //TODO wait until player finish accusation before passing turn
+                break;
 
-                // Choose a suspect and weapon to accuse/suggest
-                Game.Suspects player = Game.makeDropDown(Game.Suspects.values(),
-                        "Suggest Suspect", "Who do you think is a killer?");
-                Game.Weapons weapon = Game.makeDropDown(Game.Weapons.values(),
-                        "Suggest Weapon", "What was the weapon?");
-                Game.Rooms room;
-                String confirm;
-
-                switch (action) {
-                    case ACCUSE:
-                        room = Game.makeDropDown(Game.Rooms.values(),
-                                "Suggest Room", "Which room was the murder?");
-
-                        confirm = Game.makeDropDown(new String[]{"Yes", "No"}, "Confirmation",
-                                "Are you sure you want to Accuse: \n"+player+" with the "+weapon+" in the "+room+"?");
-                        if (confirm.equals("No")) break;
-
-                        new Accuse(room, player, weapon, this).apply();
-                        takingTurn = false;
-                        break;
-                    case SUGGEST:
-                        room = ((RoomTile)board.getTile(newPos)).getEnum();
-
-                        confirm = Game.makeDropDown(new String[]{"Yes", "No"}, "Confirmation",
-                                "Are you sure you want to Suggest: \n"+player+" with the "+weapon+" in the "+room+"?");
-                        if (confirm.equals("No")) break;
-
-                        lastRoom = room;
-                        suggested = true;
-                        movement = 0;
-                        new Suggest(room, player, weapon, this).apply();
-                }
+            case SUGGEST:
+                room = ((RoomTile)board.getTile(newPos)).getEnum();
+                lastRoom = room;
+                movement = 0;
+                new ComboBox("Suggest", room, this);
+                //TODO maybe add wait here as well, but not needed
                 break;
 
             case END_TURN:
@@ -393,5 +376,12 @@ public class Player {
      */
     public boolean hasLost() {
         return hasLost;
+    }
+
+    /**
+     * This player has suggested
+     */
+    public void setSuggested(){
+        suggested = true;
     }
 }
