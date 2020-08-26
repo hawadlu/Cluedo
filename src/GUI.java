@@ -576,7 +576,7 @@ class CardPanel extends JPanel {
         this.setBorder(new EmptyBorder(0, 0, 0, 0));
         this.setLayout(new BorderLayout(0, 0));
 
-        //Draws cards with a 7px strut between cards
+        //Draws default cards
         try {
             for (int i = 0; i < numOfCards; i++) {
                 container.add(container.add(new JLabel(new ImageIcon(ImageIO.read(

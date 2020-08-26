@@ -8,7 +8,7 @@ import javax.swing.*;
  * creates an accusation/suggestion after OK is pressed
  */
 public class ComboBox extends JFrame implements ItemListener, ActionListener {
-    private JFrame frame;
+    private JDialog frame;
     private String action;
     private Player player;
 
@@ -20,13 +20,13 @@ public class ComboBox extends JFrame implements ItemListener, ActionListener {
     private Game.Weapons chosenWeapon;
     private Game.Rooms chosenRoom;
 
-    ComboBox(String action, Game.Rooms givenRoom, Player player){
+    ComboBox(String action, Game.Rooms givenRoom, Player player) {
         //Setup Combobox
-        frame = new JFrame("Make "+ action);
-        frame.setResizable(false);
+        frame = new JDialog();
+        frame.setModal(true);
         frame.setLayout(new FlowLayout(FlowLayout.CENTER));
         frame.setSize(new Dimension(360, 180));
-        frame.add(new JLabel("Please select all guesses, press CONFIRM when finished."));
+        frame.add(new JLabel("You chose to "+action+", press CONFIRM to finish."));
         this.action = action;
         this.player = player;
 
@@ -43,13 +43,13 @@ public class ComboBox extends JFrame implements ItemListener, ActionListener {
         weapon.addItemListener(this);
 
         //Create Room
-        if(givenRoom == null) {
+        if (givenRoom == null) {
             room = new JComboBox<>(Game.Rooms.values());
             frame.add(room);
             chosenRoom = Game.Rooms.values()[0];
             room.addItemListener(this);
-        }else{
-            frame.add(new JLabel("Room: "+ givenRoom));
+        } else {
+            frame.add(new JLabel("Room: " + givenRoom));
             chosenRoom = givenRoom;
         }
 
@@ -62,15 +62,7 @@ public class ComboBox extends JFrame implements ItemListener, ActionListener {
         //Display
         frame.revalidate();
         frame.repaint();
-        frame.show();
-
-        //Allow user to carry on actions after window close
-        frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent arg){
-                player.unlockSynchronize();
-            }
-        });
+        frame.setVisible(true);
     }
 
     @Override
