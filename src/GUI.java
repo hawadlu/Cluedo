@@ -350,7 +350,7 @@ class ActionPanel extends JPanel {
  */
 class ConsolePanel extends JPanel {
     ArrayList<String> consoleMessages = new ArrayList<>();
-    JTextArea textArea = new JTextArea();
+    JTextArea textArea;
     JScrollPane scroll;
 
     ConsolePanel(Dimension size) {
