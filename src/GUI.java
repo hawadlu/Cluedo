@@ -123,13 +123,12 @@ public class GUI {
 
         //Menu Headings
         JMenuBar menuBar = new JMenuBar();
-        JMenu restart = new JMenu("Restart");
         JMenuItem debug = new JMenu("Debug");
         JMenuItem quit = new JMenuItem("Quit");
 
         //Items
         JMenuItem playGame = new JMenuItem("Play");
-        JMenuItem restartGame = new JMenuItem("Restart");
+        JMenuItem restart = new JMenuItem("Restart");
         JMenuItem instructions = new JMenuItem(instructionTitle);
         JMenuItem printCurrentPlayer = new JMenuItem("Print Current Player");
         JMenuItem printCurrentPlayerCards = new JMenuItem("Print Current Player Cards");
@@ -179,15 +178,7 @@ public class GUI {
             System.out.println("Is hallway: " + tile.isHallway());
             System.out.println("Is not null room: " + tile.isNotNullRoom());
         });
-        restartGame.addActionListener(actionEvent -> {
-            try {
-                Game.restart();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (InvalidFileException e) {
-                e.printStackTrace();
-            }
-        });
+        restart.addActionListener(actionEvent -> Game.restart());
 
         //show/hide instructions
         if (showInstructions) {
