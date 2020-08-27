@@ -26,6 +26,7 @@ public class Suggest implements Action {
         Board.rooms.get(room.getEnum()).addPlayer(suspectPlayer);
         Game.gui.boardPanel.repaint();
 
+        // List of players that cannot prove the suggestion wrong
         List<String> cannotProveWrong = new ArrayList<>();
 
         // Move the suggested weapon to the room
@@ -44,6 +45,7 @@ public class Suggest implements Action {
             // A match has been found in this hand
             if (!cardOptions.isEmpty()) {
                 // Allow the player to choose a card without current player seeing
+                player.hideHand();
                 JOptionPane.showMessageDialog(null, otherPlayer.getName() +
                         " can prove you wrong, let them choose a card to show you"
                         +"\nPress OK if you are "+otherPlayer.getName());
@@ -56,6 +58,8 @@ public class Suggest implements Action {
                 JOptionPane.showMessageDialog(null
                         , otherPlayer.getName() +
                         " has chosen to show you "+ toShow);
+
+                player.showHand();
 
                 // Generate console output text
                 int size = cannotProveWrong.size();

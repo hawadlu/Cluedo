@@ -257,6 +257,10 @@ public class Game {
         int playerIndex = 0;
         while (!gameOver) {
             currentPlayer = playingPlayers.get(playerIndex);
+            currentPlayer.hideHand();
+            JOptionPane.showMessageDialog(gui.window, currentPlayer+"'s turn");
+            currentPlayer.showHand();
+
             try { currentPlayer.takeTurn(board);
             } catch (InvalidFileException e) { e.printStackTrace(); }
 

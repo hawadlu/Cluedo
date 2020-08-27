@@ -1,6 +1,7 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -12,6 +13,10 @@ public class Card<T extends Enum<T>> {
     private final T name;
     private final JLabel image;
     private final String extraInfo;
+    private boolean hidden = false;
+    private final JLabel defaultImg;
+
+    // Initialise defaultImg
 
     Card(T name, HashMap<String, String> cardInfo) throws InvalidFileException {
         this.extraInfo = cardInfo.get(name.toString());
@@ -19,7 +24,11 @@ public class Card<T extends Enum<T>> {
         try {
             image = new JLabel(new ImageIcon(ImageIO.read(
                     new File("Assets/Cards/" + name.toString() + ".png"))));
-        }catch(Exception e){ throw new InvalidFileException("Assets/Cards/"+ name.toString() + ".png"); }
+        }catch(IOException e){ throw new InvalidFileException("Assets/Cards/"+ name.toString() + ".png"); }
+        try {
+            defaultImg = new JLabel(new ImageIcon(ImageIO.read(
+                    new File("Assets/Cards/DEFAULT.png"))));
+        }catch(IOException e){ throw new InvalidFileException("Assets/Cards/DEFAULT.png"); }
     }
 
     @Override
@@ -47,7 +56,25 @@ public class Card<T extends Enum<T>> {
      */
     public T getEnum(){ return name;}
 
-    public JLabel getImage(){ return image; }
+    public JLabel getImage(){
+        if (hidden)
+            return defaultImg;
+        return image;
+    }
 
     public String getExtraInfo() {return name.toString() + ": " + extraInfo;}
+
+    /**
+     * Hide this card
+     */
+    public void hide() {
+        hidden = true;
+    }
+
+    /**
+     * Show this card
+     */
+    public void show() {
+        hidden = false;
+    }
 }

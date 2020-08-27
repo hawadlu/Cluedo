@@ -549,7 +549,7 @@ class CardPanel extends JPanel {
 
         //Draws each card with a strut
         for (int i = 0; i < cards.size(); i++) {
-            Card currentCard = cards.get(i);
+            Card<?> currentCard = cards.get(i);
             JComponent cardImage = currentCard.getImage();
             container.add(cardImage);
             if(i<cards.size()-1) container.add(Box.createHorizontalStrut((12-cards.size())*2));
@@ -568,24 +568,6 @@ class CardPanel extends JPanel {
         }
         this.add(container, BorderLayout.CENTER);
 
-    }
-
-    public void hideCards(int numOfCards) throws InvalidFileException{
-        //Setup variables
-        JPanel container = new JPanel();
-        container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
-        this.setBorder(new EmptyBorder(0, 0, 0, 0));
-        this.setLayout(new BorderLayout(0, 0));
-
-        //Draws default cards
-        try {
-            for (int i = 0; i < numOfCards; i++) {
-                container.add(container.add(new JLabel(new ImageIcon(ImageIO.read(
-                        new File("Assets/Cards/DEFAULT.png"))))));
-                if (i < 8) container.add(Box.createHorizontalStrut(6));
-            }
-        }catch(IOException e){ throw new InvalidFileException("Assets/Cards/DEFAULT.png"); }
-        this.add(container, BorderLayout.CENTER);
     }
 }
 
