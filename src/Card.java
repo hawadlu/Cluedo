@@ -49,5 +49,5 @@ public class Card<T extends Enum<T>> {
 
     public JLabel getImage(){ return image; }
 
-    public String getExtraInfo() {return name.toString() + ": " + extraInfo;}
+    public String getExtraInfo() {return name.toString().replace("_", " ") + ": " + extraInfo;}
 }
