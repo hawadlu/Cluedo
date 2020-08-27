@@ -18,6 +18,9 @@ import javax.swing.border.EmptyBorder;
 public class GUI {
     JFrame window = new JFrame("Cluedo");
 
+    //todo make the gui smaller
+    //todo add a thing to the console where users can type messages.
+
     int width = 1400;
     int height = 900;
 
