@@ -62,7 +62,7 @@ public class Card<T extends Enum<T>> {
         return image;
     }
 
-    public String getExtraInfo() {return name.toString() + ": " + extraInfo;}
+    public String getExtraInfo() {return name.toString().replace("_", " ") + ": " + extraInfo;}
 
     /**
      * Hide this card

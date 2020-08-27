@@ -399,6 +399,8 @@ class BoardPanel extends JPanel {
         hoverInfo.setLineWrap(true);
         hoverInfo.setWrapStyleWord(true);
         hoverInfo.setBackground(new Color(36, 123, 22));
+        hoverInfo.setForeground(Color.RED);
+        hoverInfo.setFont(new Font("Arial", Font.BOLD, 14));
 
         this.setPreferredSize(size);
         //Find the appropriate image width
