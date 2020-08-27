@@ -18,6 +18,9 @@ import javax.swing.border.EmptyBorder;
 public class GUI {
     JFrame window = new JFrame("Cluedo");
 
+    //todo make the gui smaller
+    //todo add a thing to the console where users can type messages.
+
     int width = 1400;
     int height = 900;
 
@@ -85,7 +88,6 @@ public class GUI {
 //        customGrid.setPadding(widthFifths * 3, heightSixths * 4);
         gameLayout.addElement(boardPanel);
 
-        consolePanel.setBackground(Color.red);
         gameLayout.setFill(GridBagConstraints.CENTER);
         gameLayout.setAnchor(GridBagConstraints.CENTER);
         gameLayout.setWeight(0, 0);
@@ -334,6 +336,7 @@ class ConsolePanel extends JPanel {
     ArrayList<String> consoleMessages = new ArrayList<>();
     JTextArea textArea;
     JScrollPane scroll;
+    JTextField typeArea = new JTextField();
 
     ConsolePanel(Dimension size) {
         this.setPreferredSize(size);
@@ -347,10 +350,20 @@ class ConsolePanel extends JPanel {
         //textArea.set
 
         buildMessages();
-        this.add(textArea, BorderLayout.CENTER);
+        this.add(textArea, BorderLayout.NORTH);
 
         scroll = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.add(scroll);
+
+        typeArea.setBackground(Color.LIGHT_GRAY);
+        this.add(typeArea, BorderLayout.SOUTH);
+
+        //When enter is pressed add a message to the console
+        typeArea.addActionListener(actionEvent -> {
+            addMessage(typeArea.getText());
+            typeArea.setText(null);
+            redraw();
+        });
     }
 
     /**
