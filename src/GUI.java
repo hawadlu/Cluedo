@@ -232,7 +232,7 @@ public class GUI {
 
     /**
      * Set the hover text that appears in the top left of the board
-     * @param text
+     * @param text the string to be displayed
      */
     public void setHoverText(String text) {
         boardPanel.setHoverText(text);
@@ -316,13 +316,7 @@ class ActionPanel extends JPanel {
         for (Player.Actions action : actions) {
             JButton button = new JButton(action.toString().replace("_", " "));
             button.setPreferredSize(new Dimension(100, 90));
-            button.addActionListener(e -> {
-                try {
-                    player.takeAction(action, Game.board);
-                } catch (InvalidFileException invalidFileException) {
-                    invalidFileException.printStackTrace();
-                }
-            });
+            button.addActionListener(e -> player.takeAction(action, Game.board));
             buttons.add(button);
         }
         container.add(buttons);
@@ -596,10 +590,6 @@ class CustomGrid {
         constraints.gridy = gridY;
         constraints.gridwidth = gridWidth;
         constraints.gridheight = gridHeight;
-    }
-    public void setPadding(int xPad, int yPad) {
-        constraints.ipadx = xPad;
-        constraints.ipady = yPad;
     }
 
     /**

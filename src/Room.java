@@ -5,7 +5,6 @@ public class Room {
     private final ArrayList<RoomTile> playerSeats = new ArrayList<>();
     private final ArrayList<RoomTile> weaponSpots = new ArrayList<>();
     private final ArrayList<DoorTile> doors = new ArrayList<>();
-    private boolean highlighted = false;
 
     public Room(ArrayList<RoomTile> tiles, Game.Rooms name){
         this.roomTiles=tiles;
@@ -58,15 +57,6 @@ public class Room {
     }
 
     /**
-     * Toggles display of the rooms doors
-     */
-    public void toggleDoorNumbers(){
-        for(DoorTile t: doors){
-            t.toggleDoor();
-        }
-    }
-
-    /**
      * The number of doors into this room
      *
      * @return number of doors into this room
@@ -115,8 +105,6 @@ public class Room {
         }
     }
 
-
-
     /**
      * Get the tiles of this room
      *
@@ -125,11 +113,4 @@ public class Room {
     public ArrayList<RoomTile> getTiles() {
         return roomTiles;
     }
-
-    /**
-     * Returns whether this tile is highlighted
-     *
-     * @return boolean if tile is highlighted
-     */
-    public boolean isHighlighted(){ return highlighted; }
 }

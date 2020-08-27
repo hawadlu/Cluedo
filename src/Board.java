@@ -329,12 +329,8 @@ public class Board {
     */
    private String[][] readRoomNames() throws IOException {
       String[][] names = new String[getHeight() + 1][getLength()];
-      BufferedReader reader = null;
-      try {
-         reader = new BufferedReader(new FileReader(new File("Assets/RoomNames.txt")));
-      } catch (FileNotFoundException e) {
-         e.printStackTrace();
-      }
+      BufferedReader reader;
+      reader = new BufferedReader(new FileReader(new File("Assets/RoomNames.txt")));
 
       String line;
       int count = 0;

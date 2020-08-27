@@ -1,5 +1,4 @@
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
@@ -8,15 +7,13 @@ import java.io.File;
  * of Weapons in rooms
  */
 public class Weapon {
-    private Game.Rooms lastRoom;
-    private Game.Rooms currentRoom;
+    private final Game.Rooms currentRoom;
     private final Game.Weapons name;
     private final BufferedImage image;
     private Position newPos;
 
     Weapon(Game.Weapons name, Game.Rooms room) throws InvalidFileException {
         this.name = name;
-        lastRoom = null;
         currentRoom = room;
         try {
             image = ImageIO.read(new File("Assets/WeaponPieces/" + name.toString() + ".png"));

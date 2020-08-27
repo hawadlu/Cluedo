@@ -92,7 +92,7 @@ public class Player {
      * @param action The action to be taken
      * @param board The board being played on
      */
-    public void takeAction(Actions action, Board board) throws InvalidFileException {
+    public void takeAction(Actions action, Board board) {
         switch (action) {
             case MOVE:
                 movement = Game.rollDice();
