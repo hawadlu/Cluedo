@@ -226,7 +226,6 @@ public class Game {
 
     /**
      * Parse the extra information about each card
-     * @return
      */
     private static void parseExtraCardInfo() throws IOException {
         File infoFile = new File("Assets/Cards/Info.txt");
@@ -243,7 +242,7 @@ public class Game {
                 else {
                     extraInfo.put(title, line);
                 }
-            } else if (state.equals("read title")) {
+            } else {
                 title = line;
                 state = "read info";
             }
@@ -257,6 +256,10 @@ public class Game {
         int playerIndex = 0;
         while (!gameOver) {
             currentPlayer = playingPlayers.get(playerIndex);
+            currentPlayer.hideHand();
+            JOptionPane.showMessageDialog(gui.window, currentPlayer+"'s turn");
+            currentPlayer.showHand();
+
             try { currentPlayer.takeTurn(board);
             } catch (InvalidFileException e) { e.printStackTrace(); }
 

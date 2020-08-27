@@ -8,12 +8,12 @@ import javax.swing.*;
  * creates an accusation/suggestion after OK is pressed
  */
 public class ComboBox extends JFrame implements ItemListener, ActionListener {
-    private JDialog frame;
-    private String action;
-    private Player player;
+    private final JDialog frame;
+    private final String action;
+    private final Player player;
 
-    private JComboBox<Game.Suspects> suspect;
-    private JComboBox<Game.Weapons> weapon;
+    private final JComboBox<Game.Suspects> suspect;
+    private final JComboBox<Game.Weapons> weapon;
     private JComboBox<Game.Rooms> room;
 
     private Game.Suspects chosenSuspect;

@@ -23,13 +23,6 @@ public class Player {
     private boolean takingTurn = false;
     public boolean hasMoved = false;
 
-    //Suggesting & accusing
-    private Game.Suspects player;
-    private Game.Weapons weapon;
-    private Game.Rooms room;
-    public static final Object moveLock = new Object();
-
-
     public enum Actions {MOVE, SUGGEST, ACCUSE, END_TURN }
 
     Player(Game.Suspects suspect, Position startPos) throws InvalidFileException {
@@ -99,7 +92,7 @@ public class Player {
      * @param action The action to be taken
      * @param board The board being played on
      */
-    public void takeAction(Actions action, Board board) throws InvalidFileException {
+    public void takeAction(Actions action, Board board) {
         switch (action) {
             case MOVE:
                 movement = Game.rollDice();
@@ -123,15 +116,10 @@ public class Player {
                 break;
 
             case SUGGEST:
-                //todo cards not hiding idk why
-                Game.gui.cardPanel.hideCards(hand.size());
-                Game.gui.cardPanel.revalidate();
-                Game.gui.cardPanel.repaint();
-                
-                room = ((RoomTile)board.getTile(newPos)).getEnum();
-                lastRoom = room;
+                Game.Rooms room1 = ((RoomTile) board.getTile(newPos)).getEnum();
+                lastRoom = room1;
                 movement = 0;
-                new ComboBox("Suggest", room, this);
+                new ComboBox("Suggest", room1, this);
                 Game.gui.cardPanel.drawCards(hand);
                 break;
 
@@ -260,6 +248,24 @@ public class Player {
         return matches;
     }
 
+    /**
+     * Hide this players hand
+     */
+    public void hideHand() {
+        for (Card<?> card : hand) card.hide();
+        Game.gui.cardPanel.drawCards(hand);
+        Game.gui.cardPanel.revalidate();
+    }
+
+    /**
+     * Show this players hand
+     */
+    public void showHand() {
+        for (Card<?> card : hand) card.show();
+        Game.gui.cardPanel.drawCards(hand);
+        Game.gui.cardPanel.revalidate();
+    }
+
     @Override
     public String toString() {
         return suspect+"";
@@ -385,11 +391,4 @@ public class Player {
         suggested = true;
     }
 
-    /**
-     * Unlock suggest/accuse lock to carry on playing
-     */
-    public void unlockSynchronize(){
-        // Allows user to carry on making moves
-        synchronized (this) { this.notifyAll(); }
-    }
 }

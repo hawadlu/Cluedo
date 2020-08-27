@@ -16,15 +16,6 @@ public class RoomTile extends Tile {
         room.addPlayer(p);
     }
 
-    /**
-     * Puts w weapon on tile
-     *
-     * @param w the weapon to be added to the tile
-     */
-    public void addWeapon(Weapon w){
-        room.addWeapon(w);
-    }
-
     @Override
     public String toString() {
         if(player!=null){
@@ -86,18 +77,18 @@ public class RoomTile extends Tile {
     }
 
     /**
-     * Set the player on this tile
+     * Set the weapon on this tile
      *
-     * @param p the player to give this tile
+     * @param w the weapon to give this tile
      */
     public void setWeapon(Weapon w){
         weapon = w;
     }
 
     /**
-     * Get the player on this tile
+     * Get the weapon on this tile
      *
-     * @return the player on this tile, null if no player
+     * @return the weapon on this tile, null if no weapon
      */
     public Weapon getWeapon() {
         return weapon;

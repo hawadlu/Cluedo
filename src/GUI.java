@@ -232,7 +232,7 @@ public class GUI {
 
     /**
      * Set the hover text that appears in the top left of the board
-     * @param text
+     * @param text the string to be displayed
      */
     public void setHoverText(String text) {
         boardPanel.setHoverText(text);
@@ -316,13 +316,7 @@ class ActionPanel extends JPanel {
         for (Player.Actions action : actions) {
             JButton button = new JButton(action.toString().replace("_", " "));
             button.setPreferredSize(new Dimension(100, 90));
-            button.addActionListener(e -> {
-                try {
-                    player.takeAction(action, Game.board);
-                } catch (InvalidFileException invalidFileException) {
-                    invalidFileException.printStackTrace();
-                }
-            });
+            button.addActionListener(e -> player.takeAction(action, Game.board));
             buttons.add(button);
         }
         container.add(buttons);
@@ -549,7 +543,7 @@ class CardPanel extends JPanel {
 
         //Draws each card with a strut
         for (int i = 0; i < cards.size(); i++) {
-            Card currentCard = cards.get(i);
+            Card<?> currentCard = cards.get(i);
             JComponent cardImage = currentCard.getImage();
             container.add(cardImage);
             if(i<cards.size()-1) container.add(Box.createHorizontalStrut((12-cards.size())*2));
@@ -568,24 +562,6 @@ class CardPanel extends JPanel {
         }
         this.add(container, BorderLayout.CENTER);
 
-    }
-
-    public void hideCards(int numOfCards) throws InvalidFileException{
-        //Setup variables
-        JPanel container = new JPanel();
-        container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
-        this.setBorder(new EmptyBorder(0, 0, 0, 0));
-        this.setLayout(new BorderLayout(0, 0));
-
-        //Draws default cards
-        try {
-            for (int i = 0; i < numOfCards; i++) {
-                container.add(container.add(new JLabel(new ImageIcon(ImageIO.read(
-                        new File("Assets/Cards/DEFAULT.png"))))));
-                if (i < 8) container.add(Box.createHorizontalStrut(6));
-            }
-        }catch(IOException e){ throw new InvalidFileException("Assets/Cards/DEFAULT.png"); }
-        this.add(container, BorderLayout.CENTER);
     }
 }
 
@@ -614,10 +590,6 @@ class CustomGrid {
         constraints.gridy = gridY;
         constraints.gridwidth = gridWidth;
         constraints.gridheight = gridHeight;
-    }
-    public void setPadding(int xPad, int yPad) {
-        constraints.ipadx = xPad;
-        constraints.ipady = yPad;
     }
 
     /**
