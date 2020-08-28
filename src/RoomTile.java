@@ -30,9 +30,12 @@ public class RoomTile extends Tile {
 
     /**
      * Return the room name
-     * @return
+     * @return the name of the romm
      */
-    public String getName() {return roomName.toString().replace("_", " ");}
+    public String getName() {
+        if (roomName != null) return roomName.toString().replace("_", " ");
+        else return "";
+    }
 
 
     //GETTERS AND SETTERS

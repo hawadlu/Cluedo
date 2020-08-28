@@ -437,7 +437,9 @@ class BoardPanel extends JPanel {
                 //Check if the mouse has entered known coordinated of a player or weapon
                 Object piece = pieceAtMouseLocation(e.getPoint());
                 if (piece != null) {
-                    if (piece instanceof RoomTile) setHoverText(((RoomTile) piece).getName());
+                    if (piece instanceof RoomTile) {
+                        setHoverText(((RoomTile) piece).getName());
+                    }
                     else setHoverText(piece.toString().replace("_", " "));
                 } else {
                     setHoverText("");
