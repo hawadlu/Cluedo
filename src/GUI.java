@@ -296,6 +296,7 @@ class ActionPanel extends JPanel {
         JTextArea textArea = new JTextArea(1, 1);
         textArea.setFont(textArea.getFont().deriveFont(18f));
         textArea.append(player.getSuspect() + "  |  " + player.getName());
+        textArea.setEditable(false);
         container.add(textArea);
 
         //Drawing dice
