@@ -102,7 +102,8 @@ public class Player {
                 if (board.getTile(oldPos).isRoom()) {
                     Room room = ((RoomTile) board.getTile(oldPos)).getRoom();
                     for (int i=0; i<room.getNumberOfDoors(); i++)
-                        findPath(board, movement-1, room.getDoor(i));
+                        if(!board.getTile(room.getDoor(i)).hasPlayer())
+                            findPath(board, movement-1, room.getDoor(i));
                 }
 
                 findPath(board, movement, oldPos);
