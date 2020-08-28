@@ -360,7 +360,7 @@ class ConsolePanel extends JPanel {
 
         //When enter is pressed add a message to the console
         typeArea.addActionListener(actionEvent -> {
-            addMessage(Game.getActivePlayers() + ": " + typeArea.getText());
+            addMessage(Game.currentPlayer + ": " + typeArea.getText());
             typeArea.setText(null);
             redraw();
         });
