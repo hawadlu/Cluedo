@@ -288,7 +288,7 @@ public class Board {
                Tile leftTile = posX > 0 ? board[posY][posX-1] : null;
                Tile rightTile = posX < 23 ? board[posY][posX+1] : null;
 
-               // Switch between highlighted and unhighlighted tiles
+               // Switch between highlighted and non highlighted tiles
                if (currentTile.isHighlighted()){ fileName.append("HighlightedPieces/"); }
                else { fileName.append("TilePieces/"); }
 

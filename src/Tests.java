@@ -2,8 +2,6 @@ import java.io.*;
 
 import org.junit.jupiter.api.Test;
 
-import javax.imageio.ImageIO;
-
 public class Tests {
     @Test
     public void testGUI() throws IOException, InvalidFileException {
