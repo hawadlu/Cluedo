@@ -12,7 +12,6 @@ import java.util.*;
 public class Board {
    public static HashMap<Game.Rooms, Room> rooms = new HashMap<>();
    private final Tile[][] board = new Tile[25][24];
-   private String[][] roomNames = new String[25][24];
 
    public Board(){
       for(int i =0; i< board.length; i++){
@@ -301,11 +300,11 @@ public class Board {
                     BufferedImage image = ImageIO.read(new File(fileName.toString()));
 
                     if(currentTile.hasPlayer())
-                        images[posY][posX] = overlayImages(image, currentTile.getPlayer().getImage(), roomNames, posX, posY);
+                        images[posY][posX] = overlayImages(image, currentTile.getPlayer().getImage());
                     else {
-                       images[posY][posX] = overlayImages(image, ((RoomTile) currentTile).getWeapon().getImage(), roomNames, posX, posY);
+                       images[posY][posX] = overlayImages(image, ((RoomTile) currentTile).getWeapon().getImage());
                     }
-                 } else images[posY][posX] = overlayImages(ImageIO.read(new File(fileName.toString())), null, roomNames, posX, posY);
+                 } else images[posY][posX] = overlayImages(ImageIO.read(new File(fileName.toString())), null);
 
                } catch (IOException e) { throw new InvalidFileException("Invalid filename: " + fileName); }
                posX++;
@@ -320,16 +319,12 @@ public class Board {
     * Lays one image on top of another
     * @param bottom image to go on the bottom
     * @param top image to go on the top
-    * @param roomNames array containing the room names (aligned with the tile positions)
-    * @param xPos x pos of the tile to draw
-    * @param yPos y pos of the tile to draw
     * @return the composite image
     */
-   private BufferedImage overlayImages(BufferedImage bottom, BufferedImage top, String[][] roomNames, int xPos, int yPos) {
+   private BufferedImage overlayImages(BufferedImage bottom, BufferedImage top) {
       BufferedImage combined = new BufferedImage(bottom.getWidth(), bottom.getHeight(), BufferedImage.TYPE_INT_ARGB);
       Graphics2D g2 = combined.createGraphics();
       g2.drawImage(bottom, 0, 0, null);
-
 
       if (top != null) g2.drawImage(top, 0, 0, null);
       g2.dispose();
