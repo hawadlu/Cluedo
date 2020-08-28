@@ -18,8 +18,11 @@ import javax.swing.border.EmptyBorder;
 public class GUI {
     JFrame window = new JFrame("Cluedo");
 
-    int width = 1400;
-    int height = 900;
+    //todo make the gui smaller
+    //todo add a thing to the console where users can type messages.
+
+    int width = 1152;
+    int height = 720;
 
     int widthFifths = width / 5;
     int heightSixths = height / 6;
@@ -85,7 +88,6 @@ public class GUI {
 //        customGrid.setPadding(widthFifths * 3, heightSixths * 4);
         gameLayout.addElement(boardPanel);
 
-        consolePanel.setBackground(Color.red);
         gameLayout.setFill(GridBagConstraints.CENTER);
         gameLayout.setAnchor(GridBagConstraints.CENTER);
         gameLayout.setWeight(0, 0);
@@ -334,6 +336,7 @@ class ConsolePanel extends JPanel {
     ArrayList<String> consoleMessages = new ArrayList<>();
     JTextArea textArea;
     JScrollPane scroll;
+    JTextField typeArea = new JTextField();
 
     ConsolePanel(Dimension size) {
         this.setPreferredSize(size);
@@ -347,10 +350,20 @@ class ConsolePanel extends JPanel {
         //textArea.set
 
         buildMessages();
-        this.add(textArea, BorderLayout.CENTER);
+        this.add(textArea, BorderLayout.NORTH);
 
         scroll = new JScrollPane(textArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         this.add(scroll);
+
+        typeArea.setBackground(Color.LIGHT_GRAY);
+        this.add(typeArea, BorderLayout.SOUTH);
+
+        //When enter is pressed add a message to the console
+        typeArea.addActionListener(actionEvent -> {
+            addMessage(Game.getActivePlayers() + ": " + typeArea.getText());
+            typeArea.setText(null);
+            redraw();
+        });
     }
 
     /**
@@ -393,12 +406,14 @@ class BoardPanel extends JPanel {
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
 
         //Setup the hover text
-        this.add(hoverInfo);
         hoverInfo.setEditable(false);
         hoverInfo.setCaretColor(Color.white);
         hoverInfo.setLineWrap(true);
         hoverInfo.setWrapStyleWord(true);
         hoverInfo.setBackground(new Color(36, 123, 22));
+        hoverInfo.setForeground(Color.white);
+        hoverInfo.setFont(new Font("Arial", Font.BOLD, 14));
+        this.add(hoverInfo);
 
         this.setPreferredSize(size);
         //Find the appropriate image width
@@ -422,7 +437,10 @@ class BoardPanel extends JPanel {
                 //Check if the mouse has entered known coordinated of a player or weapon
                 Object piece = pieceAtMouseLocation(e.getPoint());
                 if (piece != null) {
-                    setHoverText(piece.toString());
+                    if (piece instanceof RoomTile) {
+                        setHoverText(((RoomTile) piece).getName());
+                    }
+                    else setHoverText(piece.toString().replace("_", " "));
                 } else {
                     setHoverText("");
                 }
@@ -436,7 +454,7 @@ class BoardPanel extends JPanel {
 
     /**
      * Checks a location on the board to see if there is a player or a weapon there.
-     * @return the player / weapon found at this tile
+     * @return the player / weapon / room found at this tile
      */
     private Object pieceAtMouseLocation(Point p) {
         Tile tilePosition = calcTilePos(new Position(p.x, p.y));
@@ -447,6 +465,7 @@ class BoardPanel extends JPanel {
         if (tilePosition instanceof RoomTile) {
             RoomTile roomTile = (RoomTile) tilePosition;
             if (roomTile.hasWeapon()) return roomTile.getWeapon();
+            else return roomTile;
         }
 
         return null;

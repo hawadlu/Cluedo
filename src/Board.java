@@ -12,16 +12,8 @@ import java.util.*;
 public class Board {
    public static HashMap<Game.Rooms, Room> rooms = new HashMap<>();
    private final Tile[][] board = new Tile[25][24];
-   private String[][] roomNames = new String[25][24];
 
    public Board(){
-      //Read the room names
-      try {
-         roomNames = readRoomNames();
-      } catch (IOException e) {
-         e.printStackTrace();
-      }
-
       for(int i =0; i< board.length; i++){
          for(int j =0; j< board[i].length; j++){
             board[i][j] = new HallwayTile(new Position(j,i));
@@ -308,11 +300,11 @@ public class Board {
                     BufferedImage image = ImageIO.read(new File(fileName.toString()));
 
                     if(currentTile.hasPlayer())
-                        images[posY][posX] = overlayImages(image, currentTile.getPlayer().getImage(), roomNames, posX, posY);
+                        images[posY][posX] = overlayImages(image, currentTile.getPlayer().getImage());
                     else {
-                       images[posY][posX] = overlayImages(image, ((RoomTile) currentTile).getWeapon().getImage(), roomNames, posX, posY);
+                       images[posY][posX] = overlayImages(image, ((RoomTile) currentTile).getWeapon().getImage());
                     }
-                 } else images[posY][posX] = overlayImages(ImageIO.read(new File(fileName.toString())), null, roomNames, posX, posY);
+                 } else images[posY][posX] = overlayImages(ImageIO.read(new File(fileName.toString())), null);
 
                } catch (IOException e) { throw new InvalidFileException("Invalid filename: " + fileName); }
                posX++;
@@ -324,43 +316,15 @@ public class Board {
    }
 
    /**
-    * Read the room names
-    * @return 2d array containing the room names
-    */
-   private String[][] readRoomNames() throws IOException {
-      String[][] names = new String[getHeight() + 1][getLength()];
-      BufferedReader reader;
-      reader = new BufferedReader(new FileReader(new File("Assets/RoomNames.txt")));
-
-      String line;
-      int count = 0;
-      while((line = reader.readLine()) != null) {
-         names[count] = line.split(",");
-         count++;
-      }
-
-      return names;
-   }
-
-   /**
     * Lays one image on top of another
     * @param bottom image to go on the bottom
     * @param top image to go on the top
-    * @param roomNames array containing the room names (aligned with the tile positions)
-    * @param xPos x pos of the tile to draw
-    * @param yPos y pos of the tile to draw
     * @return the composite image
     */
-   private BufferedImage overlayImages(BufferedImage bottom, BufferedImage top, String[][] roomNames, int xPos, int yPos) {
+   private BufferedImage overlayImages(BufferedImage bottom, BufferedImage top) {
       BufferedImage combined = new BufferedImage(bottom.getWidth(), bottom.getHeight(), BufferedImage.TYPE_INT_ARGB);
       Graphics2D g2 = combined.createGraphics();
       g2.drawImage(bottom, 0, 0, null);
-
-      //Overlay text
-      if (!roomNames[yPos][xPos].equals("n")) {
-         g2.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
-         g2.drawString(roomNames[yPos][xPos], 0, 20);
-      }
 
       if (top != null) g2.drawImage(top, 0, 0, null);
       g2.dispose();

@@ -257,7 +257,7 @@ public class Game {
         while (!gameOver) {
             currentPlayer = playingPlayers.get(playerIndex);
             currentPlayer.hideHand();
-            JOptionPane.showMessageDialog(gui.window, currentPlayer+"'s turn");
+            JOptionPane.showMessageDialog(null, currentPlayer+"'s turn");
             currentPlayer.showHand();
 
             try { currentPlayer.takeTurn(board);
