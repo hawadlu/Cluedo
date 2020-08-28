@@ -21,8 +21,8 @@ public class GUI {
     //todo make the gui smaller
     //todo add a thing to the console where users can type messages.
 
-    int width = 1400;
-    int height = 900;
+    int width = 1152;
+    int height = 720;
 
     int widthFifths = width / 5;
     int heightSixths = height / 6;
@@ -360,7 +360,7 @@ class ConsolePanel extends JPanel {
 
         //When enter is pressed add a message to the console
         typeArea.addActionListener(actionEvent -> {
-            addMessage(typeArea.getText());
+            addMessage(Game.getActivePlayers() + ": " + typeArea.getText());
             typeArea.setText(null);
             redraw();
         });
@@ -406,7 +406,6 @@ class BoardPanel extends JPanel {
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
 
         //Setup the hover text
-        this.add(hoverInfo);
         hoverInfo.setEditable(false);
         hoverInfo.setCaretColor(Color.white);
         hoverInfo.setLineWrap(true);
@@ -414,6 +413,7 @@ class BoardPanel extends JPanel {
         hoverInfo.setBackground(new Color(36, 123, 22));
         hoverInfo.setForeground(Color.white);
         hoverInfo.setFont(new Font("Arial", Font.BOLD, 14));
+        this.add(hoverInfo);
 
         this.setPreferredSize(size);
         //Find the appropriate image width
@@ -437,7 +437,8 @@ class BoardPanel extends JPanel {
                 //Check if the mouse has entered known coordinated of a player or weapon
                 Object piece = pieceAtMouseLocation(e.getPoint());
                 if (piece != null) {
-                    setHoverText(piece.toString());
+                    if (piece instanceof RoomTile) setHoverText(((RoomTile) piece).getName());
+                    else setHoverText(piece.toString().replace("_", " "));
                 } else {
                     setHoverText("");
                 }
@@ -451,7 +452,7 @@ class BoardPanel extends JPanel {
 
     /**
      * Checks a location on the board to see if there is a player or a weapon there.
-     * @return the player / weapon found at this tile
+     * @return the player / weapon / room found at this tile
      */
     private Object pieceAtMouseLocation(Point p) {
         Tile tilePosition = calcTilePos(new Position(p.x, p.y));
@@ -462,6 +463,7 @@ class BoardPanel extends JPanel {
         if (tilePosition instanceof RoomTile) {
             RoomTile roomTile = (RoomTile) tilePosition;
             if (roomTile.hasWeapon()) return roomTile.getWeapon();
+            else return roomTile;
         }
 
         return null;

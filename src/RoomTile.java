@@ -28,6 +28,12 @@ public class RoomTile extends Tile {
 
     }
 
+    /**
+     * Return the room name
+     * @return
+     */
+    public String getName() {return roomName.toString().replace("_", " ");}
+
 
     //GETTERS AND SETTERS
 
@@ -77,9 +83,7 @@ public class RoomTile extends Tile {
     }
 
     /**
-     * Set the weapon on this tile
-     *
-     * @param w the weapon to give this tile
+     * Set the player on this tile
      */
     public void setWeapon(Weapon w){
         weapon = w;
