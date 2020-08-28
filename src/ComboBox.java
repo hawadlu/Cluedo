@@ -3,7 +3,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 /**
- * Creates a Combobox for suggestion/accusation
+ * Creates a Combobox for suggestion/accusation.
  * Given info, create a popup which then
  * creates an accusation/suggestion after OK is pressed
  */

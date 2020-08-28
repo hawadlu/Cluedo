@@ -1,7 +1,7 @@
 import javax.swing.*;
 
 /**
- * Accuse Action
+ * Accuse Action.
  *  -On a players 2nd action after move they can choose to accuse
  *  -Check if user has correct guess
  *  -End game if correct, current player loses if incorrect
@@ -19,6 +19,10 @@ public class Accuse implements Action {
         this.player = player;
     }
 
+    /**
+     * Apply an accusation.
+     * Checks that the proposed accusation matches the stored winning cards
+     */
     @Override
     public void apply() {
         //Check to see if the accused matches

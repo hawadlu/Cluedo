@@ -8,7 +8,7 @@ public class RoomTile extends Tile {
     }
 
     /**
-     * Puts a player on tile
+     * Puts a player on tile.
      *
      * @param p the player to be added to the tile
      */
@@ -29,7 +29,7 @@ public class RoomTile extends Tile {
     }
 
     /**
-     * Return the room name
+     * Return the room name.
      * @return the name of the romm
      */
     public String getName() {
@@ -41,7 +41,7 @@ public class RoomTile extends Tile {
     //GETTERS AND SETTERS
 
     /**
-     * Gets the room enum
+     * Gets the room enum.
      *
      * @return room enum
      */
@@ -50,7 +50,7 @@ public class RoomTile extends Tile {
     }
 
     /**
-     * Get the room that this tile is a part of
+     * Get the room that this tile is a part of.
      *
      * @return the room associated with this tile, null if no room
      */
@@ -59,7 +59,7 @@ public class RoomTile extends Tile {
     }
 
     /**
-     * Set this tile to a room
+     * Set this tile to a room.
      *
      * @param r the room to set this tile as
      */
@@ -68,7 +68,7 @@ public class RoomTile extends Tile {
     }
 
     /**
-     * Set the name of this room
+     * Set the name of this room.
      *
      * @param roomName new name for this room
      */
@@ -77,7 +77,7 @@ public class RoomTile extends Tile {
     }
 
     /**
-     * Set the player on this tile
+     * Set the player on this tile.
      *
      * @param p the player to give this tile
      */
@@ -86,14 +86,15 @@ public class RoomTile extends Tile {
     }
 
     /**
-     * Set the player on this tile
+     * Set the player on this tile.
+     * @param w the weapon to set
      */
     public void setWeapon(Weapon w){
         weapon = w;
     }
 
     /**
-     * Get the weapon on this tile
+     * Get the weapon on this tile.
      *
      * @return the weapon on this tile, null if no weapon
      */
@@ -102,14 +103,14 @@ public class RoomTile extends Tile {
     }
 
     /**
-     * Removes player from tile
+     * Removes player from tile.
      */
     public void removeWeapon() {
         weapon = null;
     }
 
     /**
-     * Check if this tile has a Weapon
+     * Check if this tile has a Weapon.
      *
      * @return boolean response
      */

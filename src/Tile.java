@@ -10,7 +10,7 @@ abstract class Tile {
     // Abstract Methods
 
     /**
-     * Set the player on this tile
+     * Set the player on this tile.
      *
      * @param p the player to give this tile
      */
@@ -20,7 +20,7 @@ abstract class Tile {
     // Common Methods
 
     /**
-     * Check if this tile has a player
+     * Check if this tile has a player.
      *
      * @return boolean response
      */
@@ -29,7 +29,7 @@ abstract class Tile {
     }
 
     /**
-     * Gets this door position, used for leaving rooms
+     * Gets this door position, used for leaving rooms.
      *
      * @return door position
      */
@@ -38,7 +38,7 @@ abstract class Tile {
     }
 
     /**
-     * Get the player on this tile
+     * Get the player on this tile.
      *
      * @return the player on this tile, null if no player
      */
@@ -47,20 +47,21 @@ abstract class Tile {
     }
 
     /**
-     * Removes player from tile
+     * Removes player from tile.
      */
     public void removePlayer() {
         player = null;
     }
     /**
-    * @return boolean response
+     * Check if this tile is a room.
+    * @return boolean response.
     */
     public boolean isRoom() {
         return this instanceof RoomTile;
     }
 
     /**
-     * Is this tile a room
+     * Is this tile a room.
      * @return boolean response
     */
     public boolean isNotNullRoom() {
@@ -68,7 +69,8 @@ abstract class Tile {
     }
 
     /**
-     * Is this tile the same type of room as the provided tile
+     * Is this tile the same type of room as the provided tile.
+     * @param otherRoom the room to compare
      * @return boolean response
      */
     public boolean isSameRoom(Tile otherRoom) {
@@ -77,7 +79,7 @@ abstract class Tile {
     }
 
     /**
-     * Is this a null tile
+     * Is this a null tile.
      * @return boolean response
      */
     public boolean isNull() {
@@ -85,7 +87,7 @@ abstract class Tile {
     }
 
     /**
-     * Is this tile a hallway
+     * Is this tile a hallway.
      * @return boolean response
      */
     public boolean isHallway() {
@@ -93,7 +95,7 @@ abstract class Tile {
     }
 
     /**
-     * Is this tile a door
+     * Is this tile a door.
      * @return boolean response
      */
     public boolean isDoor() {
@@ -101,19 +103,19 @@ abstract class Tile {
     }
 
     /**
-     * Returns whether this tile is highlighted
+     * Returns whether this tile is highlighted.
      *
      * @return boolean if tile is highlighted
      */
      public boolean isHighlighted(){ return highlighted; }
 
     /**
-     * toggle highlighted
+     * toggle highlighted.
      */
     public void toggleHighlight(){ highlighted = !highlighted; }
 
     /**
-     * set tile as highlighted
+     * set tile as highlighted.
      */
     public void setHighlighted(){ highlighted = true; }
 }

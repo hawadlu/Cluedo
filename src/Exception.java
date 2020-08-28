@@ -1,5 +1,5 @@
 /**
- * Classes containing any potential errors
+ * Classes containing any potential errors.
  */
 
 class InvalidMoveException extends Throwable {

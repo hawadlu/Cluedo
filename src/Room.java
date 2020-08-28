@@ -15,7 +15,7 @@ public class Room {
     }
 
     /**
-     * Allocates room tile spots for players in 3x2 area
+     * Allocates room tile spots for players in 3x2 area.
      *
      * @param b board game is being played on
      * @param x leftmost position of 3x2 area
@@ -31,7 +31,7 @@ public class Room {
     }
 
     /**
-     * Allocates room tile spots for weapons in 2x3 area
+     * Allocates room tile spots for weapons in 2x3 area.
      *
      * @param b board game is being played on
      * @param x leftmost position of 3x2 area
@@ -47,7 +47,7 @@ public class Room {
     }
 
     /**
-     * Add a door to this room
+     * Add a door to this room.
      *
      * @param t the tile which is the door to add to this room
      */
@@ -57,7 +57,7 @@ public class Room {
     }
 
     /**
-     * The number of doors into this room
+     * The number of doors into this room.
      *
      * @return number of doors into this room
      */
@@ -66,7 +66,7 @@ public class Room {
     }
 
     /**
-     * Get a door from this room
+     * Get a door from this room.
      *
      * @param n the index of the door to be got
      * @return the door at the provided index
@@ -76,7 +76,7 @@ public class Room {
     }
 
     /**
-     * Add a player into this room
+     * Add a player into this room.
      *
      * @param p the player to be added to this room
      */
@@ -91,7 +91,7 @@ public class Room {
     }
 
     /**
-     * Add a weapon into this room
+     * Add a weapon into this room.
      *
      * @param w the weapon to be added to this room
      */
@@ -106,7 +106,7 @@ public class Room {
     }
 
     /**
-     * Get the tiles of this room
+     * Get the tiles of this room.
      *
      * @return arraylist of the tiles in this room
      */

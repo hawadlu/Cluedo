@@ -11,7 +11,7 @@ public class Die {
     }
 
     /**
-     * Roll this 6-faced die
+     * Roll this 6-faced die.
      * @return the number rolled
      */
     public int roll() {
@@ -19,15 +19,15 @@ public class Die {
     }
 
     /**
-     * Set this die to be blank
+     * Set this die to be blank.
      */
     public void setBlank() {
         number = 0;
     }
 
     /**
-     * Draw the die
-     *
+     * Draw the die.
+     * @throws InvalidFileException die image cannot be found
      * @return a new JLabel for drawing the image
      */
     public JLabel getImage() throws InvalidFileException {

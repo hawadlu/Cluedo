@@ -5,9 +5,9 @@ public class HallwayTile extends Tile {
     }
 
     /**
-     * Puts a player on tile
+     * Puts a player on tile.
      *
-     * @param p the player to be added to the tile
+     * @param p the player to be added to the tile.
      */
     public void addPlayer(Player p){
             player = p;
@@ -25,7 +25,7 @@ public class HallwayTile extends Tile {
     // GETTERS AND SETTERS
     
     /**
-     * Set the player on this tile
+     * Set the player on this tile.
      *
      * @param p the player to give this tile
      */

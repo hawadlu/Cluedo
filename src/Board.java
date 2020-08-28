@@ -5,6 +5,7 @@ import java.io.*;
 import java.util.*;
 
 /**
+ * Board.
  * Construct a board of positions
  * -Draws board for user
  * -Contains locations of players
@@ -14,6 +15,10 @@ public class Board {
    private final Tile[][] board = new Tile[25][24];
    private String[][] roomNames = new String[25][24];
 
+   /**
+    * Constructor.
+    * Read all of the room names and construct the board in the appropriate layout
+    */
    public Board(){
       //Read the room names
       try {
@@ -157,13 +162,19 @@ public class Board {
    }
 
    /**
-    * Get the length and height of the board
+    * Board length.
+    * @return get the board length
     */
    public int getLength() {return board.length;}
+
+   /**
+    * Board height.
+    * @return get the board height
+    */
    public int getHeight() {return board[0].length;}
 
    /**
-    * Helper method to set room tiles
+    * Helper method to set room tiles.
     *
     * @param tiles list of tiles to add new tiles to
     * @param x1 left-most co-ord of area to add
@@ -212,8 +223,7 @@ public class Board {
     }
 
    /**
-    * Gets Tile from position object
-    *
+    * Gets Tile from position object.
     * @param pos the position of the tile wanted
     * @return the tile at the position
     */
@@ -221,12 +231,17 @@ public class Board {
       return board[pos.y][pos.x];
    }
 
+   /**
+    * Get room object from room enum.
+    * @param room the room enum
+    * @return the room object
+    */
    public Room getRoom(Game.Rooms room){
       return rooms.get(room);
    }
 
    /**
-    * Moves player on board
+    * Moves player on board.
     *
     * @param currentPos the current position of the player
     * @param nextPos the new position of the player
@@ -241,7 +256,7 @@ public class Board {
     }
 
     /**
-     * Create a 2d array of buffered images that represent this board
+     * Create a 2d array of buffered images that represent this board.
      * @return 2d array of buffered images that represents this board
      * @throws InvalidFileException if any png files cannot be found
      */
@@ -324,7 +339,7 @@ public class Board {
    }
 
    /**
-    * Read the room names
+    * Read the room names.
     * @return 2d array containing the room names
     */
    private String[][] readRoomNames() throws IOException {
@@ -343,7 +358,7 @@ public class Board {
    }
 
    /**
-    * Lays one image on top of another
+    * Lays one image on top of another.
     * @param bottom image to go on the bottom
     * @param top image to go on the top
     * @param roomNames array containing the room names (aligned with the tile positions)

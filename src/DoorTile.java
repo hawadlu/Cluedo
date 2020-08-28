@@ -11,14 +11,14 @@ public class DoorTile extends Tile{
     }
 
     /**
-     * Toggles the display of the door
+     * Toggles the display of the door.
      */
     public void toggleDoor(){
         toggleDoor= !toggleDoor;
     }
 
     /**
-     * Puts a player on tile
+     * Puts a player on tile.
      *
      * @param p the player to be added to the tile
      */
@@ -40,7 +40,7 @@ public class DoorTile extends Tile{
     //GETTERS AND SETTERS
 
     /**
-     * Gets the room
+     * Gets the room.
      *
      * @return the room this door is associated with
      */
@@ -49,7 +49,7 @@ public class DoorTile extends Tile{
     }
 
     /**
-     * Sets room door number
+     * Sets room door number.
      *
      * @param i is the new door number
      */
@@ -58,7 +58,7 @@ public class DoorTile extends Tile{
     }
 
     /**
-     * Set the player on this tile
+     * Set the player on this tile.
      *
      * @param p the player to give this tile
      */

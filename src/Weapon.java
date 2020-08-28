@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Weapons class for visual representation
+ * Weapons class for visual representation.
  * of Weapons in rooms
  */
 public class Weapon {
@@ -23,7 +23,7 @@ public class Weapon {
 
 
     /**
-     * Set the newest position of this weapon
+     * Set the newest position of this weapon.
      *
      * @param newPos the new position to be set as this weapons newest position
      */
@@ -32,7 +32,7 @@ public class Weapon {
     }
 
     /**
-     * Get the position of this weapon
+     * Get the position of this weapon.
      *
      * @return the position of this weapon
      */
