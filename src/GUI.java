@@ -412,7 +412,6 @@ class BoardPanel extends JPanel {
         this.setLayout(new FlowLayout(FlowLayout.LEFT));
 
         //Setup the hover text
-        this.add(hoverInfo);
         hoverInfo.setEditable(false);
         hoverInfo.setCaretColor(Color.white);
         hoverInfo.setLineWrap(true);
@@ -421,6 +420,7 @@ class BoardPanel extends JPanel {
         hoverInfo.setForeground(Color.RED);
         hoverInfo.setOpaque(false);
         hoverInfo.setFont(new Font("Arial", Font.BOLD, 14));
+        this.add(hoverInfo);
 
         this.setPreferredSize(size);
         //Find the appropriate image width
@@ -444,7 +444,8 @@ class BoardPanel extends JPanel {
                 //Check if the mouse has entered known coordinated of a player or weapon
                 Object piece = pieceAtMouseLocation(e.getPoint());
                 if (piece != null) {
-                    setHoverText(piece.toString());
+                    if (piece instanceof RoomTile) setHoverText(((RoomTile) piece).getName());
+                    else setHoverText(piece.toString().replace("_", " "));
                 } else {
                     setHoverText("");
                 }
@@ -458,7 +459,7 @@ class BoardPanel extends JPanel {
 
     /**
      * Checks a location on the board to see if there is a player or a weapon there.
-     * @return the player / weapon found at this tile
+     * @return the player / weapon / room found at this tile
      */
     private Object pieceAtMouseLocation(Point p) {
         Tile tilePosition = calcTilePos(new Position(p.x, p.y));
@@ -469,6 +470,7 @@ class BoardPanel extends JPanel {
         if (tilePosition instanceof RoomTile) {
             RoomTile roomTile = (RoomTile) tilePosition;
             if (roomTile.hasWeapon()) return roomTile.getWeapon();
+            else return roomTile;
         }
 
         return null;
