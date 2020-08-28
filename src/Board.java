@@ -356,9 +356,19 @@ public class Board {
       Graphics2D g2 = combined.createGraphics();
       g2.drawImage(bottom, 0, 0, null);
 
+      //todo move this out of this method?
+      Font monofont = null;
+      try {
+         monofont = Font.createFont(Font.TRUETYPE_FONT, new File("Assets/Font/monofonto/monofonto.ttf"));
+      } catch (FontFormatException e) {
+         e.printStackTrace();
+      } catch (IOException e) {
+         e.printStackTrace();
+      }
+
       //Overlay text
       if (!roomNames[yPos][xPos].equals("n")) {
-         g2.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 10));
+         g2.setFont(monofont.deriveFont(12f));
          g2.drawString(roomNames[yPos][xPos], 0, 10);
       }
 
