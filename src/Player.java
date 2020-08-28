@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * Physical PLayer.
- * -Contains their hand, pos & if they've lost
+ * -Contains their hand, pos and if they've lost
  */
 public class Player {
     private final Game.Suspects suspect;
@@ -44,6 +44,7 @@ public class Player {
      * Has the choice of suggest / accuse
      *
      * @param board the board that the game is running on
+     * @throws InvalidFileException thrown if a file is invalid
      */
     public void takeTurn(Board board) throws InvalidFileException {
         //Draws cards in hand
@@ -89,7 +90,7 @@ public class Player {
     }
 
     /**
-     * Have this player take the provided action
+     * Have this player take the provided action.
      * @param action The action to be taken
      * @param board The board being played on
      */
@@ -134,7 +135,7 @@ public class Player {
     }
 
     /**
-     * Generate an array of actions that can be taken
+     * Generate an array of actions that can be taken.
      *
      * @param board the board the game is being played on
      * @return the array of actions that can be taken
@@ -159,7 +160,7 @@ public class Player {
     }
 
     /**
-     * Move this player to the provided tile
+     * Move this player to the provided tile.
      * @param newTile tile to move to
      */
     public void moveTo(Tile newTile) {
@@ -178,7 +179,7 @@ public class Player {
     }
 
     /**
-     * Recursive method, highlight tiles that are free
+     * Recursive method, highlight tiles that are free.
      * highlights all tiles within movement.
      *
      * @param board board that players are playing on
@@ -235,7 +236,7 @@ public class Player {
     }
 
     /**
-     * Look through this hand for any matches
+     * Look through this hand for any matches.
      *
      * @param room Game.Rooms
      * @param suspect Game.Players
@@ -251,7 +252,7 @@ public class Player {
     }
 
     /**
-     * Hide this players hand
+     * Hide this players hand.
      */
     public void hideHand() {
         for (Card<?> card : hand) card.hide();
@@ -260,7 +261,7 @@ public class Player {
     }
 
     /**
-     * Show this players hand
+     * Show this players hand.
      */
     public void showHand() {
         for (Card<?> card : hand) card.show();
@@ -294,14 +295,14 @@ public class Player {
     // GETTERS AND SETTERS
 
     /**
-     * Get this players hand
+     * Get this players hand.
      *
      * @return arraylist of cards in this players hand
      */
     public ArrayList<Card<?>> getHand(){ return hand; }
 
     /**
-     * Get the suspect this player is playing as
+     * Get the suspect this player is playing as.
      *
      * @return enum from Suspects in Game class
      */
@@ -310,7 +311,7 @@ public class Player {
     }
 
     /**
-     * Get the name of this player
+     * Get the name of this player.
      * @return name of the person playing this suspect
      */
     public String getName() {
@@ -318,7 +319,7 @@ public class Player {
     }
 
     /**
-     * Set the name of this player
+     * Set the name of this player.
      * @param name name of the person playing this suspect
      */
     public void setName(String name) {
@@ -326,14 +327,14 @@ public class Player {
     }
 
     /**
-     * Get the position of this player
+     * Get the position of this player.
      *
      * @return the position of this player
      */
     public Position getPos(){ return newPos; }
 
     /**
-     * Get the tiles that this player has been in this and last turn
+     * Get the tiles that this player has been in this and last turn.
      *
      * @return a hashset of tiles that this player was in this and last turn
      */
@@ -342,15 +343,15 @@ public class Player {
     }
 
     /**
-     * Get the image of this player
-     * @return bufferedimage of this player
+     * Get the image of this player.
+     * @return BufferedImage of this player
      */
     public BufferedImage getImage() {
         return image;
     }
 
     /**
-     * Adds a card to players hand
+     * Adds a card to players hand.
      * Use to Create a player
      *
      * @param card the card to add to the hand
@@ -360,7 +361,7 @@ public class Player {
     }
 
     /**
-     * Set the newest position of this player
+     * Set the newest position of this player.
      *
      * @param newPos the new position to be set as this players newest position
      */
@@ -369,7 +370,7 @@ public class Player {
     }
 
     /**
-     * Set whether this player has lost or not
+     * Set whether this player has lost or not.
      *
      * @param hasLost whether this player has lost or not
      */
@@ -378,8 +379,7 @@ public class Player {
     }
 
     /**
-     * Has this player lost?
-     *
+     * Check if the player has lost.
      * @return boolean response
      */
     public boolean hasLost() {
@@ -387,7 +387,7 @@ public class Player {
     }
 
     /**
-     * This player has suggested
+     * This player has suggested.
      */
     public void setSuggested(){
         suggested = true;

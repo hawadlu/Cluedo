@@ -50,29 +50,36 @@ public class Card<T extends Enum<T>> {
     }
 
     /**
-     * Get the enum (from Game class) that this is a card of
-     *
+     * Get the enum (from Game class) that this is a card of.
      * @return enum Players/Weapons/Rooms from Game class
      */
     public T getEnum(){ return name;}
 
+    /**
+     * Get the appropriate image of the card.
+     * @return JLabel containing the images
+     */
     public JLabel getImage(){
         if (hidden)
             return defaultImg;
         return image;
     }
 
+    /**
+     * Get any extra info about this card.
+     * @return String containing the extra info
+     */
     public String getExtraInfo() {return name.toString().replace("_", " ") + ": " + extraInfo;}
 
     /**
-     * Hide this card
+     * Hide this card.
      */
     public void hide() {
         hidden = true;
     }
 
     /**
-     * Show this card
+     * Show this card.
      */
     public void show() {
         hidden = false;

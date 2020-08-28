@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.List;
 
 /**
- * Overall class to run game
+ * Overall class to run game.
  * -Initializes players, card and board
  * -Loops through players to run game
  * -Checks if game is finished
@@ -61,7 +61,7 @@ public class Game {
     }
 
     /**
-     * Create the Weapons, starting them in random rooms
+     * Create the Weapons, starting them in random rooms.
      */
     private static void createWeapons() {
         weapons = new ArrayList<>();
@@ -82,7 +82,7 @@ public class Game {
     }
 
     /**
-     * Create the players, setting them all as NPC's to start with
+     * Create the players, setting them all as NPC's to start with.
      */
     private static void createPlayers() {
         players = new ArrayList<>();
@@ -102,7 +102,7 @@ public class Game {
     }
 
     /**
-     * Gets the default starting position of a suspect
+     * Gets the default starting position of a suspect.
      *
      * @param suspect the suspect enum to find the starting position of
      * @return a position object, containing the starting position coordinates
@@ -120,7 +120,7 @@ public class Game {
     }
 
     /**
-     * Create a dropdown to get the player to choose one of the provided options
+     * Create a dropdown to get the player to choose one of the provided options.
      * @param options the options the player can choose from
      * @param title the title on the popup box
      * @param message the message above the dropdown
@@ -137,11 +137,12 @@ public class Game {
     }
 
     /**
-     * Setup the game to be ready to be played
+     * Setup the game to be ready to be played.
      * - Sets game over to false
      * - Creates board
      * - Creates players
      * - Deals cards to players
+     * @throws IOException thrown if a file cannot be found.
      */
     public static void setupGame() throws IOException {
         gameOver = false;
@@ -225,7 +226,7 @@ public class Game {
     }
 
     /**
-     * Parse the extra information about each card
+     * Parse the extra information about each card.
      */
     private static void parseExtraCardInfo() throws IOException {
         File infoFile = new File("Assets/Cards/Info.txt");
@@ -250,7 +251,7 @@ public class Game {
     }
 
     /**
-     * Play the game
+     * Play the game.
      */
     public static void playGame() {
         int playerIndex = 0;
@@ -274,7 +275,7 @@ public class Game {
     }
 
     /**
-     * Creates cards, chooses a person, weapon and room at random to be the murder items
+     * Creates cards, chooses a person, weapon and room at random to be the murder items.
      * shuffles the remaining cards and deals them out to the players
 
      * @param players the list of players playing the game to be dealt cards to
@@ -322,7 +323,7 @@ public class Game {
     }
 
     /**
-     * Roll the dice, get the result
+     * Roll the dice, get the result.
      * @return the total number rolled on the dice
      */
     public static int rollDice() {
@@ -330,7 +331,7 @@ public class Game {
     }
 
     /**
-     * Get the dice
+     * Get the dice.
      * @return an array of the 2 die
      */
     public static Die[] getDice() {
@@ -338,7 +339,7 @@ public class Game {
     }
 
     /**
-     * Print a message to the GUI console
+     * Print a message to the GUI console.
      * @param text the message to print
      */
     public static void print(String text) {
@@ -347,7 +348,7 @@ public class Game {
     }
 
     /**
-     * Get a list of players that are currently playing the game and haven't lost
+     * Get a list of players that are currently playing the game and haven't lost.
      * @return unmodifiable Collection of active players
      */
     public static Collection<Player> getActivePlayers() {

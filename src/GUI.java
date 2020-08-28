@@ -13,7 +13,7 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 /**
- * This class handles all of the drawing of the board
+ * This class handles all of the drawing of the board.
  */
 public class GUI {
     JFrame window = new JFrame("Cluedo");
@@ -29,9 +29,7 @@ public class GUI {
     JPanel topBar = new JPanel();
     JPanel content = new JPanel();
 
-    /**
-     * These objects handle the four quadrants of the gui
-     */
+    //These objects handle the four quadrants of the gui
     ActionPanel actionPanel = new ActionPanel(new Dimension(widthFifths, heightSixths * 4),
             new Dimension(widthFifths, heightSixths * 2), new Dimension(widthFifths, heightSixths));
     ConsolePanel consolePanel = new ConsolePanel(new Dimension(widthFifths, heightSixths * 4));
@@ -101,6 +99,7 @@ public class GUI {
         gameLayout.setGrid(0, 2, 3, 1);
 //        customGrid.setPadding(widthFifths * 5, heightSixths * 2);
         gameLayout.addElement(cardPanel);
+
         try { cardPanel.setupCards();
         }catch(InvalidFileException ignored){}
         
@@ -108,7 +107,7 @@ public class GUI {
     }
 
     /**
-     * Generates the menu bar
+     * Generates the menu bar.
      */
     private void generateMenuBar(Boolean showInstructions) {
         topBar.removeAll();
@@ -187,7 +186,7 @@ public class GUI {
     }
 
     /**
-     * Show the instructions
+     * Show the instructions.
      */
     private void showInstructions() throws IOException {
         generateMenuBar(false);
@@ -225,13 +224,13 @@ public class GUI {
     }
 
     /**
-     * Add a message to the console
+     * Add a message to the console.
      * @param message the message
      */
     public void addToConsole(String message) {consolePanel.addMessage(message);}
 
     /**
-     * Set the hover text that appears in the top left of the board
+     * Set the hover text that appears in the top left of the board.
      * @param text the string to be displayed
      */
     public void setHoverText(String text) {
@@ -239,7 +238,7 @@ public class GUI {
     }
 
     /**
-     * redraw the gui
+     * redraw the gui.
      */
     public void redraw() {
         topBar.revalidate();
@@ -278,6 +277,13 @@ class ActionPanel extends JPanel {
         this.add(container);
     }
 
+    /**
+     * Draws the buttons that the users uses to control movement, accusing, suggesting, etc.
+     * @param actions array of possible actions
+     * @param player the current player
+     * @param die the dice
+     * @throws InvalidFileException thrown if the Cluedo image cannot be found
+     */
     public void drawButtons(Player.Actions[] actions, Player player, Die[] die) throws InvalidFileException{
         container.removeAll();
         dice.removeAll();
@@ -367,7 +373,7 @@ class ConsolePanel extends JPanel {
     }
 
     /**
-     * Add all of the console messages to the gui
+     * Add all of the console messages to the gui.
      */
     void buildMessages () {
         for (String str: consoleMessages)
@@ -375,7 +381,7 @@ class ConsolePanel extends JPanel {
     }
 
     /**
-     * Add a message to the console. Max len of console is 30
+     * Add a message to the console. Max len of console is 30.
      * @param message the message
      */
     void addMessage(String message) {
@@ -384,7 +390,7 @@ class ConsolePanel extends JPanel {
     }
 
     /**
-     * redraw the console
+     * redraw the console.
      */
     public void redraw() {
         textArea.setText(null);
@@ -393,7 +399,7 @@ class ConsolePanel extends JPanel {
 }
 
 /**
- * This class handles displaying the board
+ * This class handles displaying the board.
  */
 class BoardPanel extends JPanel {
     int imgWidth;
@@ -449,6 +455,10 @@ class BoardPanel extends JPanel {
         });
     }
 
+    /**
+     * Sets the text that is displayed on hover in the top left corner of the board.
+     * @param text String of text to be displayed
+     */
     public void setHoverText(String text) {
         hoverInfo.setText(text);
     }
@@ -494,7 +504,16 @@ class BoardPanel extends JPanel {
         return null;
     }
 
+    /**
+     * Calculate how far down to start drawing the board.
+     * @return the start pos
+     */
     int getXOffset() {return (this.getWidth() / 2 - imgWidth * boardLength / 2);}
+
+    /**
+     * Calculate how far across to start drawing the board.
+     * @return the start pos
+     */
     int getYOffset() {return ((this.getHeight() / 2 - (imgWidth * boardHeight) / 2) / 2);}
 
     @Override
@@ -525,7 +544,7 @@ class CardPanel extends JPanel {
     }
 
     /**
-     * Sets up cards with default image
+     * Sets up cards with default image.
      * Populates container for start usage
      *
      * @throws InvalidFileException if default card file is not found
@@ -549,7 +568,7 @@ class CardPanel extends JPanel {
     }
 
     /**
-     * Draws players cards on their turn
+     * Draws players cards on their turn.
      *
      * @param cards list in the players hand.
      */
@@ -613,7 +632,7 @@ class CustomGrid {
     }
 
     /**
-     * Set the layout
+     * Set the layout.
      * @param layout layout obj
      */
     public void setLayout(GridBagLayout layout) {
@@ -621,7 +640,7 @@ class CustomGrid {
     }
 
     /**
-     * Set the constraints
+     * Set the constraints.
      * @param gridBagConstraints constraints obj
      */
     public void setConstraints(GridBagConstraints gridBagConstraints) {

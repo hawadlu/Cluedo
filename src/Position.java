@@ -1,7 +1,7 @@
 import java.util.Objects;
 
 /**
- * Records the Players position
+ * Records the Players position.
  *  - Use with 2d array?
  */
 public class Position {

@@ -2,6 +2,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * Handles play moves.
  * Checks where are valid moves to make?
  */
 public class Move implements Action {
@@ -17,9 +18,9 @@ public class Move implements Action {
     }
 
     /**
-     * Check and apply a move
+     * Check and apply a move.
      *
-     * @throws InvalidMoveException if the move is invalid
+     * @throws InvalidMoveException if the move is invalid.
      */
     @Override
     public void apply() throws InvalidMoveException {
@@ -42,7 +43,7 @@ public class Move implements Action {
     }
 
     /**
-     * Check if the list of proposed moves is valid;
+     * Check if the list of proposed moves is valid.
      */
     private void validateMoves() throws InvalidMoveException {
         Position next = new Position(player.getPos());
