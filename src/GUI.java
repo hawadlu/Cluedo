@@ -18,11 +18,9 @@ import javax.swing.border.EmptyBorder;
 public class GUI {
     JFrame window = new JFrame("Cluedo");
 
-    //todo make the gui smaller
-    //todo add a thing to the console where users can type messages.
-
     int width = 1152;
     int height = 720;
+
 
     int widthFifths = width / 5;
     int heightSixths = height / 6;
@@ -366,7 +364,7 @@ class ConsolePanel extends JPanel {
 
         //When enter is pressed add a message to the console
         typeArea.addActionListener(actionEvent -> {
-            addMessage(Game.getActivePlayers() + ": " + typeArea.getText());
+            addMessage(Game.currentPlayer + ": " + typeArea.getText());
             typeArea.setText(null);
             redraw();
         });
@@ -417,7 +415,7 @@ class BoardPanel extends JPanel {
         hoverInfo.setLineWrap(true);
         hoverInfo.setWrapStyleWord(true);
         hoverInfo.setBackground(new Color(36, 123, 22));
-        hoverInfo.setForeground(Color.RED);
+        hoverInfo.setForeground(Color.white);
         hoverInfo.setOpaque(false);
         hoverInfo.setFont(new Font("Arial", Font.BOLD, 14));
         this.add(hoverInfo);
