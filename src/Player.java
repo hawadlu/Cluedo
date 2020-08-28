@@ -1,6 +1,7 @@
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class Player {
         lastRoom = null;
         try {
             image = ImageIO.read(new File("Assets/PlayerPieces/" + suspect.toString() + ".png"));
-        }catch(Exception e){ throw new InvalidFileException(suspect.toString() + ".png"); }
+        }catch(IOException e){ throw new InvalidFileException(suspect.toString() + ".png"); }
     }
 
     /**

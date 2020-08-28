@@ -1,6 +1,7 @@
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Weapons class for visual representation
@@ -17,7 +18,7 @@ public class Weapon {
         currentRoom = room;
         try {
             image = ImageIO.read(new File("Assets/WeaponPieces/" + name.toString() + ".png"));
-        }catch(Exception e){ throw new InvalidFileException(name.toString() + ".png"); }
+        }catch(IOException e){ throw new InvalidFileException(name.toString() + ".png"); }
     }
 
 
