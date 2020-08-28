@@ -21,8 +21,8 @@ public class GUI {
     //todo make the gui smaller
     //todo add a thing to the console where users can type messages.
 
-    int width = 1400;
-    int height = 900;
+    int width = 1152;
+    int height = 720;
 
     int widthFifths = width / 5;
     int heightSixths = height / 6;
@@ -419,6 +419,7 @@ class BoardPanel extends JPanel {
         hoverInfo.setWrapStyleWord(true);
         hoverInfo.setBackground(new Color(36, 123, 22));
         hoverInfo.setForeground(Color.RED);
+        hoverInfo.setOpaque(false);
         hoverInfo.setFont(new Font("Arial", Font.BOLD, 14));
 
         this.setPreferredSize(size);
