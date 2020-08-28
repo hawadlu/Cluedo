@@ -295,6 +295,7 @@ class ActionPanel extends JPanel {
         textArea.setFont(textArea.getFont().deriveFont(18f));
         textArea.append(player.getSuspect() + "  |  " + player.getName());
         textArea.setEditable(false);
+        textArea.setBackground(new Color(0,0,0,0));
         container.add(textArea);
 
         //Drawing dice
@@ -359,7 +360,7 @@ class ConsolePanel extends JPanel {
 
         //When enter is pressed add a message to the console
         typeArea.addActionListener(actionEvent -> {
-            addMessage(Game.currentPlayer + ": " + typeArea.getText());
+            addMessage(Game.currentPlayer.getName() + " (" + Game.currentPlayer + "): " + typeArea.getText());
             typeArea.setText(null);
             redraw();
         });
