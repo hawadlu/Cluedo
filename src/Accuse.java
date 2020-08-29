@@ -25,6 +25,7 @@ public class Accuse implements Action {
      */
     @Override
     public void apply() {
+        new Game();
         //Check to see if the accused matches
         if (Game.murderRoom.equals(room) && Game.murderer.equals(suspect) && Game.murderWeapon.equals(weapon)) {
             Game.gameOver = true;
