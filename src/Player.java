@@ -109,6 +109,7 @@ public class Player {
 
                 findPath(board, movement, oldPos);
                 Game.gui.boardPanel.repaint();
+                if (tilesThisTurn.size() == 0) movement = 0;
                 hasMoved = true;
                 break;
 
