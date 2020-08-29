@@ -191,10 +191,10 @@ public class GUI {
     private void showInstructions() throws IOException {
         generateMenuBar(false);
         content.removeAll();
-        content.setLayout(new GridBagLayout());
+        content.setLayout(new FlowLayout());
 
         // create the middle panel components
-        JTextArea display = new JTextArea ( 50, 40);
+        JTextArea display = new JTextArea ( 25, 40);
         display.setEditable (false); // set textArea non-editable
         display.setLineWrap(true);
         display.setWrapStyleWord(true);
