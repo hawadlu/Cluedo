@@ -1,0 +1,3 @@
+FONT
+We have used monofonto to draw the room names on the board. This is a free to use font.
+More information can be found at https://www.fonts.com/font/typodermic/monofonto
