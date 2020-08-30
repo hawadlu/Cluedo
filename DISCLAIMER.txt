@@ -1,3 +1,69 @@
-FONT
-We have used monofonto to draw the room names on the board. This is a free to use font.
-More information can be found at https://www.fonts.com/font/typodermic/monofonto
+All images either created or licenced under non-commercial reuse.
+
+
+CLUEDO LOGO - https://commons.wikimedia.org/wiki/File:Cluedo_Clue_pack_logo.png
+
+LOUNGE CARD BACKGROUND - https://www.google.com/search?q=CASTLE+LOUNGE+ROOM&tbm=isch&ved=2ahUKEwisyODt0q3rAhWj4HMBHV4KBikQ2-cCegQIABAA&oq=CASTLE+LOUNGE+ROOM&gs_lcp=CgNpbWcQAzICCAA6BAgjECc6BAgAEEM6BggAEAcQHlDEkwdY_cAHYObCB2gBcAB4AIABrgGIAbYKkgEDMC44mAEAoAEBqgELZ3dzLXdpei1pbWfAAQE&sclient=img&ei=MXNAX-zrJqPBz7sP3pSYyAI&bih=937&biw=1903&tbs=sur%3Afm&hl=en&hl=en#imgrc=Ox_6VUHCoFIh2M
+
+LIBRARY CARD BACKGROUND - https://www.google.com/search?q=library+ROOM&tbm=isch&ved=2ahUKEwjx35y60a3rAhUN1XMBHVnKDe4Q2-cCegQIABAA&oq=library+ROOM&gs_lcp=CgNpbWcQAzICCAAyAggAMgIIADICCAAyAggAMgIIADICCAAyAggAMgIIADICCAA6BAgjECc6BwgAELEDEEM6BAgAEEM6BggAEAcQHlDJtgtYsMELYNvGC2gAcAB4AIAB6gGIAYQLkgEFMC43LjGYAQCgAQGqAQtnd3Mtd2l6LWltZ8ABAQ&sclient=img&ei=uXFAX7GfCI2qz7sP2ZS38A4&bih=937&biw=1903&tbs=sur%3Afm&hl=en&hl=en#imgrc=R-StXyXSPhDweM
+
+HALL CARD BACKGROUND - https://www.google.com/search?q=HALL+ROOM&tbm=isch&ved=2ahUKEwjSj96M0a3rAhWWgGMGHY2rDE8Q2-cCegQIABAA&oq=HALL+ROOM&gs_lcp=CgNpbWcQAzICCAAyBggAEAcQHjIGCAAQBxAeMgYIABAHEB4yBggAEAcQHjIGCAAQBxAeMgYIABAHEB4yBggAEAcQHjIGCAAQBxAeMgYIABAHEB46BAgjECc6BwgAELEDEEM6BAgAEENQ4dgFWPLdBWCA3wVoAHAAeACAAa8BiAGjBZIBAzAuNJgBAKABAaoBC2d3cy13aXotaW1nwAEB&sclient=img&ei=WXFAX5L_LJaBjuMPjdey-AQ&bih=937&biw=1903&tbs=sur%3Afm&hl=en&hl=en#imgrc=6NE4ZfcsnZi7AM
+
+DINING CARD BACKGROUND - https://www.google.com/search?q=DINING+ROOM&tbm=isch&ved=2ahUKEwjYweji0K3rAhVUNLcAHZfpAgQQ2-cCegQIABAA&oq=DINING+ROOM&gs_lcp=CgNpbWcQAzICCAAyAggAMgYIABAHEB4yBggAEAcQHjIGCAAQBxAeMgYIABAHEB4yBggAEAcQHjIGCAAQBxAeMgYIABAHEB4yBggAEAcQHjoECCMQJzoHCAAQsQMQQzoECAAQQzoFCAAQsQNQiJsFWLOjBWC_pAVoAHAAeACAAecBiAHmCJIBBTAuNS4xmAEAoAEBqgELZ3dzLXdpei1pbWfAAQE&sclient=img&ei=AXFAX5i9MtTo3LUPl9OLIA&bih=937&biw=1903&tbs=sur%3Afm&hl=en&hl=en#imgrc=ciHLbR4dy2ZtNM
+
+CONSERVATORY CARD BACKGROUND - https://www.google.com/search?q=CONSERVATORY+ROOM&tbm=isch&ved=2ahUKEwjg1LC-0K3rAhWF2HMBHUhrCuMQ2-cCegQIABAA&oq=CONSERVATORY+ROOM&gs_lcp=CgNpbWcQAzIECAAQQzIECAAQQzICCAAyAggAMgIIADICCAAyAggAMgIIADICCAAyAggAOgcIIxDqAhAnOgQIIxAnOgcIABCxAxBDOgUIABCxAzoGCAAQBRAeOgYIABAKEBg6BAgAEBhQ76IEWJTJBGCzygRoA3AAeAGAAcgBiAG5GpIBBjAuMTkuMZgBAKABAaoBC2d3cy13aXotaW1nsAEKwAEB&sclient=img&ei=tXBAX6CmGYWxz7sPyNapmA4&bih=937&biw=1903&tbs=sur%3Afm&hl=en&hl=en#imgrc=_3GACrqo4eIlMM
+
+STUDY CARD BACKGROUND - https://commons.wikimedia.org/wiki/File:Abbotsford_House_Study_Room.jpg
+
+BALLROOM CARD BACKGROUND - https://commons.wikimedia.org/wiki/File:Queluz_Palace_ballroom.JPG
+
+KITCHEN CARD BACKGROUND - https://www.maxpixel.net/Indoor-Kitchen-Sample-Room-2398940
+
+BILLIARD CARD BACKGROUND - https://www.flickr.com/photos/billy_wilson/49725312203
+
+CLOUDS FOR CARDS - https://www.google.com/search?q=stormy+cloud+background&tbm=isch&ved=2ahUKEwiBtO7Lwq3rAhV3KbcAHUyEA9gQ2-cCegQIABAA&oq=stormy+cloud+background&gs_lcp=CgNpbWcQAzICCABQuhZYuhZgoBtoAHAAeACAAagBiAGoAZIBAzAuMZgBAKABAaoBC2d3cy13aXotaW1nwAEB&sclient=img&ei=I2JAX8GWJPfS3LUPzIiOwA0&bih=937&biw=1903&tbs=sur%3Afm&hl=en#imgrc=28hITpsQaPFhZM
+
+CHARACTERS FOR CARDS - https://www.google.com/search?q=scarlet+cluedo&tbm=isch&hl=en&tbs=sur:fm&chips=q:scarlet+cluedo,g_1:miss:sdx0Q_2hmd4%3D&hl=en&sa=X&ved=2ahUKEwjPhs2lwq3rAhX6KrcAHd71BtkQ4lYoA3oECAEQGw&biw=1903&bih=937#imgrc=dQF-v3koSYo6HM
+
+WEAPONS FOR CARDS/GAME - https://www.flickr.com/photos/11356857@N08/4493251795
+
+DICE FACES - https://www.google.com/search?q=dice+faces&sxsrf=ALeKk01cz_Ix39a2JBF0e6fOVlX1zkQOxg:1598670739849&source=lnms&tbm=isch&sa=X&ved=2ahUKEwiPxL7MuL_rAhXQV30KHXjgDgwQ_AUoAXoECA8QAw&biw=1920&bih=937#imgrc=1YZRbEW0Q66D8M
+
+--- Images created ---
+Player game pieces
+Tile pieces
+Testing images
+highlighted tile pieces
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

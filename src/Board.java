@@ -371,7 +371,6 @@ public class Board {
       Graphics2D g2 = combined.createGraphics();
       g2.drawImage(bottom, 0, 0, null);
 
-      //todo move this out of this method?
       Font monofont = new Font(Font.MONOSPACED, Font.PLAIN, 12);
 
       //Overlay text

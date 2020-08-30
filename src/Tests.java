@@ -6,8 +6,8 @@ import org.junit.jupiter.api.Test;
 public class Tests {
     /**
      * Test the gui to see that it displays properly
-     * @throws IOException
-     * @throws InvalidFileException
+     * @throws IOException if there is a I/O problem
+     * @throws InvalidFileException if there is a missing file
      */
     @Test
     public void testGUI() throws IOException, InvalidFileException {
@@ -19,7 +19,7 @@ public class Tests {
 
     /**
      * Make a correct accusation
-     * @throws InvalidFileException
+     * @throws InvalidFileException if there is a missing file
      */
     @Test
     public void testAccusation01() throws InvalidFileException {
@@ -27,18 +27,15 @@ public class Tests {
         Game.murderRoom = Game.Rooms.BILLIARD_ROOM;
         Game.murderer = Game.Suspects.GREEN;
 
-//        Room room = new Room(null, Game.Rooms.BILLIARD_ROOM);
-//        Weapon weapon = new Weapon(Game.Weapons.CANDLESTICK, Game.Rooms.BILLIARD_ROOM);
         Player suspect = new Player(Game.Suspects.GREEN, new Position(0,0));
 
-        Accuse accuse = new Accuse(Game.murderRoom, Game.murderer, Game.murderWeapon, suspect);
-        accuse.apply();
+        new Accuse(Game.murderRoom, Game.murderer, Game.murderWeapon, suspect).apply();
         assert Game.gameOver;
     }
 
     /**
      * Make an incorrect accusation
-     * @throws InvalidFileException
+     * @throws InvalidFileException if there is a missing file
      */
     @Test
     public void testAccusation02() throws InvalidFileException {
@@ -57,14 +54,13 @@ public class Tests {
      * Try to throw an error while opening a file
      */
     @Test
-    public void throwFileError01() throws InvalidFileException {
+    public void throwFileError01() {
         try {
             openFile("Some invalid file");
         } catch (InvalidFileException e) {
             e.printStackTrace();
 
             //If the code reached here the test passed.
-            return;
         }
     }
 
@@ -72,7 +68,7 @@ public class Tests {
      * Try to open a valid file
      */
     @Test
-    public void throwFileError02() throws InvalidFileException {
+    public void throwFileError02() {
         try {
             openFile("Assets/textcluedo.txt");
         } catch (InvalidFileException e) {
@@ -84,7 +80,7 @@ public class Tests {
      * Force a player to make an invalid move
      */
     @Test
-    public void makeMove() throws IOException, InvalidFileException {
+    public void makeMove() throws InvalidFileException {
         Game.board = new Board();
         Player player = new Player(Game.Suspects.PLUM, new Position(10, 10));
         player.moveTo(Game.board.getTile(new Position(11, 10)));
@@ -104,9 +100,8 @@ public class Tests {
     }
 
     public void openFile(String path) throws InvalidFileException {
-        try {
-            Scanner sc = new Scanner(new File(path));
-        } catch (FileNotFoundException e) {
+        try { new Scanner(new File(path)); }
+        catch (FileNotFoundException e) {
             throw new InvalidFileException("File not found");
         }
     }

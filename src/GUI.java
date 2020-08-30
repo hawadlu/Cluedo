@@ -42,7 +42,7 @@ public class GUI {
     GUI() throws IOException, InvalidFileException {
         window.setLayout(new BoxLayout(window.getContentPane(), BoxLayout.Y_AXIS));
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setResizable(false);// todo might update this at a later stage
+        window.setResizable(false);
 
         window.add(topBar);
         window.add(content);

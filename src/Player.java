@@ -334,15 +334,6 @@ public class Player {
     public Position getPos(){ return newPos; }
 
     /**
-     * Get the tiles that this player has been in this and last turn.
-     *
-     * @return a hashset of tiles that this player was in this and last turn
-     */
-    public HashSet<Tile> getTilesThisTurn() {
-        return tilesThisTurn;
-    }
-
-    /**
      * Get the image of this player.
      * @return BufferedImage of this player
      */
