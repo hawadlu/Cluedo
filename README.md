@@ -1,6 +1,6 @@
 # Cluedo
 
-Text based implementation of the game Cludeo for SWEN225 (Victoria University of Wellingoton).
+GUI based implementation of the game Cludeo for SWEN225 (Victoria University of Wellingoton).
 
 CONTRIBUTORS
 Connor de Bruyn : https://github.com/Destiro
