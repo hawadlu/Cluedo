@@ -1,6 +1,4 @@
-# Cluedo
-
-GUI based implementation of the game Cludeo for SWEN225 (Victoria University of Wellingoton).
+A fully functional version of the Cluedo board game with an interactive GUI. Written for a Software Engineering Assignment at Victoria University of Wellington. The code is written entirely in Java using the Swing library to power the GUI.
 
 CONTRIBUTORS
 Connor de Bruyn : https://github.com/Destiro
